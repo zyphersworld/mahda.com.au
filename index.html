@@ -1,140 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8" />
 <title>Krystal Orion</title>
-<link href="https://fonts.googleapis.com/css?family=Nosifer|Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+
 <style>
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/*
+########################################################################
+*/
+
 body{
-	background:#000;
-	color:#eee;
-	font-family:sans;
-	background-image: url('images/ko_banner_s.jpg');
-	background-size:cover;
-	background-position:fixed;
-	background-repeat: repeat-y;
-	background-attachment: fixed;
-	}
-	
-div#container{
-	width:80%;
-	background:rgba(0,0,0,0.55);
-	margin:0px auto;
-}	
-	
-p{
-	width:720px;
-	margin:1em auto;
-	text-align:center;
-	font-family: 'Special Elite', cursive;
+	background-color:rgba(0,0,0,1)
 }
 
-.logo{
-	width:720px;
-	margin:0px auto;
-	text-align:center;
-	/*
-	background:rgba(255,255,255,0.25);
-	*/
-}	
-
-
-.nav{
-	margin:8px auto;
-	text-align:center;
-	background:rgba(255,255,255,0.25);
-	width:900px;
-}
-
-.nav a{
-	display:inline-block;
-	width:140px;
-	color:#eee;
-	font-weight:bold;
-	text-decoration:none;
-	padding:10px;
-}
-
-.showcase{
+#screen{
+	background:rgba(0,0,0,0);
 	width:100%;
+	height:100%;
 	margin:0px auto;
-	text-align:center;
-/*	background:rgba(255,255,255,0.25); */
+}
+
+#content{
+	text-align:center;	
+	background:rgba(44,44,44,0.0);
+	min-height:400px;
+	
 	
 }
 
-.showcase iframe.sc{
-	margin:0px 5px;
+#header{
+	font-size:2em;
+	letter-spacing:0.25em;
+	text-align:center;
+	margin-bottom:10px;
+	color:white;
+	
 	
 }
-.social{
+
+#footer{
 	text-align:center;
+	height:100%;
+	vertical-align:bottom;
 }
 
-.social a{
+
+.scrBtn{
 	display:inline-block;
-}
-	
-.footer{
-position:fixed;bottom:0;left:0;right:0;height:30px; text-align:center;
+	text-align:center;
+	width:4em;
+	height:4em;
+	border-radius:50%;
+	background-color:rgba(222,222,222,1);
+	margin:10px auto;
 }
 
-h2{
-	font-family: 'Nosifer', cursive;
-	text-align:left;
-	margin-left:14%;
+.scrBtn a{
+	font-size:1em;
+	display:block;
+	color:black;
+	text-decoration:none;
+	margin-top:25px;
+}
+
+
+#copyright{
+	font-size:.75em;
+	color:#ccc;
+}
+
+
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#background iframe {
+  position: relative;
+  width: 100%;
+  opacity:0.4
+}
+
+.main-gallery{
+	max-width:550px;
+	margin:0px auto;
+}
+
+.gallery-cell {
+  width: 100%;
+  
+}
+
+.gallery-cell h1{
+	color:#ccc;
+	font-size:2em;
+	margin:10px;
+}
+
+
+#blurb{
+	color:#ccc;
+	max-width:390px;
+	margin:0px auto;
+}
+
+#blurb p{
+	font-size:1.5em;
+	margin-top:50px;
 }
 </style>
-
-<script data-ad-client="ca-pub-4732895848072382" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
 </head>
 
 <body>
-<div id="container">
-<div class="logo">
-	<img src="images/ko_logo.png" alt="Krystal Orion"/>
-</div>
-<div class="nav">
-<a href="#">Listen</a>
-<a href="#">Look</a>
-<a href="#">Touch</a>
-</div>	
+<div id="background"><iframe frameborder="0"  allowtransparence="true" width="640" height="360" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"  src="https://www.shadertoy.com/embed/lscczl?gui=false&t=10&paused=false&muted=false" allowfullscreen></iframe></div>
 
-<p>This black sheep uses sonic artistry and pithy lyrics <br > to express lucid experiences of brutal reality.</p>
-<p>Born speaking music as a first language KO has been <br> mumbling towards a crescendo ever since.</p>
-<p>Honest. Raw. Emotive. <br>Experience Krystal Orion for yourself.</p>
-<br />
-<div class="showcase">
-<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkrystalstarbelt%2Fposts%2F3772732939461433&width=500&show_text=true&appId=419716725575180&height=634" width="500" height="634" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>	
-<br>
-<br>
-<iframe width="320" height="320" src="https://www.youtube.com/embed/videoseries?list=PLsFmP2Nz4b2P58cI-60TwEr0ifGV78o9P" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="320" height="320" src="https://www.youtube.com/embed/videoseries?list=PLsFmP2Nz4b2PyYuOvHDtDpAkxVNqJIDM6" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="320" height="320" src="https://www.youtube.com/embed/videoseries?list=PLsFmP2Nz4b2OpqnZr_qjNh4d-nup9m850" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<br>
-<iframe style="border: 0; width: 320px; height: 320px;" src="https://bandcamp.com/EmbeddedPlayer/album=2627214700/size=large/bgcol=333333/linkcol=0f91ff/artwork=small/transparent=true/" seamless><a href="https://krystalorion.bandcamp.com/album/krystal-orion-debut">Krystal Orion Debut by Krystal Orion</a></iframe>
-<iframe style="border: 0; width: 320px; height: 320px;" src="https://bandcamp.com/EmbeddedPlayer/album=1824767657/size=large/bgcol=333333/linkcol=0f91ff/artwork=small/transparent=true/" seamless><a href="https://krystalorion.bandcamp.com/album/lil-d-live-in-lock-down-krystal-orion">Lil D - (Live In Lock Down) - Krystal Orion by Krystal Orion</a></iframe>
-<iframe width="320" height="320" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/890803192&color=%23000000&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+
+
+<div id="screen">
+	<div id="header"><img src="images/ko_logo.png" style="min-width:75%;max-width:360px;"></div>
+	
+	<div id="content">
+		<div class="main-gallery">
+			<div class="gallery-cell"><div id="blurb"><p>This black sheep uses sonic artistry and pithy lyrics to express lucid experiences of brutal reality. Born speaking music as a first language KO has been mumbling towards a crescendo ever since. Honest. Raw. Emotive. Experience Krystal Orion for yourself.</p></div></div>
+			<div class="gallery-cell"><img src="images/ep_cd_cover_FRONT.png" style="margin-top:50px;width:75%;max-width:500px;max-height:500px;"/></div>
+			<div class="gallery-cell"><img src="images/ep_cd_cover_BACK.png" style="margin-top:50px;width:75%;max-width:500px;max-height:500px;"/></div>
+			<div class="gallery-cell"><h1>Originals</h1><iframe width="75%" src="https://www.youtube.com/embed/videoseries?list=PLsFmP2Nz4b2P58cI-60TwEr0ifGV78o9P" style="width:95%;max-width:500px;height:320px;max-height:500px;" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+			<div class="gallery-cell"><h1>Covers</h1><iframe width="75%" src="https://www.youtube.com/embed/videoseries?list=PLsFmP2Nz4b2PyYuOvHDtDpAkxVNqJIDM6" style="width:95%;max-width:500px;height:320px;max-height:500px;" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+			<div class="gallery-cell"><h1>Ween by Greene</h1><iframe width="75%" src="https://www.youtube.com/embed/videoseries?list=PLsFmP2Nz4b2OpqnZr_qjNh4d-nup9m850" style="width:95%;max-width:500px;height:320px;max-height:500px;" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+  		</div>
+		
+	</div>
+	
+	<div id="footer">
+		<div class="scrBtn"><a href="https://krystalorion.com.au">H</a></div>
 <!--
-<div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/krystalorion" title="Krystal Orion" target="_blank" style="color: #cccccc; text-decoration: none;">Krystal Orion</a> · <a href="https://soundcloud.com/krystalorion/sets/demos" title="Twilight Zone - Demos, Ideas and Unfinished Business" target="_blank" style="color: #cccccc; text-decoration: none;">Twilight Zone - Demos, Ideas and Unfinished Business</a></div>
+		<div class="scrBtn"><a href=#">Originals</a></div>
+		<div class="scrBtn"><a href=#">Covers</a></div>
+		
 -->
-<br />
-<div style="display:inline-block;width:320px;height:320px; background:rgba(200,200,200,0.4);">&nbsp;<a href="https://paypal.me/paychrisgreene" target="_"><img style="height:320px;" src="images/tipjar.webp" /></a></div>
-</div>
-
-</div>
-
-
-<br /><br /><br /><br /><br /><br /><br />
-&nbsp;
-
-
-
+		<div class="scrBtn" style="background-color:rgba(0,110,220,1);background-image:url('images/fb.png');"><a href="https://www.facebook.com/krystalstarbelt" target="_blank">&nbsp</a></div>
+		<div class="scrBtn" style="background-color:rgba(220,0,55,1);background-image:url('images/yt.png');"><a href="https://www.youtube.com/channel/UChu3mwkd7N4Cs2Yao33IBWw" target="_blank">&nbsp</a></div>
+		<div class="scrBtn" style="background-color:rgba(220,0,55,1);background-image:url('images/sc.png');"><a href="https://www.youtube.com/channel/UChu3mwkd7N4Cs2Yao33IBWw" target="_blank">&nbsp</a></div>
+		<div class="scrBtn" style="background-color:rgba(0,150,55,1);"><a href="https://www.gofundme.com/f/help-get-krystal-orion-recorded-and-released" target="_blank">GFM</a></div>
 <!--
-<div style="height:200px;">&nbsp;</div>
+		<div class="scrBtn" style="background-color:rgba(0,0,0,1);"><a style="color:white;" href="mailto:krystalmind316@gmail.com" target="_blank">@E</a></div>
 -->
-<div class="footer">Copyright © 2020 Krystal Orion - All Rights Reserved.</div>
-<!-- FUCKSTAIN! -->
+		
+		<div id="copyright">&copy; 2021 Krystal Orion. All Rights Reserved.</div>
+	</div>
+
+</div>
+<script>
+var flkty = new Flickity( '.main-gallery', {
+  // options
+  cellAlign: 'center',
+  contain: true,
+  wrapAround: true,
+  autoPlay:4200,
+  selectedAttraction: 0.01,
+  friction: 0.15,
+  pageDots: false
+  
+});
+
+</script>
+
 </body>
+
 </html>
