@@ -7,36 +7,45 @@
 <style>
 .countdown-wrapper{
 	width:370px;
-	margin:100px auto;
+	margin:40px auto;
 	text-align:center;
 	background: rgba(0,0,0,1);
 }	
 
 .countdown{
-	margin:100px auto;
+	margin:40px auto;
 }
 	
 	body{ 
 		background:rgb(0,0,0);
-		margin-top:100px;
+		margin-top:40px;
 	}
 		
 		
-	h1{
+	h1,h2{
 		font-size:2.2em;
-		color:#ffc;
+		color:#fec;
 		letter-spacing:2em;
 		text-align:center;
 		margin:0px auto;
 		font-weight:bold;
 		font-family:sans;	
-		
+	}
+	
+	h2{
+		font-size:1.25em;
+		font-weight:bold;
+		color:#ffccb7;
+		letter-spacing:0.56em;
+	}
 </style>
 </head>
 <body>
 
 
 <h1>Mahda</h1>
+<br />
+<h2>"I Failed as an EGG..."</h2>
 
 
 <div class="countdown-wrapper">
@@ -47,9 +56,14 @@
 <script>
 	
 (function () {
+ 
   var countdown, init_countdown, set_countdown;
   var TIMELEFT = 60; 	
+
+// Initiate a new instance of flipclock
+//###################################################################### 
   countdown = init_countdown = function () {
+ 
     countdown = new FlipClock($('.countdown'), {
       clockFace: 'MinuteCounter',
       language: 'en',
@@ -58,7 +72,7 @@
       showSeconds: true,
       callbacks: {
         start: function () {
-          return console.log('The clock has started!');
+          return console.log('Mahda Time!');
         },
         stop: function () {
           return console.log('The clock has stopped!');
@@ -70,6 +84,7 @@
             return console.log('Clock interval', time);
           }
         } } });
+//######################################################################        
 
 
     return countdown;
@@ -95,7 +110,6 @@
   };
 
   init_countdown();
-
   set_countdown(TIMELEFT, new Date());
 
 }).call(this);
