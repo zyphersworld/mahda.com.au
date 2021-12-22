@@ -93,7 +93,7 @@
         },
         interval: function () {
 		quoteCount++;
-		if(quoteCount => quoteSize){quoteCount=0;}
+		if(quoteCount > quoteSize){quoteCount=0;}
 		document.getElementById("WRQ").innerHTML= whippyRoosterQuotes[quoteCount];	
 			
           var time;
