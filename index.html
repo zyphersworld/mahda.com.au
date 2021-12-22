@@ -52,7 +52,7 @@
 
 <h1>Mahda</h1>
 <br />
-<h2>"I Failed as an EGG..."</h2>
+<h2 id="WRQ">"I Failed as an EGG..."</h2>
 
 
 <div class="countdown-wrapper">
@@ -63,6 +63,13 @@
 <script>
 	
 (function () {
+ 
+ var whippyRoosterQuotes = Array("I Failed As A Egg!","Huh?","What Actually is a wet ferret?","VFVFVFVFVFVF...TTTT","WALKING PANTS?!?!?!");
+ var quoteSize = whippyRoosterQuotes.length;
+ var quoteCount=0;
+ 
+ 
+ 
  
   var countdown, init_countdown, set_countdown;
   var TIMELEFT = 60; 	
@@ -85,6 +92,10 @@
           return console.log('The clock has stopped!');
         },
         interval: function () {
+		quoteCount++;
+		if(quoteCount => quoteSize){quoteCount=0;}
+		document.getElementById("WRQ").innerHTML= whippyRoosterQuotes[quoteCount];	
+			
           var time;
           time = this.factory.getTime().time;
           if (time) {
