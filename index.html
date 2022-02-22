@@ -1,10 +1,19 @@
 <html>
 <head>
+<!--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.js"></script>
+-->
+<script src="js/jquery.min.js"></script>
+<script src="js/flipclock.min.js"></script>
+
+
 <link rel="stylesheet" href="flipclock.css">
 
 <style>
+	
+	
+	
 .countdown-wrapper{
 	width:370px;
 	margin:40px auto;
@@ -17,7 +26,8 @@
 	margin:40px auto;
 }
 	
-	body{ 
+	body{
+		text-align:center; 
 		background:rgb(0,0,0);
 		margin-top:40px;
 		font-family:sans;
@@ -40,45 +50,49 @@
 	}
 	
 	h2{
-		font-size:1.25em;
+		font-size:2.25em;
 		font-weight:bold;
 		color:#ffccb7;
-		letter-spacing:0.56em;
+		letter-spacing:-0.025em;
+	}
+	
+	#whippy1{
+		filter : hue-rotate(180deg);
 	}
 </style>
 </head>
 <body>
-
-
 <h1>Mahda</h1>
 <br />
 <h2 id="WRQ">"I Failed as an EGG..."</h2>
-
 
 <div class="countdown-wrapper">
   <div id="countdown" class="countdown"></div>
 </div>
 
+<img id="whippy1" src="images/whippyrooster2.png" width="200" />
 
 <script>
 	
 (function () {
- 
- var whippyRoosterQuotes = Array("I Failed As An Egg!","Huh?","What Actually is a wet ferret?","VFVFVFVFVFVF...TTTT","WALKING PANTS?!?!?!");
+ var whippyRoosterQuotes = [
+	 "I Failed As An Egg!",
+	 "Huh?",
+	 "PIAND",
+	 "VFVFVFVFVFVF...TTTT",
+	  "BROGE BRO",
+	  "How many Geoffs?",
+	  "Coconut in what hole...??"
+ ];
  var quoteSize = whippyRoosterQuotes.length;
  var quoteCount=0;
- 
- 
- 
- 
-  var countdown, init_countdown, set_countdown;
-  var TIMELEFT = 60; 	
+ var countdown, init_countdown, set_countdown;
+ var TIMELEFT = 60 	
 
 // Initiate a new instance of flipclock
 //###################################################################### 
   countdown = init_countdown = function () {
- 
-    countdown = new FlipClock($('.countdown'), {
+	  countdown = new FlipClock($('.countdown'), {
       clockFace: 'MinuteCounter',
       language: 'en',
       autoStart: false,
@@ -88,20 +102,41 @@
         start: function () {
           return console.log('Mahda Time!');
         },
+        
         stop: function () {
-          return console.log('The clock has stopped!');
+          return console.log('The clock has stopped!');alert("stopped");
+          
+          
         },
+        
         interval: function () {
-		quoteCount++;
-		if(quoteCount > quoteSize){quoteCount=0;}
-		document.getElementById("WRQ").innerHTML= whippyRoosterQuotes[quoteCount];	
 			
-          var time;
-          time = this.factory.getTime().time;
-          if (time) {
-            return console.log('Clock interval', time);
-          }
-        } } });
+			
+			quoteCount++;
+			if(quoteCount >= quoteSize){quoteCount=0;}
+			document.getElementById("WRQ").innerHTML= whippyRoosterQuotes[quoteCount];
+			
+			var randDeg = Math.random() * (360 - 0) + 0;
+			var randWhip = Math.random() * (700 - -250) + -250;
+			var randOpacity =  Math.random() * (1 - 0.1) + 0.1;
+			var randSize = Math.random() * (0.25 - 1.5) + 1.5;
+			var whippy = document.getElementById("whippy1");
+						
+			whippy.style.filter = "hue-rotate("+ randDeg +"deg)";
+			whippy.style.marginLeft=randWhip;
+			whippy.style.transform="rotate("+randWhip+"deg) scale("+randSize+")";	
+			whippy.style.opacity = "" + randOpacity + "";
+//			whippy.style.transform="scale("+randSize+")";	
+			
+			var time;
+			time = this.factory.getTime().time;
+			if (time) {
+				return }
+			
+			} 
+        } 
+        }//countdown
+        );//new Flipclock
 //######################################################################        
 
 
@@ -131,6 +166,10 @@
   set_countdown(TIMELEFT, new Date());
 
 }).call(this);
+
+
+
+
 
 </script>
 
