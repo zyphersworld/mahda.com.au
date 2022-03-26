@@ -6,32 +6,26 @@
 -->
 <script src="js/jquery.min.js"></script>
 <script src="js/flipclock.min.js"></script>
-
-
 <link rel="stylesheet" href="flipclock.css">
-
 <style>
-	
-	
-	
 .countdown-wrapper{
 	width:370px;
 	margin:40px auto;
 	text-align:center;
-	background: rgba(0,0,0,1);
+	background: rgba(0,0,0,0);
 	color:#fff;
 }	
 
 .countdown{
 	margin:40px auto;
 }
-	
+.flip-clock-label{display:none;}	
 	body{
 		text-align:center; 
-		background:rgb(0,0,0);
+		background:rgba(0,0,0,1);
 		margin-top:40px;
 		font-family:sans;
-	background-image: url('images/bgm.jpg');
+	background-image: url('images/firehands.jpg');
 	background-size:cover;
 	background-position:fixed;
 	background-repeat: repeat-y;
@@ -52,7 +46,9 @@
 	h2{
 		font-size:2.25em;
 		font-weight:bold;
-		color:#ffccb7;
+		/*color:#ffccb7;*/
+		color:#ee9911;
+		text-shadow:2px 0px black;
 		letter-spacing:-0.025em;
 	}
 	
@@ -73,7 +69,6 @@
 <img id="whippy1" src="images/whippyrooster2.png" width="200" />
 
 <script>
-	
 (function () {
  var whippyRoosterQuotes = [
 	 "I Failed As An Egg!",
@@ -87,7 +82,7 @@
  var quoteSize = whippyRoosterQuotes.length;
  var quoteCount=0;
  var countdown, init_countdown, set_countdown;
- var TIMELEFT = 60 	
+ var TIMELEFT = 99 	
 
 // Initiate a new instance of flipclock
 //###################################################################### 
@@ -105,23 +100,18 @@
         
         stop: function () {
           return console.log('The clock has stopped!');alert("stopped");
-          
-          
         },
         
         interval: function () {
-			
-			
+				
 			quoteCount++;
 			if(quoteCount >= quoteSize){quoteCount=0;}
 			document.getElementById("WRQ").innerHTML= whippyRoosterQuotes[quoteCount];
-			
 			var randDeg = Math.random() * (360 - 0) + 0;
 			var randWhip = Math.random() * (700 - -250) + -250;
 			var randOpacity =  Math.random() * (1 - 0.1) + 0.1;
 			var randSize = Math.random() * (0.25 - 1.5) + 1.5;
 			var whippy = document.getElementById("whippy1");
-						
 			whippy.style.filter = "hue-rotate("+ randDeg +"deg)";
 			whippy.style.marginLeft=randWhip;
 			whippy.style.transform="rotate("+randWhip+"deg) scale("+randSize+")";	
