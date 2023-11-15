@@ -29,7 +29,7 @@ h2.scream{
 }
 
 table{
-	width:80%;
+	width:100%;
 	margin:0px auto;
 	border:solid 2px black;
 	/*background-image:linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), linear-gradient(to right, black 50%, white 50%),linear-gradient(to bottom, black 50%, white 50%);*/
