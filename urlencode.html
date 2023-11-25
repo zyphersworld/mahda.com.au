@@ -1,0 +1,28 @@
+<html>
+<head>
+</head>
+<body>
+
+<textarea id="code2decode" cols=50></textarea>
+<br />
+<button onclick="javascript:clickFunction(0);">ENCODE</button>
+<button onclick="javascript:clickFunction(1);">DECODE</button>
+<br>
+<pre id="encodedText">&nbsp;</pre> 
+
+
+<script>
+
+
+function clickFunction(code){
+
+text=document.getElementById("code2decode").value;
+//if(code==0){result=encodeURIComponent(text);}
+//if(code==1){result=decodeURIComponent(text);}
+document.getElementById("encodedText").innerHTML=text;
+}
+
+</script>
+
+</body>
+</html>
