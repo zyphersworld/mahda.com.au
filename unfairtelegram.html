@@ -15,34 +15,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	<script src="js/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/reset.css" />
 	<link rel="stylesheet" href="css/style.css" />
+	<script>
+	var links = [
+		"https://www.standard.net.au/story/8433258/james-mcfadden-on-the-challenges-future-of-australian-speedway/",
+		"https://www.standard.net.au/story/8424626/premier-speedway-complete-track-work-for-november-sprintcar-event/",
+		"https://www.standard.net.au/story/8428334/warrnambools-jamie-veal-dominates-round-four-of-sra-series/?cs=72",
+		"https://www.standard.net.au/story/8428475/simpsons-tim-rankin-triumphs-in-jack-willsher-cup-feature-race/?cs=72",
+		"https://www.standard.net.au/story/8429414/jamie-veal-to-launch-avalon-raceway-sprintcar-international/?cs=72"
+	]
 	
-		<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZGWXJJ83MP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-ZGWXJJ83MP');
-</script>
-</head>
-
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NL6F28VS"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<div id="wrapper">
-		<a href="https://mahda.com.au/"><h1>MAHDA.COM.AU</h1></a><br />
-
-<h2>Today's Information provided freely by:</h2> 
-<p style="font-size:1em; font-family:monospace;text-align:center;">
-	
-	a <b>&lt;SCRIPT&gt; TAG</b> containing a <b>&lt;![--CDATA[]]&gt; TAG</b> containing a <b>JSON</b>  <b>OBJECT</b> through a <b>"text"</b> property (usually in an urlencoded string)
-</p>
-<br />
-<form><label>Host:</label><input type="text" width="80" value="https://www.standard.net.au/story/8433258/james-mcfadden-on-the-challenges-future-of-australian-speedway/"/><button value="go">GO</button><br /><br/><textarea cols="80" rows="10">
-	SPEEDWAY Australia James McFadden is passionate about his sport. He doesn't
+	var artText = [
+	`
+SPEEDWAY Australia James McFadden is passionate about his sport. He doesn't
 like where it finds itself.
 
 The Australian sprintcar scene is in a state of flux. Complex closures, late
@@ -170,18 +154,71 @@ said they didn't do it then I believe them."
 McFadden will launch his Australian season in Max's Race at Premier Speedway on
 December 16, 2023.
 
-	 </textarea></form>
-</div>
-<P>
-One can think of an <b>object</b> as an <b>associative array</b> (a.k.a. map, dictionary, hash, lookup table). The <b>keys</b> in this array are the names of the object's <b>properties.</b>
-</P>
+`,
 
-<p>So, our Object is say, a list of things to add to our page to view. Let's call it Props. within Page is the Array
+"second story"
+]
+	
 
-<p>
-To access these properties using the commonly used dot notation convention, we could write: Props.pageProps.context.story.elements.story 
+
+	
+	</script>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZGWXJJ83MP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZGWXJJ83MP');
+</script>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NL6F28VS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="wrapper">
+		<a href="https://mahda.com.au/"><h1>MAHDA.COM.AU</h1></a><br />
+
+<h2>Today's Information provided freely by:</h2> 
+<p style="font-size:1em; font-family:monospace;text-align:center;">
+	
+	a <b>&lt;SCRIPT&gt; TAG</b> containing a <b>&lt;![--CDATA[]]&gt; TAG</b> containing a <b>JSON</b>  <b>OBJECT</b> through a <b>"text"</b> property.
 </p>
 
+
+
+
+	<form>
+		<label style="font-size:1.0em;font-weight:bold;">Host:</label><input type="text" id="host" style="background:#333;color:#eee;" value=""/>&nbsp;
+		<label style="font-size:1.0em;font-weight:bold;">Tag:</label><input type="text" id="tag" style="background:#333;color:#eee;" value="&lt;script&gt;"/>&nbsp;
+		<label style="font-size:1.0em;font-weight:bold;">Object:</label><input type="text" id="obj" style="background:#333;color:#eee;" value="Props.pageProps.context.story.elements.story"/>&nbsp;
+		<button value="go" style="background:#333;color:#eee;">GO</button><br />
+		<hr />
+		<textarea id="art" style="background:#333;color:#eee;" cols="80" rows="10"></textarea>
+	</form>
+	<br /><br />
+		<P>
+		One can think of an <b>object</b> as an <b>associative array</b> (a.k.a. map, dictionary, hash, lookup table). 
+		The <b>keys</b> in this <b>Array</b> are the names of the object's <b>properties.</b>
+		Let's say our <b>Object</b> is a list of <b>properties</b> that describe the characteristics of a document we are viewing. Let's name this Object <b>Props.</b> 
+		To access the <b>properties</b> of <b>Props</b> using the commonly used dot notation convention , we could, for example write the following accessor: Props.pageProps.context.story.elements.story 
+		</p>	
+
+</div>
+
 <footer>Thanks</footer>
+
+
+
+<script>
+
+$("input#host").val( links[0] );
+$("textarea#art").text( artText[0] );
+console.log(links);
+console.log(artText);	
+</script>
 
 </body>
