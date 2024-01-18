@@ -167,3 +167,6 @@ p.mono{font-size:1.25em;font-family:monospace;font-weight:bold;width:100%;height
 .tagline{margin: -10px 0px auto 0px;font-weight:bold;z-index:1000}
 .blackbg{background:black;}
 ul{text-align:left;width:360px;margin:0px auto;}
+
+table td.menu {width:200px;}
+table img{width:200px;}
