@@ -190,6 +190,7 @@
 	  font-size: 2.8em;
 	  font-weight:bold;
       margin-bottom: 5px;
+      color:#333;
 	}
     .card-back {
       background-color: #333;
@@ -221,7 +222,10 @@
 </head>
 <body>
   <div class="header">
-    <div class="controls">
+	  <table><tr>
+		  <td><a href="https://mahda.itch.io/scream"></a><img src="logo_new_white.png" height=90/></a><br /></td>
+			<td>
+			<div class="controls">
       <div class="search-container">
         <input type="text" id="search" placeholder="Search drivers...">
         <button id="clear-search">&times;</button>
@@ -243,6 +247,12 @@
       </div>
     </div>
   </div>
+			
+			</td>
+	 </tr></table>
+	  
+	  <h1>Driver Database</h1>
+    
   <div id="card-container" class="card-container"></div>
 
   <script>
