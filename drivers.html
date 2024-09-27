@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Trading Cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background: #f4f4f9;
+      font-family: 'Arial', sans-serif;
+      padding-top: 80px;
+      background: rgb(44,44,44);
+	  
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #333;
+      color: white;
+      padding: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .search-container {
+      display: flex;
+      flex-grow: 1;
+      position: relative;
+      min-width: 200px;
+    }
+    #search {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background: #444;
+      color: white;
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    #search::placeholder {
+      color: #aaa;
+    }
+    #clear-search {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+      font-size: 18px;
+      display: none;
+    }
+    #clear-search:hover {
+      color: white;
+    }
+    #sort, .dropdown {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background: #444;
+      color: white;
+      cursor: pointer;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1400px;
+      padding: 20px;
+    }
+    .card {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      padding-bottom: 140%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .card.flip .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border:solid 3px black;
+    }
+    .card-front {
+		background: rgb(99,99,99);
+		background: linear-gradient(90deg, rgba(99,99,99,1) 0%, rgba(222,222,222,1) 90%, rgba(99,99,99,1) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      
+    }
+    .card-front .logo-container {
+      position: relative;
+      width: 80%;
+      height: 0;
+      padding-bottom: 80%;
+    }
+    .card-front svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      filter: blur(12px);
+    }
+    .card-front img {
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .card-front h2 {
+      font-size: 1.4em;
+      margin-bottom: 0px;
+      background:rgba(22,22,22,0.5);
+      width:100%;
+      text-align:center;
+      color:#aaa;
+      text-shadow: 2px 2px 5px black;
+    }
+    .card-front p{
+	  font-size: 2.8em;
+	  font-weight:bold;
+      margin-bottom: 5px;
+	}
+    .card-back {
+      background-color: #333;
+      color: white;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+    .card-back p {
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 768px) {
+      .card-inner {
+        transform: rotateY(0);
+      }
+      .header {
+        padding: 10px;
+      }
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="controls">
+      <div class="search-container">
+        <input type="text" id="search" placeholder="Search drivers...">
+        <button id="clear-search">&times;</button>
+      </div>
+      <select id="sort">
+        <option value="default">Default</option>
+        <option value="carNum">Car Number</option>
+        <option value="firstName">First Name</option>
+        <option value="lastName">Last Name</option>
+        <option value="chassis">Chassis</option>
+      </select>
+      <div class="dropdown" id="chassis-dropdown">
+        <button class="dropbtn">Chassis Breakdown</button>
+        <div class="dropdown-content" id="chassis-list"></div>
+      </div>
+      <div class="dropdown" id="sponsor-dropdown">
+        <button class="dropbtn">All Sponsors</button>
+        <div class="dropdown-content" id="sponsor-list"></div>
+      </div>
+    </div>
+  </div>
+  <div id="card-container" class="card-container"></div>
+
+  <script>
+const driverData = [
+    //VIC
+  { carNum: "2", name: "Domain Ramsay", sponsor: "Chevon Quarries", chassis: "Maxim" },
+  { carNum: "3", name: "Jacob Dickson", sponsor: "Essendon Volkswagen", chassis: "Maxim" },
+  { carNum: "4", name: "Phillip Lock", sponsor: "Lock Agriculture", chassis: "XXX" },
+  { carNum: "5", name: "Max Dumesny", sponsor: "VALVOLINE", chassis: "Maxim" },
+  { carNum: "6", name: "Cameron Waters", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "7", name: "Paul Solomon", sponsor: "Melbourne Malibu", chassis: "XXX" },
+  { carNum: "8", name: "Bobby Daly", sponsor: "Transall Motors", chassis: "Cool" },
+  { carNum: "9", name: "Rod Matthews", sponsor: "Matthews Joinery & Kitchen Centre", chassis: "Maxim" },
+  { carNum: "10", name: "M Cunningham", sponsor: "PRP Engineering", chassis: "Unknown" },
+  { carNum: "11", name: "Brad Foster", sponsor: "B&B Retaining walls", chassis: "Cool" },
+  { carNum: "12", name: "Kristy Ellis", sponsor: "Combined Waste Services", chassis: "Maxim" },
+  { carNum: "14", name: "Glen Beaton", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "15", name: "David Dennison", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "15", name: "Gidgit Payne", sponsor: "Grampians Tyre Service", chassis: "Holden" },
+  { carNum: "16", name: "James Wren", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "17", name: "Dennis Jones", sponsor: "D.J.E", chassis: "Maxim" },
+  { carNum: "18", name: "Anthony Foster", sponsor: "Foster Transport", chassis: "J&J" },
+  { carNum: "19", name: "Sam Wren", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "20", name: "Brayden Cooley", sponsor: "Hutt Construction", chassis: "Cool" },
+  { carNum: "21", name: "Ben Micallef", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "22", name: "Terry Rankin", sponsor: "TBA", chassis: "Maxam" },
+  { carNum: "25", name: "Jack Lee", sponsor: "Lee Contracting", chassis: "Maxim" },
+  { carNum: "26", name: "Nick Lacey", sponsor: "Karcher", chassis: "Cool" },
+  { carNum: "27", name: "Ross Jarred", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "28", name: "Andrew Hughes", sponsor: "Hughes Plant", chassis: "Cool" },
+  { carNum: "29", name: "Michael Tancredi", sponsor: "Top Shelf Fruits", chassis: "Unknown" },
+  { carNum: "31", name: "Kane Fitzgerald", sponsor: "Echuca On Your Bike", chassis: "J&J" },
+  { carNum: "32", name: "Stephen Spark", sponsor: "Ozzy Tyres Laverton", chassis: "J&J" },
+  { carNum: "33", name: "Michael Holt", sponsor: "M D Autocare", chassis: "J&J" },
+  { carNum: "34", name: "Brenten Farrer", sponsor: "Frijtek", chassis: "Maxim" },
+  { carNum: "36", name: "Daniel Reinhardt", sponsor: "Australian VW Performance Centre", chassis: "Maxim" },
+  { carNum: "37", name: "Grant Anderson", sponsor: "Beef Growers", chassis: "Foster" },
+  { carNum: "38", name: "Jarrod Woolstencroft", sponsor: "TBA", chassis: "Schnee" },
+  { carNum: "39", name: "Brett Smith", sponsor: "Allclass Body Works", chassis: "Maxim" },
+  { carNum: "40", name: "Rusty Hickman", sponsor: "Hickman's Tree Maintenance", chassis: "J&J" },
+  { carNum: "42", name: "Jye Okeeffe", sponsor: "GJ Gardner Homes", chassis: "Cool" },
+  { carNum: "44", name: "Tim Van Ginneken", sponsor: "Anderson Bobcat", chassis: "XXX" },
+  { carNum: "45", name: "David Challons", sponsor: "Camden Neon Signs", chassis: "J&J Auto Racing" },
+  { carNum: "47", name: "Tim Rankin", sponsor: "Westvic Sheds & Garages", chassis: "GF1" },
+  { carNum: "48", name: "Adam King", sponsor: "Port City Engines", chassis: "XXX" },
+  { carNum: "49", name: "Ricky Clarke", sponsor: "MRC Automotive", chassis: "XXX" },
+  { carNum: "50", name: "Darren Clarke", sponsor: "DC Car Carriers", chassis: "Maxam" },
+  { carNum: "51", name: "Peter Milnes", sponsor: "Journey Management", chassis: "Cool" },
+  { carNum: "52", name: "Darren Mollenoyux", sponsor: "Warnambool Crane Hire", chassis: "GF1" },
+  { carNum: "53", name: "Andrew Thompson", sponsor: "Eagle", chassis: "Unknown" },
+  { carNum: "55", name: "Brooke Tatnell", sponsor: "Scotts Motorsports", chassis: "Unknown" },
+  { carNum: "55", name: "Ashley Scott", sponsor: "Ray Scott Transport", chassis: "Cool" },
+  { carNum: "56", name: "James Aranyosi", sponsor: "TBA", chassis: "Maxam" },
+  { carNum: "57", name: "Troy Hose", sponsor: "Hosey Earthworks", chassis: "Maxim" },
+  { carNum: "58", name: "Rhiannon Burlieigh", sponsor: "Bob Jane T Marts - Mancine Cosmetics", chassis: "Maxam" },
+  { carNum: "60", name: "Jordyn Charge", sponsor: "InCharge Racing", chassis: "Triple XXX" },
+  { carNum: "64", name: "David Aldersley", sponsor: "FTW Transport - Total Tools", chassis: "XXX" },
+  { carNum: "65", name: "Kane Newcombe", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "67", name: "Luke Walker", sponsor: "Total Dairy Service", chassis: "Cool" },
+  { carNum: "68", name: "Brett Milburn", sponsor: "I Digit - Parr Motorsports", chassis: "KCP" },
+  { carNum: "70", name: "John Vogels", sponsor: "Mainline Dynolog Dynometers & Lucas Oils", chassis: "Cool" },
+  { carNum: "71", name: "Marcus Green", sponsor: "Tritech Lubricants", chassis: "Triple XXX" },
+  { carNum: "71", name: "Mark Skidmore", sponsor: "Western Oil", chassis: "Triple X" },
+  { carNum: "72", name: "Jake Smith", sponsor: "Mepunga Grains", chassis: "Unknown" },
+  { carNum: "73", name: "Charles Hunter", sponsor: "Compass Powder Coating", chassis: "Maxam" },
+  { carNum: "74", name: "Michael Cunningham", sponsor: "PRP Engineering", chassis: "ART" },
+  { carNum: "75", name: "Mitchell Smith", sponsor: "Velocita", chassis: "Maxim" },
+  { carNum: "76", name: "Adam Cullinger", sponsor: "L&J Diesel", chassis: "ART" },
+  { carNum: "77", name: "Brayden Parr", sponsor: "ABSS", chassis: "Maxim" },
+  { carNum: "77", name: "Adrian Parr", sponsor: "Parr Motorsports", chassis: "JEI" },
+  { carNum: "78", name: "Chris Campbell", sponsor: "S&S Tyquin", chassis: "J&J" },
+  { carNum: "81", name: "Robert Paton", sponsor: "AB Tech Plumbing & Excavation", chassis: "XXX" },
+  { carNum: "82", name: "Justin Morris", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "83", name: "Christopher Solomon", sponsor: "Eagle", chassis: "Unknown" },
+  { carNum: "88", name: "Andy Hibbert", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "89", name: "Jamie Heyen", sponsor: "TBA", chassis: "Cool" },
+  { carNum: "90", name: "Corey McCullagh", sponsor: "Owen Built Holmes", chassis: "Cool" },
+  { carNum: "92", name: "Matthew Reed", sponsor: "Reed Signs", chassis: "Maxim" },
+  { carNum: "95", name: "Ryan Davis", sponsor: "R.A.K Davis & Sons Cartage Contractors", chassis: "Maxim" },
+  { carNum: "98", name: "Peter Doukas", sponsor: "Warrnambool Locksmiths", chassis: "Cool" },
+  { carNum: "99", name: "Scott Drew", sponsor: "TBA", chassis: "Maxam" },
+  { carNum: "101", name: "Michael Van Bremen", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "101", name: "David Murcott", sponsor: "Mainline Dynolog Dynomometers", chassis: "Unknown" },
+  { carNum: "106", name: "Edward Lumbar", sponsor: "Austbrokers Inc", chassis: "Maxam" },
+  { carNum: "997", name: "Rob Rankin", sponsor: "TBA", chassis: "Unknown" },
+  //SA
+  { carNum: "2", name: "Craig Vanderstelt", sponsor: "Zenith Custom Creations", chassis: "Maxim" },
+  { carNum: "3", name: "Philip March", sponsor: "Mildura Crane Hire / Maxwill Racing Engines", chassis: "J&J" },
+  { carNum: "4", name: "Trevor Green", sponsor: "Natrad Radiators", chassis: "Maxim" },
+  { carNum: "6", name: "Michael Burford", sponsor: "Redback Race Equipment", chassis: "Lightning" },
+  { carNum: "7", name: "Hayden Pitt", sponsor: "OPR Shock Services", chassis: "Triple X" },
+  { carNum: "8", name: "Terry Pitt", sponsor: "Alloy Welding Pty Ltd", chassis: "J & J" },
+  { carNum: "9", name: "Dennis Burford", sponsor: "Lightning Karts", chassis: "Lightning" },
+  { carNum: "10", name: "Steven Caruso", sponsor: "High Friction Services Australia & Dry Creek Auto Wreckers", chassis: "Maxim" },
+  { carNum: "11", name: "Karl Enderl", sponsor: "Clarend Transport", chassis: "Cool" },
+  { carNum: "11", name: "Scott Enderl", sponsor: "Clarend Tramsport", chassis: "Cool" },
+  { carNum: "12", name: "Jamie Cobby", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "14", name: "Brendan Quinn", sponsor: "Metro Holden", chassis: "XXX" },
+  { carNum: "15", name: "Aidan Hall", sponsor: "Statewide Tyres / Autosos.com.au", chassis: "Eagle" },
+  { carNum: "16", name: "Jack Gartner", sponsor: "Cappa Motor Bodies", chassis: "Cheetah" },
+  { carNum: "17", name: "Ian Binding", sponsor: "TBA", chassis: "Schnee" },
+  { carNum: "18", name: "Jed Bell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "19", name: "Brad Keller", sponsor: "Peter Page Holden / RMGH", chassis: "Cool" },
+  { carNum: "20", name: "Glen Sutherland", sponsor: "Gambier Earth Movers", chassis: "Cool" },
+  { carNum: "22", name: "Chad Ely", sponsor: "One Steel, Enviro Sweep, Fuchs Lubricants", chassis: "Maxim" },
+  { carNum: "23", name: "Jack McCarthy", sponsor: "TBA", chassis: "J & J" },
+  { carNum: "24", name: "Ricky Maiolo", sponsor: "TRG TRANSPORT", chassis: "Eagle" },
+  { carNum: "25", name: "Justin Sloan", sponsor: "Aspire Homes", chassis: "Eagle" },
+  { carNum: "26", name: "Tyson Chambers", sponsor: "Mount Barker Freightlines", chassis: "Cool" },
+  { carNum: "27", name: "Daniel Pestka", sponsor: "Pestka's Bakery", chassis: "J&J Auto Racing" },
+  { carNum: "33", name: "Mark Caruso", sponsor: "Dry Creek Auto Wreckers / Pro 4x4 / Auto Masters", chassis: "Cool" },
+  { carNum: "37", name: "Terry Kelly", sponsor: "Inland Crane Hire, Auto Pro, Bum Nutz Graphics & Queensland Speedway Spares", chassis: "Stealth" },
+  { carNum: "39", name: "Shane Heathcote", sponsor: "Victory Lane Racegear Protec Paints Carlsson Surface Afterglow Adult Prod", chassis: "J&J" },
+  { carNum: "40", name: "Emilee Lindgren", sponsor: "Rowett Motorsport", chassis: "Maxim" },
+  { carNum: "40", name: "Wayne Rowett", sponsor: "Kynoch Produce", chassis: "Maxim" },
+  { carNum: "42", name: "Jamie Hendry", sponsor: "Muzza, of Murray Muscle Therapy, Hendry Concrete Solutions (HCS)", chassis: "Maxim" },
+  { carNum: "42", name: "Ben Hendry", sponsor: "Muzza, of Murray Muscle Therapy, Hendry Concrete Solutions (HCS)", chassis: "Maxim" },
+  { carNum: "43", name: "Shane Hendry", sponsor: "Sandy Creek Engineering", chassis: "Maxim" },
+  { carNum: "44", name: "Daniel Evans", sponsor: "TBA", chassis: "JEI" },
+  { carNum: "45", name: "Jake Tranter", sponsor: "CW Wines", chassis: "Maxim" },
+  { carNum: "50", name: "Steve Webber", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "51", name: "Dylan Jenkin", sponsor: "Tatiara Truck and Trailers", chassis: "Cool" },
+  { carNum: "52", name: "Matt Egel", sponsor: "Whyalla Earthworks / North East Isuzu / Specialised Tyres", chassis: "Cool" },
+  { carNum: "55", name: "Luke Bowey", sponsor: "Showtime Signs / Gawler Car World", chassis: "Maxim" },
+  { carNum: "57", name: "Rory Button", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "58", name: "Darren Pickert", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "59", name: "Adam Currie", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "61", name: "Leith Ahlfors", sponsor: "Laka Civil, Bonney Welding", chassis: "Maxim" },
+  { carNum: "62", name: "Colin Brooks", sponsor: "Complete Gates, Mainline DynoLog Dynamometers", chassis: "ART" },
+  { carNum: "63", name: "Ryan Jones", sponsor: "Murray Machining and Sheds", chassis: "Triple X" },
+  { carNum: "66", name: "Clinton Oliver", sponsor: "Ising Autobrokers, Roger Oliver Engineers", chassis: "Twister" },
+  { carNum: "67", name: "Nicole Hill", sponsor: "Signarama", chassis: "Cool" },
+  { carNum: "69", name: "Cody Atkins", sponsor: "All States Auditing & Accreditation", chassis: "Eagle" },
+  { carNum: "71", name: "Sam Putland", sponsor: "Torrens Valley Electrical / Chooks Custom Grafix", chassis: "XXX" },
+  { carNum: "72", name: "Jamie Stark", sponsor: "Starky's Fibreglass Repairs", chassis: "Maxim" },
+  { carNum: "77", name: "Chris Evans", sponsor: "All Transport Industries", chassis: "Cool" },
+  { carNum: "77", name: "Lucy Evans", sponsor: "Chris Evans Transport", chassis: "Maxim" },
+  { carNum: "78", name: "Keke Falland", sponsor: "Blindtec - Blind & Shade Solutions", chassis: "Cool" },
+  { carNum: "80", name: "Nicholas Hall", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "81", name: "Luke Dillon", sponsor: "Action Line Marking / Dillon Bulk Haulage", chassis: "Triple X" },
+  { carNum: "82", name: "Lee Dillon", sponsor: "North Star Ute Campers", chassis: "Triple X" },
+  { carNum: "82", name: "Mark Johnson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "83", name: "Shannon Barry", sponsor: "Step into Life, ARG Race Graphics", chassis: "J&J" },
+  { carNum: "84", name: "Scott Bogucki", sponsor: "Crack Sealing Australia", chassis: "Maxim" },
+  { carNum: "88", name: "Todd Wigzell", sponsor: "Oakbank Hotel", chassis: "Triple X" },
+  { carNum: "89", name: "Stephen Lovegrove", sponsor: "John Boy", chassis: "Unknown" },
+  { carNum: "90", name: "Michael Lovegrove", sponsor: "Sponsors Required", chassis: "J&J" },
+  { carNum: "92", name: "Russell Worthley", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "93", name: "Gill Worthley", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "95", name: "Mark Reuter", sponsor: "ROH Wheels", chassis: "Cool" },
+  { carNum: "95", name: "Jarman Dalitz", sponsor: "Murray Bridge Glass", chassis: "Eagle" },
+  { carNum: "96", name: "Darryl Guerin", sponsor: "7 Day Spares", chassis: "Maxim" },
+  { carNum: "96", name: "Brendan Guerin", sponsor: "7 Day Spares", chassis: "Cool" },
+  //NSW
+  { carNum: "2", name: "Ben Atkinson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "2", name: "Graham Keets", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "3", name: "Dennis Farr", sponsor: "Macarthur Paint & Panel", chassis: "Maxim" },
+  { carNum: "3", name: "Matthew Craft", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "5", name: "Dean Thomas", sponsor: "SWF", chassis: "Gambler" },
+  { carNum: "6", name: "Paul Freeman", sponsor: "Terrier Mini Loaders", chassis: "Maxim" },
+  { carNum: "6", name: "David Doherty", sponsor: "Active Power Steering", chassis: "Maxim" },
+  { carNum: "6", name: "Tim Gleeson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "7", name: "Ross Nicastri", sponsor: "Franks Parts Plus", chassis: "Eagle" },
+  { carNum: "7", name: "Tony Elliott", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "7", name: "Mick Rowell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "7", name: "Davey Ray", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "9", name: "Steve Caunt", sponsor: "Fire Service Plus / Mj Rowles Landscaping", chassis: "Meyers KPC" },
+  { carNum: "9", name: "Danny Porter", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "10", name: "Adrian Maher", sponsor: "Integrity Locksmiths", chassis: "Maxim" },
+  { carNum: "10", name: "Kent Christian", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "12", name: "Lynton Jeffrey", sponsor: "Vortex Race Products", chassis: "Vortex" },
+  { carNum: "12", name: "Paul Jeffrey", sponsor: "Vortex Wings", chassis: "Unknown" },
+  { carNum: "13", name: "Wayne McKenna", sponsor: "Urgent Skips", chassis: "Eagle" },
+  { carNum: "14", name: "Peter Gordon", sponsor: "Turnkey Electrical Systems", chassis: "Maxim" },
+  { carNum: "14", name: "Justin Mineef", sponsor: "JD Industrial Equipment", chassis: "Maxim" },
+  { carNum: "15", name: "Matthew Thomas", sponsor: "Wynns", chassis: "Gambler" },
+  { carNum: "15", name: "Jeffrey Thomas", sponsor: "State Wide Forklifts", chassis: "Unknown" },
+  { carNum: "16", name: "Matthew Vella", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "16", name: "Damian Abbott", sponsor: "Aussie Forklift Repairs", chassis: "Maxim" },
+  { carNum: "16", name: "Louise Genner", sponsor: "Gough & Gilmour", chassis: "John Boy" },
+  { carNum: "16", name: "Daniel Sayre", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "17", name: "Trevor Shields", sponsor: "Royal Purple Oils", chassis: "Johnboy" },
+  { carNum: "17", name: "Marty Perovich", sponsor: "Network Painting", chassis: "Maxim" },
+  { carNum: "18", name: "Ian Loudoun", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "20", name: "Troy Little", sponsor: "Barry Smith Isuzu", chassis: "Maxim" },
+  { carNum: "21", name: "Garry Brazier", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "22", name: "James Thompson", sponsor: "Hills Motorcycles", chassis: "Maxim" },
+  { carNum: "23", name: "Scott Alexander", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "24", name: "Wayne Skipper", sponsor: "Stockmans Steakhouse", chassis: "Eagle" },
+  { carNum: "24", name: "Blake Skipper", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "25", name: "Scott Anderson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "25", name: "Troy Pearson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "25", name: "Jeff Franks", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "27", name: "Ian Burrows", sponsor: "UEA", chassis: "Unknown" },
+  { carNum: "28", name: "Daniel Phillips", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "29", name: "Matt Barbara", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "30", name: "Darren Saillard", sponsor: "Saillard Racing/Wiggys Speedway Spares", chassis: "Cheetah" },
+  { carNum: "31", name: "Rod Davis", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "31", name: "David Hall", sponsor: "Regemage Cranes", chassis: "John Boy" },
+  { carNum: "32", name: "Les Porter", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "32", name: "Warren Ferguson", sponsor: "Deco Glaze Glass Splashbacks", chassis: "Eagle" },
+  { carNum: "33", name: "Matt Carroll", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "34", name: "Luke Pyne", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "34", name: "Laurence Simiana", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "35", name: "Gary Hann", sponsor: "Tumbi Wholesale Meats", chassis: "Maxim" },
+  { carNum: "36", name: "Eddie Lumbar", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "36", name: "Jamie Jones", sponsor: "Parts Plus", chassis: "Gambler" },
+  { carNum: "37", name: "Danny Hogan", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "37", name: "Peter Bastow", sponsor: "TBA", chassis: "Beast" },
+  { carNum: "38", name: "Shaun Forrell", sponsor: "Bar-Up Bullbars", chassis: "Cool" },
+  { carNum: "38", name: "Keith Devonshire", sponsor: "Squirt In The Dirt", chassis: "Maxim" },
+  { carNum: "38", name: "Max Johnston", sponsor: "Fincar", chassis: "Unknown" },
+  { carNum: "39", name: "Jeremy Cross", sponsor: "Frank Cross Tyres", chassis: "Unknown" },
+  { carNum: "39", name: "Danny Hart", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "40", name: "David Lambert", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "40", name: "Chris McInerney", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "41", name: "Kevin Swindell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "41", name: "Mick Turner", sponsor: "The Van Man", chassis: "Maxim" },
+  { carNum: "41", name: "Jeff Lawler", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "42", name: "Gary Rooke", sponsor: "Concept Automotion", chassis: "J&J" },
+  { carNum: "43", name: "Anthony Orr", sponsor: "V8 Max.com", chassis: "Eagle" },
+  { carNum: "44", name: "Jayme Barnes", sponsor: "44", chassis: "Unknown" },
+  { carNum: "44", name: "Garry Corfield", sponsor: "TBA", chassis: "Gambler" },
+  { carNum: "44", name: "Peter Murphy", sponsor: "44", chassis: "Unknown" },
+  { carNum: "44", name: "Tony Pryor", sponsor: "Tucker Time", chassis: "Gambler" },
+  { carNum: "46", name: "Stacey Galliford", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "47", name: "Mark Blyton", sponsor: "UEA", chassis: "Unknown" },
+  { carNum: "47", name: "Mark Cooper", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "48", name: "Peter Blake", sponsor: "Aussie Bananas", chassis: "Unknown" },
+  { carNum: "49", name: "Jamie Matherson", sponsor: "49", chassis: "Unknown" },
+  { carNum: "49", name: "Ian Madsen", sponsor: "49", chassis: "Unknown" },
+  { carNum: "50", name: "Martin Lawes", sponsor: "Tyrepower", chassis: "Maxim" },
+  { carNum: "50", name: "Kevin Burton", sponsor: "Nathan Troy Motors", chassis: "Eagle" },
+  { carNum: "51", name: "Mark Richards", sponsor: "Omron", chassis: "Johnboy" },
+  { carNum: "52", name: "Robert Carrick", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "53", name: "Peter Attard", sponsor: "Supreme Poultry", chassis: "J&J" },
+  { carNum: "54", name: "Grant Tunks", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "55", name: "Paul Moloney", sponsor: "55", chassis: "Unknown" },
+  { carNum: "55", name: "Kim Becker", sponsor: "Supreme Poultry", chassis: "J&J" },
+  { carNum: "56", name: "Peter Johnson", sponsor: "EWT", chassis: "Unknown" },
+  { carNum: "57", name: "Brendan Scorgie", sponsor: "57", chassis: "Unknown" },
+  { carNum: "57", name: "Craig Morrison", sponsor: "Metro-Mix Concrete", chassis: "Maxim" },
+  { carNum: "57", name: "Matthew Dumesny", sponsor: "Maxim", chassis: "Unknown" },
+  { carNum: "59", name: "Mitch Chapman", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "60", name: "Michael Matchett", sponsor: "Mercatroyd", chassis: "JEI" },
+  { carNum: "61", name: "Matt Young", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "62", name: "Taylor Johnson", sponsor: "EWT Auto Dismantlers", chassis: "Unknown" },
+  { carNum: "62", name: "Troy Marland", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "63", name: "Stephen Grassmayr", sponsor: "Sponsor Wanted", chassis: "Gambler" },
+  { carNum: "65", name: "Shay Spranger", sponsor: "SPE Race Trailers", chassis: "Maxim" },
+  { carNum: "66", name: "Rod Bright", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "67", name: "Clayton Hart", sponsor: "Wescranes", chassis: "J&J" },
+  { carNum: "68", name: "Garry McKelvey", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "69", name: "John Mineeff", sponsor: "Villawood Truck Sales", chassis: "Gambler" },
+  { carNum: "69", name: "Jon McCorkindale", sponsor: "Dial Before You Dig", chassis: "XXX" },
+  { carNum: "69", name: "Patrick Parry", sponsor: "Linigen Racing", chassis: "Gambler" },
+  { carNum: "70", name: "Toby Bellbowen", sponsor: "Hog's Breath Cafe", chassis: "Maxim" },
+  { carNum: "71", name: "Skip Jackson", sponsor: "EWT / Pennzoil", chassis: "Avenger" },
+  { carNum: "71", name: "Jim Townsend", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "71", name: "Todd McKittrick", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "76", name: "Brad Stacey", sponsor: "AQL", chassis: "J&J" },
+  { carNum: "77", name: "Mitchell Dumesny", sponsor: "Eagle One", chassis: "Maxim" },
+  { carNum: "77", name: "Sid Moore", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "78", name: "Andrew Wright", sponsor: "Avenger", chassis: "Unknown" },
+  { carNum: "78", name: "Mark Bertacco", sponsor: "Belair Smash Repairs", chassis: "Gambler" },
+  { carNum: "79", name: "Peter Bourke", sponsor: "Carline Automotive", chassis: "Unknown" },
+  { carNum: "79", name: "Eddie Russell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "79", name: "Martin Hankin", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "79", name: "John Hart", sponsor: "J&D Excavations", chassis: "Maxboy" },
+  { carNum: "79", name: "Nathan Smee", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "81", name: "Steve Rhind", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "82", name: "Gavin Black", sponsor: "Acadamy Motor Body Repairs", chassis: "Stealth" },
+  { carNum: "82", name: "Joel Knott", sponsor: "Dent Specialist", chassis: "Unknown" },
+  { carNum: "83", name: "Rob Alcock", sponsor: "Powerhouse Engineering", chassis: "Cool" },
+  { carNum: "84", name: "Matt Hinton", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "84", name: "Lawrence Condon", sponsor: "Bikebiz Yamaha Motorcycles", chassis: "Eagle" },
+  { carNum: "84", name: "Rory Button", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "85", name: "Michael Sammut", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "86", name: "Ryan Marshall", sponsor: "Grahams Towing Service", chassis: "Grizzly Chassis" },
+  { carNum: "86", name: "David Craft", sponsor: "Crafts Differentials", chassis: "Grizzly" },
+  { carNum: "87", name: "Hayley Sayers", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "88", name: "Jimmy Matchett", sponsor: "Mercatroyd", chassis: "JEI" },
+  { carNum: "90", name: "Darren Meehan", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "90", name: "Josh Brown", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "91", name: "Scott Matherson", sponsor: "Novak Signs", chassis: "Challenger" },
+  { carNum: "91", name: "Luca Cox", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "92", name: "Sam Walsh", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "92", name: "Leigh Nicholls", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "93", name: "Kellie Brackham", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "93", name: "Dick Thompson", sponsor: "DJMR Engines", chassis: "Maxim" },
+  { carNum: "94", name: "Stephen Brown", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "94", name: "Jason Begg", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "94", name: "Paul Bevan", sponsor: "Prestige Sunroofs", chassis: "J&J" },
+  { carNum: "95", name: "Daniel Needham", sponsor: "CR&D", chassis: "Unknown" },
+  { carNum: "96", name: "Bruce White", sponsor: "Digitron", chassis: "Eagle" },
+  { carNum: "97", name: "Warren Vassall", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "97", name: "Greg Morris", sponsor: "A-One Lift Truck Services", chassis: "Jackson" },
+  { carNum: "97", name: "Danny Vassall", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "98", name: "Erin Jones", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "98", name: "Steve Lynch", sponsor: "Steve Bayliss Motorcycles Bathurst", chassis: "Jackson" },
+  { carNum: "98", name: "Phillip Woodberry", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "98", name: "Steven Kane", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "99", name: "Jamie Cook", sponsor: "Wholesale Suspensions", chassis: "Eagle" },
+  { carNum: "99", name: "Melinda Dumesny", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "99", name: "Peter Dane", sponsor: "GM World", chassis: "Jenkins" },
+  { carNum: "99", name: "Sean Dyson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "99", name: "John Walsh", sponsor: "TBA", chassis: "Unknown" },
+  //TAS
+  { carNum: "2", name: "Nick Kingston", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "3", name: "Kristian Kelly", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "4", name: "Gerry Hoekstra", sponsor: "Gunns Kitchens & Bathrooms", chassis: "Cool" },
+  { carNum: "6", name: "Steven Rowe", sponsor: "S&A Rowe Logging", chassis: "Avenger" },
+  { carNum: "7", name: "Tim Hutchins", sponsor: "THR - Tim Hutchins Racing", chassis: "Maxim" },
+  { carNum: "8", name: "Curt Smith", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "10", name: "Callum Zizek", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "11", name: "Jason Redpath", sponsor: "Wyllie Tiles", chassis: "JEI" },
+  { carNum: "12", name: "Adrian Redpath", sponsor: "Wyllie Tiles", chassis: "JEI" },
+  { carNum: "14", name: "Mark House", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "15", name: "Tim Austin", sponsor: "Austune Automotive", chassis: "Maxim" },
+  { carNum: "16", name: "Adam Alexander", sponsor: "Lamb Mechanical", chassis: "Unknown" },
+  { carNum: "17", name: "Jason Dawkins", sponsor: "Mikes Country Kitchen", chassis: "Maxim" },
+  { carNum: "18", name: "Jamie ONeill", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "20", name: "Ashley House", sponsor: "Irrigation Tasmania", chassis: "Unknown" },
+  { carNum: "24", name: "Shaun Robins", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "25", name: "Anthony Frost", sponsor: "D&L Morrison Machinery Pty. Ltd.", chassis: "Unknown" },
+  { carNum: "26", name: "Chris House", sponsor: "Roger Spinks Plumbing & Roofing", chassis: "Unknown" },
+  { carNum: "27", name: "Emma Dobson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "29", name: "Robin Dawkins", sponsor: "Kart Magic / Tamar Cars", chassis: "Cool" },
+  { carNum: "32", name: "Nick Anderson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "33", name: "Jacob Krushka", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "41", name: "Damian Robins", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "45", name: "Kurt Luttrell", sponsor: "Challenge Motors", chassis: "Cool" },
+  { carNum: "46", name: "Terrence Kirkpatrick", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "55", name: "Jamie Bricknell", sponsor: "Montile Boutique", chassis: "Maxim" },
+  { carNum: "69", name: "Michael Parker", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "78", name: "Clinton Mason", sponsor: "H & A Contracting & Land Supplies", chassis: "Cheetah" },
+  //NT
+    { carNum: "2", name: "Gary Joseph", sponsor: "Maxim", chassis: "Unknown" },
+  { carNum: "2", name: "Damien Thorne", sponsor: "Maxim", chassis: "Unknown" },
+  { carNum: "3", name: "Gary Pendlebury", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "4", name: "Jamie McInnes", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "5", name: "Mark Brown", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "7", name: "Matt Costello", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "7", name: "Daniel Goldoni", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "8", name: "Mick Goryan", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "9", name: "Robert Tucker", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "9", name: "Danny Porter", sponsor: "Major Sponsor Needed", chassis: "Unknown" },
+  { carNum: "10", name: "Brooke David", sponsor: "Murphy", chassis: "Unknown" },
+  { carNum: "10", name: "David Brooke", sponsor: "Murphy", chassis: "Unknown" },
+  { carNum: "12", name: "Mark King", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "15", name: "Dean Summers", sponsor: "Darwin Auto Wholesalers", chassis: "Unknown" },
+  { carNum: "15", name: "Kevin Quinlan", sponsor: "Darwin Auto Wholesalers", chassis: "Unknown" },
+  { carNum: "17", name: "Sally Barlee", sponsor: "South Eastern Trucks", chassis: "Avenger" },
+  { carNum: "17", name: "Mark Weaver", sponsor: "Fun City Entertainment Complex", chassis: "J&J" },
+  { carNum: "17", name: "Gavin Shipp", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "18", name: "Scott Reilly", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "21", name: "Chace Karpenko", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "22", name: "Chris Tinning", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "23", name: "Jason Stagg", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "23", name: "Brian Murphy", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "24", name: "Quentin Downes", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "25", name: "Terry Carew", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "26", name: "Tony Moule", sponsor: "MCF Trailers", chassis: "QT" },
+  { carNum: "27", name: "Mick Harre", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "28", name: "Sean Harre", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "28", name: "Luke Schmidt", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "29", name: "Wade Beaton", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "30", name: "Adam Fallas", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "31", name: "Anthony Vysmar", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "33", name: "Geoff Fleming", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "41", name: "John Murdie", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "43", name: "Garry Chippindall", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "54", name: "Geoff Selby", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "54", name: "Dayle Smith", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "54", name: "Dale Smith", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "57", name: "Darren Summers", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "61", name: "Alan Barlee", sponsor: "Castrol/Smorgon Steel", chassis: "Foster" },
+  { carNum: "65", name: "Jason McIver", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "66", name: "Aaron Caden", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "67", name: "John Binnes", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "69", name: "Mark Grovsenor", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "75", name: "Mike Hanlon", sponsor: "The Gem Cave", chassis: "Unknown" },
+  { carNum: "77", name: "Dave McFadden", sponsor: "All Wreck Dismantlers", chassis: "Unknown" },
+  { carNum: "77", name: "Terry Downes", sponsor: "All Wreck Dismantlers", chassis: "Unknown" },
+  { carNum: "77", name: "Ollie Dennis", sponsor: "All Wreck Dismantlers", chassis: "Unknown" },
+  { carNum: "83", name: "Steve Arrigo", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "88", name: "Craig Hodge", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "95", name: "Tony Willes", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "95", name: "Troy Ditchfield", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "99", name: "Peter McIver", sponsor: "Gambler", chassis: "Unknown" },
+  //WA
+    { carNum: "2", name: "Kerry Madsen", sponsor: "Bikebiz", chassis: "Eagle" },
+  { carNum: "4", name: "Kent Roberts", sponsor: "Autopro", chassis: "J&J" },
+  { carNum: "5", name: "David Hall", sponsor: "Halls Haulage", chassis: "Maxim" },
+  { carNum: "8", name: "David Priolo", sponsor: "Budget Forklifts", chassis: "Eagle" },
+  { carNum: "9", name: "Terry Cutts", sponsor: "Direct Fuel Supplies", chassis: "Murphy" },
+  { carNum: "10", name: "Andrew Priolo", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "11", name: "Jason Kendrick", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "12", name: "Daniel Harding", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "13", name: "Robert Watson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "14", name: "Jason Pryde", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "14", name: "Robbie Farr", sponsor: "Aleabrax Systems", chassis: "Cool Chassis" },
+  { carNum: "17", name: "Kyle Hirst", sponsor: "MG Monte and Son", chassis: "Unknown" },
+  { carNum: "17", name: "James McFadden", sponsor: "TBA", chassis: "Maxim" },
+  { carNum: "20", name: "Ryan Lancaster", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "21", name: "Troy Lawson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "21", name: "Mark Wells", sponsor: "Geraldton Sand & Gravel", chassis: "Murphy" },
+  { carNum: "22", name: "Brodie Minchin", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "25", name: "Taylor Milling", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "27", name: "Sean Zemunik", sponsor: "Zems Engine Exchange / Wanneroo Autos", chassis: "Eagle" },
+  { carNum: "29", name: "Rod Snellin", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "32", name: "Jake Beard-Miller", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "37", name: "Jacob Lucas", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "42", name: "Ben Butcher", sponsor: "Northam Motorsports", chassis: "Eagle" },
+  { carNum: "45", name: "Daryl Clayden", sponsor: "Auto One / AJN Race Engines", chassis: "Eagle" },
+  { carNum: "46", name: "Lee Nash", sponsor: "Wormall Civil", chassis: "Unknown" },
+  { carNum: "49", name: "Ryan Schlam", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "50", name: "Ken Sartori", sponsor: "Watsons Express", chassis: "Unknown" },
+  { carNum: "53", name: "Ben Ellement", sponsor: "Stingers", chassis: "Cool" },
+  { carNum: "53", name: "Matt Muir", sponsor: "Mobecrete XXX", chassis: "XXX" },
+  { carNum: "55", name: "Darren Mewett", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "57", name: "Shaun Bradford", sponsor: "Asbestos Masters", chassis: "Eagle" },
+  { carNum: "60", name: "John McLellan", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "66", name: "Robert Watson Jrn", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "73", name: "Callum Williamson", sponsor: "CLW Earthmoving", chassis: "J&J" },
+  { carNum: "77", name: "Brad Maiolo", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "79", name: "Scott Chatwin", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "80", name: "James Inglis", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "81", name: "Jason Boland", sponsor: "TBA", chassis: "J&J" },
+  { carNum: "86", name: "Corey Hunter", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "87", name: "Carl Dowling", sponsor: "Consolidated Diesels", chassis: "Cool" },
+  { carNum: "89", name: "Kye Scroop", sponsor: "Scardifield Smash Repairs", chassis: "Maxim" },
+  { carNum: "90", name: "Ryan Farrell", sponsor: "Bunbury Autogroup", chassis: "Maxim" },
+  { carNum: "96", name: "Aldo DePaoli", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "97", name: "Mitchell Wormall", sponsor: "Wormall Civil", chassis: "Unknown" },
+  { carNum: "98", name: "Jamie Buszan", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "99", name: "Jamie Maiolo", sponsor: "Ausquip Industries", chassis: "Eagle" },
+  { carNum: "101", name: "Daniel Forbes", sponsor: "TBA", chassis: "Unknown" },
+  //QLD
+    { carNum: "2", name: "Brent Kratzmann", sponsor: "Kratzman Caravans, BK Trading Australia", chassis: "Maxim" },
+  { carNum: "3", name: "Karl Hoffmans", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "4", name: "Brad Ayers", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "6", name: "Michael Rowell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "7", name: "Aaron Kelly", sponsor: "RAW Metal Corp", chassis: "Unknown" },
+  { carNum: "8", name: "Brock Dean", sponsor: "Ace Fireworks", chassis: "Avenger" },
+  { carNum: "10", name: "Adam Butler", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "12", name: "Matthew Butler", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "12", name: "Ben Hilder", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "13", name: "Zack Howell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "14", name: "Mark Pholi", sponsor: "Darra Mechanical", chassis: "Maxim" },
+  { carNum: "16", name: "Bryan Mann", sponsor: "East Coast Logistics", chassis: "Unknown" },
+  { carNum: "17", name: "Luke Oldfield", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "18", name: "Scott Genrich", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "20", name: "Ron Hendrickson", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "21", name: "David Whell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "21", name: "Nicholas Whell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "22", name: "Sam Bylsma", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "25", name: "Andrew Scheuerle", sponsor: "Ausdeck Racing", chassis: "Maxim" },
+  { carNum: "28", name: "Allan Woods", sponsor: "Quick Time Chassis", chassis: "QT" },
+  { carNum: "33", name: "Callum Walker", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "34", name: "Kevin Britten", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "38", name: "Darren Silcock", sponsor: "One Fix Plumbing", chassis: "Maxim" },
+  { carNum: "40", name: "James Grady", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "42", name: "Kristy Bonsey", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "43", name: "Paul Rooks", sponsor: "Thermal Edge Coatings", chassis: "Unknown" },
+  { carNum: "44", name: "Dan Murray", sponsor: "Comstar Internet Services", chassis: "Razor" },
+  { carNum: "46", name: "Dylan Menz", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "47", name: "Brendon Claridge", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "51", name: "Tim Farrell", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "54", name: "Richard Morgan", sponsor: "Morgan Metalcorp", chassis: "Morgan Fat Boy" },
+  { carNum: "55", name: "Jayden Peacock", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "56", name: "Sean Rose", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "57", name: "Brandon Haynes", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "59", name: "Kevin Titman", sponsor: "John Titman Racing", chassis: "J&J" },
+  { carNum: "63", name: "Des Collier", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "65", name: "Mitchell Gee", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "69", name: "Mick Sauer", sponsor: "Pottsville Self-Storage", chassis: "Maxim" },
+  { carNum: "72", name: "Anthony Vanderreyden", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "74", name: "Brodie Tulloch", sponsor: "Autobarn Browns Plains", chassis: "Eagle" },
+  { carNum: "75", name: "Darren Jensen", sponsor: "TBA", chassis: "Unknown" },
+  { carNum: "83", name: "Steven Lines", sponsor: "TBA", chassis: "Cool" },
+  { carNum: "83", name: "Brock Hallett", sponsor: "Bunyip Print", chassis: "Triple X" },
+  { carNum: "84", name: "Steve Greer", sponsor: "John Greer Dental", chassis: "Unknown" },
+  { carNum: "90", name: "Anthony Lambert", sponsor: "DTR Mechanical", chassis: "Unknown" }
+];
+
+
+    driverData.forEach((driver, index) => {
+      driver.defaultIndex = index;
+    });
+
+    function generateRandomSVG() {
+      const shapes = ['circle', 'rect', 'polygon'];
+      const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7d794', '#786fa6'];
+      let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">';
+      
+      for (let i = 0; i < 5; i++) {
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        if (shape === 'circle') {
+          const r = Math.random() * 20 + 5;
+          svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" />`;
+        } else if (shape === 'rect') {
+          const width = Math.random() * 40 + 10;
+          const height = Math.random() * 40 + 10;
+          svg += `<rect x="${x}" y="${y}" width="${width}" height="${height}" fill="${color}" />`;
+        } else if (shape === 'polygon') {
+          const points = Array.from({length: 3}, () => `${Math.random() * 100},${Math.random() * 100}`).join(' ');
+          svg += `<polygon points="${points}" fill="${color}" />`;
+        }
+      }
+      
+      svg += '</svg>';
+      return svg;
+    }
+
+    const cardContainer = document.getElementById('card-container');
+    const searchInput = document.getElementById('search');
+    const clearSearchBtn = document.getElementById('clear-search');
+    const sortSelect = document.getElementById('sort');
+    const chassisList = document.getElementById('chassis-list');
+    const sponsorList = document.getElementById('sponsor-list');
+
+    function createDriverCard(driver) {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="logo-container">
+              ${generateRandomSVG()}
+              <img src="sprintcar_logo.png" alt="Driver logo">
+            </div>
+            <h2>${driver.name}</h2>
+            <p>#${driver.carNum}</p>
+          </div>
+          <div class="card-back">
+            <h2>${driver.name}</h2>
+            <p><strong>Sponsor:</strong> ${driver.sponsor || 'TBA'}</p>
+            <p><strong>Chassis:</strong> ${driver.chassis || 'Unknown'}</p>
+          </div>
+        </div>
+      `;
+      
+      card.addEventListener('click', () => {
+        card.classList.toggle('flip');
+      });
+      return card;
+    }
+
+    function renderDrivers(drivers) {
+      cardContainer.innerHTML = '';
+      drivers.forEach(driver => {
+        cardContainer.appendChild(createDriverCard(driver));
+      });
+    }
+
+    function filterDrivers() {
+      const searchTerm = searchInput.value.toLowerCase();
+      return driverData.filter(driver => 
+        driver.name.toLowerCase().includes(searchTerm) ||
+        driver.carNum.includes(searchTerm) ||
+        driver.sponsor.toLowerCase().includes(searchTerm) ||
+        driver.chassis.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    function sortDrivers(drivers) {
+      const sortBy = sortSelect.value;
+      return drivers.sort((a, b) => {
+        if (sortBy === 'default') {
+          return a.defaultIndex - b.defaultIndex;
+        } else if (sortBy === 'carNum') {
+          return a.carNum.localeCompare(b.carNum, undefined, {numeric: true});
+        } else if (sortBy === 'firstName') {
+          return a.name.split(' ')[0].localeCompare(b.name.split(' ')[0]);
+        } else if (sortBy === 'lastName') {
+          return a.name.split(' ').slice(-1)[0].localeCompare(b.name.split(' ').slice(-1)[0]);
+        } else if (sortBy === 'chassis') {
+          return a.chassis.localeCompare(b.chassis);
+        }
+      });
+    }
+
+    function updateDisplay() {
+      const filteredDrivers = filterDrivers();
+      const sortedDrivers = sortDrivers(filteredDrivers);
+      renderDrivers(sortedDrivers);
+      updateClearButton();
+    }
+
+    function updateStats() {
+      const chassisCount = {};
+      const sponsors = new Set();
+
+      driverData.forEach(driver => {
+        chassisCount[driver.chassis] = (chassisCount[driver.chassis] || 0) + 1;
+        sponsors.add(driver.sponsor);
+      });
+
+      // Update chassis dropdown
+      chassisList.innerHTML = '';
+      Object.entries(chassisCount).forEach(([chassis, count]) => {
+        const item = document.createElement('a');
+        item.href = '#';
+        item.textContent = `${chassis}: ${count}`;
+        chassisList.appendChild(item);
+      });
+
+      // Update sponsors dropdown
+      sponsorList.innerHTML = '';
+      Array.from(sponsors).sort().forEach(sponsor => {
+        const item = document.createElement('a');
+        item.href = '#';
+        item.textContent = sponsor;
+        sponsorList.appendChild(item);
+      });
+    }
+
+    function updateClearButton() {
+      if (searchInput.value) {
+        clearSearchBtn.style.display = 'block';
+      } else {
+        clearSearchBtn.style.display = 'none';
+      }
+    }
+
+    function clearSearch() {
+      searchInput.value = '';
+      updateDisplay();
+    }
+
+    searchInput.addEventListener('input', updateDisplay);
+    sortSelect.addEventListener('change', updateDisplay);
+    clearSearchBtn.addEventListener('click', clearSearch);
+
+    updateDisplay();
+    updateStats();
+  </script>
+</body>
+</html>
