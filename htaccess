@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^drivers$ /drivers.html [L,R=301]
