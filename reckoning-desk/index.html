@@ -329,6 +329,9 @@ footer .mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
 "use strict";
 const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Backstop: strip any tag-like content from feed text before display, so a
+// stale or hand-edited headlines.json can never surface raw <a href> markup.
+const strip=s=>String(s==null?'':s).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600);};
 try{dayjs.extend(dayjs_plugin_relativeTime);}catch(e){}
 const rel=d=>{try{const x=dayjs(d);return x.isValid()?x.fromNow():'';}catch(e){return '';}};
@@ -390,7 +393,7 @@ function renderFeed(items,live,builtAt){
   $('#feedStatus').style.display='none';
   $('#feedList').innerHTML=items.slice(0,8).map(it=>{
     const when=it.date?rel(it.date):'';
-    return `<li><div class="src"><span>${esc(it.src||'Source')}</span><time>${esc(when)}</time></div><a class="hl" href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.t)}</a>${it.d?`<div class="dek">${esc(it.d)}</div>`:''}</li>`;
+    return `<li><div class="src"><span>${esc(it.src||'Source')}</span><time>${esc(when)}</time></div><a class="hl" href="${esc(it.url)}" target="_blank" rel="noopener">${esc(strip(it.t))}</a>${it.d?`<div class="dek">${esc(strip(it.d))}</div>`:''}</li>`;
   }).join('');
 }
 async function loadFeed(){

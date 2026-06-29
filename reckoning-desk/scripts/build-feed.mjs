@@ -20,10 +20,18 @@ function tag(block, name) {
   if (!m) return '';
   return m[1]
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/<[^>]+>/g, ' ')
+    // Decode entities FIRST, so any encoded markup (e.g. &lt;a href...&gt;)
+    // becomes real tags that the strip step below can then remove.
     .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/&apos;/g, "'")
     .replace(/&nbsp;/g, ' ')
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    // Now strip all tags. Run twice in case decoding exposed nested markup.
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    // Decode &amp; LAST, so a literal "&amp;lt;" can't re-introduce a "<".
+    .replace(/&amp;/g, '&')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -48,7 +56,20 @@ function parse(xml) {
       title = title.replace(new RegExp(`\\s-\\s${src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`), '').trim();
     }
     let desc = tag(block, 'description');
-    if (desc.length > 170) desc = desc.slice(0, 167) + '\u2026';
+    // Google appends the publisher to the description text; drop that tail.
+    if (src) desc = desc.replace(new RegExp(`\\s*${src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`), '').trim();
+    // Google News descriptions usually just echo the headline + publisher,
+    // which is noise beside the title we already show. Drop them when they
+    // add nothing; keep only genuinely different summary text.
+    const norm = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+    const titleKey = norm(title), srcKey = norm(src);
+    let descKey = norm(desc);
+    if (srcKey) descKey = descKey.split(srcKey).join('');
+    if (!desc || descKey.includes(titleKey) || titleKey.includes(descKey) || descKey.length < 25) {
+      desc = '';
+    } else if (desc.length > 170) {
+      desc = desc.slice(0, 167).replace(/\s+\S*$/, '') + '\u2026'; // clamp on a word boundary
+    }
     const date = tag(block, 'pubDate');
     return { src: src || 'Google News', t: title, d: desc, date, url: linkOf(block) };
   }).filter(x => x.t && x.url);
