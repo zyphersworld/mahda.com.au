@@ -1,0 +1,45 @@
+name: Build news feed
+
+# Refreshes headlines.json from Google News RSS and commits it next to the page.
+# Runs server-side on a GitHub runner, so there is no CORS and no third-party proxy.
+
+on:
+  schedule:
+    - cron: '0,30 * * * *'   # every 30 minutes (UTC). Loosen if you hit Action minutes limits.
+  workflow_dispatch:          # lets you trigger a refresh by hand from the Actions tab
+  push:
+    branches: [ main ]        # rebuild on every deploy so first load is never empty
+
+permissions:
+  contents: write             # needed to commit headlines.json back to the repo
+
+concurrency:
+  group: build-feed
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch and build headlines.json
+        run: node scripts/build-feed.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "feed-bot"
+          git config user.email "feed-bot@users.noreply.github.com"
+          git add headlines.json
+          if git diff --staged --quiet; then
+            echo "No feed changes."
+          else
+            git commit -m "chore: refresh headlines $(date -u +'%Y-%m-%dT%H:%MZ')"
+            git push
+          fi
