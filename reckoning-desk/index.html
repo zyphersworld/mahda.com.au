@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A survivor-led monitoring panel tracking the insolvency of the Trustees of the Christian Brothers (Oceania Province) and the proposed Creditors' Scheme of Arrangement.">
+<title>The Reckoning Desk — Christian Brothers Insolvency Watch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/plugin/relativeTime.js"></script>
+<style>
+:root{
+  --paper:#e8e2d4; --paper-deep:#ddd5c2; --ink:#1c1a16; --ink-soft:#494436; --ink-faint:#6f6852;
+  --rule:#b6ad96; --copper:#7a5a3a; --copper-bright:#a06a3a; --verdigris:#3f5d52; --alert:#8a2f24;
+  --card:#efe9dc; --card-edge:#cfc5ac; --shadow:rgba(28,26,22,.10);
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --display:"Fraunces","Newsreader",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background:radial-gradient(120% 90% at 50% -10%,#efe9db 0%,var(--paper) 45%,var(--paper-deep) 100%) fixed;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.035'/></svg>");}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 22px 90px}
+@media(max-width:560px){.wrap{padding:0 15px 70px}}
+a{color:var(--copper);text-decoration:none;border-bottom:1px solid rgba(122,90,58,.35)}
+a:hover{color:var(--copper-bright);border-bottom-color:var(--copper-bright)}
+:focus-visible{outline:2.5px solid var(--verdigris);outline-offset:2px;border-radius:2px}
+header.masthead{padding:34px 0 22px;border-bottom:3px double var(--ink);margin-bottom:6px}
+@media(max-width:560px){header.masthead{padding:22px 0 16px}}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint);
+  display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--verdigris);display:inline-block;animation:pulse 2.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,93,82,.45)}70%{box-shadow:0 0 0 7px rgba(63,93,82,0)}100%{box-shadow:0 0 0 0 rgba(63,93,82,0)}}
+h1.title{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:.97;font-size:clamp(36px,7vw,76px);margin:12px 0 6px}
+h1.title .sub{display:block;font-family:var(--serif);font-size:clamp(15px,2.4vw,22px);font-weight:400;font-style:italic;
+  color:var(--ink-soft);letter-spacing:0;margin-top:10px;max-width:60ch;line-height:1.35}
+.standfirst{font-size:15px;color:var(--ink-soft);max-width:74ch;margin:14px 0 0;line-height:1.6}
+.standfirst b{color:var(--ink)}
+.clockbar{margin-top:24px;border:1px solid var(--card-edge);border-radius:6px;color:var(--paper);
+  background:linear-gradient(180deg,#1c1a16,#2a261d);box-shadow:0 6px 22px var(--shadow);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;padding:16px 18px}
+.clockbar .ctx{flex:1 1 240px;min-width:0}
+.clockbar .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#b9b09a;margin:0 0 6px}
+.clockbar .ev{font-family:var(--serif);font-size:15px;color:#efe9dc;line-height:1.35;margin:0}
+.clockbar .ev em{color:var(--copper-bright);font-style:normal}
+.counter{display:flex;gap:8px;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.counter .unit{text-align:center;flex:1 1 0;min-width:52px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);border-radius:4px;padding:8px 4px}
+.counter .n{font-family:var(--mono);font-size:clamp(20px,5vw,26px);font-weight:600;color:#fff;letter-spacing:-.02em;line-height:1}
+.counter .u{font-family:var(--mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#a39a84;margin-top:5px}
+@media(max-width:560px){
+  .clockbar{flex-direction:column;align-items:stretch;padding:14px}
+  .clockbar .ctx{flex:none}
+  .counter{width:100%;gap:6px}
+  .counter .unit{min-width:0;padding:9px 2px}
+}
+.dash{display:grid;grid-template-columns:1.7fr 1fr;gap:22px;margin-top:30px}
+@media(max-width:860px){.dash{grid-template-columns:1fr;gap:18px;margin-top:22px}}
+.col{display:flex;flex-direction:column;gap:22px;min-width:0}
+@media(max-width:860px){.col{gap:18px}}
+.widget{background:var(--card);border:1px solid var(--card-edge);border-radius:6px;
+  box-shadow:0 2px 0 var(--paper-deep),0 8px 24px var(--shadow);overflow:hidden}
+.w-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;
+  border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#f3eee2,#e9e2d2)}
+.w-head h2{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin:0;color:var(--ink);
+  display:flex;align-items:center;gap:9px;font-weight:600}
+.w-head .ico{width:15px;height:15px;color:var(--copper);flex:0 0 auto}
+.w-head .meta{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--alert);animation:livep 1.8s infinite}
+@keyframes livep{0%{box-shadow:0 0 0 0 rgba(138,47,36,.5)}70%{box-shadow:0 0 0 6px rgba(138,47,36,0)}100%{box-shadow:0 0 0 0 rgba(138,47,36,0)}}
+.w-body{padding:16px}
+.w-foot{padding:10px 16px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+  color:var(--ink-faint);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+@media(max-width:420px){.ledger{grid-template-columns:1fr}}
+.ledger .cell{background:var(--card);padding:14px}
+.ledger .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+.ledger .v{font-family:var(--display);font-size:23px;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+.ledger .v small{font-family:var(--serif);font-size:13px;font-weight:400;color:var(--ink-soft);display:block;margin-top:3px;letter-spacing:0}
+.ledger .v.alert{color:var(--alert)}
+.stages{list-style:none;margin:0;padding:0;counter-reset:stage}
+.stages li{position:relative;padding:11px 0 11px 38px;border-bottom:1px dashed var(--rule)}
+.stages li:last-child{border-bottom:0}
+.stages li::before{counter-increment:stage;content:counter(stage);position:absolute;left:0;top:10px;width:24px;height:24px;
+  border-radius:50%;border:1.5px solid var(--rule);background:var(--paper);font-family:var(--mono);font-size:11px;
+  display:flex;align-items:center;justify-content:center;color:var(--ink-faint)}
+.stages li.done::before{background:var(--verdigris);border-color:var(--verdigris);color:#fff;content:"\2713"}
+.stages li.active::before{background:var(--copper);border-color:var(--copper);color:#fff}
+.stages li.active{background:linear-gradient(90deg,rgba(160,106,58,.10),transparent)}
+.stages .st-t{font-weight:600;font-size:15.5px;font-family:var(--serif)}
+.stages .st-d{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:99px;border:1px solid currentColor;margin-left:6px;white-space:nowrap}
+.tag.now{color:var(--copper)}.tag.pend{color:var(--ink-faint)}.tag.done{color:var(--verdigris)}
+.feed{list-style:none;margin:0;padding:0}
+.feed li{padding:13px 0;border-bottom:1px solid var(--rule)}
+.feed li:last-child{border-bottom:0;padding-bottom:0}
+.feed .src{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper);
+  display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.feed .src time{color:var(--ink-faint);white-space:nowrap}
+.feed .hl{font-family:var(--serif);font-size:16px;font-weight:500;line-height:1.3;margin:5px 0 3px;display:block;color:var(--ink);border:0}
+.feed .hl:hover{color:var(--copper)}
+.feed .dek{font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.feed-status{font-family:var(--mono);font-size:11px;color:var(--ink-faint);padding:8px 0;line-height:1.6}
+.skel{height:13px;background:linear-gradient(90deg,var(--paper-deep),#e6dfcf,var(--paper-deep));background-size:200% 100%;
+  animation:sh 1.3s infinite;border-radius:3px;margin:7px 0}
+@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  background:var(--paper);border:1px solid var(--card-edge);color:var(--ink);padding:7px 12px;border-radius:4px;transition:.15s}
+.btn:hover{background:var(--copper);color:#fff;border-color:var(--copper)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.5;cursor:wait}
+.voice{padding:13px 0;border-bottom:1px solid var(--rule)}
+.voice:last-child{border-bottom:0;padding-bottom:0}
+.voice .who{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.voice .av{width:30px;height:30px;border-radius:50%;background:var(--verdigris);color:#fff;font-family:var(--mono);
+  font-size:13px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-weight:600}
+.voice .nm{font-weight:600;font-size:14px;line-height:1.15;font-family:var(--serif)}
+.voice .hd{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.voice .tx{font-size:14.5px;line-height:1.5;color:var(--ink-soft)}
+.voice .tx q{quotes:none}
+.voice .lk{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;display:inline-block}
+.entry{padding:18px 0;border-bottom:2px solid var(--rule)}
+.entry:first-child{padding-top:4px}
+.entry:last-child{border-bottom:0;padding-bottom:0}
+.entry .date{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);
+  margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.entry .date::after{content:"";height:1px;flex:1;background:var(--rule)}
+.entry h3{font-family:var(--display);font-size:22px;font-weight:600;margin:0 0 10px;letter-spacing:-.01em;line-height:1.18}
+.entry .know{list-style:none;margin:0 0 8px;padding:0}
+.entry .know li{position:relative;padding:7px 0 7px 26px;font-size:15px;line-height:1.5;border-bottom:1px dotted var(--rule)}
+.entry .know li:last-child{border-bottom:0}
+.entry .know li::before{content:"";position:absolute;left:4px;top:14px;width:7px;height:7px;background:var(--copper);transform:rotate(45deg)}
+.entry .body{font-size:15.5px;line-height:1.62;color:var(--ink-soft)}
+.entry .body p{margin:0 0 12px}
+.byline{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:10px}
+.res{list-style:none;margin:0;padding:0}
+.res li{padding:11px 0;border-bottom:1px solid var(--rule);display:flex;gap:12px;align-items:flex-start}
+.res li:last-child{border-bottom:0;padding-bottom:0}
+.res .badge{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:3px;
+  background:var(--paper-deep);color:var(--ink-faint);flex:0 0 auto;margin-top:2px;min-width:62px;text-align:center}
+.res .badge.legal{background:rgba(63,93,82,.16);color:var(--verdigris)}
+.res .badge.support{background:rgba(138,47,36,.12);color:var(--alert)}
+.res .badge.official{background:rgba(122,90,58,.14);color:var(--copper)}
+.res .t{font-weight:600;font-size:15px;line-height:1.25;border:0;font-family:var(--serif)}
+.res .t:hover{color:var(--copper)}
+.res .d{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.support-band{margin:26px 0 0;border:1px solid rgba(138,47,36,.35);background:rgba(138,47,36,.06);border-radius:6px;
+  padding:15px 18px;font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+.support-band b{color:var(--alert)}
+footer{margin-top:46px;border-top:3px double var(--ink);padding-top:22px;font-size:13px;color:var(--ink-faint);line-height:1.6}
+footer .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
+@media(max-width:680px){footer .grid{grid-template-columns:1fr}}
+footer .mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(140%);z-index:50;background:var(--ink);
+  color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:12px 20px;border-radius:6px;
+  box-shadow:0 8px 26px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.2,.9,.3,1);max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="masthead">
+  <div class="eyebrow">
+    <span><span class="dot"></span>Live monitoring desk</span>
+    <span>Oceania Province &middot; Australia</span>
+    <span id="todayStamp">&mdash;</span>
+  </div>
+  <h1 class="title">The Reckoning Desk
+    <span class="sub">Tracking the insolvency of the Trustees of the Christian Brothers &mdash; and what it means for the people they were always meant to answer to.</span>
+  </h1>
+  <p class="standfirst">On <b>22 June 2026</b>, after 183 years in Australia, the Trustees of the Christian Brothers (Oceania Province) announced they would ask creditors and the Court to approve a <b>Creditors' Scheme of Arrangement</b> to wind up and distribute roughly <b>$216 million</b> in remaining assets. The creditors include the survivors of the abuse the order's members committed. This page is kept by one of them. It is not legal advice. It is a way of refusing to look away.</p>
+  <div class="clockbar" id="clockbar">
+    <div class="ctx">
+      <p class="lbl" id="clockLbl">Elapsed since the announcement</p>
+      <p class="ev" id="nextEvent">Moratorium sought &mdash; <em>a stay on all civil claims, still in the Court's hands</em></p>
+    </div>
+    <div class="counter" id="counter" aria-label="Time elapsed since the insolvency announcement">
+      <div class="unit"><div class="n" id="cD">&mdash;</div><div class="u">Days</div></div>
+      <div class="unit"><div class="n" id="cH">&mdash;</div><div class="u">Hrs</div></div>
+      <div class="unit"><div class="n" id="cM">&mdash;</div><div class="u">Min</div></div>
+      <div class="unit"><div class="n" id="cS">&mdash;</div><div class="u">Sec</div></div>
+    </div>
+  </div>
+</header>
+<main class="dash">
+  <div class="col">
+    <section class="widget">
+      <div class="w-head">
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>The Ledger</h2>
+        <span class="meta">Figures as announced</span>
+      </div>
+      <div class="w-body">
+        <div class="ledger">
+          <div class="cell"><div class="k">Remaining assets</div><div class="v">~$216M<small>&asymp; 36 properties to be sold</small></div></div>
+          <div class="cell"><div class="k">Paid to survivors, 45 yrs</div><div class="v">$480M+<small>compensation &amp; legal costs, 1980&ndash;2025</small></div></div>
+          <div class="cell"><div class="k">Recovery to creditors</div><div class="v alert">&lt; 100c<small>in the dollar &mdash; exact figure unset</small></div></div>
+          <div class="cell"><div class="k">Brothers remaining</div><div class="v">176<small>average age 80.9 years</small></div></div>
+          <div class="cell"><div class="k">Creditor vote threshold</div><div class="v">75%<small>by value, plus 50% by number</small></div></div>
+          <div class="cell"><div class="k">In Australia since</div><div class="v">1843<small>183 years; nearing its end</small></div></div>
+        </div>
+      </div>
+      <div class="w-foot"><span>Source: Trustees' statement, 22 Jun 2026</span><span>If the scheme fails &rarr; liquidation</span></div>
+    </section>
+    <section class="widget" id="newswire">
+      <div class="w-head">
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5" fill="currentColor"/></svg>The Wire</h2>
+        <span class="meta" id="wireMeta"><span class="live-dot"></span>Connecting&hellip;</span>
+      </div>
+      <div class="w-body">
+        <div class="feed-status" id="feedStatus">
+          <div class="skel" style="width:40%"></div><div class="skel" style="width:90%"></div><div class="skel" style="width:70%"></div>
+        </div>
+        <ul class="feed" id="feedList"></ul>
+      </div>
+      <div class="w-foot">
+        <span id="wireFoot">Live Google News RSS via CORS relay</span>
+        <button class="btn" id="refreshFeed">Refresh</button>
+      </div>
+    </section>
+    <section class="widget">
+      <div class="w-head">
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h11l3 3v15H5z"/><path d="M9 8h7M9 12h7M9 16h4"/></svg>Things You Need to Know</h2>
+        <span class="meta">The state of play</span>
+      </div>
+      <div class="w-body">
+        <article class="entry">
+          <div class="date">As of 29 June 2026</div>
+          <h3>The week the order said it could not pay</h3>
+          <ul class="know">
+            <li>The Trustees announced insolvency on 22 June and proposed a Creditors' Scheme to distribute ~$216M in remaining assets.</li>
+            <li>They are seeking a Court moratorium that would pause every civil claim &mdash; current and future &mdash; against the Province Entities.</li>
+            <li>A stay pauses claims; it does not erase them. If the scheme is approved, live claims move into its adjudication process, run by a panel of retired judges.</li>
+            <li>Survivors keep a choice: pursue the scheme, or the National Redress Scheme.</li>
+            <li>Claims against EREA and other Catholic bodies are <em>not</em> blocked by this process.</li>
+            <li>If creditors or the Court reject the scheme, the entities go into liquidation &mdash; and the return gets smaller.</li>
+            <li>Scheme terms are still being finalised. The Trustees say creditor meetings convened by the Court are expected "over coming months."</li>
+          </ul>
+          <div class="body">
+            <p>Forty-five years and more than $480 million paid, and the message this week is that the well is nearly dry. Read it twice. The body built to make redress is now asking a court to freeze the very claims it exists to answer. That can be lawful and still feel like the floor giving way.</p>
+            <p>If you are a survivor: you have not missed your window, you have not lost your choice, and you do not have to work this out alone &mdash; the legal services listed on this page are free. Watch the moratorium. That is the next door, and what the Court does with it shapes everything after.</p>
+          </div>
+          <div class="byline">&mdash; Kept by a survivor</div>
+        </article>
+        <article class="entry">
+          <div class="date">Background &middot; why $216M is not the whole picture</div>
+          <h3>What the scheme leaves standing</h3>
+          <ul class="know">
+            <li>The ~36 properties in the scheme do not include the schools &mdash; those belong to Edmund Rice Education Australia (EREA), a separate entity.</li>
+            <li>The Trustees say Catholic bodies, including ACBC and EREA, were asked for help and, as of 26 June, had given none.</li>
+            <li>The scheme also sets aside provision for the "modest future living needs" of the 176 remaining brothers, average age 80.9.</li>
+            <li>The Australian Lawyers Alliance called the wind-up a continuation of a Royal-Commission-documented pattern of delay and denial.</li>
+          </ul>
+          <div class="body">
+            <p>The number that matters is not only what is left to share, but what sits one entity across from the survivors and is not on the table at all. Keep both in view.</p>
+          </div>
+          <div class="byline">&mdash; Kept by a survivor</div>
+        </article>
+      </div>
+      <div class="w-foot"><span>Updated by hand &middot; cross-checked against sources</span><span>Not legal advice</span></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="widget">
+      <div class="w-head">
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg>Where It Stands</h2>
+        <span class="meta">Road to a vote</span>
+      </div>
+      <div class="w-body">
+        <ul class="stages">
+          <li class="done"><div class="st-t">Insolvency announced <span class="tag done">done</span></div><div class="st-d">22 Jun 2026 &mdash; scheme proposed; liquidation flagged as the alternative.</div></li>
+          <li class="active"><div class="st-t">Moratorium sought <span class="tag now">now</span></div><div class="st-d">Application to stay all current &amp; future civil claims. When it is heard is a matter for the Court.</div></li>
+          <li><div class="st-t">Scheme terms finalised <span class="tag pend">pending</span></div><div class="st-d">Drafted with creditors &amp; stakeholders; adjudication panel of retired judges to be named.</div></li>
+          <li><div class="st-t">Creditors vote <span class="tag pend">pending</span></div><div class="st-d">Needs 50% by number and 75% by value of claims in favour. Expected "over coming months."</div></li>
+          <li><div class="st-t">Court approval <span class="tag pend">pending</span></div><div class="st-d">Final sign-off. Without it, the scheme does not bind.</div></li>
+        </ul>
+      </div>
+      <div class="w-foot"><span>Fail at any stage &rarr; liquidation</span><span>Lower return either way</span></div>
+    </section>
+    <section class="widget">
+      <div class="w-head">
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-12 7.6L3 21l1.9-6A8.4 8.4 0 1 1 21 11.5z"/></svg>The Voices</h2>
+        <span class="meta">Public commentary</span>
+      </div>
+      <div class="w-body"><div id="voicesList"></div></div>
+      <div class="w-foot">
+        <span>Links go to the originals.</span>
+        <a href="https://x.com/search?q=%22Christian%20Brothers%22%20(insolvency%20OR%20survivors%20OR%20scheme)&f=live" target="_blank" rel="noopener">Live X search &rarr;</a>
+      </div>
+    </section>
+    <section class="widget">
+      <div class="w-head">
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/><circle cx="7" cy="7" r="0.6" fill="currentColor"/></svg>Where to Turn</h2>
+        <span class="meta">Survivor-first</span>
+      </div>
+      <div class="w-body"><ul class="res" id="resList"></ul></div>
+      <div class="w-foot"><span>Verify details independently</span><span>Not legal advice</span></div>
+    </section>
+  </div>
+</main>
+<div class="support-band">
+  <b>If this is heavy to read, it is heavier to live.</b> Support is free and confidential.
+  In Australia: <a href="https://www.1800respect.org.au" target="_blank" rel="noopener">1800RESPECT &mdash; 1800 737 732</a>,
+  <a href="https://www.lifeline.org.au" target="_blank" rel="noopener">Lifeline &mdash; 13 11 14</a>,
+  and the <a href="https://www.blueknot.org.au" target="_blank" rel="noopener">Blue Knot Helpline &mdash; 1300 657 380</a> for adult survivors of childhood trauma.
+  In an emergency, call <b>000</b>.
+</div>
+<footer>
+  <div class="grid">
+    <div>
+      <p>An independent, survivor-kept monitoring page. It records publicly available facts about the insolvency of the Trustees of the Christian Brothers (Oceania Province) and links to original sources. It does not name living individuals, does not reproduce other outlets' articles, and takes no instruction from any party to the proceedings.</p>
+      <p class="mono">No accounts &middot; No tracking &middot; Links out to primary sources.</p>
+    </div>
+    <div>
+      <p class="mono">BUILT WITH<br>&mdash; Auto-built feed (GitHub Action, same-origin JSON)<br>&mdash; Day.js relative timestamps<br>&mdash; Fraunces / Newsreader / IBM Plex Mono<br>&mdash; Live countdown &middot; zero tracking</p>
+      <p class="mono" id="buildStamp">RENDERED &mdash;</p>
+    </div>
+  </div>
+</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600);};
+try{dayjs.extend(dayjs_plugin_relativeTime);}catch(e){}
+const rel=d=>{try{const x=dayjs(d);return x.isValid()?x.fromNow():'';}catch(e){return '';}};
+const now=new Date();
+$('#todayStamp').textContent=now.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+$('#buildStamp').textContent='RENDERED '+now.toLocaleString('en-AU',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).toUpperCase();
+const ANNOUNCED=new Date('2026-06-22T08:00:00+10:00');
+function tick(){
+  const s=Math.max(0,Math.floor((Date.now()-ANNOUNCED.getTime())/1000));
+  $('#cD').textContent=Math.floor(s/86400);
+  $('#cH').textContent=String(Math.floor(s%86400/3600)).padStart(2,'0');
+  $('#cM').textContent=String(Math.floor(s%3600/60)).padStart(2,'0');
+  $('#cS').textContent=String(s%60).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+const VOICES=[
+  {who:'Australian Lawyers Alliance',handle:'Media release',av:'AL',text:'Called the wind-up plan a continuation of a documented pattern \u2014 delay and deny justice to survivors \u2014 and said they stand with survivors.',url:'https://lawyersalliance.com.au/Web/News/Media-releases-internal/2026/Christian-Brothers-wind-up-plan-risks-justice-for-abuse-survivors.aspx'},
+  {who:'Trustees of the Christian Brothers',handle:'Official statement',av:'CB',text:'Say survivors\u2019 interests remain their highest priority, that the scheme returns more than liquidation would, and that no part of the process is meant to stop future claims against EREA or other Catholic bodies.',url:'https://www.edmundrice.org/'},
+  {who:'Survivor advocates',handle:'via ABC News',av:'SV',text:'Survivors describe being unsurprised but exhausted \u2014 devastated that the body meant to deliver redress now says it cannot pay in full.',url:'https://www.abc.net.au/news/2026-06-24/victim-survivor-devastated-by-christian-brothers-compensation/106831658'},
+  {who:'SNAP Network',handle:'Survivors\u2019 network',av:'SN',text:'Tracking related Christian Brothers litigation internationally, where survivors press for accountability and an apology, not only money.',url:'https://snapnetwork.org/'},
+];
+$('#voicesList').innerHTML=VOICES.map(v=>`<div class="voice"><div class="who"><div class="av">${esc(v.av)}</div><div><div class="nm">${esc(v.who)}</div><div class="hd">${esc(v.handle)}</div></div></div><div class="tx"><q>${esc(v.text)}</q></div><a class="lk" href="${esc(v.url)}" target="_blank" rel="noopener">Read the source &rarr;</a></div>`).join('');
+const RES=[
+  ['support','Blue Knot Helpline','For adult survivors of childhood trauma \u2014 1300 657 380.','https://www.blueknot.org.au'],
+  ['support','1800RESPECT','National sexual assault &amp; abuse counselling \u2014 1800 737 732.','https://www.1800respect.org.au'],
+  ['legal','knowmore Legal Service','Free, independent legal help for abuse survivors, incl. redress decisions \u2014 1800 605 762.','https://knowmore.org.au'],
+  ['official','National Redress Scheme','The alternative pathway survivors can still choose instead of the scheme.','https://www.nationalredress.gov.au/institutions/trustees-christian-brothers'],
+  ['official','Province scheme FAQ','The Trustees\u2019 own running explainer on the moratorium and scheme.','https://www.edmundrice.org/'],
+  ['legal','What the scheme means','A plain-English lawyer explainer on the moratorium, the vote and the adjudication panel.','https://www.burkemeadlawyers.com.au/christian-brothers-compensation-scheme'],
+];
+$('#resList').innerHTML=RES.map(([b,t,d,u])=>`<li><span class="badge ${b}">${esc(b)}</span><div><a class="t" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a><div class="d">${d}</div></div></li>`).join('');
+/* ---------- LIVE WIRE ----------
+   Same-origin fetch of headlines.json, built server-side by a
+   GitHub Action on a schedule (see .github/workflows/feed.yml).
+   No CORS, no third-party relay: the file sits next to this page,
+   so the fetch is as reliable as the page itself. The curated
+   list below is the cold-start fallback (first deploy, before the
+   Action has run, or if the file is ever missing). */
+const FEED_FILE='headlines.json';
+const FALLBACK=[
+  {src:'The Catholic Leader',t:'Christian Brothers facing bankruptcy after 183 years in Australia',d:'Trustees seek a Creditors\u2019 Scheme to distribute remaining assets; provision flagged for 176 ageing brothers.',date:'2026-06-24',url:'https://catholicleader.com.au/news/australia/christian-brothers-facing-bankruptcy-after-183-years-in-australia/'},
+  {src:'The Canberra Times',t:'Victims of Christian Brothers to share in final assets',d:'Body responsible for restitution says it is on the brink of collapse; ~$216M to be split among survivors and creditors.',date:'2026-06-22',url:'https://www.canberratimes.com.au/story/9297154/victims-of-christian-brothers-to-share-in-final-assets/'},
+  {src:'Australian Lawyers Alliance',t:'Wind-up plan risks justice for abuse survivors',d:'\u201CNot surprised, but appalled\u201D \u2014 advocates warn the move echoes a Royal-Commission-documented pattern of delay.',date:'2026-06-25',url:'https://lawyersalliance.com.au/Web/News/Media-releases-internal/2026/Christian-Brothers-wind-up-plan-risks-justice-for-abuse-survivors.aspx'},
+  {src:'CathNews',t:'Christian Brothers seek financial solutions',d:'Scheme would pay survivors more than liquidation, the group says, but less than the full value of claims.',date:'2026-06-23',url:'https://cathnews.com/2026/06/23/christian-brothers-seek-financial-solutions/'},
+  {src:'Burke Mead Lawyers',t:'What the proposed scheme means for survivors',d:'Plain-English guide to the moratorium, the creditor vote and the adjudication panel.',date:'2026-06-29',url:'https://www.burkemeadlawyers.com.au/christian-brothers-compensation-scheme'},
+];
+function setMeta(live,builtAt){
+  if(live){
+    const stamp=builtAt?rel(builtAt):'';
+    $('#wireMeta').innerHTML='<span class="live-dot"></span>Updated '+esc(stamp||'just now');
+    $('#wireFoot').textContent='Auto-built feed \u00b7 refreshed on a schedule';
+  }else{
+    $('#wireMeta').innerHTML='Curated index';
+    $('#wireFoot').textContent='Auto-feed not found yet \u2014 showing curated links';
+  }
+}
+function renderFeed(items,live,builtAt){
+  setMeta(live,builtAt);
+  $('#feedStatus').style.display='none';
+  $('#feedList').innerHTML=items.slice(0,8).map(it=>{
+    const when=it.date?rel(it.date):'';
+    return `<li><div class="src"><span>${esc(it.src||'Source')}</span><time>${esc(when)}</time></div><a class="hl" href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.t)}</a>${it.d?`<div class="dek">${esc(it.d)}</div>`:''}</li>`;
+  }).join('');
+}
+async function loadFeed(){
+  const btn=$('#refreshFeed');btn.disabled=true;
+  $('#feedStatus').style.display='block';
+  $('#feedStatus').innerHTML='<div class="skel" style="width:40%"></div><div class="skel" style="width:90%"></div><div class="skel" style="width:70%"></div>';
+  $('#feedList').innerHTML='';
+  try{
+    const ctrl=new AbortController();const to=setTimeout(()=>ctrl.abort(),8000);
+    const res=await fetch(FEED_FILE+'?t='+Date.now(),{signal:ctrl.signal,cache:'no-store'});
+    clearTimeout(to);
+    if(!res.ok)throw new Error('status '+res.status);
+    const data=await res.json();
+    const items=Array.isArray(data)?data:(data.items||[]);
+    const builtAt=Array.isArray(data)?null:data.builtAt;
+    if(!items.length)throw new Error('empty');
+    renderFeed(items,true,builtAt);
+  }catch(e){
+    renderFeed(FALLBACK,false);
+  }
+  btn.disabled=false;
+}
+$('#refreshFeed').addEventListener('click',loadFeed);
+loadFeed();
+</script>
+</body>
+</html>
