@@ -1,7 +1,42 @@
 {
-  "builtAt": "2026-06-30T20:29:19.307Z",
-  "count": 3,
+  "builtAt": "2026-06-30T21:59:37.522Z",
+  "count": 12,
   "items": [
+    {
+      "src": "The Guardian",
+      "t": "Christian Brothers sold real estate worth millions for $1. Now it claims in court it lacks money to pay abuse survivors",
+      "d": "",
+      "date": "Sat, 27 Jun 2026 04:02:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQZkJOZFZBaXZwYW5fMVNMcUVmSzMtSThwVHZ6dzdQV2ZIR25pUXRfdjR6YnpJdl9Wa1NXOWViMEVkRDRVSWtPc2FIZjc2Z2RaVzNFOFhSYTE1Rm1Dbm4zQnZna0I4X25HQndza1cxR2tkZERla3RjaGhrbDNPWEl3ZEF3UjBUN3NsWEhNY3p1WEpfdWQwZXJVdzdkVDIyUWFGNzB3Y1BpM2thSzFiWEVCaTcwRUNfSXY0eXYxM3ExZkprQ2NKTWZRZ3lnRGhrbWQtVTNybE5mRTh4YWs?oc=5"
+    },
+    {
+      "src": "Australian Broadcasting Corporation",
+      "t": "Christian Brothers 'squib' on abuse compensation, lawyer says",
+      "d": "",
+      "date": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPOGY2MVZKc2todTRvVDhzVmNKSU5TRlpqbnZNT2Q5MlEybXdkdnFTQnhlTW8zNmV3M2dWZDVXMlRzcWF0MTRhTlNjV0N2cVllVlNHYktzTFQ0aTFKb3c3V1Z2UTl3UTJudG5PWkF5NmpTUjZjS2pxY29CdWJOVjRNRGROYktfT21fRzhVeHZBbVRIMzhtV3A1dGpnVjA2QQ?oc=5"
+    },
+    {
+      "src": "AFR",
+      "t": "Schools feel heat over redress after Christian Brothers collapse",
+      "d": "",
+      "date": "Tue, 23 Jun 2026 06:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNSFk1YmJfV2RVZkQ0R284eHRWTFFsc3F1WmhieGJwYzJHSlcwWU9aUzB2Z3RnZDF3WU0wZmlEdlgyMy1WU0lNdGNTekpHMmpMTXh3NEkzS0RPV2JsekdOSFVDRHhVSjYwbzJjb0lFdm1GQ2ptSXdDaFFMTWQxdFFpNkFvczRVaXBGUDNRekkxNTdRX28tTXRYbU9KNzZNekNuQld6d2I5czI4UUdlZFZQYzhPcWxIa3hCSDlqbGI0bnA3T3czYTdR?oc=5"
+    },
+    {
+      "src": "The Catholic Leader",
+      "t": "Christian Brothers facing bankruptcy after 183 years in Australia",
+      "d": "",
+      "date": "Tue, 23 Jun 2026 22:51:46 GMT",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPbkJGRXhPMFYxS3piQldMeXFFcWN2ZVVMd2tRbDRHMVpoVTUwWHFpTEtLWENZTmZhNGFrUXF2amtDdTZfZFBZVVVOR3hPdHg3eEFzTHo3M1JoVjNnVzVucXhyRGZEYi1HaVZDVXhJWmZXYzQ0RmRGSS03aEhvN1A0OHJxME9DWTFpbWdIZGhQLVlPbnNTRVJKdWJjYnJpeWpiUDVhSkc4SVdkU3hiUVIyMg?oc=5"
+    },
+    {
+      "src": "The Saturday Paper",
+      "t": "Christian Brothers face bankruptcy from abuse payments",
+      "d": "",
+      "date": "Wed, 24 Jun 2026 21:43:33 GMT",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHNDS2pXWEpnSjhabUFHRkJWdDMyX0hWTW5ydXZsZzFUZTFORTF3Zi1qcXltT3YzY3ZWMkI4am0wTWMyMHo1UVhMd3Z0VUQtbTFfSmV5MzZPbzVwd1BveGE1MGxuTC1YOVd4bk1aYmp3T0M2eklJZkZvbkxUZHAxa1JyTkIybDNvY0JWR3BPWER6Y1hW?oc=5"
+    },
     {
       "src": "CathNews",
       "t": "Christian Brothers seek financial solutions",
@@ -11,17 +46,45 @@
     },
     {
       "src": "The Age",
-      "t": "Catholic Church Inc. protects its assets",
+      "t": "Christian Brothers claim no money left to pay sex-abuse survivors",
       "d": "",
-      "date": "Tue, 23 Jun 2026 10:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOb1ZiOWFBSDcyYnJtM24wT1MtY2l0am1Gdk5uYmpNa0E2OEF4OTc2UzVrWmQ4Q3I2ZmZGZG54UHlvZFhBdEdHVlNGN29YcUNPSXZ1N2prckR0WkNGTjlCWExlY2FJSGk4T2ZWbkJuTXA4b1R4bGhoRXZkMlh2cEJKTnE5c3ZJWXFWWEttN3FIQ0pzOGtUQi16X0dkN0VLay1JVDIxNGVjaw?oc=5"
+      "date": "Mon, 22 Jun 2026 09:04:07 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQZVVlMk5JN1VXLWlIUFRXOFlITk45Umg0WmZfQUdfckxYWGNRNVM1V3UzWXdvZU91ZVBhQVRsb0xmdFRrRVU3Y1VwMmVrbUszbWV1ek8ySHlCaE83NUJVOVhpU2NxM1d6NU56LUF3d05NdW9yOVZad3JqS2diRUdNVUJsWXBiNnEydFEyXzlveFh0MlR4M3Away1uTkpLM2JzVkNzZGJkMFNFSzhKVTFIeVZwOEU3ejAzQlU5T1QwSldHOTJjclpqcmVn?oc=5"
     },
     {
-      "src": "Legacy obituary",
-      "t": "Stephen Joseph Seufert Obituary (2026) - St. Joseph, MO - Rupp Funeral Home - St. Joseph",
+      "src": "SMH.com.au",
+      "t": "Christian Brothers cry poor to abuse survivors after transferring elite schools for $1",
       "d": "",
-      "date": "Tue, 02 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOalAyb1U4OUxzaHFzYlYyVVJjS3dEcFVWbENsQXJyNVVXUTJqZGlnMTZGWVkxN2J5VEltWFFWTUlHd3AtV0FIQlFrR0hTVUJzOXN6YnhfSnlVNUNVY2NYX05DUFlZZVZmdTd5R1FJT1JKTFYyWWYtTndtT2VHdGVmalUxOWo?oc=5"
+      "date": "Mon, 29 Jun 2026 09:30:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQYjNzSjBkUUhkdm9xNU9uWXMxVFpvQzNfV2QyRFZobE9hWmNIV0FTV25EUTJVcUU4V1k2bHNycUQxSXpPYkljeHQtZWtuc0J3NXpDQUNvQkVOUUEyb2Q3TEhzbUNZLXcxUFlDdHlpalh4UVozQWRNcDZhSk1VMGp1Vy0xOVBYUW1nRkZaSXZjcDA5TkJJeXRtN3A4cnhsMkNSd2hHWmtpMS1DRXA1dDMtWTJPVm81NmlMU3pUQ0l0NEZkRFZFNFF5MWFZaVc4UTV1U3RWOFdWaGwwdUpw?oc=5"
+    },
+    {
+      "src": "AFR",
+      "t": "Christian Brothers expects collapse with just $23m in the bank",
+      "d": "",
+      "date": "Wed, 24 Jun 2026 03:49:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPcGdvRW1VSHh3X19IbnBCYnlrWkZwUDVETGVrUV9WdnJObDBkODRMZHBxTWtDaUFhRzhJU3Q5TWppUk91TG1uUW9lZ1NZZ1UwbUp4cThKdG5Vc0JFTDY5c01LT04zZ2hlb2Z6ZHJodUFuTUliN0ljZmlqY1BxLTlRQU1STG9OMXY4eENIYWNXck5Ea3Q4bWZTX0hrbGxKNHd1dDZoZzlWb01oWTZVNVhyQWpYa1FtUWpSTnZXWkpTOXUyZ2JYWVpIcWY0MA?oc=5"
+    },
+    {
+      "src": "Herald Sun",
+      "t": "Christian Brothers’ $200m property sell-off sparks compo fight for abuse survivors",
+      "d": "",
+      "date": "Tue, 23 Jun 2026 02:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi8AJBVV95cUxPZVNZN1RVUFluXzNFUmNTZ2ZNMjNFNnlsUzkxSEZOX2hxMlU5UFVfYTdNMF9mTFhHT2Z5NmdZbWdfZHJJeHZyX09ISTlWc1RGSFdhTV9GVEhiY3k4RG9mT3k4ODBSeEIwT3g4MmtTamctYm5IMU9uWEswMFlfSVVMaGxzcHFUc1A2YktPT1hkT1l0dGJyNE5nSDZVdG1IQmlJMC1tU19aQWJmRUp1clRPQzFEX1FqX3dqMkUxNU5HZTNfOVp4UWtkU2kwZ2NoVUdhZHlGV2FNTHBjV3p4Q1BnMUxjMXdOMTVUSEFKOFQtVUZ5ZG5YRUd3dUdKdG96V0RJQ0pmRl9JVk1kMy1xcUJZZ3FZT1MtemE0WFhLc01lWUFjUWh3eXdRc1FQNFFsalV1LVgzdE9JNFpTWDVvU0ZQREZseXNFM3gwOHFCV0d2bEozcUhBVFlkV3MydmJNX0hSb2FwcEt1Q0VEUy1jbWZIMdIB9gJBVV95cUxPeFhoUFdaRGlRMEdpZGk3ZF92SklXbUtUZFZaclI0TkZDSWozMzVGcU82TnRjRUtiWnpBb0JFdThQWnpQRG81Qm1jcm41RUQ4VXVIaDB1ZzJ6SHZ5cTJhOFpwbVVuNWtaZVFqR0hEdGxmSTNIcVRqa18wb3ZWUC1iTG9YdTlmSHBRaTBuQ1hQVzVudmVscG9WRURubXF4VEdQVFRqbnVJeDNHbU8ybGE5VUZCRG5uRlAtNTB3SlVodXhDQklSLUVlZmlHUDNnMTdkMGN3X3VqMzZtelJGN1NabEgwNS1VclJfRHlWc0lOcFR6eWZfZ1RCUFd0Q3UtVkZaZ1FnMVBScm9FNHRuck03N2xpVU5jSmRQVzlGNlJtaHVLTElOU2ZSNUwxNHhhemw3NlNoQ0dsVThYNUNoSUFzR2R2N2NKQ0FkYW56NG5QNjV5OXJMNG9EY1lzS0JHRHZpSlZaRGJPdGxEX3Q1Rk10NUdyMmc0QQ?oc=5"
+    },
+    {
+      "src": "Australian Broadcasting Corporation",
+      "t": "Christian Brothers spending $1.7m a week on abuse cases",
+      "d": "",
+      "date": "Wed, 24 Jun 2026 05:30:13 GMT",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPbEVjc19tV1hYd0dESkVyRXhtSXRwWjFjNHNlZUptdlZBSExfTnVUU1dUUXpaSmJzZ0RoZzg0VC1HbXRMYkVoWHFUVzRsU1BXQVBwS2ZZMkNHYVRSZVJicThNYk9RbFNaWGt5d0R6UHlXdnIzU1p0V0hDUWF2TDRLcFFta2YxdlhiUHR2S0s5eUk2emJtM09YZzVIZ2doZDlT?oc=5"
+    },
+    {
+      "src": "The Age",
+      "t": "Christian Brothers cry poor to abuse survivors after transferring elite schools for $1",
+      "d": "",
+      "date": "Mon, 29 Jun 2026 09:30:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxONUwxSzFBbmtodTJndWcwNTRhcEFBbF9DUEVJWlpJa0wzcFI0TmE5X1RKU3FQcGtRZ2dtMHBJQWdpazdWZlJNRjk2ZjNreDEzWmViM0hld3E5UGYtSGZHNkxva0VMRkpDVXpWU2F5ZmotbUZxc2k3ekFqM2p5a24tMHVLa1hqaHlaejJXNzgta29BcHRjQ1lJZVhGZUI0TjZPeEk0UkJlS19BRkxQNHg2dDNKWHc3SktXTkhzSS1oV29qV240TnVZY1huZU5CRlBoaGI4V1JNNGNQVnhsRVh5bA?oc=5"
     }
   ]
 }
