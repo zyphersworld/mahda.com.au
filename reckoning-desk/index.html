@@ -194,10 +194,6 @@ footer{margin-top:46px;border-top:3px double var(--ink);padding-top:22px;font-si
 footer .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
 @media(max-width:680px){footer .grid{grid-template-columns:1fr}}
 footer .mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(140%);z-index:50;background:var(--ink);
-  color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:12px 20px;border-radius:6px;
-  box-shadow:0 8px 26px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.2,.9,.3,1);max-width:90vw;text-align:center}
-.toast.show{transform:translateX(-50%) translateY(0)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
 </style>
 </head>
@@ -342,7 +338,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 </div>
-<div class="toast" id="toast"></div>
 <script>
 "use strict";
 const $=(s,r=document)=>r.querySelector(s);
@@ -360,7 +355,6 @@ const strip=s=>String(s==null?'':s).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').
     if(e.target.closest('#themeToggle')) apply(root.getAttribute('data-theme')!=='dark');
   });
 })();
-const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600);};
 try{dayjs.extend(dayjs_plugin_relativeTime);}catch(e){}
 const rel=d=>{try{const x=dayjs(d);return x.isValid()?x.fromNow():'';}catch(e){return '';}};
 const now=new Date();
