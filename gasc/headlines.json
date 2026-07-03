@@ -1,0 +1,27 @@
+{
+  "builtAt": "2026-07-03T00:00:00.000Z",
+  "count": 3,
+  "items": [
+    {
+      "src": "Premier Speedway",
+      "t": "The home of the Grand Annual Sprintcar Classic",
+      "d": "Gates open at 3pm, cars on track from 5pm across three nights of racing at Sungold Stadium, Warrnambool.",
+      "date": "",
+      "url": "https://premierspeedway.com.au/"
+    },
+    {
+      "src": "Speedcafe",
+      "t": "Reutzel wins the 2026 Grand Annual Sprintcar Classic",
+      "d": "The Texan drove from 12th to beat McHugh and Hallett home before a sold-out Sunday crowd near 13,000.",
+      "date": "2026-01-25T12:00:00Z",
+      "url": "https://speedcafe.com/speedway-news-aaron-reutzel-wins-grand-annual-classic-premier-speedway-warrnambool/"
+    },
+    {
+      "src": "Premier Speedway",
+      "t": "Classic winner's share climbing to $75k, then $100k",
+      "d": "An extended Flying Horse Bar & Brewery deal bumps the 2027 top prize to $75,000 and 2028 to a six-figure payday.",
+      "date": "2026-01-25T00:00:00Z",
+      "url": "https://premierspeedway.com.au/"
+    }
+  ]
+}

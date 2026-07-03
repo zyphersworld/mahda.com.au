@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NL6F28VS');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZGWXJJ83MP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ZGWXJJ83MP');
+</script>
+<meta name="description" content="The Pitstop — a fan-kept countdown and race-week hub for the Grand Annual Sprintcar Classic at Premier Speedway, Warrnambool. Schedule, tickets, the wire and all the guff on the weekend's events.">
+<meta name="theme-color" content="#0a0a0f">
+<title>The Pitstop — Grand Annual Sprintcar Classic Countdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pitstop.css">
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/plugin/relativeTime.js"></script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NL6F28VS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="wrap">
+<header class="masthead">
+  <div class="checker"></div>
+  <div class="eyebrow">
+    <span><span class="dot"></span>Race-week hub</span>
+    <span class="sep">&#9670;</span>
+    <span>Premier Speedway &middot; Warrnambool</span>
+    <span class="sep">&#9670;</span>
+    <span id="todayStamp">&mdash;</span>
+  </div>
+  <h1 class="title">The <span class="flag">Pitstop</span>
+    <span class="sub">Every bit of guff on the Grand Annual Sprintcar Classic &mdash; the countdown, the card, and the weekend's racing at Sungold Stadium.</span>
+  </h1>
+  <p class="standfirst">The <b>54th Grand Annual Sprintcar Classic</b> rolls into Premier Speedway over the Australia Day long weekend &mdash; three nights of the biggest car count in sprintcar racing, chasing a <b>$75,000</b> winner's cheque. This is the fan's pit board: when the gates open, who's turning laps, where to watch, and everything moving on the wire. Kept by a speedway tragic, for speedway tragics.</p>
+
+  <div class="clockbar" id="clockbar">
+    <!-- staging tree: 3 amber, 1 green — the signature element -->
+    <div class="tree" id="tree" aria-hidden="true">
+      <div class="bulb amber" data-stage="0"></div>
+      <div class="bulb amber" data-stage="1"></div>
+      <div class="bulb amber" data-stage="2"></div>
+      <div class="bulb green" data-stage="3"></div>
+    </div>
+    <div class="clock-main">
+      <div class="clock-head">
+        <p class="lbl" id="clockLbl">Countdown to cars on track &mdash; Night 1</p>
+        <p class="ev" id="nextEvent">Gates open for <em>Night 1 of the 54th Classic</em></p>
+      </div>
+      <div class="counter" id="counter" aria-label="Time until the Classic">
+        <div class="unit"><span class="n" id="cD">--</span><span class="u">Days</span></div>
+        <div class="unit"><span class="n" id="cH">--</span><span class="u">Hrs</span></div>
+        <div class="unit"><span class="n" id="cM">--</span><span class="u">Min</span></div>
+        <div class="unit"><span class="n" id="cS">--</span><span class="u">Sec</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="dash">
+  <div class="col">
+    <section class="widget">
+      <div class="w-head">
+        <h2><span class="gly">&#9873;</span>The Guff</h2>
+        <span class="meta">What you need to know</span>
+      </div>
+      <div class="w-body">
+        <div class="feed-status" id="postsStatus">
+          <div class="skel" style="width:55%"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:70%"></div>
+        </div>
+        <div id="postsList"></div>
+      </div>
+      <div class="w-foot"><span id="postsFoot">Kept by a fan &middot; check the club for the last word</span><span>Not official</span></div>
+    </section>
+
+    <section class="widget" id="newswire">
+      <div class="w-head">
+        <h2><span class="gly">&#9741;</span>The Wire</h2>
+        <span class="meta" id="wireMeta"><span class="live-dot"></span>Connecting&hellip;</span>
+      </div>
+      <div class="w-body">
+        <div class="feed-status" id="feedStatus">
+          <div class="skel" style="width:40%"></div><div class="skel" style="width:90%"></div><div class="skel" style="width:70%"></div>
+        </div>
+        <ul class="feed" id="feedList"></ul>
+      </div>
+      <div class="w-foot">
+        <span id="wireFoot">Auto-built feed &middot; refreshed on a schedule</span>
+        <button class="btn" id="refreshFeed">Refresh</button>
+      </div>
+    </section>
+
+    <section class="widget">
+      <div class="w-head">
+        <h2><span class="gly">&#9636;</span>The Numbers</h2>
+        <span class="meta">The Classic by the stat sheet</span>
+      </div>
+      <div class="w-body">
+        <div class="ledger">
+          <div class="cell"><div class="k">To win, 2027</div><div class="v win">$75K<small>up from $60k &mdash; Flying Horse extension</small></div></div>
+          <div class="cell"><div class="k">The event</div><div class="v cyan">54TH<small>first run 1973</small></div></div>
+          <div class="cell"><div class="k">Nights of racing</div><div class="v">3<small>prelims Fri &amp; Sat, final Sunday</small></div></div>
+          <div class="cell"><div class="k">Car count</div><div class="v hot">100+<small>biggest field in sprintcar racing</small></div></div>
+          <div class="cell"><div class="k">Sunday crowd, 2026</div><div class="v">~13K<small>a sold-out Sungold Stadium</small></div></div>
+          <div class="cell"><div class="k">Defending winner</div><div class="v">REUTZEL<small>Aaron Reutzel, USA &mdash; 2026</small></div></div>
+        </div>
+      </div>
+      <div class="w-foot"><span>Figures per Premier Speedway &amp; reports</span><span>$100k to win in 2028</span></div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="widget">
+      <div class="w-head">
+        <h2><span class="gly">&#9654;</span>The Card</h2>
+        <span class="meta">Three-night running order</span>
+      </div>
+      <div class="w-body">
+        <ul class="card" id="cardList"><!-- filled by JS so "tonight" can highlight live --></ul>
+      </div>
+      <div class="w-foot"><span>Gates 3pm &middot; cars ~5pm</span><span>Times provisional</span></div>
+    </section>
+
+    <section class="widget">
+      <div class="w-head">
+        <h2><span class="gly">&#9993;</span>The Infield</h2>
+        <span class="meta">Chatter &amp; talking points</span>
+      </div>
+      <div class="w-body"><div id="voicesList"></div></div>
+      <div class="w-foot">
+        <span>Links go to the sources.</span>
+        <a href="https://x.com/search?q=%23GASC%20OR%20%22Grand%20Annual%20Sprintcar%20Classic%22&f=live" target="_blank" rel="noopener">Live X search &rarr;</a>
+      </div>
+    </section>
+
+    <section class="widget">
+      <div class="w-head">
+        <h2><span class="gly">&#9678;</span>Where to Watch</h2>
+        <span class="meta">Tickets, streaming, gates</span>
+      </div>
+      <div class="w-body"><ul class="res" id="resList"></ul></div>
+      <div class="w-foot"><span>Confirm details with the club</span><span>Dates provisional</span></div>
+    </section>
+  </div>
+</main>
+
+<div class="support-band">
+  <span class="gly">&#9888;</span><b>First Classic, or first in a while?</b> Gates open early &mdash; the infield fills fast and the good grandstand seats go first.
+  Bring ear protection (these are 410ci methanol sprintcars, they are loud), sun cover for the afternoon, and something warm for when the sea breeze comes in after dark.
+  Cash and card both work at the canteen. Camping books out well ahead &mdash; sort it before you drive down.
+</div>
+
+<footer>
+  <div class="checker" style="margin-bottom:20px"></div>
+  <div class="grid">
+    <div>
+      <p>An independent, fan-kept race-week hub for the Grand Annual Sprintcar Classic. It gathers publicly available information and links to primary sources &mdash; the Premier Speedway club, ticketing and broadcasters. It is not affiliated with Premier Speedway or the event, and is not an official source. Always confirm dates, times and tickets with the club.</p>
+      <p class="mono">NO ACCOUNTS &middot; NO ADS &middot; ANALYTICS VIA GOOGLE (MAHDA.COM.AU) &middot; LINKS OUT TO PRIMARY SOURCES.</p>
+    </div>
+    <div>
+      <p class="mono">BUILT WITH<br>&mdash; AUTO-BUILT FEED (GITHUB ACTION, SAME-ORIGIN JSON)<br>&mdash; DAY.JS RELATIVE TIMESTAMPS<br>&mdash; ORBITRON / RAJDHANI / DSEG7 / IBM PLEX MONO<br>&mdash; LIVE COUNTDOWN &middot; STAGING TREE &middot; GA4 + GTM</p>
+      <p class="mono" id="buildStamp">RENDERED &mdash;</p>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Backstop: strip any tag-like content from feed text before display, so a
+// stale or hand-edited headlines.json can never surface raw <a href> markup.
+const strip=s=>String(s==null?'':s).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+
+try{dayjs.extend(dayjs_plugin_relativeTime);}catch(e){}
+const rel=d=>{try{const x=dayjs(d);return x.isValid()?x.fromNow():'';}catch(e){return '';}};
+const now=new Date();
+$('#todayStamp').textContent=now.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+$('#buildStamp').textContent='RENDERED '+now.toLocaleString('en-AU',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).toUpperCase();
+
+/* ---------- THE CARD (three nights) ----------
+   One place to edit dates/times. Each night has a cars-on-track datetime used
+   for the schedule highlight, the master countdown, AND the staging tree.
+   If the club announces official dates/times, change ONLY this array. */
+const NIGHTS=[
+  {n:1, label:'Night 1', when:'2027-01-22T17:00:00+11:00',
+   t:'Preliminary night one', d:'Time trials, heats and the first prelim feature. Track record watch early.'},
+  {n:2, label:'Night 2', when:'2027-01-23T17:00:00+11:00',
+   t:'Preliminary night two', d:'Second round of qualifying; the points picture for Sunday takes shape.'},
+  {n:3, label:'Final night', when:'2027-01-24T17:00:00+11:00',
+   t:'The 40-lap final', d:'Pole shuffle, then the big one \u2014 $75,000 and the Classic on the line.'},
+];
+const firstNight=new Date(NIGHTS[0].when).getTime();
+
+function nextNight(){
+  const t=Date.now();
+  for(const g of NIGHTS){ if(new Date(g.when).getTime()>t) return g; }
+  return null;
+}
+function renderCard(){
+  const t=Date.now();
+  $('#cardList').innerHTML=NIGHTS.map(g=>{
+    const start=new Date(g.when).getTime();
+    const isTonight=t>=start && t<start+8*3600*1000; // ~8h race window
+    const gate=new Date(g.when).toLocaleDateString('en-AU',{weekday:'short',day:'2-digit',month:'short'}).toUpperCase();
+    const timeStr=new Date(g.when).toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+    return `<li class="${isTonight?'now':''}">
+      <div class="night">${esc(g.label)}<b>${esc(gate)}</b></div>
+      <div class="prog"><div class="t">${esc(g.t)}</div><div class="d">${esc(g.d)}</div></div>
+      <div class="gate">~${esc(timeStr)}</div>
+    </li>`;
+  }).join('');
+}
+renderCard();
+
+/* ---------- STAGING TREE ----------
+   As Night 1 approaches, the three ambers light in sequence, then the green
+   drops when the racing is on. Mirrors a start-light staging sequence:
+   >7 days  -> none lit
+   <=7 days -> amber 1
+   <=3 days -> amber 2
+   <=24 hrs -> amber 3 (fully staged)
+   racing   -> green    */
+const bulbs=$$('#tree .bulb');
+function setTree(diffMs, racing){
+  const days=diffMs/86400000;
+  let lit=0;                       // how many ambers
+  if(racing) lit=3;
+  else if(days<=1) lit=3;
+  else if(days<=3) lit=2;
+  else if(days<=7) lit=1;
+  bulbs.forEach(b=>{
+    b.classList.remove('on');
+    const s=+b.dataset.stage;
+    if(b.classList.contains('amber') && s<lit) b.classList.add('on');
+    if(b.classList.contains('green') && racing) b.classList.add('on');
+  });
+}
+
+/* ---------- MASTER COUNTDOWN ---------- */
+function tick(){
+  const g=nextNight();
+  const racing=!g;
+  if(racing){
+    $('#clockLbl').textContent='The Classic is racing \u2014 or done for another year';
+    $('#nextEvent').innerHTML='See you trackside next January. <em>Results on the wire.</em>';
+    $('#cD').textContent=$('#cH').textContent=$('#cM').textContent=$('#cS').textContent='--';
+    setTree(0,true);
+    return;
+  }
+  $('#clockLbl').textContent='Countdown to cars on track \u2014 '+g.label;
+  $('#nextEvent').innerHTML=`Gates open for <em>${esc(g.t)}</em>`;
+  const diff=new Date(g.when).getTime()-Date.now();
+  const s=Math.max(0,Math.floor(diff/1000));
+  $('#cD').textContent=String(Math.floor(s/86400)).padStart(2,'0');
+  $('#cH').textContent=String(Math.floor(s%86400/3600)).padStart(2,'0');
+  $('#cM').textContent=String(Math.floor(s%3600/60)).padStart(2,'0');
+  $('#cS').textContent=String(s%60).padStart(2,'0');
+  // Tree arms against the FIRST night (the "green flag" of the weekend).
+  setTree(firstNight-Date.now(), false);
+}
+tick();setInterval(()=>{tick();renderCard();},1000);
+
+/* ---------- THE INFIELD (chatter) ---------- */
+const VOICES=[
+  {who:'Aaron Reutzel',handle:'2026 Classic winner, USA',av:'AR',text:'Called Premier Speedway a coliseum and one of the best sprintcar races on earth \u2014 back to defend the crown he took in front of a sold-out Sunday house.',url:'https://premierspeedway.com.au/'},
+  {who:'Premier Speedway',handle:'The club',av:'PS',text:'Extended the Flying Horse Bar & Brewery deal: $75,000 to win in 2027, climbing to $100,000 in 2028 \u2014 a six-figure sprintcar payday down under.',url:'https://premierspeedway.com.au/'},
+  {who:'The locals',handle:'Warrnambool',av:'WB',text:'Home-state hopes ride with the Victorian runners; Max Dumesny broke the drought for the district in 1992 and the town still turns out in force.',url:'https://en.wikipedia.org/wiki/Grand_Annual_Sprintcar_Classic'},
+  {who:'The travellers',handle:'US & interstate tour',av:'US',text:'Mid-summer timing brings the American stars across before their season starts \u2014 the Classic and Knoxville are the two both sides circle on the calendar.',url:'https://en.wikipedia.org/wiki/Grand_Annual_Sprintcar_Classic'},
+];
+$('#voicesList').innerHTML=VOICES.map(v=>`<div class="voice"><div class="who"><div class="av">${esc(v.av)}</div><div><div class="nm">${esc(v.who)}</div><div class="hd">${esc(v.handle)}</div></div></div><div class="tx"><q>${esc(v.text)}</q></div><a class="lk" href="${esc(v.url)}" target="_blank" rel="noopener">Source &rarr;</a></div>`).join('');
+
+/* ---------- WHERE TO WATCH ---------- */
+const RES=[
+  ['tickets','Premier Speedway','Tickets, camping, gate times and the official Classic timetable \u2014 the first place to check.','https://premierspeedway.com.au/'],
+  ['watch','Clay-Per-View','Australia\u2019s speedway broadcaster \u2014 live and on-demand streaming of the Classic within AU/NZ.','https://www.clayperview.com/grand-annual-sprintcar-classic'],
+  ['watch','FloRacing','Streams the Classic to viewers outside Australia and New Zealand, with replays after each night.','https://www.floracing.com/'],
+  ['info','What\u2019s On Warrnambool','Local event listing with the visitor rundown \u2014 handy if you\u2019re travelling in for the weekend.','https://whatson.warrnambool.vic.gov.au/'],
+  ['info','GASC on Wikipedia','History, past winners and the record book for the biggest car count in sprintcar racing.','https://en.wikipedia.org/wiki/Grand_Annual_Sprintcar_Classic'],
+];
+$('#resList').innerHTML=RES.map(([b,t,d,u])=>`<li><span class="badge ${b}">${esc(b)}</span><div><a class="t" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a><div class="d">${d}</div></div></li>`).join('');
+
+/* ---------- LIVE WIRE ----------
+   Same-origin fetch of headlines.json, built server-side by a
+   GitHub Action on a schedule (see .github/workflows/feed-gasc.yml).
+   No CORS, no third-party relay: the file sits next to this page.
+   The curated list below is the cold-start fallback (first deploy,
+   before the Action has run, or if the file is ever missing). */
+const FEED_FILE='headlines.json';
+const FALLBACK=[
+  {src:'Premier Speedway',t:'The home of the Grand Annual Sprintcar Classic',d:'Gates open at 3pm, cars on track from 5pm across three nights of racing at Sungold Stadium.',date:'',url:'https://premierspeedway.com.au/'},
+  {src:'Speedcafe',t:'Reutzel wins the 2026 Grand Annual Classic',d:'Texan drove from 12th to beat McHugh and Hallett before a sold-out Sunday crowd near 13,000.',date:'2026-01-25',url:'https://speedcafe.com/speedway-news-aaron-reutzel-wins-grand-annual-classic-premier-speedway-warrnambool/'},
+  {src:'Premier Speedway',t:'Classic winner\u2019s share climbing to $75k, then $100k',d:'Extended Flying Horse deal bumps the 2027 top prize to $75,000 and 2028 to a six-figure payday.',date:'2026-01-25',url:'https://premierspeedway.com.au/'},
+];
+function setMeta(live,builtAt){
+  if(live){
+    const stamp=builtAt?rel(builtAt):'';
+    $('#wireMeta').innerHTML='<span class="live-dot"></span>Updated '+esc(stamp||'just now');
+    $('#wireFoot').textContent='Auto-built feed \u00b7 refreshed on a schedule';
+  }else{
+    $('#wireMeta').innerHTML='Curated index';
+    $('#wireFoot').textContent='Auto-feed not found yet \u2014 showing curated links';
+  }
+}
+function renderFeed(items,live,builtAt){
+  setMeta(live,builtAt);
+  $('#feedStatus').style.display='none';
+  $('#feedList').innerHTML=items.slice(0,8).map(it=>{
+    const when=it.date?rel(it.date):'';
+    return `<li><div class="src"><span>${esc(it.src||'Source')}</span><time>${esc(when)}</time></div><a class="hl" href="${esc(it.url)}" target="_blank" rel="noopener">${esc(strip(it.t))}</a>${it.d?`<div class="dek">${esc(strip(it.d))}</div>`:''}</li>`;
+  }).join('');
+}
+async function loadFeed(){
+  const btn=$('#refreshFeed');btn.disabled=true;
+  $('#feedStatus').style.display='block';
+  $('#feedStatus').innerHTML='<div class="skel" style="width:40%"></div><div class="skel" style="width:90%"></div><div class="skel" style="width:70%"></div>';
+  $('#feedList').innerHTML='';
+  try{
+    const ctrl=new AbortController();const to=setTimeout(()=>ctrl.abort(),8000);
+    const res=await fetch(FEED_FILE+'?t='+Date.now(),{signal:ctrl.signal,cache:'no-store'});
+    clearTimeout(to);
+    if(!res.ok)throw new Error('status '+res.status);
+    const data=await res.json();
+    const items=Array.isArray(data)?data:(data.items||[]);
+    const builtAt=Array.isArray(data)?null:data.builtAt;
+    if(!items.length)throw new Error('empty');
+    renderFeed(items,true,builtAt);
+  }catch(e){
+    renderFeed(FALLBACK,false);
+  }
+  btn.disabled=false;
+}
+$('#refreshFeed').addEventListener('click',loadFeed);
+loadFeed();
+
+/* ---------- THE GUFF (round-ups) ----------
+   Same-origin fetch of posts.json. Each entry is pure data, so adding a
+   new round-up is a data edit, never a code change. Falls back to a single
+   baked-in entry if the file is missing (e.g. first deploy). */
+const POSTS_FILE='posts.json';
+const POSTS_FALLBACK=[{
+  dateLabel:'Race week',
+  title:'Three nights, one big Sunday. Here\u2019s the shape of it.',
+  know:[
+    'The Classic runs over the Australia Day long weekend \u2014 two preliminary nights then the 40-lap final on Sunday.',
+    'Gates open around 3pm each day with cars on track from about 5pm; get in early for the good grandstand seats.',
+    'The 2027 final pays $75,000 to win \u2014 expect a full international and interstate field of 100+ cars.',
+    'Camping and reserved seating book out ahead of time \u2014 sort tickets through the club before you travel.'
+  ],
+  body:['Dates and times here are provisional until Premier Speedway posts the official Classic timetable. When they do, this page follows.'],
+  byline:'\u2014 Kept by a fan'
+}];
+function renderPosts(posts){
+  $('#postsStatus').style.display='none';
+  $('#postsList').innerHTML=posts.map(p=>{
+    const bullets=(p.know||[]).map(k=>`<li>${esc(strip(k))}</li>`).join('');
+    const paras=(p.body||[]).map(t=>`<p>${esc(strip(t))}</p>`).join('');
+    const label=p.dateLabel||p.date||'';
+    return `<article class="entry">
+      <div class="date">${esc(label)}</div>
+      <h3>${esc(strip(p.title||''))}</h3>
+      ${bullets?`<ul class="know">${bullets}</ul>`:''}
+      ${paras?`<div class="body">${paras}</div>`:''}
+      ${p.byline?`<div class="byline">${esc(p.byline)}</div>`:''}
+    </article>`;
+  }).join('');
+}
+async function loadPosts(){
+  try{
+    const ctrl=new AbortController();const to=setTimeout(()=>ctrl.abort(),8000);
+    const res=await fetch(POSTS_FILE+'?t='+Date.now(),{signal:ctrl.signal,cache:'no-store'});
+    clearTimeout(to);
+    if(!res.ok)throw new Error('status '+res.status);
+    const data=await res.json();
+    const posts=Array.isArray(data)?data:(data.posts||[]);
+    if(!posts.length)throw new Error('empty');
+    posts.sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+    renderPosts(posts);
+    if(data.updated)$('#postsFoot').textContent='Updated '+esc(rel(data.updated))+' \u00b7 cross-checked against sources';
+  }catch(e){
+    renderPosts(POSTS_FALLBACK);
+    $('#postsFoot').textContent='Showing the latest saved round-up';
+  }
+}
+loadPosts();
+</script>
+</body>
+</html>
