@@ -1,27 +1,13 @@
 {
-  "builtAt": "2026-07-03T05:24:46.039Z",
+  "builtAt": "2026-07-03T08:34:24.589Z",
   "count": 12,
   "items": [
-    {
-      "src": "AFR",
-      "t": "Christian Brothers gifted property worth $2b to schools before collapse",
-      "d": "",
-      "date": "Fri, 26 Jun 2026 04:52:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOSFp2YlE0ak84NkZRQlMta2I0Mm1xOXFHZlc1dzkyTk1xZHoxcVpaQ1BiSkZiVlhQTTdBVFp3X2JvZl96MlpZQ1ZEWTNqYXMzR2VJZVpwRXU3ME1XVGl0VzRId2pabTVvUDVia1JtWWdNQmczTEpsUUJ0a1VfVWhJbEI5a3lmbmptLU42VmVXWTFNbkRhSmhVUlQ0NklXQTFKM1FkMVJacU5UcHk4Ny14MEM5UWlUaWltTFczZHY0dk5pblA3WTc5OHhxbE4?oc=5"
-    },
     {
       "src": "The Guardian",
       "t": "‘Obviously disturbing’ if Christian Brothers’ $1 property sales deprive abuse survivors of pay, government tells court",
       "d": "",
       "date": "Thu, 02 Jul 2026 02:28:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQekVwakpYZjJ5UC1VMHgwbTFHcVpYZWE2bTdfeVYwYWh2dnp5YTk0R0Z4bjdJR0Fjb2tNT043aXJrSnRhdlN5WUp2MnBYMTZTcnZwTUREdE1zbjRnOF9YbklMNHYtSkhxWFVLNVVVWlUyN19qLVpxSGVmR3VXdnloTXlHcnlLcFFBdEFya0QtWVp0QU1iQm9HeVQ3aUZyaE9yTDJMTkRhQXJWOFVYWkVhbHpoQnB3TkV1bFZPWHNn?oc=5"
-    },
-    {
-      "src": "The Saturday Paper",
-      "t": "Christian Brothers face bankruptcy from abuse payments",
-      "d": "",
-      "date": "Wed, 24 Jun 2026 21:43:33 GMT",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHNDS2pXWEpnSjhabUFHRkJWdDMyX0hWTW5ydXZsZzFUZTFORTF3Zi1qcXltT3YzY3ZWMkI4am0wTWMyMHo1UVhMd3Z0VUQtbTFfSmV5MzZPbzVwd1BveGE1MGxuTC1YOVd4bk1aYmp3T0M2eklJZkZvbkxUZHAxa1JyTkIybDNvY0JWR3BPWER6Y1hW?oc=5"
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
@@ -31,6 +17,20 @@
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNaHRoTklueEtid2pWOTFsMXUwVXZoRlpMQ09nVm5iTXF5elN2X1JwODZmTk9HQ3dla1A2Z3FnNFZKck5EOUF1TVNfdmxndWx4aDVuTGthSXVVbmVjNGk3OTQ1cHptZGdQaXltb1EtLUs4SDZKWGZfTkZTQnd1S05ZOF9ObmxoOUJCbVhnQW5jV0xkTUxyTEM2VURDVWkyWlBMRTV6d2ZQbGtDbXZQ?oc=5"
     },
     {
+      "src": "AFR",
+      "t": "Schools feel heat over redress after Christian Brothers collapse",
+      "d": "",
+      "date": "Tue, 23 Jun 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNSFk1YmJfV2RVZkQ0R284eHRWTFFsc3F1WmhieGJwYzJHSlcwWU9aUzB2Z3RnZDF3WU0wZmlEdlgyMy1WU0lNdGNTekpHMmpMTXh3NEkzS0RPV2JsekdOSFVDRHhVSjYwbzJjb0lFdm1GQ2ptSXdDaFFMTWQxdFFpNkFvczRVaXBGUDNRekkxNTdRX28tTXRYbU9KNzZNekNuQld6d2I5czI4UUdlZFZQYzhPcWxIa3hCSDlqbGI0bnA3T3czYTdR?oc=5"
+    },
+    {
+      "src": "The Saturday Paper",
+      "t": "Christian Brothers face bankruptcy from abuse payments",
+      "d": "",
+      "date": "Wed, 24 Jun 2026 21:43:33 GMT",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHNDS2pXWEpnSjhabUFHRkJWdDMyX0hWTW5ydXZsZzFUZTFORTF3Zi1qcXltT3YzY3ZWMkI4am0wTWMyMHo1UVhMd3Z0VUQtbTFfSmV5MzZPbzVwd1BveGE1MGxuTC1YOVd4bk1aYmp3T0M2eklJZkZvbkxUZHAxa1JyTkIybDNvY0JWR3BPWER6Y1hW?oc=5"
+    },
+    {
       "src": "The Catholic Leader",
       "t": "Christian Brothers facing bankruptcy after 183 years in Australia",
       "d": "",
@@ -38,11 +38,11 @@
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPbkJGRXhPMFYxS3piQldMeXFFcWN2ZVVMd2tRbDRHMVpoVTUwWHFpTEtLWENZTmZhNGFrUXF2amtDdTZfZFBZVVVOR3hPdHg3eEFzTHo3M1JoVjNnVzVucXhyRGZEYi1HaVZDVXhJWmZXYzQ0RmRGSS03aEhvN1A0OHJxME9DWTFpbWdIZGhQLVlPbnNTRVJKdWJjYnJpeWpiUDVhSkc4SVdkU3hiUVIyMg?oc=5"
     },
     {
-      "src": "CathNews",
-      "t": "Christian Brothers seek financial solutions",
+      "src": "SMH.com.au",
+      "t": "Christian Brothers cry poor to abuse survivors after transferring elite schools for $1",
       "d": "",
-      "date": "Mon, 22 Jun 2026 22:01:04 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
+      "date": "Mon, 29 Jun 2026 09:30:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQYjNzSjBkUUhkdm9xNU9uWXMxVFpvQzNfV2QyRFZobE9hWmNIV0FTV25EUTJVcUU4V1k2bHNycUQxSXpPYkljeHQtZWtuc0J3NXpDQUNvQkVOUUEyb2Q3TEhzbUNZLXcxUFlDdHlpalh4UVozQWRNcDZhSk1VMGp1Vy0xOVBYUW1nRkZaSXZjcDA5TkJJeXRtN3A4cnhsMkNSd2hHWmtpMS1DRXA1dDMtWTJPVm81NmlMU3pUQ0l0NEZkRFZFNFF5MWFZaVc4UTV1U3RWOFdWaGwwdUpw?oc=5"
     },
     {
       "src": "The Age",
@@ -52,11 +52,11 @@
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQZVVlMk5JN1VXLWlIUFRXOFlITk45Umg0WmZfQUdfckxYWGNRNVM1V3UzWXdvZU91ZVBhQVRsb0xmdFRrRVU3Y1VwMmVrbUszbWV1ek8ySHlCaE83NUJVOVhpU2NxM1d6NU56LUF3d05NdW9yOVZad3JqS2diRUdNVUJsWXBiNnEydFEyXzlveFh0MlR4M3Away1uTkpLM2JzVkNzZGJkMFNFSzhKVTFIeVZwOEU3ejAzQlU5T1QwSldHOTJjclpqcmVn?oc=5"
     },
     {
-      "src": "SMH.com.au",
-      "t": "Christian Brothers cry poor to abuse survivors after transferring elite schools for $1",
+      "src": "CathNews",
+      "t": "Christian Brothers seek financial solutions",
       "d": "",
-      "date": "Mon, 29 Jun 2026 09:30:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQYjNzSjBkUUhkdm9xNU9uWXMxVFpvQzNfV2QyRFZobE9hWmNIV0FTV25EUTJVcUU4V1k2bHNycUQxSXpPYkljeHQtZWtuc0J3NXpDQUNvQkVOUUEyb2Q3TEhzbUNZLXcxUFlDdHlpalh4UVozQWRNcDZhSk1VMGp1Vy0xOVBYUW1nRkZaSXZjcDA5TkJJeXRtN3A4cnhsMkNSd2hHWmtpMS1DRXA1dDMtWTJPVm81NmlMU3pUQ0l0NEZkRFZFNFF5MWFZaVc4UTV1U3RWOFdWaGwwdUpw?oc=5"
+      "date": "Mon, 22 Jun 2026 22:01:04 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
     },
     {
       "src": "BBC",
@@ -74,10 +74,10 @@
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Christian Brothers 'squib' on abuse compensation, lawyer says",
+      "t": "Victims 'thrown into uncertainty' by Christian Brothers court ruling",
       "d": "",
-      "date": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPOGY2MVZKc2todTRvVDhzVmNKSU5TRlpqbnZNT2Q5MlEybXdkdnFTQnhlTW8zNmV3M2dWZDVXMlRzcWF0MTRhTlNjV0N2cVllVlNHYktzTFQ0aTFKb3c3V1Z2UTl3UTJudG5PWkF5NmpTUjZjS2pxY29CdWJOVjRNRGROYktfT21fRzhVeHZBbVRIMzhtV3A1dGpnVjA2QQ?oc=5"
+      "date": "Thu, 02 Jul 2026 20:36:31 GMT",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPTExHb3hUODJOQmhkQmdBWkUzRTJnbXRaSTlESGh0Q0RSaXJ4XzVhUjRkLXpXcWp2cl9CMzFJSnhLMzZqdkN6ZVQ2ZC1Mb3p3clM2Y0tFRE9QLXJDdnBBc2F1QUFWbmJvR1dBWlY4RUgxSGdyWmw3VUQtbng5aHhsRW0zd0JxWVVBZlloYV9GWUFOVlc1Nm5NRXp1WlNqNVRWRFV0eEJn?oc=5"
     },
     {
       "src": "The Guardian",
