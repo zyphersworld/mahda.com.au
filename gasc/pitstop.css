@@ -1,6 +1,13 @@
 /* ============================================================
-   THE PITSTOP — arcade sprintcar HUD
-   Dark-only "attract mode". Bold, readable, low haze.
+   THE PITSTOP — sprintcar race-week HUD
+   Six selectable themes via [data-theme] on <html>:
+     attract  → dark arcade HUD (default / original)
+     victory  → warm daylight race-program (cream + ink + checker)
+     nitro    → synthwave neon (deep purple, hot magenta/cyan glow)
+     feature  → green-flag go-light (checker + electric green)
+     redline  → carbon + hot red, aggressive race-livery
+     clay      → dirt-track dusk, ochre/sepia clay-and-dust
+   A short crossfade (.theme-fade overlay in the page) plays on switch.
    Signature element: the staging tree (.tree) beside the counter.
    ============================================================ */
 
@@ -15,29 +22,42 @@
   font-weight:700;font-display:swap;
 }
 
-:root{
-  /* surfaces */
-  --track:#0a0a0f;        /* deepest night */
-  --asphalt:#14141d;      /* panel base */
-  --asphalt-2:#1b1b26;    /* raised panel */
-  --grid:#23232f;         /* hairlines / borders */
+/* ================= THEME TOKENS ================= */
+/* ---- ATTRACT (default): dark arcade HUD ---- */
+:root,
+html[data-theme="attract"]{
+  --track:#0a0a0f;
+  --asphalt:#14141d;
+  --asphalt-2:#1b1b26;
+  --grid:#23232f;
   --grid-soft:#1e1e29;
 
-  /* ink */
   --ink:#f4f4ec;
   --ink-soft:#b9b9c6;
   --ink-faint:#7a7a8c;
 
-  /* signal colours */
-  --cyan:#22e0d6;         /* primary HUD accent */
+  --cyan:#22e0d6;
   --cyan-dim:#158d87;
-  --amber:#ffb020;        /* staging / caution */
-  --green:#3dff88;        /* go / done */
-  --red:#ff3b3b;          /* redline / live */
-  --magenta:#ff2d7e;      /* methanol flame accent */
+  --amber:#ffb020;
+  --green:#3dff88;
+  --red:#ff3b3b;
+  --magenta:#ff2d7e;
 
   --shadow:rgba(0,0,0,.55);
   --glow-cyan:0 0 0 1px rgba(34,224,214,.25),0 0 18px rgba(34,224,214,.10);
+
+  --page-bg:radial-gradient(120% 80% at 50% -8%, #16161f 0%, #0d0d13 46%, var(--track) 100%);
+  --texture-op:.4;
+  --texture:repeating-linear-gradient(115deg, rgba(255,255,255,.014) 0 2px, transparent 2px 9px);
+
+  --title-shadow:0 0 1px var(--cyan), 3px 3px 0 rgba(255,45,126,.22);
+  --panel-grad:linear-gradient(180deg,var(--asphalt-2),var(--asphalt));
+  --bracket:var(--cyan);
+  --bracket-op:.55;
+  --counter-bg:linear-gradient(180deg,#0c0c11,#08080c);
+  --counter-glow:0 0 14px rgba(34,224,214,.35);
+  --mast-tint:linear-gradient(90deg, var(--track) 12%, rgba(10,10,15,.72) 46%, rgba(10,10,15,.52) 100%),linear-gradient(180deg, rgba(10,10,15,.30), rgba(10,10,15,.30));
+  --mast-photo-op:1;
 
   --display:"Orbitron","Rajdhani",system-ui,sans-serif;
   --body:"Rajdhani",system-ui,sans-serif;
@@ -45,26 +65,305 @@
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 
+/* ---- VICTORY LANE: warm daylight race-program ----
+   Cream paper, ink-black type, oil-stain warmth, checker accents.
+   Light theme — inverts surfaces and ink, keeps the layout identical. */
+html[data-theme="victory"]{
+  --track:#efe7d6;
+  --asphalt:#fbf6ea;
+  --asphalt-2:#fffdf6;
+  --grid:#d9cdb4;
+  --grid-soft:#e6dcc7;
+
+  --ink:#1c1710;
+  --ink-soft:#4f463a;
+  --ink-faint:#8a7d68;
+
+  --cyan:#1668a6;         /* signage blue */
+  --cyan-dim:#1668a6;
+  --amber:#c8791b;        /* oil amber */
+  --green:#2f8f4e;
+  --red:#c0261f;          /* start-flag red */
+  --magenta:#b0246a;
+
+  --shadow:rgba(70,55,30,.18);
+  --glow-cyan:0 0 0 1px rgba(22,104,166,.2);
+
+  --page-bg:radial-gradient(130% 90% at 50% -6%, #fbf5e7 0%, #f3ead6 52%, var(--track) 100%);
+  --texture-op:.5;
+  --texture:repeating-linear-gradient(115deg, rgba(80,60,20,.03) 0 2px, transparent 2px 10px);
+
+  --title-shadow:2px 2px 0 rgba(192,38,31,.16);
+  --panel-grad:linear-gradient(180deg,var(--asphalt-2),var(--asphalt));
+  --bracket:var(--red);
+  --bracket-op:.7;
+  --counter-bg:linear-gradient(180deg,#241d13,#141009);
+  --counter-glow:none;
+  --mast-tint:linear-gradient(90deg, var(--track) 10%, rgba(239,231,214,.78) 44%, rgba(239,231,214,.5) 100%);
+  --mast-photo-op:.85;
+
+  --display:"Orbitron","Rajdhani",system-ui,sans-serif;
+  --body:"Rajdhani",system-ui,sans-serif;
+  --seg:"DSEG7","IBM Plex Mono",ui-monospace,monospace;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+/* counter stays a dark LED slab even on the light theme (a scoreboard inset) */
+html[data-theme="victory"] .counter .n{color:var(--amber);text-shadow:0 0 10px rgba(200,121,27,.4)}
+html[data-theme="victory"] a{border-bottom-color:rgba(22,104,166,.35)}
+html[data-theme="victory"] .checker{opacity:1}
+
+/* ---- NITRO NEON: synthwave ----
+   Deep indigo/purple night, hot magenta + electric cyan, heavier glow. */
+html[data-theme="nitro"]{
+  --track:#0b061a;
+  --asphalt:#160b2e;
+  --asphalt-2:#1e1140;
+  --grid:#3a2168;
+  --grid-soft:#2a1850;
+
+  --ink:#f6ecff;
+  --ink-soft:#c3aae6;
+  --ink-faint:#8b6fc0;
+
+  --cyan:#31f0ff;
+  --cyan-dim:#1f9fb8;
+  --amber:#ffcf3a;
+  --green:#5cffb0;
+  --red:#ff4d6d;
+  --magenta:#ff2fd0;
+
+  --shadow:rgba(60,0,90,.6);
+  --glow-cyan:0 0 0 1px rgba(49,240,255,.35),0 0 22px rgba(49,240,255,.18);
+
+  --page-bg:
+    radial-gradient(120% 70% at 50% -10%, #2a0f52 0%, #150a33 44%, var(--track) 100%),
+    linear-gradient(180deg, transparent 60%, rgba(255,47,208,.06) 100%);
+  --texture-op:.7;
+  --texture:
+    repeating-linear-gradient(0deg, rgba(49,240,255,.05) 0 1px, transparent 1px 46px),
+    repeating-linear-gradient(90deg, rgba(255,47,208,.045) 0 1px, transparent 1px 46px);
+
+  --title-shadow:0 0 2px var(--cyan), 0 0 18px rgba(49,240,255,.5), 4px 4px 0 rgba(255,47,208,.4);
+  --panel-grad:linear-gradient(180deg,var(--asphalt-2),var(--asphalt));
+  --bracket:var(--magenta);
+  --bracket-op:.85;
+  --counter-bg:linear-gradient(180deg,#10061f,#080312);
+  --counter-glow:0 0 18px rgba(49,240,255,.6),0 0 3px rgba(49,240,255,.9);
+  --mast-tint:linear-gradient(90deg, var(--track) 10%, rgba(11,6,26,.7) 44%, rgba(42,15,82,.4) 100%),linear-gradient(180deg, rgba(11,6,26,.25), rgba(11,6,26,.35));
+  --mast-photo-op:.9;
+
+  --display:"Orbitron","Rajdhani",system-ui,sans-serif;
+  --body:"Rajdhani",system-ui,sans-serif;
+  --seg:"DSEG7","IBM Plex Mono",ui-monospace,monospace;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html[data-theme="nitro"] .widget{box-shadow:0 6px 22px var(--shadow),0 0 0 1px rgba(255,47,208,.06)}
+html[data-theme="nitro"] .w-head h2{text-shadow:0 0 10px rgba(49,240,255,.4)}
+html[data-theme="nitro"] .title .flag{text-shadow:0 0 16px rgba(49,240,255,.7)}
+
+/* ---- FEATURE FLAG: green-flag go-light ----
+   Near-black track green, electric go-green primary, checker energy. */
+html[data-theme="feature"]{
+  --track:#05100a;
+  --asphalt:#0c1a12;
+  --asphalt-2:#12241a;
+  --grid:#1f3a2a;
+  --grid-soft:#193122;
+
+  --ink:#eafff1;
+  --ink-soft:#a9d8bd;
+  --ink-faint:#6e9a82;
+
+  --cyan:#25f07a;         /* go-green primary */
+  --cyan-dim:#159a4e;
+  --amber:#ffd23a;
+  --green:#25f07a;
+  --red:#ff5252;
+  --magenta:#00d3a7;
+
+  --shadow:rgba(0,20,8,.55);
+  --glow-cyan:0 0 0 1px rgba(37,240,122,.3),0 0 18px rgba(37,240,122,.14);
+
+  --page-bg:radial-gradient(120% 80% at 50% -8%, #0e2117 0%, #081409 46%, var(--track) 100%);
+  --texture-op:.5;
+  --texture:
+    repeating-linear-gradient(45deg, rgba(37,240,122,.05) 0 10px, transparent 10px 20px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.012) 0 10px, transparent 10px 20px);
+
+  --title-shadow:0 0 2px var(--green), 3px 3px 0 rgba(0,0,0,.5);
+  --panel-grad:linear-gradient(180deg,var(--asphalt-2),var(--asphalt));
+  --bracket:var(--green);
+  --bracket-op:.7;
+  --counter-bg:linear-gradient(180deg,#03150b,#020c06);
+  --counter-glow:0 0 16px rgba(37,240,122,.5);
+  --mast-tint:linear-gradient(90deg, var(--track) 12%, rgba(5,16,10,.72) 46%, rgba(5,16,10,.5) 100%),linear-gradient(180deg, rgba(5,16,10,.28), rgba(5,16,10,.28));
+  --mast-photo-op:.95;
+
+  --display:"Orbitron","Rajdhani",system-ui,sans-serif;
+  --body:"Rajdhani",system-ui,sans-serif;
+  --seg:"DSEG7","IBM Plex Mono",ui-monospace,monospace;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html[data-theme="feature"] .title .flag{text-shadow:0 0 16px rgba(37,240,122,.6)}
+
+/* ---- REDLINE: carbon + hot red, aggressive race-livery ---- */
+html[data-theme="redline"]{
+  --track:#0d0708;
+  --asphalt:#181012;
+  --asphalt-2:#20161a;
+  --grid:#3a2228;
+  --grid-soft:#2c1a1f;
+
+  --ink:#fdeef0;
+  --ink-soft:#d6a9b0;
+  --ink-faint:#9a7379;
+
+  --cyan:#ff2e43;         /* redline primary */
+  --cyan-dim:#a8141f;
+  --amber:#ff9f1c;
+  --green:#37d67a;
+  --red:#ff2e43;
+  --magenta:#ff4d8d;
+
+  --shadow:rgba(30,0,4,.6);
+  --glow-cyan:0 0 0 1px rgba(255,46,67,.32),0 0 18px rgba(255,46,67,.16);
+
+  --page-bg:
+    radial-gradient(120% 80% at 50% -8%, #241014 0%, #150a0c 46%, var(--track) 100%),
+    linear-gradient(180deg, transparent 62%, rgba(255,46,67,.05) 100%);
+  --texture-op:.55;
+  --texture:
+    repeating-linear-gradient(115deg, rgba(255,255,255,.015) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(115deg, rgba(255,46,67,.03) 0 2px, transparent 2px 26px);
+
+  --title-shadow:0 0 2px var(--red), 4px 4px 0 rgba(0,0,0,.55);
+  --panel-grad:linear-gradient(180deg,var(--asphalt-2),var(--asphalt));
+  --bracket:var(--red);
+  --bracket-op:.8;
+  --counter-bg:linear-gradient(180deg,#150809,#0a0405);
+  --counter-glow:0 0 16px rgba(255,46,67,.5);
+  --mast-tint:linear-gradient(90deg, var(--track) 12%, rgba(13,7,8,.74) 46%, rgba(13,7,8,.5) 100%),linear-gradient(180deg, rgba(13,7,8,.3), rgba(13,7,8,.3));
+  --mast-photo-op:1;
+
+  --display:"Orbitron","Rajdhani",system-ui,sans-serif;
+  --body:"Rajdhani",system-ui,sans-serif;
+  --seg:"DSEG7","IBM Plex Mono",ui-monospace,monospace;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html[data-theme="redline"] .title .flag{text-shadow:0 0 16px rgba(255,46,67,.6)}
+
+/* ---- CLAY: dirt-track dusk, ochre/sepia clay-and-dust ----
+   Warm mid-dark theme — the colour of a watered clay track under lights. */
+html[data-theme="clay"]{
+  --track:#191009;
+  --asphalt:#241812;
+  --asphalt-2:#2e2016;
+  --grid:#45311f;
+  --grid-soft:#3a291b;
+
+  --ink:#fbeedd;
+  --ink-soft:#d3b58f;
+  --ink-faint:#9c8360;
+
+  --cyan:#f2a24a;         /* clay-lit amber primary */
+  --cyan-dim:#b06f27;
+  --amber:#ffc861;
+  --green:#8fbf5a;
+  --red:#e8552f;
+  --magenta:#e0723f;
+
+  --shadow:rgba(20,10,0,.55);
+  --glow-cyan:0 0 0 1px rgba(242,162,74,.28),0 0 16px rgba(242,162,74,.12);
+
+  --page-bg:
+    radial-gradient(130% 90% at 50% -8%, #3a2413 0%, #24160c 48%, var(--track) 100%),
+    linear-gradient(180deg, transparent 55%, rgba(232,85,47,.05) 100%);
+  --texture-op:.6;
+  --texture:
+    radial-gradient(rgba(255,220,170,.05) 1px, transparent 1.4px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.03) 0 2px, transparent 2px 6px);
+
+  --title-shadow:0 0 2px var(--amber), 3px 3px 0 rgba(0,0,0,.45);
+  --panel-grad:linear-gradient(180deg,var(--asphalt-2),var(--asphalt));
+  --bracket:var(--amber);
+  --bracket-op:.72;
+  --counter-bg:linear-gradient(180deg,#150c05,#0d0703);
+  --counter-glow:0 0 15px rgba(242,162,74,.45);
+  --mast-tint:linear-gradient(90deg, var(--track) 12%, rgba(25,16,9,.72) 46%, rgba(25,16,9,.48) 100%),linear-gradient(180deg, rgba(25,16,9,.26), rgba(25,16,9,.26));
+  --mast-photo-op:.95;
+
+  --display:"Orbitron","Rajdhani",system-ui,sans-serif;
+  --body:"Rajdhani",system-ui,sans-serif;
+  --seg:"DSEG7","IBM Plex Mono",ui-monospace,monospace;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+/* clay texture wants a small dot-grid; size the radial layer */
+html[data-theme="clay"] body::before{background-size:7px 7px,auto}
+html[data-theme="clay"] .title .flag{text-shadow:0 0 16px rgba(242,162,74,.55)}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;font-weight:500;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  background:
-    radial-gradient(120% 80% at 50% -8%, #16161f 0%, #0d0d13 46%, var(--track) 100%) fixed;
+  background:var(--page-bg) fixed;
+  transition:background .35s ease,color .35s ease;
 }
-/* faint diagonal "track texture" — very low contrast, no scanlines */
+/* faint diagonal "track texture" — theme-driven */
 body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4;
-  background-image:
-    repeating-linear-gradient(115deg, rgba(255,255,255,.014) 0 2px, transparent 2px 9px);
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:var(--texture-op);
+  background-image:var(--texture);
 }
 .wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 22px 90px}
 @media(max-width:560px){.wrap{padding:0 15px 70px}}
 
 a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(34,224,214,.28)}
-a:hover{color:#5cf3ea;border-bottom-color:#5cf3ea}
+a:hover{color:var(--cyan);filter:brightness(1.2);border-bottom-color:currentColor}
 :focus-visible{outline:2.5px solid var(--amber);outline-offset:2px;border-radius:2px}
+
+/* ============================== THEME SWITCHER ============================== */
+.theme-switch{
+  position:relative;z-index:3;display:flex;gap:6px;align-items:center;flex-wrap:wrap;
+  margin:14px 0 2px;
+}
+.theme-switch .lbl{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-faint);margin-right:4px;
+}
+.theme-switch button{
+  font-family:var(--display);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;background:rgba(0,0,0,.22);border:1px solid var(--grid);color:var(--ink-soft);
+  padding:6px 12px;border-radius:3px;transition:.15s;display:inline-flex;align-items:center;gap:7px;
+}
+html[data-theme="victory"] .theme-switch button{background:rgba(255,255,255,.4)}
+.theme-switch button .swatch{width:9px;height:9px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 6px currentColor}
+.theme-switch button[data-set="attract"] .swatch{color:#22e0d6;background:#22e0d6}
+.theme-switch button[data-set="victory"] .swatch{color:#c0261f;background:#c0261f}
+.theme-switch button[data-set="nitro"] .swatch{color:#ff2fd0;background:#ff2fd0}
+.theme-switch button[data-set="feature"] .swatch{color:#25f07a;background:#25f07a}
+.theme-switch button[data-set="redline"] .swatch{color:#ff2e43;background:#ff2e43}
+.theme-switch button[data-set="clay"] .swatch{color:#f2a24a;background:#f2a24a}
+.theme-switch button:hover{color:var(--ink);border-color:var(--ink-faint)}
+.theme-switch button[aria-pressed="true"]{
+  border-color:var(--cyan);color:var(--ink);
+  box-shadow:0 0 0 1px var(--cyan),0 0 12px rgba(34,224,214,.25);
+}
+
+/* ---- THEME CROSSFADE ----
+   A single fixed overlay snapshots the outgoing accent colour and fades out
+   as the new theme's variables cascade in. GPU-only (opacity), so it stays
+   cheap. The page itself keeps its own background/colour transitions. */
+.theme-fade{
+  position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:0;background:var(--fade-col,#0a0a0f);
+  will-change:opacity;
+}
+.theme-fade.run{animation:themeFade .5s ease both}
+@keyframes themeFade{
+  0%{opacity:0}
+  35%{opacity:.9}
+  100%{opacity:0}
+}
 
 /* ---- checker rule (thin, arcade banner) ---- */
 .checker{
@@ -82,28 +381,22 @@ header.masthead{
   position:relative;padding:26px 24px 24px;border-bottom:1px solid var(--grid);margin-bottom:6px;
   border-radius:4px;overflow:hidden;isolation:isolate;
 }
-/* Sungold Stadium at dusk — full-masthead backdrop, right-anchored,
-   fading in from the left so its left edge dissolves into the page.
-   A dark tint keeps the LED counter, staging tree and copy readable. */
 header.masthead::before{
-  content:"";position:absolute;inset:0;z-index:-2;
+  content:"";position:absolute;inset:0;z-index:-2;opacity:var(--mast-photo-op);
   background:#0b0b10 url("stadium.jpg") no-repeat right center;
   background-size:cover;
-  /* dissolve the left edge, and soften the right/bottom a touch */
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 22%,#000 62%);
           mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 22%,#000 62%);
 }
-/* moody tint sitting over the photo, under the content */
 header.masthead::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:
-    linear-gradient(90deg, var(--track) 12%, rgba(10,10,15,.72) 46%, rgba(10,10,15,.52) 100%),
-    linear-gradient(180deg, rgba(10,10,15,.30), rgba(10,10,15,.30));
+  background:var(--mast-tint);
 }
 @media(max-width:560px){
   header.masthead{padding:18px 15px 16px}
   header.masthead::before{-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 45%);mask-image:linear-gradient(90deg,transparent 0%,#000 45%)}
   header.masthead::after{background:linear-gradient(180deg,rgba(10,10,15,.62),rgba(10,10,15,.82))}
+  html[data-theme="victory"] header.masthead::after{background:linear-gradient(180deg,rgba(239,231,214,.7),rgba(239,231,214,.9))}
 }
 .eyebrow{
   font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);
@@ -118,7 +411,7 @@ h1.title{
   font-family:var(--display);font-weight:800;letter-spacing:.02em;line-height:.95;
   font-size:clamp(40px,9vw,94px);margin:14px 0 8px;text-transform:uppercase;
   color:var(--ink);
-  text-shadow:0 0 1px var(--cyan), 3px 3px 0 rgba(255,45,126,.22);
+  text-shadow:var(--title-shadow);
 }
 h1.title .flag{color:var(--cyan)}
 h1.title .sub{
@@ -133,21 +426,30 @@ h1.title .sub{
 .clockbar{
   position:relative;z-index:1;
   margin-top:26px;border:1px solid rgba(255,255,255,.10);border-radius:4px;
-  /* translucent so the Sungold Stadium photo behind the masthead reads through */
   background:linear-gradient(180deg,rgba(20,20,29,.55),rgba(11,11,16,.62));
   backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);
   box-shadow:0 8px 30px var(--shadow);
   display:flex;flex-wrap:wrap;align-items:stretch;gap:0;overflow:hidden;
 }
-/* staging tree — the signature element */
+html[data-theme="victory"] .clockbar{
+  border-color:var(--grid);
+  background:linear-gradient(180deg,rgba(255,253,246,.82),rgba(251,246,234,.9));
+}
+html[data-theme="nitro"] .clockbar{
+  border-color:rgba(255,47,208,.35);
+  background:linear-gradient(180deg,rgba(30,17,64,.6),rgba(11,6,26,.7));
+  box-shadow:0 8px 30px var(--shadow),0 0 0 1px rgba(49,240,255,.08);
+}
 .tree{
   flex:0 0 auto;display:flex;flex-direction:column;gap:7px;justify-content:center;
   padding:16px 18px;border-right:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.28);
 }
+html[data-theme="victory"] .tree{background:rgba(28,23,16,.06);border-right-color:var(--grid)}
 .tree .bulb{
   width:20px;height:20px;border-radius:50%;background:#26262f;
   border:1px solid #34343f;position:relative;transition:.25s;
 }
+html[data-theme="victory"] .tree .bulb{background:#cdbfa4;border-color:#b6a98c}
 .tree .bulb::after{content:"";position:absolute;inset:3px;border-radius:50%;background:transparent}
 .tree .bulb.amber.on{background:var(--amber);border-color:var(--amber);box-shadow:0 0 12px var(--amber)}
 .tree .bulb.green.on{background:var(--green);border-color:var(--green);box-shadow:0 0 14px var(--green)}
@@ -165,8 +467,8 @@ h1.title .sub{
 .counter .unit{text-align:center;flex:1 1 0;min-width:56px}
 .counter .n{
   font-family:var(--seg);font-size:clamp(30px,8vw,52px);line-height:1;color:var(--cyan);
-  letter-spacing:.02em;text-shadow:0 0 14px rgba(34,224,214,.35);
-  background:linear-gradient(180deg,#0c0c11,#08080c);border:1px solid var(--grid);
+  letter-spacing:.02em;text-shadow:var(--counter-glow);
+  background:var(--counter-bg);border:1px solid var(--grid);
   border-radius:4px;padding:10px 6px 8px;display:block;
 }
 .counter .u{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-top:6px}
@@ -183,13 +485,13 @@ h1.title .sub{
 
 /* HUD panel with corner brackets */
 .widget{
-  background:linear-gradient(180deg,var(--asphalt-2),var(--asphalt));
+  background:var(--panel-grad);
   border:1px solid var(--grid);border-radius:4px;position:relative;overflow:hidden;
   box-shadow:0 6px 22px var(--shadow);
 }
 .widget::before,.widget::after{
   content:"";position:absolute;width:12px;height:12px;pointer-events:none;z-index:2;
-  border-color:var(--cyan);border-style:solid;opacity:.55;
+  border-color:var(--bracket);border-style:solid;opacity:var(--bracket-op);
 }
 .widget::before{top:6px;left:6px;border-width:2px 0 0 2px}
 .widget::after{bottom:6px;right:6px;border-width:0 2px 2px 0}
@@ -197,6 +499,7 @@ h1.title .sub{
   display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;
   border-bottom:1px solid var(--grid);background:rgba(0,0,0,.22);
 }
+html[data-theme="victory"] .w-head{background:rgba(28,23,16,.04)}
 .w-head h2{
   font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
   margin:0;color:var(--ink);display:flex;align-items:center;gap:9px;
@@ -248,7 +551,7 @@ h1.title .sub{
 .feed .hl:hover{color:var(--cyan)}
 .feed .dek{font-size:14px;color:var(--ink-soft);line-height:1.45}
 .feed-status{font-family:var(--mono);font-size:11px;color:var(--ink-faint);padding:8px 0;line-height:1.6}
-.skel{height:13px;background:linear-gradient(90deg,var(--asphalt),#26262f,var(--asphalt));background-size:200% 100%;
+.skel{height:13px;background:linear-gradient(90deg,var(--asphalt),var(--grid),var(--asphalt));background-size:200% 100%;
   animation:sh 1.3s infinite;border-radius:3px;margin:7px 0}
 @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
@@ -316,4 +619,4 @@ footer .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
 @media(max-width:680px){footer .grid{grid-template-columns:1fr}}
 footer .mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;line-height:1.7}
 
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto;transition:none!important}.theme-fade{display:none!important}}

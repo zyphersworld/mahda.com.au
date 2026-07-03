@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="en-AU">
+<html lang="en-AU" data-theme="attract">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Set theme before paint to avoid a flash of the default theme -->
+<script>(function(){try{var t=localStorage.getItem('pitstop-theme');if(['attract','victory','nitro','feature','redline','clay'].indexOf(t)>-1)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -33,9 +35,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NL6F28VS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<div class="theme-fade" id="themeFade" aria-hidden="true"></div>
 <div class="wrap">
 <header class="masthead">
   <div class="checker"></div>
+  <div class="theme-switch" role="group" aria-label="Colour theme">
+    <span class="lbl">Livery</span>
+    <button type="button" data-set="attract" aria-pressed="true"><span class="swatch"></span>Attract</button>
+    <button type="button" data-set="victory" aria-pressed="false"><span class="swatch"></span>Victory Lane</button>
+    <button type="button" data-set="nitro" aria-pressed="false"><span class="swatch"></span>Nitro</button>
+    <button type="button" data-set="feature" aria-pressed="false"><span class="swatch"></span>Feature</button>
+    <button type="button" data-set="redline" aria-pressed="false"><span class="swatch"></span>Redline</button>
+    <button type="button" data-set="clay" aria-pressed="false"><span class="swatch"></span>Clay</button>
+  </div>
   <div class="eyebrow">
     <span><span class="dot"></span>Race-week hub</span>
     <span class="sep">&#9670;</span>
@@ -187,6 +199,35 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 // Backstop: strip any tag-like content from feed text before display, so a
 // stale or hand-edited headlines.json can never surface raw <a href> markup.
 const strip=s=>String(s==null?'':s).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+
+/* ---------- THEME SWITCHER (livery) ----------
+   Three selectable themes, persisted in localStorage. The pre-paint inline
+   script in <head> applies the saved theme before first render; this wires
+   the buttons and keeps aria-pressed + the meta theme-color in sync. */
+const THEMES=['attract','victory','nitro','feature','redline','clay'];
+const META_COLOR={attract:'#0a0a0f',victory:'#efe7d6',nitro:'#0b061a',feature:'#05100a',redline:'#0d0708',clay:'#191009'};
+const fadeEl=$('#themeFade');
+// Trigger the crossfade: paint the overlay in the OUTGOING theme's accent,
+// then let the CSS keyframe fade it out as the new variables take over.
+function playFade(){
+  if(!fadeEl)return;
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--cyan').trim()||'#0a0a0f';
+  fadeEl.style.setProperty('--fade-col',accent);
+  fadeEl.classList.remove('run');void fadeEl.offsetWidth; // restart the animation
+  fadeEl.classList.add('run');
+}
+function setTheme(name,animate){
+  if(!THEMES.includes(name))name='attract';
+  const current=document.documentElement.getAttribute('data-theme');
+  if(animate&&name!==current)playFade();
+  document.documentElement.setAttribute('data-theme',name);
+  try{localStorage.setItem('pitstop-theme',name);}catch(e){}
+  const mc=document.querySelector('meta[name="theme-color"]');if(mc)mc.setAttribute('content',META_COLOR[name]);
+  $$('.theme-switch button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.set===name)));
+  if(animate){try{dataLayer.push({event:'theme_select',theme:name});}catch(e){}}
+}
+$$('.theme-switch button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.set,true)));
+setTheme(document.documentElement.getAttribute('data-theme')||'attract',false);
 
 try{dayjs.extend(dayjs_plugin_relativeTime);}catch(e){}
 const rel=d=>{try{const x=dayjs(d);return x.isValid()?x.fromNow():'';}catch(e){return '';}};
