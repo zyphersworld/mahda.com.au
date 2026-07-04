@@ -51,6 +51,17 @@ Algerian is a Windows system font; visitors who have it installed see
 the real face. Everyone else gets Rye from Google Fonts, which matches
 Algerian's engraved western-tuscan capitals closely. No action needed.
 
+EMBEDDED MEDIA
+--------------
+The Resources page now embeds the three promo videos and the audio
+review as inline HTML5 players (play them right on the page). The home
+page embeds the main College Promo video with a link to Resources for
+the rest. Each player has a built-in fallback: if a file can't be
+hotlinked from Wix's servers on the new host, it automatically shows
+an "Open in a new tab" link instead of a broken player. If that
+happens, the fix is to re-host the MP4/MP3 files alongside the site
+and update the src URLs.
+
 MOBILE HEADER
 -------------
 The header now scales cleanly on phones: the brand title wraps instead
