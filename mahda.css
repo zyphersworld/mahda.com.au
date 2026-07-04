@@ -60,6 +60,7 @@ html[data-theme="vellum"]{
   --plaque-grad:linear-gradient(180deg,#f0e4c8,#e2d0a6);
   --plaque-emboss:inset 0 1px 0 rgba(255,255,255,.6), inset 0 -2px 5px rgba(120,90,40,.18);
   --mast-band:linear-gradient(180deg, rgba(154,107,31,.12), rgba(154,107,31,0));
+  --hero-op:.18;--hero-blend:multiply;
 
   --display:"Cinzel",Georgia,serif;
   --script:"UnifrakturMaguntia","Cinzel",serif;
@@ -104,6 +105,7 @@ html[data-theme="brass"]{
   --plaque-grad:linear-gradient(180deg,#3b2c19,#241a10);
   --plaque-emboss:inset 0 1px 0 rgba(224,168,60,.35), inset 0 -3px 6px rgba(0,0,0,.5), 0 0 0 1px rgba(224,168,60,.15);
   --mast-band:linear-gradient(180deg, rgba(224,168,60,.14), rgba(224,168,60,0));
+  --hero-op:.45;--hero-blend:screen;
 
   --display:"Cinzel",Georgia,serif;
   --script:"UnifrakturMaguntia","Cinzel",serif;
@@ -150,6 +152,7 @@ html[data-theme="iron"]{
   --plaque-grad:linear-gradient(180deg,#262b2f,#171a1d);
   --plaque-emboss:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -3px 6px rgba(0,0,0,.55), 0 0 0 1px rgba(224,102,58,.12);
   --mast-band:linear-gradient(180deg, rgba(224,102,58,.12), rgba(224,102,58,0));
+  --hero-op:.55;--hero-blend:screen;
 
   --display:"Cinzel",Georgia,serif;
   --script:"UnifrakturMaguntia","Cinzel",serif;
@@ -194,6 +197,7 @@ html[data-theme="emerald"]{
   --plaque-grad:linear-gradient(180deg,#163d29,#0b2015);
   --plaque-emboss:inset 0 1px 0 rgba(231,193,90,.25), inset 0 -3px 6px rgba(0,0,0,.45), 0 0 0 1px rgba(231,193,90,.14);
   --mast-band:linear-gradient(180deg, rgba(231,193,90,.13), rgba(231,193,90,0));
+  --hero-op:.42;--hero-blend:screen;
 
   --display:"Cinzel",Georgia,serif;
   --script:"UnifrakturMaguntia","Cinzel",serif;
@@ -239,6 +243,7 @@ html[data-theme="sanctum"]{
   --plaque-grad:linear-gradient(180deg,#241c45,#140f2a);
   --plaque-emboss:inset 0 1px 0 rgba(216,180,90,.22), inset 0 -3px 6px rgba(0,0,0,.5), 0 0 0 1px rgba(216,180,90,.12);
   --mast-band:linear-gradient(180deg, rgba(216,180,90,.12), rgba(216,180,90,0));
+  --hero-op:.42;--hero-blend:screen;
 
   --display:"Cinzel",Georgia,serif;
   --script:"UnifrakturMaguntia","Cinzel",serif;
@@ -284,6 +289,7 @@ html[data-theme="sigil"]{
   --plaque-grad:linear-gradient(180deg,#231624,#140d15);
   --plaque-emboss:inset 0 1px 0 rgba(255,47,179,.3), inset 0 -3px 6px rgba(0,0,0,.55), 0 0 0 1px rgba(255,47,179,.16);
   --mast-band:linear-gradient(180deg, rgba(255,47,179,.14), rgba(255,47,179,0));
+  --hero-op:.46;--hero-blend:screen;
 
   --display:"Cinzel",Georgia,serif;
   --script:"UnifrakturMaguntia","Cinzel",serif;
@@ -304,6 +310,7 @@ body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:var(--texture-op);
   background-image:var(--texture);background-size:var(--texture-size);
 }
+
 .wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 20px 90px}
 @media(max-width:560px){.wrap{padding:0 14px 70px}body{font-size:17px}}
 
@@ -361,11 +368,22 @@ img,iframe,object{max-width:100%}
 
 /* ============================== MASTHEAD ============================== */
 header.masthead{
-  position:relative;padding:22px 8px 10px;text-align:center;
+  position:relative;padding:34px 8px 20px;text-align:center;overflow:hidden;
 }
+/* tint wash — sits under the hero image */
 header.masthead .band{
-  position:absolute;inset:0;z-index:-1;background:var(--mast-band);pointer-events:none;
+  position:absolute;inset:0;z-index:-2;background:var(--mast-band);pointer-events:none;
   border-radius:0 0 40% 40%/0 0 14px 14px;
+}
+/* hero image — background of the masthead only, radial-masked so it melts into
+   the header edges (not anchored to the page). Opacity/blend per livery. */
+header.masthead::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  opacity:var(--hero-op,.5);mix-blend-mode:var(--hero-blend,normal);
+  background:url("img/hero-bg.jpg") no-repeat center center;
+  background-size:cover;transition:opacity .4s ease;
+  -webkit-mask-image:radial-gradient(115% 100% at 50% 30%, #000 0%, rgba(0,0,0,.8) 42%, rgba(0,0,0,.35) 68%, transparent 90%);
+          mask-image:radial-gradient(115% 100% at 50% 30%, #000 0%, rgba(0,0,0,.8) 42%, rgba(0,0,0,.35) 68%, transparent 90%);
 }
 .eyebrow{
   font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint);
