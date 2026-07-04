@@ -1,0 +1,504 @@
+/* ============================================================
+   MAHDA CHRISTOPHER GREENE — a personal hub
+   An illuminated-manuscript / iron-age grimoire, built on the same
+   architecture as The Pitstop (GASC): same-origin JSON drives the
+   "pages", a livery switcher with an animated crossfade, corner-
+   bracket panels, mobile-first.  Its own skin, though: brass, iron,
+   vellum, knotwork and sigils rather than an arcade HUD.
+
+   Six liveries via [data-theme] on <html>:
+     vellum   → aged-paper manuscript (default)
+     brass    → steampunk copper + verdigris
+     iron     → dark iron & ember
+     emerald  → Celtic green & gold
+     sanctum  → deep indigo/violet (Kabbalah-tinged)
+     sigil    → black + chaos-magenta (chaos magic)
+   A short crossfade (.theme-fade overlay) plays on switch.
+   ============================================================ */
+
+/* ---- fonts ----
+   Cinzel            → display / engraved capitals (Roman-inscription feel)
+   IM Fell English   → body serif (early-modern printed manuscript)
+   UnifrakturMaguntia→ occasional blackletter flourish
+   IBM Plex Mono     → dense data / stamps / kickers                       */
+
+/* ================= THEME TOKENS ================= */
+/* ---- VELLUM (default): aged-paper manuscript ---- */
+:root,
+html[data-theme="vellum"]{
+  --page:#e9dcc0;
+  --leaf:#f4ead1;
+  --leaf-2:#fbf3df;
+  --rule:#cbb489;
+  --rule-soft:#dcc9a3;
+
+  --ink:#241a10;
+  --ink-soft:#5b4a33;
+  --ink-faint:#8c7857;
+
+  --gold:#9a6b1f;         /* primary accent — burnished gold-brown */
+  --gold-dim:#7c561a;
+  --rubric:#8a2118;       /* rubricated red (manuscript initials) */
+  --verd:#3f6b4a;
+  --azure:#2f5c86;
+  --amethyst:#6b3b8a;
+
+  --shadow:rgba(60,40,10,.28);
+  --edge:rgba(120,90,40,.35);
+
+  --page-bg:
+    radial-gradient(140% 100% at 50% -10%, #efe3c8 0%, #e4d6b6 55%, var(--page) 100%);
+  --texture-op:.5;
+  --texture:
+    radial-gradient(rgba(120,90,40,.05) 1px, transparent 1.3px),
+    repeating-linear-gradient(92deg, rgba(120,90,40,.02) 0 2px, transparent 2px 7px);
+  --texture-size:6px 6px, auto;
+
+  --title-shadow:1px 1px 0 rgba(255,255,255,.35), 3px 3px 0 rgba(138,33,24,.12);
+  --panel-grad:linear-gradient(180deg,var(--leaf-2),var(--leaf));
+  --bracket:var(--gold);
+  --bracket-op:.7;
+  --plaque-grad:linear-gradient(180deg,#f0e4c8,#e2d0a6);
+  --plaque-emboss:inset 0 1px 0 rgba(255,255,255,.6), inset 0 -2px 5px rgba(120,90,40,.18);
+  --mast-band:linear-gradient(180deg, rgba(154,107,31,.12), rgba(154,107,31,0));
+
+  --display:"Cinzel",Georgia,serif;
+  --script:"UnifrakturMaguntia","Cinzel",serif;
+  --body:"IM Fell English",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+
+/* ---- BRASS: steampunk copper + verdigris ---- */
+html[data-theme="brass"]{
+  --page:#1c1710;
+  --leaf:#2a2016;
+  --leaf-2:#342718;
+  --rule:#7a5a2c;
+  --rule-soft:#54401f;
+
+  --ink:#f3e3c4;
+  --ink-soft:#cba871;
+  --ink-faint:#9a7c4c;
+
+  --gold:#e0a83c;         /* polished brass */
+  --gold-dim:#a9761f;
+  --rubric:#4bbfa0;       /* verdigris */
+  --verd:#4bbfa0;
+  --azure:#5aa2c9;
+  --amethyst:#c98adb;
+
+  --shadow:rgba(0,0,0,.55);
+  --edge:rgba(224,168,60,.4);
+
+  --page-bg:
+    radial-gradient(140% 100% at 50% -10%, #2c2113 0%, #1f180f 55%, var(--page) 100%);
+  --texture-op:.55;
+  --texture:
+    repeating-linear-gradient(90deg, rgba(224,168,60,.045) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 8px);
+  --texture-size:auto,auto;
+
+  --title-shadow:0 1px 0 rgba(0,0,0,.6), 0 0 18px rgba(224,168,60,.25);
+  --panel-grad:linear-gradient(180deg,var(--leaf-2),var(--leaf));
+  --bracket:var(--gold);
+  --bracket-op:.85;
+  --plaque-grad:linear-gradient(180deg,#3b2c19,#241a10);
+  --plaque-emboss:inset 0 1px 0 rgba(224,168,60,.35), inset 0 -3px 6px rgba(0,0,0,.5), 0 0 0 1px rgba(224,168,60,.15);
+  --mast-band:linear-gradient(180deg, rgba(224,168,60,.14), rgba(224,168,60,0));
+
+  --display:"Cinzel",Georgia,serif;
+  --script:"UnifrakturMaguntia","Cinzel",serif;
+  --body:"IM Fell English",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+
+/* ---- IRON: dark iron & ember ---- */
+html[data-theme="iron"]{
+  --page:#0f1113;
+  --leaf:#181b1e;
+  --leaf-2:#202428;
+  --rule:#3a4249;
+  --rule-soft:#2b3236;
+
+  --ink:#e7ebee;
+  --ink-soft:#a9b4bb;
+  --ink-faint:#71808a;
+
+  --gold:#e0663a;         /* ember */
+  --gold-dim:#a2401f;
+  --rubric:#e0663a;
+  --verd:#5fb8a0;
+  --azure:#5b9bd1;
+  --amethyst:#9c7bd0;
+
+  --shadow:rgba(0,0,0,.6);
+  --edge:rgba(224,102,58,.35);
+
+  --page-bg:
+    radial-gradient(140% 100% at 50% -12%, #23282c 0%, #14181b 52%, var(--page) 100%),
+    linear-gradient(180deg, transparent 60%, rgba(224,102,58,.05) 100%);
+  --texture-op:.6;
+  --texture:
+    repeating-linear-gradient(115deg, rgba(255,255,255,.014) 0 1px, transparent 1px 3px),
+    radial-gradient(rgba(224,102,58,.05) 1px, transparent 1.4px);
+  --texture-size:auto, 9px 9px;
+
+  --title-shadow:0 2px 0 rgba(0,0,0,.6), 0 0 20px rgba(224,102,58,.28);
+  --panel-grad:linear-gradient(180deg,var(--leaf-2),var(--leaf));
+  --bracket:var(--gold);
+  --bracket-op:.8;
+  --plaque-grad:linear-gradient(180deg,#262b2f,#171a1d);
+  --plaque-emboss:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -3px 6px rgba(0,0,0,.55), 0 0 0 1px rgba(224,102,58,.12);
+  --mast-band:linear-gradient(180deg, rgba(224,102,58,.12), rgba(224,102,58,0));
+
+  --display:"Cinzel",Georgia,serif;
+  --script:"UnifrakturMaguntia","Cinzel",serif;
+  --body:"IM Fell English",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+
+/* ---- EMERALD: Celtic green & gold ---- */
+html[data-theme="emerald"]{
+  --page:#06140d;
+  --leaf:#0c2016;
+  --leaf-2:#12291c;
+  --rule:#265a3c;
+  --rule-soft:#1c452d;
+
+  --ink:#eafff0;
+  --ink-soft:#a7d6bb;
+  --ink-faint:#6f9c81;
+
+  --gold:#e7c15a;         /* Celtic gold */
+  --gold-dim:#b28f2c;
+  --rubric:#e7c15a;
+  --verd:#37c47a;
+  --azure:#4bb3a8;
+  --amethyst:#b98ad6;
+
+  --shadow:rgba(0,20,10,.55);
+  --edge:rgba(231,193,90,.35);
+
+  --page-bg:
+    radial-gradient(140% 100% at 50% -10%, #103021 0%, #0a1c12 52%, var(--page) 100%);
+  --texture-op:.55;
+  --texture:
+    repeating-linear-gradient(45deg, rgba(231,193,90,.04) 0 10px, transparent 10px 20px),
+    repeating-linear-gradient(-45deg, rgba(55,196,122,.03) 0 10px, transparent 10px 20px);
+  --texture-size:auto,auto;
+
+  --title-shadow:0 1px 0 rgba(0,0,0,.5), 0 0 16px rgba(231,193,90,.25);
+  --panel-grad:linear-gradient(180deg,var(--leaf-2),var(--leaf));
+  --bracket:var(--gold);
+  --bracket-op:.75;
+  --plaque-grad:linear-gradient(180deg,#163d29,#0b2015);
+  --plaque-emboss:inset 0 1px 0 rgba(231,193,90,.25), inset 0 -3px 6px rgba(0,0,0,.45), 0 0 0 1px rgba(231,193,90,.14);
+  --mast-band:linear-gradient(180deg, rgba(231,193,90,.13), rgba(231,193,90,0));
+
+  --display:"Cinzel",Georgia,serif;
+  --script:"UnifrakturMaguntia","Cinzel",serif;
+  --body:"IM Fell English",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+
+/* ---- SANCTUM: deep indigo/violet, Kabbalah-tinged ---- */
+html[data-theme="sanctum"]{
+  --page:#0a0818;
+  --leaf:#130f26;
+  --leaf-2:#1b1533;
+  --rule:#3a2e63;
+  --rule-soft:#2c234c;
+
+  --ink:#efe9ff;
+  --ink-soft:#bcaee6;
+  --ink-faint:#8375b8;
+
+  --gold:#d8b45a;         /* menorah gold */
+  --gold-dim:#a9862f;
+  --rubric:#d8b45a;
+  --verd:#5ec9c0;
+  --azure:#6b8ff0;
+  --amethyst:#b07be6;
+
+  --shadow:rgba(10,0,40,.55);
+  --edge:rgba(216,180,90,.3);
+
+  --page-bg:
+    radial-gradient(140% 100% at 50% -12%, #211a44 0%, #120e2a 52%, var(--page) 100%),
+    linear-gradient(180deg, transparent 58%, rgba(176,123,230,.06) 100%);
+  --texture-op:.6;
+  --texture:
+    radial-gradient(rgba(216,180,90,.05) 1px, transparent 1.4px),
+    repeating-linear-gradient(90deg, rgba(176,123,230,.03) 0 1px, transparent 1px 44px);
+  --texture-size:22px 22px, auto;
+
+  --title-shadow:0 1px 0 rgba(0,0,0,.5), 0 0 18px rgba(216,180,90,.28);
+  --panel-grad:linear-gradient(180deg,var(--leaf-2),var(--leaf));
+  --bracket:var(--gold);
+  --bracket-op:.75;
+  --plaque-grad:linear-gradient(180deg,#241c45,#140f2a);
+  --plaque-emboss:inset 0 1px 0 rgba(216,180,90,.22), inset 0 -3px 6px rgba(0,0,0,.5), 0 0 0 1px rgba(216,180,90,.12);
+  --mast-band:linear-gradient(180deg, rgba(216,180,90,.12), rgba(216,180,90,0));
+
+  --display:"Cinzel",Georgia,serif;
+  --script:"UnifrakturMaguntia","Cinzel",serif;
+  --body:"IM Fell English",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+
+/* ---- SIGIL: black + chaos-magenta (chaos magic) ---- */
+html[data-theme="sigil"]{
+  --page:#0a070a;
+  --leaf:#150f16;
+  --leaf-2:#1e141f;
+  --rule:#3d2440;
+  --rule-soft:#2c1a2e;
+
+  --ink:#f7eafb;
+  --ink-soft:#d3a9d9;
+  --ink-faint:#9a7099;
+
+  --gold:#ff2fb3;         /* chaos magenta primary */
+  --gold-dim:#b01f7d;
+  --rubric:#ff2fb3;
+  --verd:#3dd7c0;
+  --azure:#4aa8ff;
+  --amethyst:#c46bff;
+
+  --shadow:rgba(30,0,25,.6);
+  --edge:rgba(255,47,179,.35);
+
+  --page-bg:
+    radial-gradient(120% 80% at 50% -10%, #2a0f28 0%, #160a17 46%, var(--page) 100%),
+    linear-gradient(180deg, transparent 58%, rgba(255,47,179,.06) 100%);
+  --texture-op:.6;
+  --texture:
+    repeating-linear-gradient(0deg, rgba(255,47,179,.04) 0 1px, transparent 1px 46px),
+    repeating-linear-gradient(90deg, rgba(74,168,255,.03) 0 1px, transparent 1px 46px);
+  --texture-size:auto,auto;
+
+  --title-shadow:0 0 2px var(--gold), 0 0 18px rgba(255,47,179,.5), 3px 3px 0 rgba(0,0,0,.5);
+  --panel-grad:linear-gradient(180deg,var(--leaf-2),var(--leaf));
+  --bracket:var(--gold);
+  --bracket-op:.85;
+  --plaque-grad:linear-gradient(180deg,#231624,#140d15);
+  --plaque-emboss:inset 0 1px 0 rgba(255,47,179,.3), inset 0 -3px 6px rgba(0,0,0,.55), 0 0 0 1px rgba(255,47,179,.16);
+  --mast-band:linear-gradient(180deg, rgba(255,47,179,.14), rgba(255,47,179,0));
+
+  --display:"Cinzel",Georgia,serif;
+  --script:"UnifrakturMaguntia","Cinzel",serif;
+  --body:"IM Fell English",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+
+/* ================= BASE ================= */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background:var(--page-bg) fixed;
+  transition:background .4s ease,color .4s ease;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:var(--texture-op);
+  background-image:var(--texture);background-size:var(--texture-size);
+}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 20px 90px}
+@media(max-width:560px){.wrap{padding:0 14px 70px}body{font-size:17px}}
+
+a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--edge)}
+a:hover{filter:brightness(1.15);border-bottom-color:currentColor}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px;border-radius:2px}
+img,iframe,object{max-width:100%}
+
+/* ---- THEME CROSSFADE (identical mechanic to GASC) ---- */
+.theme-fade{
+  position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:0;background:var(--fade-col,#0a0a0f);will-change:opacity;
+}
+.theme-fade.run{animation:themeFade .5s ease both}
+@keyframes themeFade{0%{opacity:0}35%{opacity:.9}100%{opacity:0}}
+
+/* ============================== LIVERY SWITCHER ============================== */
+.theme-switch{
+  position:relative;z-index:3;display:flex;gap:6px;align-items:center;flex-wrap:wrap;
+  margin:16px 0 4px;
+}
+.theme-switch .lbl{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-faint);margin-right:4px;
+}
+.theme-switch button{
+  font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;background:var(--plaque-grad);border:1px solid var(--rule);color:var(--ink-soft);
+  padding:6px 12px;border-radius:3px;transition:.15s;display:inline-flex;align-items:center;gap:7px;
+  box-shadow:var(--plaque-emboss);
+}
+.theme-switch button .swatch{width:10px;height:10px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 6px currentColor;border:1px solid rgba(0,0,0,.25)}
+.theme-switch button[data-set="vellum"]  .swatch{color:#9a6b1f;background:#e9dcc0}
+.theme-switch button[data-set="brass"]   .swatch{color:#e0a83c;background:#e0a83c}
+.theme-switch button[data-set="iron"]    .swatch{color:#e0663a;background:#e0663a}
+.theme-switch button[data-set="emerald"] .swatch{color:#37c47a;background:#37c47a}
+.theme-switch button[data-set="sanctum"] .swatch{color:#b07be6;background:#b07be6}
+.theme-switch button[data-set="sigil"]   .swatch{color:#ff2fb3;background:#ff2fb3}
+.theme-switch button:hover{color:var(--ink);border-color:var(--ink-faint)}
+.theme-switch button[aria-pressed="true"]{
+  border-color:var(--gold);color:var(--ink);
+  box-shadow:var(--plaque-emboss),0 0 0 1px var(--gold),0 0 12px var(--edge);
+}
+
+/* ---- knotwork rule: a repeating Celtic-ish braided divider ---- */
+.knot{
+  height:14px;margin:2px 0;
+  background-image:
+    radial-gradient(circle at 6px 7px, var(--gold) 2px, transparent 2.6px),
+    radial-gradient(circle at 18px 7px, transparent 2px, var(--gold) 2.4px, transparent 3px);
+  background-size:24px 14px;opacity:.5;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+}
+
+/* ============================== MASTHEAD ============================== */
+header.masthead{
+  position:relative;padding:22px 8px 10px;text-align:center;
+}
+header.masthead .band{
+  position:absolute;inset:0;z-index:-1;background:var(--mast-band);pointer-events:none;
+  border-radius:0 0 40% 40%/0 0 14px 14px;
+}
+.eyebrow{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint);
+  display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:center;margin:14px 0 2px;
+}
+.eyebrow .sep{color:var(--rule)}
+.crest{
+  font-family:var(--script);font-size:34px;line-height:1;color:var(--gold);
+  margin:6px 0 2px;text-shadow:var(--title-shadow);
+}
+h1.title{
+  font-family:var(--display);font-weight:800;letter-spacing:.06em;line-height:1.02;
+  font-size:clamp(30px,7vw,58px);margin:6px 0 8px;text-transform:uppercase;color:var(--ink);
+  text-shadow:var(--title-shadow);
+}
+h1.title .rubric{color:var(--rubric)}
+.subtitle{
+  font-family:var(--body);font-style:italic;font-size:clamp(15px,2.4vw,20px);color:var(--ink-soft);
+  max-width:60ch;margin:0 auto;line-height:1.5;
+}
+.pronounce{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-faint);margin-top:8px}
+
+/* ============================== PLAQUES (nav) ============================== */
+.plaques{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:26px 0 8px;
+}
+@media(max-width:560px){.plaques{grid-template-columns:1fr;gap:13px}}
+.plaque{
+  position:relative;text-align:left;cursor:pointer;color:var(--ink);
+  background:var(--plaque-grad);border:1px solid var(--rule);border-radius:6px;
+  padding:18px 18px 16px;box-shadow:var(--plaque-emboss),0 6px 18px var(--shadow);
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  font-family:var(--body);display:flex;flex-direction:column;gap:6px;min-height:112px;
+  overflow:hidden;
+}
+/* rivets in the corners — steampunk/iron detail */
+.plaque::before,.plaque::after{
+  content:"";position:absolute;width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--gold), var(--gold-dim));
+  box-shadow:0 0 0 1px rgba(0,0,0,.25);opacity:.85;
+}
+.plaque::before{top:8px;left:8px}
+.plaque::after{top:8px;right:8px}
+.plaque:hover,.plaque:focus-visible{transform:translateY(-2px);border-color:var(--gold);box-shadow:var(--plaque-emboss),0 12px 26px var(--shadow),0 0 0 1px var(--gold)}
+.plaque .rune{font-family:var(--script);font-size:26px;line-height:1;color:var(--gold);margin-bottom:2px}
+.plaque .p-title{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.plaque .p-kicker{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim)}
+.plaque .p-desc{font-size:14.5px;color:var(--ink-soft);line-height:1.4}
+.plaque .p-ext{position:absolute;bottom:10px;right:12px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint);text-transform:uppercase}
+
+/* ============================== LEAF (loaded page panel) ============================== */
+.leaf{
+  position:relative;margin-top:22px;background:var(--panel-grad);
+  border:1px solid var(--rule);border-radius:6px;overflow:hidden;
+  box-shadow:0 8px 26px var(--shadow);
+  animation:leafIn .4s ease both;
+}
+@keyframes leafIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.leaf::before,.leaf::after{
+  content:"";position:absolute;width:14px;height:14px;pointer-events:none;z-index:2;
+  border-color:var(--bracket);border-style:solid;opacity:var(--bracket-op);
+}
+.leaf::before{top:8px;left:8px;border-width:2px 0 0 2px}
+.leaf::after{bottom:8px;right:8px;border-width:0 2px 2px 0}
+
+.leaf-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+  padding:16px 20px;border-bottom:1px solid var(--rule);background:var(--mast-band);
+}
+.leaf-head .lh-txt{min-width:0}
+.leaf-head .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dim);margin:0 0 5px}
+.leaf-head h2{font-family:var(--display);font-size:clamp(20px,4vw,28px);font-weight:800;letter-spacing:.03em;text-transform:uppercase;margin:0;color:var(--ink);line-height:1.1}
+.leaf-back{
+  flex:0 0 auto;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;
+  background:var(--plaque-grad);border:1px solid var(--rule);color:var(--ink-soft);
+  padding:8px 12px;border-radius:3px;box-shadow:var(--plaque-emboss);transition:.15s;white-space:nowrap;
+}
+.leaf-back:hover{color:var(--ink);border-color:var(--gold)}
+
+.leaf-body{padding:22px 24px}
+@media(max-width:560px){.leaf-body{padding:18px 16px}.leaf-head{padding:14px 16px}}
+.leaf-body h3{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:22px 0 10px}
+.leaf-body h3:first-child{margin-top:0}
+/* rubricated drop-cap on the first paragraph of a leaf */
+.leaf-body>p:first-of-type::first-letter{
+  font-family:var(--script);font-size:3.1em;line-height:.8;float:left;
+  color:var(--rubric);padding:4px 10px 0 0;text-shadow:var(--title-shadow);
+}
+.leaf-body p{margin:0 0 14px;color:var(--ink-soft)}
+.leaf-body b,.leaf-body strong{color:var(--ink)}
+.leaf-body i,.leaf-body em{color:var(--gold-dim)}
+.leaf-body ul{margin:0 0 16px;padding:0;list-style:none}
+.leaf-body ul li{position:relative;padding:7px 0 7px 26px;border-bottom:1px solid var(--rule-soft);color:var(--ink-soft)}
+.leaf-body ul li:last-child{border-bottom:0}
+.leaf-body ul li::before{content:"\2748";position:absolute;left:2px;top:8px;font-size:12px;color:var(--gold)}
+.leaf-body blockquote{
+  margin:0 0 16px;padding:12px 18px;border-left:3px solid var(--gold);
+  background:var(--mast-band);font-style:italic;color:var(--ink-soft);border-radius:0 4px 4px 0;
+}
+.leaf-body blockquote cite{display:block;margin-top:6px;font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-faint)}
+
+/* embeds inside a leaf sit centred with a hairline frame */
+.embed{margin:0 0 18px;text-align:center}
+.embed iframe{border:1px solid var(--rule);border-radius:4px;width:100%;aspect-ratio:16/9;height:auto}
+.embed.tall iframe{aspect-ratio:auto;height:450px;max-width:560px}
+.embed .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-faint);margin-top:6px}
+.embed img{border:1px solid var(--rule);border-radius:4px}
+
+/* outbound-link buttons rendered from a page's `links` array */
+.leaf-links{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 4px}
+.leaf-links a{
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--plaque-grad);border:1px solid var(--rule);color:var(--ink);
+  padding:9px 15px;border-radius:4px;box-shadow:var(--plaque-emboss);transition:.15s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.leaf-links a:hover{border-color:var(--gold);transform:translateY(-1px)}
+.leaf-links a .arw{color:var(--gold)}
+
+.status{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding:10px 0;line-height:1.7}
+.skel{height:14px;background:linear-gradient(90deg,var(--leaf),var(--rule),var(--leaf));background-size:200% 100%;
+  animation:sh 1.3s infinite;border-radius:3px;margin:9px 0}
+@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ============================== FOOTER ============================== */
+footer{
+  margin-top:40px;border-top:1px solid var(--rule);padding-top:20px;text-align:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-faint);line-height:1.8;
+}
+footer .flourish{font-family:var(--script);font-size:22px;color:var(--gold);margin-bottom:8px}
+footer a{font-size:11px}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto;transition:none!important}
+  .theme-fade{display:none!important}
+}
