@@ -329,7 +329,7 @@ img,iframe,object{max-width:100%}
 
 /* ============================== LIVERY SWITCHER ============================== */
 .theme-switch{
-  position:relative;z-index:3;display:flex;gap:6px;align-items:center;flex-wrap:wrap;
+  position:relative;z-index:3;display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;
   margin:16px 0 4px;
 }
 .theme-switch .lbl{
@@ -386,10 +386,21 @@ header.masthead::before{
           mask-image:radial-gradient(115% 100% at 50% 30%, #000 0%, rgba(0,0,0,.8) 42%, rgba(0,0,0,.35) 68%, transparent 90%);
 }
 .eyebrow{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint);
-  display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:center;margin:14px 0 2px;
+  position:relative;isolation:isolate;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#e8ddc8;
+  display:inline-flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:center;
+  margin:14px auto 2px;padding:8px 22px;max-width:100%;
+  text-shadow:0 1px 2px rgba(0,0,0,.6);
 }
-.eyebrow .sep{color:var(--rule)}
+/* dark scrim behind the eyebrow text, faded at the edges so it blends into
+   the masthead rather than reading as a solid bar */
+.eyebrow::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(90% 140% at 50% 50%, rgba(10,8,6,.72) 0%, rgba(10,8,6,.5) 55%, transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+}
+.eyebrow .sep{color:var(--gold);opacity:.85;text-shadow:none}
 .crest{
   font-family:var(--script);font-size:34px;line-height:1;color:var(--gold);
   margin:6px 0 2px;text-shadow:var(--title-shadow);
