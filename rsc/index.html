@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jsonpath · embedded JSON inspector</title>
+<style>
+  :root{
+    --bg:#0f1318;
+    --panel:#161c24;
+    --panel-2:#1c242e;
+    --line:#2a3441;
+    --line-2:#384655;
+    --ink:#dfe7ef;
+    --ink-dim:#8a99a8;
+    --ink-faint:#5d6b78;
+    --accent:#4db6ac;      /* signal teal — the "resolve" colour */
+    --accent-dim:#2f7d76;
+    --warn:#e0894a;
+    --err:#e0685f;
+    --string:#9ece8a;
+    --key:#6cb6ff;
+    --punct:#566573;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    font-size:14px;line-height:1.5;min-height:100vh;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:24px 18px 80px}
+  a{color:var(--accent)}
+
+  /* header */
+  header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:22px}
+  .logo{font-size:18px;font-weight:700;letter-spacing:-.02em}
+  .logo .br{color:var(--punct)}
+  .logo .fn{color:var(--accent)}
+  .ver{color:var(--ink-faint);font-size:12px}
+  .blurb{color:var(--ink-dim);font-size:12.5px;margin-left:auto;max-width:420px;text-align:right}
+  @media(max-width:620px){.blurb{margin-left:0;text-align:left;width:100%}}
+
+  /* form panel */
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .panel + .panel{margin-top:18px}
+  .panel-bar{display:flex;align-items:center;gap:8px;background:var(--panel-2);
+    border-bottom:1px solid var(--line);padding:8px 12px;font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+  .panel-bar .tag{color:var(--accent)}
+  .panel-body{padding:16px}
+
+  .field{margin-bottom:14px}
+  .field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-dim);margin-bottom:6px}
+  label .hint{text-transform:none;letter-spacing:0;color:var(--ink-faint);font-size:11.5px}
+  input[type=text],input[type=url],select{
+    width:100%;padding:10px 12px;background:#0c1116;color:var(--ink);
+    border:1px solid var(--line-2);border-radius:4px;
+    font-family:inherit;font-size:13.5px;}
+  input::placeholder{color:var(--ink-faint)}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--accent-dim);outline-offset:1px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  .path-row{display:flex;gap:8px}
+  .path-row input{flex:1;min-width:0}
+  .btn.discover{white-space:nowrap;padding:0 14px}
+
+  /* breadcrumb signature */
+  .crumbs{display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+    margin-top:10px;font-size:12px;color:var(--ink-faint);min-height:18px}
+  .explorer{margin-top:8px}
+  .explorer:empty{display:none}
+  .exp-crumbs{display:flex;align-items:center;gap:3px;flex-wrap:wrap;font-size:12px;margin-bottom:6px}
+  .exp-crumb{padding:2px 7px;border:1px solid var(--line-2);border-radius:3px;cursor:pointer;
+    color:var(--ink-dim);font-family:var(--mono,monospace);background:none}
+  .exp-crumb:hover{border-color:var(--accent-dim);color:var(--accent)}
+  .exp-crumb.cur{border-color:var(--accent);color:var(--accent);background:rgba(77,182,172,.1);cursor:default}
+  .exp-sep{color:var(--ink-faint)}
+  .exp-keys{display:flex;flex-wrap:wrap;gap:4px;max-height:180px;overflow:auto}
+  .exp-key{display:flex;align-items:center;gap:6px;padding:4px 9px;border:1px solid var(--line-2);
+    border-radius:4px;cursor:pointer;font-size:12px;background:rgba(255,255,255,.01);color:var(--ink-dim);
+    font-family:var(--mono,monospace)}
+  .exp-key:hover{border-color:var(--accent-dim);background:rgba(77,182,172,.06);color:var(--accent)}
+  .exp-key .ek-type{color:var(--ink-faint);font-size:11px;font-family:inherit}
+  .exp-key.leaf{border-style:dashed}
+  .exp-hint{font-size:11px;color:var(--ink-faint);margin-top:6px}
+  .crumb{padding:1px 7px;border:1px solid var(--line-2);border-radius:3px;color:var(--ink-dim)}
+  .crumb.hit{border-color:var(--accent-dim);color:var(--accent);background:rgba(77,182,172,.08)}
+  .crumb.miss{border-color:#5a3a38;color:var(--err)}
+  .crumbs .sep{color:var(--punct)}
+
+  .controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+  .dropzone{margin-top:14px;padding:14px;border:1px dashed var(--line-2);border-radius:6px;
+    text-align:center;color:var(--ink-faint);font-size:12px;cursor:pointer;transition:border-color .15s,background .15s}
+  .dropzone:hover{border-color:var(--accent-dim);color:var(--ink-dim)}
+  .dropzone.drag{border-color:var(--accent);background:rgba(77,182,172,.07);color:var(--accent)}
+  .dz-text b{color:var(--accent);font-weight:600}
+  button.run{appearance:none;border:1px solid var(--accent-dim);cursor:pointer;
+    background:var(--accent-dim);color:#04110f;font-weight:700;font-family:inherit;
+    letter-spacing:.06em;font-size:13px;padding:10px 22px;border-radius:4px;}
+  button.run:hover{background:var(--accent)}
+  button.run:disabled{opacity:.5;cursor:wait}
+  .btn{background:#0c1116;border:1px solid var(--line-2);cursor:pointer;color:var(--ink-dim);
+    font-family:inherit;font-size:12px;padding:9px 14px;border-radius:4px}
+  .btn:hover{border-color:var(--line-2);color:var(--ink)}
+  .msg{font-size:12px;color:var(--ink-faint);min-height:1.2em}
+  .msg.err{color:var(--err)}
+  .msg.ok{color:var(--accent)}
+
+  /* result */
+  .out{margin-top:22px;display:none}
+  .out.show{display:block}
+  .out-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);
+    border:1px solid var(--line);border-bottom:none;border-radius:6px 6px 0 0;
+    background:var(--panel-2);padding:9px 14px}
+  .badge{padding:1px 8px;border-radius:3px;border:1px solid var(--line-2);color:var(--ink)}
+  .badge.type{color:var(--accent);border-color:var(--accent-dim)}
+  .out-bar .right{margin-left:auto;display:flex;gap:14px;color:var(--ink-faint)}
+  pre.value{margin:0;background:#0a0e12;border:1px solid var(--line);border-radius:0 0 6px 6px;
+    padding:16px;overflow:auto;font-size:13px;line-height:1.55;color:var(--ink);
+    white-space:pre-wrap;word-break:break-word;max-height:60vh}
+  /* lightweight token colouring for JSON output */
+  .tok-key{color:var(--key)} .tok-str{color:var(--string)} .tok-punct{color:var(--punct)}
+  .tok-num{color:var(--warn)} .tok-bool{color:var(--accent)}
+
+  .out-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center}
+  .chk{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-dim);cursor:pointer;user-select:none}
+  .chk input{accent-color:var(--accent);cursor:pointer}
+  .chk-note{color:var(--ink-faint)}
+
+  /* docs */
+  details.docs{margin-top:30px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+  details.docs > summary{cursor:pointer;list-style:none;padding:12px 14px;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
+  details.docs > summary::-webkit-details-marker{display:none}
+  details.docs[open] > summary{border-bottom:1px solid var(--line)}
+  /* collapsible input sections, matching the docs disclosure pattern */
+  details.fold{border-bottom:1px solid var(--line)}
+  details.fold > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;
+    padding:11px 16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);
+    background:var(--panel-2)}
+  details.fold > summary::-webkit-details-marker{display:none}
+  details.fold > summary .tag{color:var(--accent)}
+  details.fold > summary .fold-mark{margin-left:auto;color:var(--ink-faint);font-size:13px;transition:transform .15s}
+  details.fold[open] > summary .fold-mark{transform:rotate(90deg)}
+  details.fold > summary .fold-note{margin-left:auto;color:var(--ink-faint);font-size:10.5px;letter-spacing:.04em;text-transform:none}
+  details.fold[open] > summary .fold-note{display:none}
+  .fold-body{padding:16px}
+  textarea.paste{width:100%;min-height:120px;resize:vertical;box-sizing:border-box;
+    background:#0c1116;border:1px solid var(--line);border-radius:5px;color:var(--ink);
+    font-family:var(--mono,monospace);font-size:12px;line-height:1.5;padding:10px}
+  textarea.paste:focus{outline:none;border-color:var(--accent-dim)}
+  .paste-status{margin-top:8px;font-size:11px;color:var(--ink-faint)}
+  .paste-status.active{color:var(--accent)}
+  .docs-body{padding:14px;font-size:13px;color:var(--ink-dim);line-height:1.6}
+  .docs-body p{margin:0 0 .9em}
+  .docs-body code{background:#0c1116;border:1px solid var(--line);padding:1px 5px;border-radius:3px;color:var(--ink)}
+  .docs-body strong{color:var(--ink)}
+  footer{margin-top:34px;color:var(--ink-faint);font-size:11.5px;line-height:1.6;
+    border-top:1px solid var(--line);padding-top:14px}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="logo"><span class="fn">jsonpath</span><span class="br">()</span></span>
+    <span class="ver">v2 · embedded-JSON inspector</span>
+    <span class="blurb">Resolves a dotted property path against JSON embedded in a Next.js RSC payload. A debugging utility for inspecting server-rendered data structures.</span>
+  </header>
+
+  <section class="panel">
+    <div class="panel-bar"><span class="tag">input</span><span>request</span></div>
+    <div class="panel-body" style="padding:0">
+
+      <details class="fold" id="fold-request">
+        <summary><span class="tag">request</span> <span>URL &amp; resolver</span>
+          <span class="fold-note">tap to expand</span><span class="fold-mark">›</span></summary>
+        <div class="fold-body">
+
+          <div class="field">
+            <label for="url">Document URL <span class="hint">— page whose embedded JSON you want to inspect</span></label>
+            <input id="url" type="url" spellcheck="false"
+              placeholder="https://example.com/path/"
+              value="">
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="path">Property path <span class="hint">— dot notation, or walk the tree below</span></label>
+              <div class="path-row">
+                <input id="path" type="text" spellcheck="false" list="path-options"
+                  value=""
+                  placeholder="a.b.c">
+                <button class="btn discover" id="discover" type="button" title="Scan the payload for likely content paths">Discover</button>
+              </div>
+              <datalist id="path-options"></datalist>
+              <div class="explorer" id="explorer" aria-live="polite">
+                <div class="exp-crumbs" id="exp-crumbs"></div>
+                <div class="exp-keys" id="exp-keys"></div>
+              </div>
+              <div class="crumbs" id="crumbs" aria-live="polite"></div>
+            </div>
+            <div class="field">
+              <label for="mode">Resolver</label>
+              <select id="mode">
+                <option value="auto" selected>Path — resolve dotted path, follow $ref</option>
+                <option value="raw">Raw — return the whole parsed payload</option>
+                <option value="text">Text — return the content as-is (plain text, HTML, markup)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="proxy">Request relay <span class="hint">— a browser file can't read another origin without one (CORS)</span></label>
+            <select id="proxy">
+              <option value="https://corsproxy.io/?url=" selected>corsproxy.io</option>
+              <option value="https://api.allorigins.win/raw?url=">allorigins.win (raw)</option>
+              <option value="https://thingproxy.freeboard.io/fetch/">thingproxy.freeboard.io</option>
+              <option value="">None — direct (same-origin only)</option>
+            </select>
+          </div>
+
+        </div>
+      </details>
+
+      <details class="fold" id="fold-paste">
+        <summary><span class="tag">paste</span> <span>raw content</span>
+          <span class="fold-note">optional — overrides URL</span><span class="fold-mark">›</span></summary>
+        <div class="fold-body">
+          <div class="field">
+            <label for="pasted">Pasted content <span class="hint">— any text: RSC stream, page HTML, JSON, markdown, or plain text. When non-empty, this is used instead of fetching the URL (no relay needed). Use the “Text” resolver to return non-JSON content as-is.</span></label>
+            <textarea id="pasted" class="paste" spellcheck="false" placeholder="Paste anything — page HTML, an __next_f.push stream, JSON, markdown, or plain text…"></textarea>
+            <div class="paste-status" id="paste-status">empty — the URL above will be fetched</div>
+            <div class="controls" style="margin-top:10px">
+              <button class="btn" id="savepastepng" type="button" title="Compress (deflate) and obfuscate the pasted text, then save it as a MAHDA-watermarked PNG you can drag back in">Save paste.png</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div style="padding:16px">
+      <div class="controls">
+        <button class="run" id="go" type="button">Resolve</button>
+        <button class="btn" id="paste" type="button">Paste URL</button>
+        <button class="btn" id="debug" type="button" title="Dump what each parse stage sees">Debug pipeline</button>
+        <span class="msg" id="msg" role="status" aria-live="polite"></span>
+      </div>
+
+      <div class="dropzone" id="dropzone" title="Drop a share .png here, or click to pick one">
+        <input type="file" id="pngfile" accept="image/png" hidden>
+        <span class="dz-text">drop a <b>config.png</b>, <b>result.png</b> or <b>paste.png</b> here, or click to load one</span>
+      </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="out" id="out" aria-live="polite">
+    <div class="out-bar">
+      <span>result</span>
+      <span class="badge type" id="b-type">—</span>
+      <span class="right">
+        <span id="b-keys">keys —</span>
+        <span id="b-len">length —</span>
+        <span id="b-via">via —</span>
+      </span>
+    </div>
+    <pre class="value" id="value"></pre>
+    <div class="out-actions">
+      <button class="btn" id="copy" type="button">Copy value</button>
+      <button class="btn" id="copylink" type="button" title="Copy a shareable link that reproduces this path, resolver and relay">Copy link</button>
+      <button class="btn" id="savepng" type="button" title="Save the current config (URL, path, resolver, relay) as a tiny PNG you can drag back in to restore it">Save config.png</button>
+      <button class="btn" id="saveresultpng" type="button" title="Save the resolved value as a PNG you can drag back in to view it">Save result.png</button>
+      <label class="chk" title="Drop the human-readable slug from the URL to shorten the link. The trimmed URL is fetched and compared first — if the server needs the slug, the full URL is kept.">
+        <input type="checkbox" id="trimslug"> trim slug <span class="chk-note">(verified)</span>
+      </label>
+      <button class="btn" id="download" type="button">Download .json</button>
+      <button class="btn" id="toggle" type="button">Toggle pretty / raw</button>
+    </div>
+  </section>
+
+  <details class="docs">
+    <summary>What this does</summary>
+    <div class="docs-body">
+      <p>Server-rendered React (Next.js / RSC) pages serialise their data into a sequence of
+      <code>self.__next_f.push([1,"…"])</code> calls split across several <code>&lt;script&gt;</code> tags.
+      The chunk index is not stable between pages, so this tool concatenates every chunk, rebuilds the
+      payload, and resolves your dotted <strong>property path</strong> against it — regardless of which
+      script tag the data landed in.</p>
+      <p>When a resolved value is a stream reference (e.g. <code>"$f"</code>), the resolver follows it to
+      the row that holds the referenced value. Output is returned as <strong>raw data</strong>: a JSON
+      value with its type, key count, and length. It is an inspection and debugging aid, not a viewer or
+      renderer for any particular content type.</p>
+      <p><strong>Relay:</strong> a file opened locally cannot fetch a different origin (the browser's
+      same-origin policy). The relay forwards the request and adds the CORS header the browser needs.
+      Public relays are best-effort and rate-limited; if one fails, try another, or host this file on the
+      origin you're inspecting and choose <em>None</em>.</p>
+    </div>
+  </details>
+
+  <footer>
+    Runs entirely in your browser. Requests go only to the relay you select. Inspect only resources you
+    are authorised to access, and respect the terms of service and copyright of any site you query.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var msgEl = $("msg");
+
+  function msg(t, kind){ msgEl.textContent = t || ""; msgEl.className = "msg" + (kind?" "+kind:""); }
+
+  $("paste").addEventListener("click", function(){
+    if(navigator.clipboard && navigator.clipboard.readText){
+      navigator.clipboard.readText().then(function(t){
+        if(t){ $("url").value = t.trim(); msg("Pasted.", "ok"); }
+      }).catch(function(){ msg("Clipboard blocked — paste manually.", "err"); });
+    } else { msg("Clipboard unavailable.", "err"); }
+  });
+
+  // ---- RSC chunk collection & row table ----------------------------------
+  function collectPushChunks(html){
+    // Find each self.__next_f.push([N, <payload>]) and extract <payload> by
+    // BALANCED scanning, not a non-greedy regex. The payload is a JSON string
+    // full of "]" characters (every array in the story); a non-greedy match
+    // stops at the first "])" inside it and truncates the chunk — which is how
+    // bodyText/seoDescription got chopped while elements survived.
+    var chunks = [];
+    var re = /self\.__next_f\.push\(\[\s*\d+\s*,\s*/g, m;
+    while((m = re.exec(html)) !== null){
+      var i = m.index + m[0].length;
+      // payload starts here; it's normally a JSON string ("..."). Scan to its
+      // matching close-quote respecting escapes, then we have the chunk text.
+      if(html.charAt(i) === '"'){
+        var j = i + 1, esc = false, str = '"';
+        for(; j < html.length; j++){
+          var ch = html.charAt(j);
+          str += ch;
+          if(esc){ esc = false; continue; }
+          if(ch === "\\"){ esc = true; continue; }
+          if(ch === '"') break; // closing quote
+        }
+        try { chunks.push(JSON.parse(str)); }
+        catch(e){ chunks.push(str.replace(/^"|"$/g,"")); }
+      } else {
+        // non-string payload (rare: a bare array/number) — balance brackets
+        var depth = 0, k = i, started = false, buf = "";
+        for(; k < html.length; k++){
+          var c = html.charAt(k);
+          buf += c;
+          if(c === "[" || c === "{"){ depth++; started = true; }
+          else if(c === "]" || c === "}"){ depth--; if(started && depth <= 0){ break; } }
+        }
+        // not a content string; skip JSON.parse, these aren't the body text
+      }
+    }
+    return chunks;
+  }
+  function parseRowTable(stream){
+    var table = {}, lines = stream.split("\n");
+    for(var i=0;i<lines.length;i++){
+      var line = lines[i], c = line.indexOf(":");
+      if(c < 1) continue;
+      var id = line.slice(0,c).trim();
+      if(!/^[0-9a-f]+$/i.test(id)) continue;
+      table[id] = line.slice(c+1);
+    }
+    return table;
+  }
+  function tryParseFrom(str, start){
+    var open = str[start], close = open === "{" ? "}" : "]";
+    var depth = 0, inStr = false, esc = false;
+    for(var i=start;i<str.length;i++){
+      var ch = str[i];
+      if(inStr){ if(esc) esc=false; else if(ch==="\\") esc=true; else if(ch==='"') inStr=false; continue; }
+      if(ch==='"'){ inStr=true; continue; }
+      if(ch===open) depth++;
+      else if(ch===close){ depth--; if(depth===0){ try{ return JSON.parse(str.slice(start,i+1)); }catch(e){ return null; } } }
+    }
+    return null;
+  }
+  function dig(obj, parts){
+    var cur = obj;
+    for(var i=0;i<parts.length;i++){ if(cur==null) return undefined; cur = cur[parts[i]]; }
+    return cur;
+  }
+  function deepFind(obj, key){
+    if(obj==null || typeof obj!=="object") return undefined;
+    if(Object.prototype.hasOwnProperty.call(obj,key)) return obj[key];
+    for(var k in obj){ var f = deepFind(obj[k], key); if(f!==undefined) return f; }
+    return undefined;
+  }
+  // Cut the first `byteLen` UTF-8 bytes from a string and decode back to text.
+  // The RSC length prefix counts UTF-8 bytes, but JS strings index by UTF-16
+  // code units — so for any non-ASCII text (em dashes, curly quotes, accents,
+  // emoji) a naive .substr(start, len) lands in the wrong place. Encoding to
+  // bytes first makes the cut correct for every charset.
+  function cutUtf8(str, byteLen){
+    if(typeof TextEncoder === "undefined" || typeof TextDecoder === "undefined"){
+      return str.substr(0, byteLen); // very old engine: best-effort fallback
+    }
+    var bytes = new TextEncoder().encode(str);
+    if(byteLen >= bytes.length) return str;
+    // avoid slicing through a multi-byte sequence: TextDecoder(fatal:false)
+    // with stream semantics drops a trailing partial char cleanly.
+    var slice = bytes.subarray(0, byteLen);
+    return new TextDecoder("utf-8").decode(slice);
+  }
+
+  function resolveRef(val, table){
+    // follow a stream reference like "$f" -> table["f"]
+    if(typeof val === "string" && val.charAt(0) === "$" && table[val.slice(1)] != null){
+      var row = table[val.slice(1)];
+
+      // RSC text rows are prefixed with a hex BYTE length: e.g.  T8d8,<text...>
+      // Cut exactly that many UTF-8 bytes so anything concatenated after the
+      // chunk (e.g. a following "4:[...]" row) is dropped — for any charset.
+      var lenMatch = row.match(/^T([0-9a-f]+),/i);
+      if(lenMatch){
+        var declared = parseInt(lenMatch[1], 16);
+        var body = row.slice(lenMatch[0].length);
+        var cut = cutUtf8(body, declared);
+        if(cut.length){ return cut; }
+      }
+
+      var raw = row.replace(/^T[0-9a-f]+,/i,"");
+      // quoted JSON string: parse and return only the string
+      if(raw.charAt(0)==='"'){
+        // grab just the first complete quoted string, ignore trailing rows
+        var m = raw.match(/^"((?:\\.|[^"\\])*)"/);
+        if(m){ try{ return JSON.parse(m[0]); }catch(e){ return m[1]; } }
+        try{ return JSON.parse(raw); }catch(e){ return raw.replace(/^"|"$/g,""); }
+      }
+      if(raw.charAt(0)==='{' || raw.charAt(0)==='['){ var p = tryParseFrom(raw,0); if(p!=null) return p; }
+      return raw;
+    }
+    return val;
+  }
+
+  // ---- auto-discovery of likely content paths -----------------------------
+  var BODY_KEYS = /\b(body|bodytext|content|article|articlebody|elements|blocks|richtext|maintext|story)\b/i;
+  var NEG_KEYS  = /\b(seo|meta|summary|teaser|excerpt|description|caption|alt|byline|title|headline|url|href|image|video|embed|nav|menu|footer|advert|bio|notice|tribute|funeral|recirculation|widget|cluster)\b/i;
+  // subtrees that hold OTHER stories / boilerplate — never the article body
+  var SKIP_KEYS = /^(recirculationSections|exploreTravelRecirculation|latestStoryWidget|mostPopularStoryWidget|features|conf|settings|zoneItems|menuTree|cluster|classifieds|newsletters|authors)$/i;
+
+  function looksLikeBlocks(v){
+    if(!Array.isArray(v) || v.length < 2) return false;
+    var textBlocks = v.filter(function(e){
+      return e && typeof e==="object" && typeof e.text==="string" &&
+        (e.type==="paragraph" || e.type==="heading" || e.type==="text" || e.type===undefined);
+    });
+    return textBlocks.length >= Math.max(2, v.length*0.4);
+  }
+  function looksLikeProse(s){
+    if(typeof s!=="string" || s.length < 80) return false;
+    if(/^https?:\/\//.test(s)) return false;
+    var letters=(s.match(/[A-Za-z\u00C0-\u024F]/g)||[]).length;
+    var struct =(s.match(/[{}\[\]<>]/g)||[]).length;
+    var spaces =(s.match(/ /g)||[]).length;
+    return letters > 60 && spaces > 12 && struct < letters*0.05;
+  }
+  function scoreCandidate(path, value, table){
+    var leaf = path.split(".").pop().toLowerCase();
+    var resolved = resolveRef(value, table);
+    var score = 0, kind = "";
+    if(looksLikeBlocks(resolved)){
+      score += 50; kind = resolved.length + " blocks";
+      var chars = resolved.reduce(function(a,e){return a+((e&&e.text)?e.text.length:0);},0);
+      score += Math.min(30, chars/100);
+    } else if(looksLikeProse(resolved)){
+      score += 45; kind = resolved.length + " chars";
+      score += Math.min(30, resolved.length/100);
+    } else if(typeof resolved === "string" && /^\$./.test(resolved) && BODY_KEYS.test(leaf)){
+      // a content-named field pointing at a stream reference (e.g. bodyText:"$f")
+      // that didn't resolve in this pass — still a strong candidate to offer.
+      score += 40; kind = "ref " + resolved;
+    } else { return null; }
+    if(BODY_KEYS.test(leaf)) score += 25;
+    if(NEG_KEYS.test(leaf))  score -= 40;
+    if(/\bstory\b/i.test(path)) score += 10;
+    score -= path.split(".").length;
+    return { path: path, score: Math.round(score), kind: kind };
+  }
+  function walkForCandidates(node, prefix, table, out, depth, inArray){
+    if(depth > 9 || node==null || typeof node!=="object") return;
+
+    if(Array.isArray(node)){
+      // descend into element objects, flagged so their leaves aren't offered
+      // as separate candidates (the array itself is the candidate)
+      for(var i=0;i<node.length;i++){
+        var av = node[i];
+        if(av && typeof av==="object") walkForCandidates(av, prefix, table, out, depth+1, true);
+      }
+      return;
+    }
+    for(var k in node){
+      if(!Object.prototype.hasOwnProperty.call(node,k)) continue;
+      // skip boilerplate subtrees (other stories, config, nav) that would
+      // flood discovery with author bios and syndicated summaries
+      if(SKIP_KEYS.test(k)) continue;
+      var path = prefix ? prefix+"."+k : k;
+      var v = node[k];
+      if(!inArray){
+        var cand = scoreCandidate(path, v, table);
+        if(cand) out.push(cand);
+      }
+      if(v && typeof v==="object") walkForCandidates(v, path, table, out, depth+1, false);
+    }
+  }
+  function discoverPaths(stream){
+    // Scan the RAW concatenated stream for JSON roots with brace-matching,
+    // NOT the newline-split row table. RSC payloads embed literal \n inside
+    // string values (e.g. death-notice text), so splitting on newlines can
+    // fragment the story object and drop context.story.bodyText. tryParseFrom
+    // is newline-agnostic and finds the whole object the way Raw mode does.
+    var table = parseRowTable(stream); // still needed so resolveRef can follow $refs
+    var all = [];
+    var idx = 0;
+    while(idx < stream.length){
+      var ch = stream.charAt(idx);
+      if(ch === "{" || ch === "["){
+        var parsed = tryParseFrom(stream, idx);
+        if(parsed){
+          walkForCandidates(parsed, "", table, all, 0, false);
+          var end = findStructEnd(stream, idx);
+          idx = end > idx ? end : idx + 1;
+          continue;
+        }
+      }
+      idx++;
+    }
+    var byPath = {};
+    all.forEach(function(c){ if(!byPath[c.path] || c.score>byPath[c.path].score) byPath[c.path]=c; });
+    var ranked = Object.keys(byPath).map(function(p){ return byPath[p]; })
+      .sort(function(a,b){ return b.score-a.score; });
+
+    // guarantee body-named paths are offered even if the cap would drop them:
+    // take the top 8, then force-include any body-keyed candidate not already in.
+    var top = ranked.slice(0, 8);
+    ranked.forEach(function(c){
+      var leaf = c.path.split(".").pop();
+      if(BODY_KEYS.test(leaf) && top.indexOf(c) === -1) top.push(c);
+    });
+    return top;
+  }
+  // find the index just past a balanced {..} or [..] starting at `start`
+  function findStructEnd(str, start){
+    var open=str[start], close=open==="{"?"}":"]", depth=0, inStr=false, esc=false;
+    for(var i=start;i<str.length;i++){
+      var ch=str[i];
+      if(inStr){ if(esc)esc=false; else if(ch==="\\")esc=true; else if(ch==='"')inStr=false; continue; }
+      if(ch==='"'){ inStr=true; continue; }
+      if(ch===open) depth++;
+      else if(ch===close){ depth--; if(depth===0) return i+1; }
+    }
+    return str.length;
+  }
+
+  // resolve a dotted path; render a live breadcrumb of which keys hit
+  // tokenize a path supporting both a.b.c and a.b[0].c (and bare a[0][1])
+  function tokenizePath(path){
+    var parts = [], re = /[^.\[\]]+|\[(\d+)\]/g, m;
+    while((m = re.exec(path)) !== null){
+      parts.push(m[1] !== undefined ? m[1] : m[0]);
+    }
+    return parts.filter(function(s){ return s !== ""; });
+  }
+
+  // Resolve a dotted/bracketed path. Walks the brace-matched root object built
+  // from the RAW stream (newline-agnostic) — the SAME object the explorer walks —
+  // rather than the newline-split row table, which fragments RSC payloads whose
+  // JSON contains literal newlines (that mismatch caused valid explorer paths to
+  // fail here). Follows $ref leaves transparently and records the breadcrumb.
+  function resolvePath(stream, table, path){
+    var parts = tokenizePath(path);
+    var crumbState = parts.map(function(p){ return {key:p, hit:false}; });
+    var root = buildRootObject(stream);
+    if(root == null){
+      // fall back to the legacy row-table walk if no root object could be built
+      return resolvePathFromTable(table, path, parts, crumbState);
+    }
+    var cur = root;
+    for(var i=0;i<parts.length;i++){
+      // follow a $ref before descending, so refs mid-path are transparent
+      if(typeof cur === "string" && cur.charAt(0) === "$"){
+        var rr = resolveRef(cur, table); if(rr !== cur) cur = rr;
+      }
+      if(cur != null && typeof cur === "object" && parts[i] in cur){
+        crumbState[i].hit = true; cur = cur[parts[i]];
+      } else {
+        // not directly present — try deepFind for the final key as a last resort
+        var leaf = parts[parts.length-1];
+        var hit = deepFind(root, leaf);
+        if(hit !== undefined){
+          crumbState[parts.length-1].hit = true;
+          return { value: resolveRef(hit, table), crumbs: crumbState, via: "deepFind:"+leaf };
+        }
+        return { value: undefined, crumbs: crumbState, via: null };
+      }
+    }
+    // resolve a trailing $ref leaf to its chunk
+    var val = resolveRef(cur, table);
+    return { value: val, crumbs: crumbState, via: "path" };
+  }
+
+  // legacy fallback: walk the newline-split row table (kept for robustness)
+  function resolvePathFromTable(table, path, parts, crumbState){
+    var firstKey = parts[0];
+    for(var id in table){
+      var row = table[id];
+      if(row.indexOf('"'+firstKey+'"') === -1) continue;
+      var so = row.indexOf("{"), sa = row.indexOf("[");
+      var start = so===-1 ? sa : (sa===-1 ? so : Math.min(so,sa));
+      if(start === -1) continue;
+      var parsed = tryParseFrom(row, start);
+      if(!parsed) continue;
+      var cur = parsed, ok = true;
+      for(var i=0;i<parts.length;i++){
+        if(cur!=null && typeof cur==="object" && parts[i] in cur){
+          crumbState[i].hit = true; cur = cur[parts[i]];
+        } else { ok = false; break; }
+      }
+      if(ok) return { value: resolveRef(cur, table), crumbs: crumbState, via: "path" };
+      var leaf = parts[parts.length-1];
+      var hit = deepFind(parsed, leaf);
+      if(hit !== undefined){
+        crumbState[parts.length-1].hit = true;
+        return { value: resolveRef(hit, table), crumbs: crumbState, via: "deepFind:"+leaf };
+      }
+    }
+    return { value: undefined, crumbs: crumbState, via: null };
+  }
+
+  function renderCrumbs(crumbs){
+    var el = $("crumbs"); el.innerHTML = "";
+    if(!crumbs || !crumbs.length) return;
+    crumbs.forEach(function(c, i){
+      if(i>0){ var s=document.createElement("span"); s.className="sep"; s.textContent="."; el.appendChild(s); }
+      var span = document.createElement("span");
+      span.className = "crumb" + (c.hit ? " hit" : "");
+      span.textContent = c.key;
+      el.appendChild(span);
+    });
+  }
+
+  // ---- value presentation (as DATA, not prose) ---------------------------
+  var lastValue, prettyMode = true;
+
+  function typeOf(v){
+    if(v===null) return "null";
+    if(Array.isArray(v)) return "array";
+    return typeof v;
+  }
+  function serialise(v, pretty){
+    if(typeof v === "string") return v;            // strings shown as-is
+    try { return JSON.stringify(v, null, pretty ? 2 : 0); }
+    catch(e){ return String(v); }
+  }
+  function highlight(text){
+    // escape, then colour JSON tokens lightly; safe for arbitrary text
+    var esc = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    return esc
+      .replace(/("(\\.|[^"\\])*")(\s*:)/g, '<span class="tok-key">$1</span>$3')
+      .replace(/:\s*("(\\.|[^"\\])*")/g, ': <span class="tok-str">$1</span>')
+      .replace(/\b(true|false|null)\b/g, '<span class="tok-bool">$1</span>')
+      .replace(/(:\s*)(-?\d+(\.\d+)?)/g, '$1<span class="tok-num">$2</span>');
+  }
+  function showValue(v, via){
+    lastValue = v;
+    var t = typeOf(v);
+    $("b-type").textContent = t;
+    $("b-keys").textContent = (t==="object") ? "keys " + Object.keys(v).length
+                            : (t==="array") ? "items " + v.length : "keys —";
+    var ser = serialise(v, prettyMode);
+    $("b-len").textContent = "length " + ser.length.toLocaleString();
+    $("b-via").textContent = "via " + (via || "—");
+    $("value").innerHTML = (t==="string") ? highlight(ser) : highlight(ser);
+    $("out").classList.add("show");
+    $("out").scrollIntoView({behavior: prefersReduced()?"auto":"smooth", block:"start"});
+  }
+
+  function buildFetchUrl(proxy, target){
+    if(!proxy) return target;
+    if(proxy.indexOf("url=") !== -1) return proxy + encodeURIComponent(target);
+    return proxy + target;
+  }
+
+  // ---- shareable deep-links: the "s1" generic codec -------------------------
+  // Fully site-agnostic. General-purpose compressors (deflate/LZ) barely shrink
+  // a single URL and base64 then inflates it, because the redundancy here isn't
+  // statistical. The wins we take are universal and lossless:
+  //   1. don't percent-encode — verbose links %-encode the URL, which roughly
+  //      doubles its punctuation; we use "~" as the separator (URL-safe, never
+  //      in our field data) and store everything raw.
+  //   2. strip the URL scheme + "www." and record what was removed in 1 flag
+  //      char, re-adding it exactly on decode (so http: vs https: survives).
+  //   3. encode the relay as its INDEX in the proxy <select> (read from the DOM
+  //      at runtime — adding an <option> is supported with no code change).
+  //   4. pack relay/raw/scheme flags into one base36 char.
+  // Nothing about any specific site or path shape is assumed.
+  //
+  // token:  s1~<flags>~<doc>~<pp>
+  //   flags : base36 of  relayIdx | (raw?8:0) | (wasHttp?16:0) | (hadWww?32:0)
+  //   doc   : url with scheme + "www." removed (verbatim otherwise)
+  //   pp    : the property path, verbatim
+
+  function s1_relays(){
+    // read relay option values straight from the DOM, in order
+    var opts = $("proxy").options, a = [];
+    for(var i=0;i<opts.length;i++) a.push(opts[i].value);
+    return a; // index 0 is whatever the first option is (here: corsproxy)
+  }
+  function s1_relayIndex(value){
+    var r = s1_relays(), i = r.indexOf(value);
+    return i < 0 ? 0 : i;
+  }
+
+  function s1_encodeDoc(url){
+    var wasHttp = /^http:\/\//i.test(url);
+    var stripped = url.replace(/^https?:\/\//i, "");
+    var hadWww = /^www\./i.test(stripped);
+    stripped = stripped.replace(/^www\./i, "");
+    return { text: stripped, wasHttp: wasHttp, hadWww: hadWww };
+  }
+  function s1_decodeDoc(text, wasHttp, hadWww){
+    if(!text) return "";
+    return (wasHttp ? "http://" : "https://") + (hadWww ? "www." : "") + text;
+  }
+
+  // Token layout (lossless, no visible separator soup): a tidy run of
+  //   <flags><L><pp><doc>
+  //   flags : 1 base36 char  =  relayIdx | raw<<3 | http<<4 | www<<5
+  //   L     : 1 base36 char  =  length of the property-path segment (0..35)
+  //           (paths longer than 35 chars fall back to a length run — see below)
+  //   pp    : the property path, verbatim, exactly L chars
+  //   doc   : the rest of the token, verbatim (scheme/www stripped)
+  // Reads as one continuous string ending on the recognizable site name, e.g.
+  //   w9context.storystandard.net.au/story/9298142/...   (no ~, no "s1" prefix)
+  // For pp length >= 36 we emit L="z" then a 2-char base36 length, so it stays
+  // unambiguous and still short.
+  function s1_lenEnc(n){
+    if(n < 35) return n.toString(36);              // single char 0..y (0..34)
+    return "z" + ("0" + n.toString(36)).slice(-2); // "z" + 2-char length (35..1295)
+  }
+  function s1_lenDec(s, i){
+    if(s.charAt(i) === "z"){ return { len: parseInt(s.substr(i+1,2),36)||0, next: i+3 }; }
+    return { len: parseInt(s.charAt(i),36)||0, next: i+1 };
+  }
+
+  // Generic path-prefix dictionary. These are COMMON RSC/Next.js container
+  // prefixes — substrings, not site logic — exactly like a gzip preset
+  // dictionary. A path that shares one folds its prefix to a single code char;
+  // any path that doesn't match uses code 0 and is stored verbatim, so the
+  // scheme stays lossless for ANY input on ANY site. Order doesn't matter for
+  // correctness; we always pick the LONGEST matching prefix at encode time.
+  var PATH_DICT = [
+    "context.story.", "props.pageProps.", "context.", "props.",
+    "pageProps.", "data.", "page.", "items.", "results."
+  ];
+  function s1_foldPath(pp){
+    // returns { code: base36 char, rest: remaining-path }
+    var best = -1, bestLen = 0;
+    for(var i=0;i<PATH_DICT.length;i++){
+      var pre = PATH_DICT[i];
+      if(pp.indexOf(pre) === 0 && pre.length > bestLen){ best = i; bestLen = pre.length; }
+    }
+    if(best === -1) return { code: "0", rest: pp };
+    return { code: (best + 1).toString(36), rest: pp.slice(bestLen) };
+  }
+  function s1_unfoldPath(code, rest){
+    var idx = parseInt(code, 36);
+    if(!idx) return rest;                       // code 0 -> verbatim
+    var pre = PATH_DICT[idx - 1];
+    return (pre || "") + rest;
+  }
+
+  function s1_encode(cfg){
+    var relayIdx = s1_relayIndex(cfg.relay);
+    var d = s1_encodeDoc(cfg.doc || "");
+    var flags = relayIdx
+      | (cfg.res === "raw" ? 8 : 0)
+      | (d.wasHttp ? 16 : 0)
+      | (d.hadWww ? 32 : 0);
+    var pp = cfg.pp || "";
+    var folded = s1_foldPath(pp);               // dict code + remaining path
+    // flags fixed at 2 base36 chars; then 1-char dict code; then length-prefixed
+    // remainder; then doc.  layout: <f2><dictCode><lenEnc(rest)><rest><doc>
+    var f2 = ("0" + flags.toString(36)).slice(-2);
+    return f2 + folded.code + s1_lenEnc(folded.rest.length) + folded.rest + d.text;
+  }
+  function s1_decode(tok){
+    if(!tok) return null;
+    // backward-compat: earlier tokens used the visible "s1~flags~doc~pp" form
+    if(tok.indexOf("~") !== -1){
+      var parts = tok.split("~");
+      if(parts[0] !== "s1") return null;
+      var on = parseInt(parts[1] || "0", 36); if(isNaN(on)) on = 0;
+      var orelays = s1_relays();
+      return {
+        relay: orelays[on & 7] !== undefined ? orelays[on & 7] : "",
+        res: (on & 8) ? "raw" : "path",
+        doc: s1_decodeDoc(parts[2] || "", !!(on & 16), !!(on & 32)),
+        pp: parts[3] || ""
+      };
+    }
+    var n = parseInt(tok.substr(0, 2), 36); if(isNaN(n)) return null;
+    var relayIdx = n & 7, isRaw = !!(n & 8), wasHttp = !!(n & 16), hadWww = !!(n & 32);
+    var dictCode = tok.charAt(2);
+    var ld = s1_lenDec(tok, 3);
+    var rest = tok.substr(ld.next, ld.len);
+    var doc = tok.substr(ld.next + ld.len);
+    var relays = s1_relays();
+    return {
+      relay: relays[relayIdx] !== undefined ? relays[relayIdx] : "",
+      res: isRaw ? "raw" : "path",
+      doc: s1_decodeDoc(doc, wasHttp, hadWww),
+      pp: s1_unfoldPath(dictCode, rest)
+    };
+  }
+
+  // ---- cosmetic obfuscation -------------------------------------------------
+  // Makes the token LOOK like a random string. This is NOT security: the codec
+  // lives in this file, so it's fully reversible by anyone who has it. It only
+  // hides the readable URL/path from a casual glance. Method, all reversible:
+  //   1. UTF-8 bytes of the s1 token
+  //   2. XOR each byte with a keystream (a tiny LCG seeded from a fixed salt +
+  //      a per-link 1-byte nonce, so the same config still scrambles differently)
+  //   3. base64url the result
+  //   4. remap through a fixed shuffled alphabet so it doesn't read as base64
+  // Output is prefixed "k" — plain s1 tokens start with a base36 flags digit
+  // (0/1), never "k", so the decoder can tell them apart unambiguously.
+  var OBF_SALT = 0x9E3779B1;                 // arbitrary fixed constant
+  var B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  // a fixed permutation of the base64url alphabet (kills the base64 "look")
+  var B64S = "a0-gru5cqU2yJMRh6tmQO3v9ZX7Kpw8SjnBeToVzkAYxCf_FWPslN4G1EbLdiDIH";
+  function obf_maps(){
+    // build forward/inverse maps once (lazily) from B64 -> B64S
+    if(obf_maps._f) return obf_maps;
+    var f = {}, r = {};
+    for(var i=0;i<B64.length;i++){ f[B64[i]] = B64S[i]; r[B64S[i]] = B64[i]; }
+    obf_maps._f = f; obf_maps._r = r; return obf_maps;
+  }
+  function b64urlEncodeBytes(bytes){
+    var out = "", i;
+    for(i=0;i<bytes.length;i+=3){
+      var b0=bytes[i], b1=i+1<bytes.length?bytes[i+1]:0, b2=i+2<bytes.length?bytes[i+2]:0;
+      out += B64[b0>>2];
+      out += B64[((b0&3)<<4)|(b1>>4)];
+      out += (i+1<bytes.length) ? B64[((b1&15)<<2)|(b2>>6)] : "";
+      out += (i+2<bytes.length) ? B64[b2&63] : "";
+    }
+    return out;
+  }
+  function b64urlDecodeBytes(str){
+    var lut = {}; for(var k=0;k<B64.length;k++) lut[B64[k]]=k;
+    var bytes=[], i;
+    for(i=0;i<str.length;i+=4){
+      var c0=lut[str[i]], c1=lut[str[i+1]];
+      var c2=str[i+2]!==undefined?lut[str[i+2]]:undefined;
+      var c3=str[i+3]!==undefined?lut[str[i+3]]:undefined;
+      bytes.push((c0<<2)|(c1>>4));
+      if(c2!==undefined) bytes.push(((c1&15)<<4)|(c2>>2));
+      if(c3!==undefined) bytes.push(((c2&3)<<6)|c3);
+    }
+    return bytes;
+  }
+  function keystream(seed, n){
+    // simple LCG; deterministic, reversible XOR keystream
+    var s = (seed ^ OBF_SALT) >>> 0, out = [];
+    for(var i=0;i<n;i++){ s = (Math.imul(s, 1664525) + 1013904223) >>> 0; out.push((s >>> 24) & 0xff); }
+    return out;
+  }
+  function s1_obfuscate(tok){
+    var bytes = [];
+    for(var i=0;i<tok.length;i++){
+      var c = tok.charCodeAt(i);
+      if(c < 128){ bytes.push(c); }
+      else { // UTF-8 encode any non-ASCII (paths/urls are ASCII, but be safe)
+        var e = unescape(encodeURIComponent(tok[i]));
+        for(var j=0;j<e.length;j++) bytes.push(e.charCodeAt(j));
+      }
+    }
+    var nonce = (Math.random()*256)|0;
+    var ks = keystream(nonce, bytes.length);
+    var x = bytes.map(function(b,i){ return b ^ ks[i]; });
+    var blob = b64urlEncodeBytes([nonce].concat(x));
+    var maps = obf_maps(), scrambled = "";
+    for(var m=0;m<blob.length;m++) scrambled += (maps._f[blob[m]] || blob[m]);
+    return "k" + scrambled;
+  }
+  function s1_deobfuscate(scrambled){
+    if(scrambled.charAt(0) !== "k") return null;
+    var body = scrambled.slice(1), maps = obf_maps(), unscr = "";
+    for(var m=0;m<body.length;m++) unscr += (maps._r[body[m]] || body[m]);
+    var raw = b64urlDecodeBytes(unscr);
+    if(!raw.length) return null;
+    var nonce = raw[0], x = raw.slice(1);
+    var ks = keystream(nonce, x.length);
+    var bytes = x.map(function(b,i){ return b ^ ks[i]; });
+    // bytes -> string (utf-8 aware)
+    var s = "";
+    for(var i=0;i<bytes.length;i++) s += String.fromCharCode(bytes[i]);
+    try { return decodeURIComponent(escape(s)); } catch(e){ return s; }
+  }
+
+  // ---- downloadable PNG share-artifact --------------------------------------
+  // Packs the config into a compact fixed-width binary RECORD, lays the raw bytes
+  // out as PNG pixels (3 data bytes per pixel as R,G,B; alpha forced to 255 so the
+  // canvas never premultiplies and corrupts the data), and lets the browser PNG-
+  // compress it. No base64 tax: the data lives as real bytes, not URL text.
+  //   record:  [0x5C][ver=1][flags][dictCode][pathLen:u16][docLen:u16][path][doc]
+  //   pixels:  [len:u32][record][zero-pad to x3]  ->  RGB triples, A=255
+  function utf8Bytes(str){
+    var out = unescape(encodeURIComponent(str)), a = [];
+    for(var i=0;i<out.length;i++) a.push(out.charCodeAt(i));
+    return a;
+  }
+  function utf8FromBytes(arr){
+    var s = "";
+    for(var i=0;i<arr.length;i++) s += String.fromCharCode(arr[i]);
+    try { return decodeURIComponent(escape(s)); } catch(e){ return s; }
+  }
+  function packRecord(cfg){
+    var relayIdx = s1_relayIndex(cfg.relay);
+    var d = s1_encodeDoc(cfg.doc || "");
+    var fold = s1_foldPath(cfg.pp || "");
+    var flags = relayIdx | (cfg.res === "raw" ? 8 : 0) | (d.wasHttp ? 16 : 0) | (d.hadWww ? 32 : 0);
+    var pathB = utf8Bytes(fold.rest), docB = utf8Bytes(d.text);
+    var dictCode = parseInt(fold.code, 36) || 0;
+    return [0x5C, 1, flags, dictCode,
+            (pathB.length>>8)&255, pathB.length&255,
+            (docB.length>>8)&255, docB.length&255]
+           .concat(pathB, docB);
+  }
+  function unpackRecord(bytes){
+    if(bytes[0] !== 0x5C) throw new Error("Not a share image (bad signature).");
+    var flags = bytes[2], dictCode = bytes[3];
+    var pathLen = (bytes[4]<<8)|bytes[5], docLen = (bytes[6]<<8)|bytes[7];
+    var pathRest = utf8FromBytes(bytes.slice(8, 8+pathLen));
+    var docText  = utf8FromBytes(bytes.slice(8+pathLen, 8+pathLen+docLen));
+    var relays = s1_relays();
+    return {
+      relay: relays[flags & 7] !== undefined ? relays[flags & 7] : "",
+      res: (flags & 8) ? "raw" : "path",
+      doc: s1_decodeDoc(docText, !!(flags & 16), !!(flags & 32)),
+      pp: s1_unfoldPath(dictCode.toString(36), pathRest)
+    };
+  }
+  // ---- shared pixel layer: arbitrary record bytes <-> PNG -------------------
+  // 3 data bytes per pixel as R,G,B; alpha forced to 255 so the canvas never
+  // premultiplies and corrupts data. A 4-byte big-endian length prefix marks how
+  // many record bytes are real vs trailing zero-pad.
+  function bytesToPng(rec){
+    var len = rec.length;
+    var stream = [(len>>>24)&255,(len>>>16)&255,(len>>>8)&255,len&255].concat(rec);
+    while(stream.length % 3) stream.push(0);
+    var pxCount = stream.length / 3;
+    var w = Math.max(1, Math.ceil(Math.sqrt(pxCount)));
+    var h = Math.max(1, Math.ceil(pxCount / w));
+    var cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+    var ctx = cv.getContext("2d");
+    var img = ctx.createImageData(w, h);
+    for(var p=0; p<w*h; p++){
+      var si = p*3;
+      img.data[p*4]   = si   < stream.length ? stream[si]   : 0;
+      img.data[p*4+1] = si+1 < stream.length ? stream[si+1] : 0;
+      img.data[p*4+2] = si+2 < stream.length ? stream[si+2] : 0;
+      img.data[p*4+3] = 255; // opaque — prevents canvas alpha premultiplication
+    }
+    ctx.putImageData(img, 0, 0);
+    return new Promise(function(resolve, reject){
+      cv.toBlob(function(b){ b ? resolve(b) : reject(new Error("PNG encode failed.")); }, "image/png");
+    });
+  }
+  function pngToBytes(file){
+    return new Promise(function(resolve, reject){
+      var url = URL.createObjectURL(file);
+      var im = new Image();
+      im.onload = function(){
+        try {
+          var cv = document.createElement("canvas"); cv.width = im.width; cv.height = im.height;
+          var ctx = cv.getContext("2d");
+          ctx.drawImage(im, 0, 0);
+          var data = ctx.getImageData(0, 0, im.width, im.height).data;
+          var stream = [];
+          for(var p=0; p<im.width*im.height; p++){ stream.push(data[p*4], data[p*4+1], data[p*4+2]); }
+          URL.revokeObjectURL(url);
+          var rlen = (stream[0]<<24)|(stream[1]<<16)|(stream[2]<<8)|stream[3];
+          if(rlen <= 0 || rlen > stream.length) throw new Error("Not a share image (bad length).");
+          resolve(stream.slice(4, 4+rlen));
+        } catch(e){ reject(e); }
+      };
+      im.onerror = function(){ URL.revokeObjectURL(url); reject(new Error("Could not read the image.")); };
+      im.src = url;
+    });
+  }
+
+  // config.png  — record magic 0x5C, holds the share config (fixed-width record)
+  function configToPng(cfg){ return bytesToPng(packRecord(cfg)); }
+
+  // result.png  — record magic 0x52 ('R'), holds text as UTF-8.
+  //   record: [0x52][ver=2][meta][ payload bytes ]
+  //   meta bit0 = kind (0 resolved value, 1 pasted textarea text)
+  //   meta bit1 = isString (only meaningful for kind 0: value was a raw string)
+  function textToResultPng(text, kind){
+    var meta = (kind & 1);                 // pasted text -> kind 1; never a "string value"
+    var payload = utf8Bytes(text);
+    var rec = [0x52, 2, meta].concat(payload);
+    return bytesToPng(rec);
+  }
+  function valueToResultPng(value){
+    var isStr = (typeof value === "string");
+    var text = isStr ? value : serialise(value, true);
+    var meta = 0 | (isStr ? 2 : 0);        // kind 0 (resolved value) + isString bit
+    var payload = utf8Bytes(text);
+    var rec = [0x52, 2, meta].concat(payload);
+    return bytesToPng(rec);
+  }
+  function decodeResultRecord(rec){
+    if(rec[0] !== 0x52) throw new Error("Not a result image.");
+    var ver = rec[1], meta = rec[2];
+    // v1 had no kind byte: [0x52][1][isString][payload]
+    if(ver === 1){
+      var isStr1 = rec[2] === 1, text1 = utf8FromBytes(rec.slice(3));
+      return { kind: "value", value: isStr1 ? text1 : (function(){ try{return JSON.parse(text1);}catch(e){return text1;} })() };
+    }
+    var kind = meta & 1, isString = !!(meta & 2);
+    var text = utf8FromBytes(rec.slice(3));
+    if(kind === 1) return { kind: "pasted", text: text };
+    return { kind: "value", value: isString ? text : (function(){ try{return JSON.parse(text);}catch(e){return text;} })() };
+  }
+
+  // decode any share PNG. config.png / result.png store the record directly in
+  // the pixel bytes (magic 0x5C / 0x52). The watermarked paste.png hides its
+  // record in the low bits, so if the direct read isn't a known magic we fall
+  // back to the stego (low-bit) decode.
+  function pngToShare(file){
+    return pngToBytes(file).then(function(rec){
+      if(rec[0] === 0x5C) return { kind: "config", cfg: unpackRecord(rec) };
+      if(rec[0] === 0x52){
+        var r = decodeResultRecord(rec);
+        return r.kind === "pasted"
+          ? { kind: "pasted", text: r.text }
+          : { kind: "result", value: r.value };
+      }
+      if(rec[0] === 0x50) return pasteRecordToText(rec).then(function(text){ return { kind: "paste", text: text }; });
+      // not a direct-layout record — try the watermarked stego layout
+      return stegoPngToRecord(file).then(function(srec){
+        if(srec[0] === 0x50) return pasteRecordToText(srec).then(function(text){ return { kind: "paste", text: text }; });
+        throw new Error("Unrecognized share image.");
+      });
+    }).catch(function(e){
+      // pngToBytes can reject on a stego image (its length header is in low bits);
+      // try the stego path before giving up.
+      return stegoPngToRecord(file).then(function(srec){
+        if(srec[0] === 0x50) return pasteRecordToText(srec).then(function(text){ return { kind: "paste", text: text }; });
+        throw e;
+      });
+    });
+  }
+
+  // ---- pasted-text PNG: deflate (real compression) then obfuscate -----------
+  // Pasted content is large and repetitive — the case where DEFLATE actually
+  // wins (unlike the tiny URL token). We deflate, then apply the token's own
+  // obfuscation core (XOR keystream) so the stored bytes look random, then pack
+  // into a PNG. No base64 — that was only the URL token's tax for surviving text;
+  // a PNG holds raw bytes. record:  [0x50][ver=1][flags][nonce][ payload ]
+  //   flags bit0 = deflated (1) or raw (0, fallback if CompressionStream absent)
+  function deflateBytes(u8){
+    if(typeof CompressionStream === "undefined") return Promise.resolve(null);
+    try {
+      var cs = new CompressionStream("deflate-raw");
+      var writer = cs.writable.getWriter();
+      writer.write(u8); writer.close();
+      return new Response(cs.readable).arrayBuffer().then(function(ab){ return new Uint8Array(ab); });
+    } catch(e){ return Promise.resolve(null); }
+  }
+  function inflateBytes(u8){
+    var ds = new DecompressionStream("deflate-raw");
+    var writer = ds.writable.getWriter();
+    writer.write(u8); writer.close();
+    return new Response(ds.readable).arrayBuffer().then(function(ab){ return new Uint8Array(ab); });
+  }
+  function xorScramble(bytes, nonce){
+    var ks = keystream(nonce, bytes.length), out = new Array(bytes.length);
+    for(var i=0;i<bytes.length;i++) out[i] = bytes[i] ^ ks[i];
+    return out;
+  }
+  // build the paste record bytes (magic 0x50): deflate when it helps, then XOR-
+  // obfuscate, exactly the token's method.  [0x50][ver=2][flags][nonce][payload]
+  function buildPasteRecord(text){
+    var u8 = new Uint8Array(utf8Bytes(text));
+    return deflateBytes(u8).then(function(def){
+      var useDeflate = !!def && def.length < u8.length;
+      var payloadBytes = useDeflate ? Array.prototype.slice.call(def) : Array.prototype.slice.call(u8);
+      var nonce = (Math.random()*256)|0;
+      var scrambled = xorScramble(payloadBytes, nonce);
+      return [0x50, 2, useDeflate ? 1 : 0, nonce].concat(scrambled);
+    });
+  }
+  function pasteRecordToText(rec){
+    if(rec[0] !== 0x50) return Promise.reject(new Error("Not a paste image."));
+    var deflated = (rec[2] & 1) === 1, nonce = rec[3];
+    var scrambled = rec.slice(4);
+    var bytes = xorScramble(scrambled, nonce);    // XOR is its own inverse
+    if(!deflated) return Promise.resolve(utf8FromBytes(bytes));
+    return inflateBytes(new Uint8Array(bytes)).then(function(out){ return utf8FromBytes(Array.prototype.slice.call(out)); });
+  }
+
+  // ---- watermarked stego image for paste.png --------------------------------
+  // The catch: paste.png stores DATA in its pixels, so we can't paint over them.
+  // Instead we split each channel's bits: the HIGH 6 bits carry the visible
+  // "MAHDA" watermark, the LOW 2 bits carry the data (invisible). Image looks
+  // watermarked; data is recovered from the low bits. 6 data bits per pixel.
+  // The watermark is one big horizontal "MAHDA" in a stylized 9x11 display font
+  // (angled M peaks, pointed A apex, beveled D), centered across the image.
+  var WM_FONT = {
+    "M":["110000011","111000111","111101111","110111011","110010011","110000011","110000011","110000011","110000011","110000011","110000011"],
+    "A":["000111000","000111000","001111100","001101100","011000110","011000110","111111111","111111111","110000011","110000011","110000011"],
+    "H":["110000011","110000011","110000011","110000011","111111111","111111111","110000011","110000011","110000011","110000011","110000011"],
+    "D":["111111000","111111100","110000110","110000011","110000011","110000011","110000011","110000011","110000110","111111100","111111000"]
+  };
+  var WM_LETTERS = "MAHDA".split("");
+  var WM_GW = 9, WM_GH = 11, WM_GAP = 2;
+  var WM_TOTALCOLS = WM_LETTERS.length * (WM_GW + WM_GAP) - WM_GAP;  // word width in cells
+  // build a per-pixel watermark test for a given image size: one big centered word
+  function makeBigWatermark(W, H){
+    // scale to fit width, letters take ~62% of the height, vertically centered
+    var sx = W / WM_TOTALCOLS;
+    var sy = (H * 0.62) / WM_GH;
+    var scale = Math.min(sx, sy);                 // uniform scale, keep proportions
+    var wordPxW = WM_TOTALCOLS * scale, wordPxH = WM_GH * scale;
+    var ox = (W - wordPxW) / 2, oy = (H - wordPxH) / 2;   // center
+    return function(x, y){
+      var col = Math.floor((x - ox) / scale);
+      var gy = Math.floor((y - oy) / scale);
+      if(col < 0 || gy < 0 || gy >= WM_GH) return 0;
+      var li = Math.floor(col / (WM_GW + WM_GAP));
+      var cx = col % (WM_GW + WM_GAP);
+      if(li >= WM_LETTERS.length || cx >= WM_GW) return 0;
+      return WM_FONT[WM_LETTERS[li]][gy].charAt(cx) === "1" ? 1 : 0;
+    };
+  }
+  // cheap integer hash for the confetti pattern
+  function wmHash(i){
+    var x = (i ^ 0x9E3779B1) >>> 0;
+    x = Math.imul(x ^ (x>>>15), 0x85EBCA6B) >>> 0;
+    x = Math.imul(x ^ (x>>>13), 0xC2B2AE35) >>> 0;
+    return (x ^ (x>>>16)) >>> 0;
+  }
+  // confetti colour for a BACKGROUND pixel (high 6 bits per channel, 0..63),
+  // derived from the pixel index and the data bits passing through it — so the
+  // speckle genuinely reflects the encoded payload. Sparse bright flecks over a
+  // dark field, so the MAHDA watermark still reads on top.
+  function confettiHi(idx, dR, dG, dB){
+    var h = wmHash((idx*3 + dR*7 + dG*11 + dB*13) >>> 0);
+    if((h % 7) !== 0){                       // ~6 of 7 px: dim, lightly textured
+      var base = 4 + (h & 3);                // 4..7 of 63 -> dark
+      return [base, base, base];
+    }
+    var r = 20 + ((h>>>3) % 44);             // a vivid fleck: 20..63 per channel
+    var g = 20 + ((h>>>9) % 44);
+    var b = 20 + ((h>>>15) % 44);
+    var pick = (h>>>21) % 3;                  // knock one channel down for saturation
+    if(pick === 0) g >>= 2; else if(pick === 1) b >>= 2; else r >>= 2;
+    return [r, g, b];
+  }
+  // a length-prefixed record -> watermarked PNG carrying it in low 2 bits/channel
+  function recordToStegoPng(rec){
+    var len = rec.length;
+    var stream = [(len>>>24)&255,(len>>>16)&255,(len>>>8)&255,len&255].concat(rec);
+    var totalBits = stream.length * 8;
+    var pxNeeded = Math.ceil(totalBits / 6);          // 6 data bits per pixel
+    // square canvas: side fits the data, with a floor so the word reads well
+    var floorSide = WM_TOTALCOLS * 3;                 // ~3px per font column
+    var side = Math.max(floorSide, Math.ceil(Math.sqrt(pxNeeded)));
+    var w = side, h = side;
+    var wmOn = makeBigWatermark(w, h);
+    var cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+    var ctx = cv.getContext("2d");
+    var img = ctx.createImageData(w, h);
+    var bit = 0;
+    function nextBits(n){ var v = 0;
+      for(var k=0;k<n;k++){ var bi = bit>>3, off = 7-(bit&7);
+        var b = (bi < stream.length) ? ((stream[bi]>>off)&1) : 0; v = (v<<1)|b; bit++; }
+      return v;
+    }
+    for(var y=0;y<h;y++) for(var x=0;x<w;x++){
+      var i = (y*w + x);
+      var dR = nextBits(2), dG = nextBits(2), dB = nextBits(2);   // data (low bits)
+      var hiR, hiG, hiB;
+      if(wmOn(x, y)){ hiR = hiG = hiB = 0x3F; }                   // bright MAHDA
+      else { var c = confettiHi(i, dR, dG, dB); hiR = c[0]; hiG = c[1]; hiB = c[2]; }
+      img.data[i*4]   = (hiR<<2) | dR;
+      img.data[i*4+1] = (hiG<<2) | dG;
+      img.data[i*4+2] = (hiB<<2) | dB;
+      img.data[i*4+3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    return new Promise(function(resolve, reject){
+      cv.toBlob(function(b){ b ? resolve(b) : reject(new Error("PNG encode failed.")); }, "image/png");
+    });
+  }
+  // read the low-bit data plane back out of a watermarked PNG
+  function stegoPngToRecord(file){
+    return new Promise(function(resolve, reject){
+      var url = URL.createObjectURL(file);
+      var im = new Image();
+      im.onload = function(){
+        try {
+          var cv = document.createElement("canvas"); cv.width = im.width; cv.height = im.height;
+          var ctx = cv.getContext("2d");
+          ctx.drawImage(im, 0, 0);
+          var data = ctx.getImageData(0, 0, im.width, im.height).data;
+          URL.revokeObjectURL(url);
+          // collect 2 low bits per channel into a bit stream
+          var bits = [];
+          for(var p=0; p<im.width*im.height; p++){
+            for(var c=0;c<3;c++){ var v = data[p*4+c]; bits.push((v>>1)&1, v&1); }
+          }
+          function readByte(bo){ var v=0; for(var k=0;k<8;k++) v=(v<<1)|(bits[bo+k]||0); return v; }
+          var len = (readByte(0)<<24)|(readByte(8)<<16)|(readByte(16)<<8)|readByte(24);
+          if(len <= 0 || len*8 > bits.length) throw new Error("Not a MAHDA paste image (bad length).");
+          var rec = [];
+          for(var n=0; n<len; n++) rec.push(readByte(32 + n*8));
+          resolve(rec);
+        } catch(e){ reject(e); }
+      };
+      im.onerror = function(){ URL.revokeObjectURL(url); reject(new Error("Could not read the image.")); };
+      im.src = url;
+    });
+  }
+  // text -> watermarked paste PNG (Promise<Blob>)
+  function pasteTextToPng(text){
+    return buildPasteRecord(text).then(function(rec){ return recordToStegoPng(rec); });
+  }
+
+  // ---- generic SEO-slug trim (opt-in, verified before use) ------------------
+  // Many CMS URLs are ".../<id-or-token>/<descriptive-slug>/". The slug is
+  // decoration the server usually ignores, but NOT always — so we never assume.
+  // This only PROPOSES a trimmed URL; the copy handler fetches it and compares
+  // the resolved value before committing. Purely structural: no domain names.
+  function slugTrimCandidate(url){
+    var hash = "", query = "", u = url;
+    var h = u.indexOf("#"); if(h !== -1){ hash = u.slice(h); u = u.slice(0,h); }
+    var q = u.indexOf("?"); if(q !== -1){ query = u.slice(q); u = u.slice(0,q); }
+    // split scheme://host from the path
+    var m = u.match(/^(https?:\/\/[^\/]+)(\/.*)$/i);
+    if(!m) return null;
+    var origin = m[1], path = m[2];
+    var hadTrailing = /\/$/.test(path);
+    var segs = path.split("/").filter(Boolean);
+    if(segs.length < 2) return null;             // need at least <token>/<slug>
+    var last = segs[segs.length - 1];
+    // a "slug" looks descriptive: contains a hyphen, or is long & non-numeric.
+    var looksSlug = /-/.test(last) || (last.length >= 12 && !/^\d+$/.test(last));
+    if(!looksSlug) return null;
+    // the segment BEFORE it should look like an id/token (keeps the page reference)
+    var prev = segs[segs.length - 2];
+    if(!prev) return null;
+    var trimmedPath = "/" + segs.slice(0, -1).join("/") + (hadTrailing ? "/" : "");
+    var trimmed = origin + trimmedPath + query + hash;
+    return trimmed === url ? null : trimmed;
+  }
+
+  function buildShareLink(docOverride){
+    var base = location.origin === "null"
+      ? location.href.split(/[?#]/)[0]                              // file:// — full path
+      : (location.pathname.split("/").pop() || location.pathname);  // just the filename
+    var cfg = {
+      doc: (docOverride != null ? docOverride : $("url").value.trim()),
+      pp:  $("path").value.trim(),
+      res: $("mode").value === "raw" ? "raw" : "path",
+      relay: $("proxy").value
+    };
+    return base + "?s=" + s1_obfuscate(s1_encode(cfg));
+  }
+
+  // on load: accept either the compact ?s= token OR the readable ?doc=&pp=&...
+  // form (so hand-edited links still work), then auto-resolve when possible.
+  function applyShareParams(){
+    var qs = location.search.replace(/^\?/, "");
+    if(!qs) return;
+    var p = {};
+    qs.split("&").forEach(function(kv){
+      var i = kv.indexOf("="); if(i === -1) return;
+      p[decodeURIComponent(kv.slice(0,i))] = decodeURIComponent(kv.slice(i+1));
+    });
+
+    var cfg = null;
+    if(p.s){
+      // obfuscated tokens start with "k"; plain s1 tokens start with a base36 digit
+      var tok = (p.s.charAt(0) === "k") ? s1_deobfuscate(p.s) : p.s;
+      if(tok) cfg = s1_decode(tok);
+    }
+    if(!cfg && (p.doc || p.pp)){
+      // legacy readable form; map relay slug -> proxy value
+      var relayVal = "";
+      if(p.relay && p.relay !== "none"){
+        var opts = $("proxy").options;
+        for(var k=0;k<opts.length;k++){
+          if(opts[k].textContent.trim().split(/\s+/)[0].toLowerCase() === p.relay.toLowerCase()){ relayVal = opts[k].value; break; }
+        }
+      }
+      cfg = { doc: p.doc||"", pp: p.pp||"", res: p.res==="raw"?"raw":"path", relay: relayVal };
+    }
+    if(!cfg) return;
+    applyConfig(cfg, "link");
+  }
+
+  // apply a decoded config to the fields and auto-resolve when possible
+  function applyConfig(cfg, sourceLabel){
+    if(!cfg) return;
+    if(cfg.doc) $("url").value = cfg.doc;
+    $("path").value = cfg.pp || "";
+    $("mode").value = cfg.res === "raw" ? "raw" : "auto";
+    $("proxy").value = cfg.relay;
+    if(cfg.doc && (cfg.pp || cfg.res === "raw")){
+      msg("Loaded from " + (sourceLabel || "share") + " — resolving…");
+      run();
+    } else {
+      msg("Loaded from " + (sourceLabel || "share") + ".", "ok");
+    }
+  }
+
+  // dump what each stage of the pipeline actually sees, so failures are visible
+  function debugPipeline(){
+    var url = $("url").value.trim();
+    var proxy = $("proxy").value;
+    var pasted = pastedContent();
+    if(!pasted && !/^https?:\/\//i.test(url)){ msg("Enter a full http(s) URL, or paste content below.", "err"); return; }
+    var btn = $("debug"); btn.disabled = true;
+    msg(pasted ? "Analyzing pasted content…" : "Fetching for diagnostics…");
+    var source = pasted
+      ? Promise.resolve({ status: 0, text: pasted, fromPaste: true })
+      : fetch(buildFetchUrl(proxy, url), {redirect:"follow"})
+          .then(function(r){ return r.text().then(function(t){ return {status:r.status, text:t}; }); });
+    source
+      .then(function(res){
+        var report = { source: res.fromPaste ? "pasted content" : "fetched URL",
+                       httpStatus: res.status, rawBytes: res.text.length };
+        var pushCount = (res.text.match(/self\.__next_f\.push/g)||[]).length;
+        report.pushStatementsInPage = pushCount;
+
+        var chunks = collectPushChunks(res.text);
+        report.chunksCollected = chunks.length;
+        report.chunkLengths = chunks.map(function(c){ return c.length; });
+
+        // when pasting raw stream/JSON (no push found), the text itself is the stream
+        var stream = chunks.length ? chunks.join("") : (res.fromPaste ? res.text : "");
+        report.streamLength = stream.length;
+        report.streamHasBodyText = stream.indexOf("bodyText") !== -1;
+        report.streamHasElements = stream.indexOf('"elements"') !== -1;
+        report.streamHasSeoDescription = stream.indexOf("seoDescription") !== -1;
+        report.streamHasContextStory = stream.indexOf('"story"') !== -1;
+
+        // what discovery extracts
+        try {
+          var found = discoverPaths(stream);
+          report.discoveredPaths = found.map(function(c){ return c.path + " [" + c.score + ", " + c.kind + "]"; });
+        } catch(e){ report.discoverError = e.message; }
+
+        // first 400 chars of the stream so we can see its actual shape
+        report.streamHead = stream.slice(0, 400);
+        // a window around bodyText if present
+        var bi = stream.indexOf("bodyText");
+        report.bodyTextContext = bi !== -1 ? stream.slice(Math.max(0,bi-60), bi+40) : "(bodyText not in stream)";
+
+        // ---- share-link codec diagnostics (encode/fold/trim/obfuscate) ------
+        // exposes every stage of the link pipeline for the CURRENT config so
+        // shortening and round-trip behaviour are inspectable, not a black box.
+        try {
+          var cfg = {
+            doc: url,
+            pp: $("path").value.trim(),
+            res: $("mode").value === "raw" ? "raw" : "path",
+            relay: proxy
+          };
+          var plain = s1_encode(cfg);
+          var obf = s1_obfuscate(plain);
+          var roundtrip = s1_decode(s1_deobfuscate(obf));
+          var fold = s1_foldPath(cfg.pp || "");
+          var trimCand = slugTrimCandidate(url);
+          var verboseLen = ("?doc=" + encodeURIComponent(cfg.doc) +
+                            "&pp=" + encodeURIComponent(cfg.pp) +
+                            "&res=" + cfg.res + "&relay=x").length;
+          report.shareLink = {
+            config: cfg,
+            plainToken: plain,
+            plainTokenChars: plain.length,
+            pathDictCode: fold.code,
+            pathPrefixFolded: fold.code === "0" ? "(none — stored verbatim)" : PATH_DICT[parseInt(fold.code,36)-1],
+            pathRemainderAfterFold: fold.rest,
+            slugTrimCandidate: trimCand || "(no trimmable slug)",
+            obfuscatedToken: "?s=" + obf,
+            obfuscatedChars: ("?s=" + obf).length,
+            roundTripOk: !!roundtrip && roundtrip.doc === cfg.doc &&
+                         roundtrip.pp === cfg.pp && roundtrip.res === cfg.res &&
+                         roundtrip.relay === cfg.relay,
+            lengthVsVerbose: verboseLen + " verbose  ->  " + plain.length +
+                             " plain  ->  " + ("?s="+obf).length + " obfuscated"
+          };
+        } catch(e){ report.shareLinkError = e.message; }
+
+        showValue(report, "pipeline debug");
+        msg("Diagnostics ready — paste this whole output back.", "ok");
+      })
+      .catch(function(err){ msg(err.message || "Debug fetch failed.", "err"); })
+      .finally(function(){ btn.disabled = false; });
+  }
+  function prefersReduced(){ return window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches; }
+
+  // shared: fetch a page and build the RSC stream + row table
+  // Build a {stream, table} from EITHER pasted content (if the paste box is
+  // non-empty) or by fetching the URL. Paste wins; URL is the fallback. Pasted
+  // content may be: full page HTML (has __next_f.push), a raw RSC stream, or
+  // plain JSON — all are handled.
+  function streamTableFromText(text){
+    var chunks = collectPushChunks(text);
+    var stream;
+    if(chunks.length){
+      stream = chunks.join("");           // page HTML with embedded RSC push()
+    } else {
+      // no push() found — treat the text itself as the stream (raw RSC or JSON)
+      stream = text;
+    }
+    return { stream: stream, table: parseRowTable(stream) };
+  }
+  function pastedContent(){
+    var el = document.getElementById("pasted");
+    return el ? el.value.trim() : "";
+  }
+  function fetchTable(url, proxy){
+    var pasted = pastedContent();
+    if(pasted){
+      // resolve synchronously from pasted text, wrapped in a Promise for callers
+      return Promise.resolve().then(function(){
+        var st = streamTableFromText(pasted);
+        if(!st.stream) throw new Error("Pasted content is empty after parsing.");
+        return st;
+      });
+    }
+    return fetch(buildFetchUrl(proxy, url), {redirect:"follow"})
+      .then(function(r){ if(!r.ok) throw new Error("Relay returned HTTP " + r.status); return r.text(); })
+      .then(function(html){
+        var chunks = collectPushChunks(html);
+        if(!chunks.length) throw new Error("No __next_f payload found — not an RSC page, or the relay returned a block page.");
+        var stream = chunks.join("");
+        return { stream: stream, table: parseRowTable(stream) };
+      });
+  }
+
+  // resolve a value for an arbitrary url/path/mode (same logic as run), used to
+  // VERIFY that a slug-trimmed URL returns the identical result before we use it.
+  function resolveForUrl(url, path, mode, proxy){
+    return fetchTable(url, proxy).then(function(res){
+      if(mode === "raw"){
+        var biggest = buildRootObject(res.stream);
+        if(!biggest) throw new Error("no payload");
+        return biggest;
+      }
+      var r = resolvePath(res.stream, res.table, path);
+      if(r.value === undefined) throw new Error("path did not resolve");
+      return r.value;
+    });
+  }
+  // structural equality for resolved values (order-sensitive, like the displayed JSON)
+  function valuesEqual(a, b){
+    try { return JSON.stringify(a) === JSON.stringify(b); }
+    catch(e){ return false; }
+  }
+
+  // feed the datalist with discovered paths for typeahead in the path field
+  function fillPathOptions(candidates){
+    var dl = $("path-options");
+    dl.innerHTML = "";
+    candidates.forEach(function(c){
+      var opt = document.createElement("option");
+      opt.value = c.path;
+      opt.label = c.kind + " · score " + c.score;
+      dl.appendChild(opt);
+    });
+  }
+
+  // ---- generic property-path explorer --------------------------------------
+  // Walks the actual parsed object: breadcrumb (click to climb) + key picker
+  // (real keys/indices at the current node). No key names are hardcoded.
+  var EXPLORER = { root: null, path: [], table: null };
+
+  function navTo(obj, segs){
+    var cur = obj;
+    for(var i=0;i<segs.length && cur!=null;i++){
+      // follow a $ref leaf transparently so we can keep exploring into it
+      if(typeof cur === "string" && cur.charAt(0) === "$" && EXPLORER.table){
+        var rr = resolveRef(cur, EXPLORER.table);
+        if(rr !== cur) cur = rr;
+      }
+      cur = cur[segs[i]];
+    }
+    if(typeof cur === "string" && cur.charAt(0) === "$" && EXPLORER.table){
+      var r2 = resolveRef(cur, EXPLORER.table);
+      if(r2 !== cur) cur = r2;
+    }
+    return cur;
+  }
+
+  function pathString(segs){
+    // dot notation, but bracket numeric indices: a.b[0].c
+    var s = "";
+    segs.forEach(function(k){
+      if(/^[0-9]+$/.test(String(k))) s += "[" + k + "]";
+      else s += (s ? "." : "") + k;
+    });
+    return s;
+  }
+
+  function shortType(v){
+    if(v === null) return "null";
+    if(Array.isArray(v)) return "[" + v.length + "]";
+    var t = typeof v;
+    if(t === "object") return "{" + Object.keys(v).length + "}";
+    if(t === "string"){
+      if(v.charAt(0) === "$") return "ref " + v;
+      return "str " + v.length;
+    }
+    return t;
+  }
+
+  function renderExplorer(){
+    var crumbsEl = $("exp-crumbs"), keysEl = $("exp-keys");
+    crumbsEl.innerHTML = ""; keysEl.innerHTML = "";
+    if(!EXPLORER.root){ return; }
+
+    // breadcrumb: root + each chosen segment, each clickable to climb back
+    function crumb(label, depth, current){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "exp-crumb" + (current ? " cur" : "");
+      b.textContent = label;
+      if(!current) b.addEventListener("click", function(){
+        EXPLORER.path = EXPLORER.path.slice(0, depth);
+        syncPathField(); renderExplorer();
+      });
+      return b;
+    }
+    crumbsEl.appendChild(crumb("root", 0, EXPLORER.path.length === 0));
+    EXPLORER.path.forEach(function(seg, i){
+      var sep = document.createElement("span"); sep.className = "exp-sep"; sep.textContent = "›";
+      crumbsEl.appendChild(sep);
+      crumbsEl.appendChild(crumb(String(seg), i+1, i === EXPLORER.path.length-1));
+    });
+
+    // current node, and the keys/indices available to descend into
+    var node = navTo(EXPLORER.root, EXPLORER.path);
+    if(node == null || typeof node !== "object"){
+      var leaf = document.createElement("div");
+      leaf.className = "exp-hint";
+      leaf.textContent = node == null ? "(no value here)"
+        : "leaf " + shortType(node) + " — this path resolves to a value. Click Resolve to view it.";
+      keysEl.appendChild(leaf);
+      return;
+    }
+    var keys = Array.isArray(node)
+      ? node.map(function(_,i){ return i; })
+      : Object.keys(node);
+    if(!keys.length){
+      var empty = document.createElement("div");
+      empty.className = "exp-hint"; empty.textContent = "(empty)";
+      keysEl.appendChild(empty);
+      return;
+    }
+    keys.forEach(function(k){
+      var child = node[k];
+      var btn = document.createElement("button");
+      btn.type = "button";
+      var canDescend = child != null && typeof child === "object";
+      // a $ref string is descendable if it resolves to an object
+      if(!canDescend && typeof child === "string" && child.charAt(0)==="$" && EXPLORER.table){
+        var rr = resolveRef(child, EXPLORER.table);
+        canDescend = rr != null && typeof rr === "object";
+      }
+      btn.className = "exp-key" + (canDescend ? "" : " leaf");
+      var name = document.createElement("span"); name.textContent = String(k);
+      var ty = document.createElement("span"); ty.className = "ek-type"; ty.textContent = shortType(child);
+      btn.appendChild(name); btn.appendChild(ty);
+      btn.addEventListener("click", function(){
+        EXPLORER.path = EXPLORER.path.concat([k]);
+        syncPathField();
+        renderExplorer();
+      });
+      keysEl.appendChild(btn);
+    });
+  }
+
+  function syncPathField(){
+    $("path").value = pathString(EXPLORER.path);
+  }
+
+  // open the explorer at the document root
+  function openExplorer(stream, table){
+    EXPLORER.root = buildRootObject(stream);
+    EXPLORER.table = table;
+    EXPLORER.path = [];
+    syncPathField();
+    renderExplorer();
+  }
+
+  function discover(){
+    var url = $("url").value.trim();
+    var proxy = $("proxy").value;
+    if(!pastedContent() && !/^https?:\/\//i.test(url)){ msg("Enter a full http(s) URL, or paste content below.", "err"); return; }
+    var btn = $("discover"); btn.disabled = true;
+    msg("Scanning for content paths…");
+    fetchTable(url, proxy)
+      .then(function(res){
+        var found = discoverPaths(res.stream);
+        fillPathOptions(found);
+        $("mode").value = "auto";
+        // open the tree explorer at the document root; field starts blank
+        openExplorer(res.stream, res.table);
+        if(!found.length){ msg("Scanned — walk the tree below to pick a path.", "ok"); return; }
+        msg("Found " + found.length + " content candidate" + (found.length>1?"s":"") +
+            " (in typeahead). Walk the tree below to pick any path.", "ok");
+      })
+      .catch(function(err){ msg(err.message || "Scan failed.", "err"); })
+      .finally(function(){ btn.disabled = false; });
+  }
+
+  // build the largest parsed object from the stream (newline-agnostic).
+  // generic: no key names assumed — just the biggest JSON object present.
+  function buildRootObject(stream){
+    var biggest = null, bestLen = 0, idx = 0;
+    while(idx < stream.length){
+      var ch = stream.charAt(idx);
+      if(ch === "{"){
+        var p = tryParseFrom(stream, idx);
+        if(p){
+          var end = findStructEnd(stream, idx);
+          if(end - idx > bestLen){ biggest = p; bestLen = end - idx; }
+          idx = end > idx ? end : idx + 1;
+          continue;
+        }
+      }
+      idx++;
+    }
+    return biggest;
+  }
+
+  function run(){
+    var url = $("url").value.trim();
+    var path = $("path").value.trim();
+    var mode = $("mode").value;
+    var proxy = $("proxy").value;
+    var hasPaste = pastedContent().length > 0;
+    if(!hasPaste && !/^https?:\/\//i.test(url)){ msg("Enter a full http(s) URL, or paste content below.", "err"); return; }
+    if(mode === "auto" && !path){ msg("Enter a property path, or switch resolver to Raw.", "err"); return; }
+
+    var go = $("go"); go.disabled = true;
+    msg(hasPaste ? "Parsing pasted content…" : "Requesting…"); $("out").classList.remove("show"); renderCrumbs([]);
+
+    // Text passthrough: return the content exactly as-is (plain text, HTML, markup,
+    // anything). No JSON parsing — the pasted text, or the raw fetched page, IS the
+    // value. Lets non-structured content flow into the result view and result.png.
+    if(mode === "text"){
+      var textPromise = hasPaste
+        ? Promise.resolve(pastedContent())
+        : fetch(buildFetchUrl(proxy, url), {redirect:"follow"})
+            .then(function(r){ if(!r.ok) throw new Error("Relay returned HTTP " + r.status); return r.text(); });
+      textPromise
+        .then(function(text){ showValue(text, "text (as-is)"); msg("Returned content as-is.", "ok"); })
+        .catch(function(err){ msg(err.message || "Request failed.", "err"); })
+        .finally(function(){ go.disabled = false; });
+      return;
+    }
+
+    fetchTable(url, proxy)
+      .then(function(res){
+        msg("Parsing payload…");
+        var table = res.table, stream = res.stream;
+
+        if(mode === "raw"){
+          var biggest = buildRootObject(stream);
+          if(!biggest) throw new Error("Could not parse any object payload.");
+          showValue(biggest, "raw payload");
+          msg("Resolved.", "ok"); return;
+        }
+
+        var r = resolvePath(stream, table, path);
+        renderCrumbs(r.crumbs);
+        if(r.value === undefined){
+          var looksStructured = /[:{]/.test(stream.slice(0, 200));
+          msg(looksStructured
+            ? "Path did not resolve. Check the breadcrumb for the last key that matched."
+            : "Path did not resolve — this looks like plain text/HTML, not structured JSON. Switch the resolver to “Text” to return it as-is.", "err");
+          return;
+        }
+        showValue(r.value, r.via);
+        msg("Resolved.", "ok");
+      })
+      .catch(function(err){ msg(err.message || "Request failed.", "err"); })
+      .finally(function(){ go.disabled = false; });
+  }
+
+  $("go").addEventListener("click", run);
+  $("discover").addEventListener("click", discover);
+  $("debug").addEventListener("click", debugPipeline);
+  $("url").addEventListener("keydown", function(e){ if(e.key==="Enter") run(); });
+  $("path").addEventListener("keydown", function(e){ if(e.key==="Enter") run(); });
+
+  $("copy").addEventListener("click", function(){
+    var ser = serialise(lastValue, prettyMode);
+    if(navigator.clipboard){ navigator.clipboard.writeText(ser).then(function(){ msg("Copied.", "ok"); }); }
+  });
+  function copyText(text){
+    if(navigator.clipboard){ return navigator.clipboard.writeText(text); }
+    return Promise.resolve();
+  }
+  $("copylink").addEventListener("click", function(){
+    var fullDoc = $("url").value.trim();
+    var path = $("path").value.trim();
+    var mode = $("mode").value;
+    var proxy = $("proxy").value;
+    var wantTrim = $("trimslug").checked;
+    var candidate = wantTrim ? slugTrimCandidate(fullDoc) : null;
+
+    // no trim requested, or nothing trimmable -> copy the normal (full) link
+    if(!candidate){
+      var link = buildShareLink();
+      copyText(link).then(function(){ msg("Link copied — " + link, "ok"); });
+      if(wantTrim && !candidate) msg("No trimmable slug in this URL — copied full link.", "ok");
+      return;
+    }
+
+    // verify: the trimmed URL must resolve to the SAME value we already have.
+    if(lastValue === undefined){
+      var lk = buildShareLink();
+      copyText(lk).then(function(){ msg("Resolve first to verify a trimmed link — copied full link.", "ok"); });
+      return;
+    }
+    var btn = $("copylink"); btn.disabled = true;
+    msg("Verifying trimmed URL returns the same result…");
+    resolveForUrl(candidate, path, mode, proxy)
+      .then(function(trimmedVal){
+        if(valuesEqual(trimmedVal, lastValue)){
+          var shortLink = buildShareLink(candidate);
+          return copyText(shortLink).then(function(){
+            msg("Verified identical — short link copied (" + shortLink.length + " chars): " + shortLink, "ok");
+          });
+        } else {
+          var fullLink = buildShareLink(fullDoc);
+          return copyText(fullLink).then(function(){
+            msg("Trimmed URL returned a DIFFERENT result — slug is required here, kept full link.", "err");
+          });
+        }
+      })
+      .catch(function(){
+        var fullLink2 = buildShareLink(fullDoc);
+        copyText(fullLink2).then(function(){
+          msg("Trimmed URL didn't resolve — slug is required here, kept full link.", "err");
+        });
+      })
+      .finally(function(){ btn.disabled = false; });
+  });
+  $("download").addEventListener("click", function(){
+    var ser = serialise(lastValue, true);
+    var blob = new Blob([ser], {type:"application/json"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "value.json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  });
+  $("toggle").addEventListener("click", function(){
+    prettyMode = !prettyMode;
+    if(lastValue !== undefined) showValue(lastValue, $("b-via").textContent.replace(/^via /,""));
+    msg(prettyMode ? "Pretty-printed." : "Minified.", "ok");
+  });
+
+  // save the current config as a tiny PNG artifact
+  // shared: trigger a download of a Blob with a given filename
+  function downloadBlob(blob, filename){
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  }
+
+  $("savepng").addEventListener("click", function(){
+    var cfg = {
+      doc: $("url").value.trim(),
+      pp:  $("path").value.trim(),
+      res: $("mode").value === "raw" ? "raw" : "path",
+      relay: $("proxy").value
+    };
+    if(!cfg.doc){ msg("Enter a document URL first.", "err"); return; }
+    var btn = $("savepng"); btn.disabled = true;
+    configToPng(cfg).then(function(blob){
+      downloadBlob(blob, "config.png");
+      msg("Saved config.png (" + blob.size + " bytes) — drag it back in to restore the setup.", "ok");
+    }).catch(function(e){ msg(e.message || "Could not save config.png.", "err"); })
+      .finally(function(){ btn.disabled = false; });
+  });
+
+  $("saveresultpng").addEventListener("click", function(){
+    if(lastValue === undefined){ msg("Resolve a value first.", "err"); return; }
+    var btn = $("saveresultpng"); btn.disabled = true;
+    valueToResultPng(lastValue).then(function(blob){
+      downloadBlob(blob, "result.png");
+      msg("Saved result.png (" + blob.size + " bytes) — drag it back in to view the value.", "ok");
+    }).catch(function(e){ msg(e.message || "Could not save result.png.", "err"); })
+      .finally(function(){ btn.disabled = false; });
+  });
+
+  // save the pasted textarea text to a PNG, compressed (deflate) then obfuscated
+  // with the token's own scramble — the bytes look random, like the share token.
+  $("savepastepng").addEventListener("click", function(){
+    var pasted = pastedContent();
+    if(!pasted){ msg("Paste some content first.", "err"); return; }
+    var btn = $("savepastepng"); btn.disabled = true;
+    var rawLen = pasted.length;
+    pasteTextToPng(pasted).then(function(blob){
+      downloadBlob(blob, "paste.png");
+      msg("Saved paste.png (" + blob.size + " bytes from " + rawLen.toLocaleString() +
+          " chars) — drag it back in to restore the text.", "ok");
+    }).catch(function(e){ msg(e.message || "Could not save paste.png.", "err"); })
+      .finally(function(){ btn.disabled = false; });
+  });
+
+  // load a share PNG back in (drag/drop or file pick); routes on record kind:
+  //   config -> fills fields & resolves;  paste -> text back into the paste box;
+  //   result -> shown in the result pane.
+  function loadPngFile(file){
+    if(!file){ return; }
+    if(file.type && file.type.indexOf("png") === -1){ msg("Please drop a PNG share file.", "err"); return; }
+    msg("Reading share image…");
+    pngToShare(file)
+      .then(function(out){
+        if(out.kind === "config"){ applyConfig(out.cfg, "config.png"); return; }
+        if(out.kind === "paste"){
+          $("pasted").value = out.text;
+          updatePasteStatus();
+          var fp = document.getElementById("fold-paste"); if(fp) fp.open = true;
+          msg("Loaded paste.png into the paste box (" + out.text.length.toLocaleString() +
+              " chars) — press Resolve to inspect it.", "ok");
+          return;
+        }
+        showValue(out.value, "result.png");
+        msg("Loaded result.png — showing the saved value.", "ok");
+      })
+      .catch(function(e){ msg(e.message || "Could not read that image.", "err"); });
+  }
+  var dz = $("dropzone"), pf = $("pngfile");
+  dz.addEventListener("click", function(){ pf.click(); });
+  pf.addEventListener("change", function(){ if(pf.files && pf.files[0]) loadPngFile(pf.files[0]); pf.value = ""; });
+  dz.addEventListener("dragover", function(e){ e.preventDefault(); dz.classList.add("drag"); });
+  dz.addEventListener("dragleave", function(){ dz.classList.remove("drag"); });
+  dz.addEventListener("drop", function(e){
+    e.preventDefault(); dz.classList.remove("drag");
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    loadPngFile(f);
+  });
+
+  // live status for the paste box; auto-opens its fold when content is present
+  function updatePasteStatus(){
+    var ta = $("pasted"), st = $("paste-status");
+    var has = ta.value.trim().length > 0;
+    if(has){
+      st.textContent = ta.value.trim().length.toLocaleString() + " chars — this overrides the URL above";
+      st.classList.add("active");
+    } else {
+      st.textContent = "empty — the URL above will be fetched";
+      st.classList.remove("active");
+    }
+  }
+  $("pasted").addEventListener("input", updatePasteStatus);
+  updatePasteStatus();
+
+  applyShareParams();
+})();
+</script>
+</body>
+</html>
