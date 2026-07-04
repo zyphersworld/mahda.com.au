@@ -474,6 +474,7 @@ function renderLeaf(p,scroll){
 }
 
 /* ---------- ROUTER (hash-based, shareable, back-button friendly) ---------- */
+let lastLeafId=''; // remembers which plaque opened the current leaf, for Back
 function goto(id){
   const target=id?('#/'+id):'#/';
   if(location.hash!==target){location.hash=target;return;} // hashchange will re-render
@@ -482,9 +483,25 @@ function goto(id){
 function route(scroll){
   if(galTimer){clearInterval(galTimer);galTimer=null;} // stop any slideshow autoplay on nav
   const id=(location.hash.replace(/^#\/?/,'')||'').trim();
-  if(!id){introLeaf();document.title='Mahda Christopher Greene';if(scroll)window.scrollTo({top:0,behavior:'smooth'});return;}
+  if(!id){
+    introLeaf();document.title='Mahda Christopher Greene';
+    if(scroll){
+      // Return to the plaque that opened the leaf, not the top of the page.
+      const safeId=(window.CSS&&CSS.escape)?CSS.escape(lastLeafId):lastLeafId.replace(/[^\w-]/g,'');
+      const plaque=lastLeafId && document.querySelector('.plaque[data-goto="'+safeId+'"]');
+      if(plaque){
+        plaque.scrollIntoView({behavior:'smooth',block:'center'});
+        plaque.classList.add('just-back');
+        setTimeout(()=>plaque.classList.remove('just-back'),1200);
+      }else{
+        window.scrollTo({top:0,behavior:'smooth'});
+      }
+    }
+    lastLeafId='';
+    return;
+  }
   const p=PAGES.find(x=>x.id===id);
-  if(p&&p.body){renderLeaf(p,scroll);try{dataLayer.push({event:'leaf_open',leaf:id});}catch(e){}}
+  if(p&&p.body){lastLeafId=id;renderLeaf(p,scroll);try{dataLayer.push({event:'leaf_open',leaf:id});}catch(e){}}
   else{introLeaf();}
 }
 window.addEventListener('hashchange',()=>route(true));

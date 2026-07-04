@@ -59,6 +59,7 @@ html[data-theme="vellum"]{
   --bracket-op:.7;
   --plaque-grad:linear-gradient(180deg,#f0e4c8,#e2d0a6);
   --plaque-emboss:inset 0 1px 0 rgba(255,255,255,.6), inset 0 -2px 5px rgba(120,90,40,.18);
+  --metal-sheen:rgba(255,250,235,.7);
   --mast-band:linear-gradient(180deg, rgba(154,107,31,.12), rgba(154,107,31,0));
   --hero-op:.18;--hero-blend:multiply;
 
@@ -104,6 +105,7 @@ html[data-theme="brass"]{
   --bracket-op:.85;
   --plaque-grad:linear-gradient(180deg,#3b2c19,#241a10);
   --plaque-emboss:inset 0 1px 0 rgba(224,168,60,.35), inset 0 -3px 6px rgba(0,0,0,.5), 0 0 0 1px rgba(224,168,60,.15);
+  --metal-sheen:rgba(255,232,170,.6);
   --mast-band:linear-gradient(180deg, rgba(224,168,60,.14), rgba(224,168,60,0));
   --hero-op:.45;--hero-blend:screen;
 
@@ -151,6 +153,7 @@ html[data-theme="iron"]{
   --bracket-op:.8;
   --plaque-grad:linear-gradient(180deg,#262b2f,#171a1d);
   --plaque-emboss:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -3px 6px rgba(0,0,0,.55), 0 0 0 1px rgba(224,102,58,.12);
+  --metal-sheen:rgba(220,232,244,.55);
   --mast-band:linear-gradient(180deg, rgba(224,102,58,.12), rgba(224,102,58,0));
   --hero-op:.55;--hero-blend:screen;
 
@@ -196,6 +199,7 @@ html[data-theme="emerald"]{
   --bracket-op:.75;
   --plaque-grad:linear-gradient(180deg,#163d29,#0b2015);
   --plaque-emboss:inset 0 1px 0 rgba(231,193,90,.25), inset 0 -3px 6px rgba(0,0,0,.45), 0 0 0 1px rgba(231,193,90,.14);
+  --metal-sheen:rgba(228,246,196,.5);
   --mast-band:linear-gradient(180deg, rgba(231,193,90,.13), rgba(231,193,90,0));
   --hero-op:.42;--hero-blend:screen;
 
@@ -242,6 +246,7 @@ html[data-theme="sanctum"]{
   --bracket-op:.75;
   --plaque-grad:linear-gradient(180deg,#241c45,#140f2a);
   --plaque-emboss:inset 0 1px 0 rgba(216,180,90,.22), inset 0 -3px 6px rgba(0,0,0,.5), 0 0 0 1px rgba(216,180,90,.12);
+  --metal-sheen:rgba(226,218,250,.52);
   --mast-band:linear-gradient(180deg, rgba(216,180,90,.12), rgba(216,180,90,0));
   --hero-op:.42;--hero-blend:screen;
 
@@ -288,6 +293,7 @@ html[data-theme="sigil"]{
   --bracket-op:.85;
   --plaque-grad:linear-gradient(180deg,#231624,#140d15);
   --plaque-emboss:inset 0 1px 0 rgba(255,47,179,.3), inset 0 -3px 6px rgba(0,0,0,.55), 0 0 0 1px rgba(255,47,179,.16);
+  --metal-sheen:rgba(255,214,246,.52);
   --mast-band:linear-gradient(180deg, rgba(255,47,179,.14), rgba(255,47,179,0));
   --hero-op:.46;--hero-blend:screen;
 
@@ -424,9 +430,20 @@ h1.title .rubric{color:var(--rubric)}
 @media(max-width:560px){.plaques{grid-template-columns:1fr;gap:13px}}
 .plaque{
   position:relative;text-align:left;cursor:pointer;color:var(--ink);
-  background:var(--plaque-grad);border:1px solid var(--rule);border-radius:6px;
-  padding:18px 18px 16px;box-shadow:var(--plaque-emboss),0 6px 18px var(--shadow);
-  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  border:1px solid var(--rule);border-radius:6px;
+  /* polished diagonal-brushed metal: a moving specular streak, a soft
+     counter-sheen, diagonal brush grain, and a top light — over the base
+     metal gradient. The streak sweeps across on hover for a real glint. */
+  background:
+    linear-gradient(58deg, transparent 30%, var(--metal-sheen,rgba(255,255,255,.5)) 46%, rgba(255,255,255,.9) 50%, var(--metal-sheen,rgba(255,255,255,.5)) 54%, transparent 70%) 0 0 / 260% 100% no-repeat,
+    linear-gradient(58deg, rgba(255,255,255,.06) 0%, transparent 30%, transparent 70%, rgba(255,255,255,.05) 100%),
+    repeating-linear-gradient(55deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px, rgba(0,0,0,.055) 3px 4px, transparent 4px 6px),
+    linear-gradient(180deg, rgba(255,255,255,.14), transparent 34%),
+    var(--plaque-grad);
+  background-position:135% 0, 0 0, 0 0, 0 0, 0 0;
+  padding:18px 18px 16px;
+  box-shadow:var(--plaque-emboss),0 6px 18px var(--shadow);
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease, background-position .55s ease;
   font-family:var(--body);display:flex;flex-direction:column;gap:6px;min-height:112px;
   overflow:hidden;
 }
@@ -438,7 +455,14 @@ h1.title .rubric{color:var(--rubric)}
 }
 .plaque::before{top:8px;left:8px}
 .plaque::after{top:8px;right:8px}
-.plaque:hover,.plaque:focus-visible{transform:translateY(-2px);border-color:var(--gold);box-shadow:var(--plaque-emboss),0 12px 26px var(--shadow),0 0 0 1px var(--gold)}
+.plaque:hover,.plaque:focus-visible{transform:translateY(-2px);border-color:var(--gold);box-shadow:var(--plaque-emboss),0 12px 26px var(--shadow),0 0 0 1px var(--gold);background-position:-35% 0, 0 0, 0 0, 0 0, 0 0}
+/* brief flag on the plaque the viewer returns to via Back */
+.plaque.just-back{animation:justBack 1.2s ease both}
+@keyframes justBack{
+  0%{box-shadow:var(--plaque-emboss),0 6px 18px var(--shadow),0 0 0 2px var(--gold)}
+  30%{box-shadow:var(--plaque-emboss),0 12px 26px var(--shadow),0 0 0 2px var(--gold),0 0 22px var(--edge)}
+  100%{box-shadow:var(--plaque-emboss),0 6px 18px var(--shadow)}
+}
 .plaque .rune{font-family:var(--script);font-size:26px;line-height:1;color:var(--gold);margin-bottom:2px}
 .plaque .p-title{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
 .plaque .p-kicker{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim)}
@@ -447,7 +471,11 @@ h1.title .rubric{color:var(--rubric)}
 
 /* ============================== LEAF (loaded page panel) ============================== */
 .leaf{
-  position:relative;margin-top:22px;background:var(--panel-grad);
+  position:relative;margin-top:22px;
+  background:
+    repeating-linear-gradient(55deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px, rgba(0,0,0,.03) 3px 4px, transparent 4px 6px),
+    linear-gradient(180deg, rgba(255,255,255,.07), transparent 24%),
+    var(--panel-grad);
   border:1px solid var(--rule);border-radius:6px;overflow:hidden;
   box-shadow:0 8px 26px var(--shadow);
   animation:leafIn .4s ease both;
