@@ -7,9 +7,9 @@
    vellum, knotwork and sigils rather than an arcade HUD.
 
    Six liveries via [data-theme] on <html>:
-     vellum   → aged-paper manuscript (default)
+     iron     → dark iron & ember (default)
+     vellum   → aged-paper manuscript
      brass    → steampunk copper + verdigris
-     iron     → dark iron & ember
      emerald  → Celtic green & gold
      sanctum  → deep indigo/violet (Kabbalah-tinged)
      sigil    → black + chaos-magenta (chaos magic)
@@ -23,8 +23,7 @@
    IBM Plex Mono     → dense data / stamps / kickers                       */
 
 /* ================= THEME TOKENS ================= */
-/* ---- VELLUM (default): aged-paper manuscript ---- */
-:root,
+/* ---- VELLUM: aged-paper manuscript ---- */
 html[data-theme="vellum"]{
   --page:#e9dcc0;
   --leaf:#f4ead1;
@@ -112,7 +111,8 @@ html[data-theme="brass"]{
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 
-/* ---- IRON: dark iron & ember ---- */
+/* ---- IRON (default): dark iron & ember ---- */
+:root,
 html[data-theme="iron"]{
   --page:#0f1113;
   --leaf:#181b1e;

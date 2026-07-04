@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-AU" data-theme="vellum">
+<html lang="en-AU" data-theme="iron">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   gtag('config', 'G-ZGWXJJ83MP');
 </script>
 <meta name="description" content="Mahda Christopher Greene — indie developer, musician and speedway tragic from Koroit, Victoria. A hand-kept hub: the memoir, the racing game SCREAM, music, the Reckoning Desk and The Pitstop.">
-<meta name="theme-color" content="#e9dcc0">
+<meta name="theme-color" content="#0f1113">
 <title>Mahda Christopher Greene</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,9 +40,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="band"></div>
   <div class="theme-switch" role="group" aria-label="Livery">
     <span class="lbl">Livery</span>
-    <button type="button" data-set="vellum"  aria-pressed="true"><span class="swatch"></span>Vellum</button>
+    <button type="button" data-set="vellum"  aria-pressed="false"><span class="swatch"></span>Vellum</button>
     <button type="button" data-set="brass"   aria-pressed="false"><span class="swatch"></span>Brass</button>
-    <button type="button" data-set="iron"    aria-pressed="false"><span class="swatch"></span>Iron</button>
+    <button type="button" data-set="iron"    aria-pressed="true"><span class="swatch"></span>Iron</button>
     <button type="button" data-set="emerald" aria-pressed="false"><span class="swatch"></span>Emerald</button>
     <button type="button" data-set="sanctum" aria-pressed="false"><span class="swatch"></span>Sanctum</button>
     <button type="button" data-set="sigil"   aria-pressed="false"><span class="swatch"></span>Sigil</button>
@@ -95,7 +95,7 @@ function playFade(){
   fadeEl.classList.remove('run');void fadeEl.offsetWidth;fadeEl.classList.add('run');
 }
 function setTheme(name,animate){
-  if(!THEMES.includes(name))name='vellum';
+  if(!THEMES.includes(name))name='iron';
   const current=document.documentElement.getAttribute('data-theme');
   if(animate&&name!==current)playFade();
   document.documentElement.setAttribute('data-theme',name);
@@ -105,7 +105,7 @@ function setTheme(name,animate){
   if(animate){try{dataLayer.push({event:'livery_select',livery:name});}catch(e){}}
 }
 $$('.theme-switch button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.set,true)));
-setTheme(document.documentElement.getAttribute('data-theme')||'vellum',false);
+setTheme(document.documentElement.getAttribute('data-theme')||'iron',false);
 
 /* ============================================================
    PAGES
