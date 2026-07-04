@@ -1,0 +1,113 @@
+{
+  "updated": "2026-07-04",
+  "pages": [
+    {
+      "id": "memoir",
+      "rune": "✍",
+      "kicker": "A work in progress",
+      "title": "The Memoir",
+      "desc": "A Life, Gathered — assembled a fragment at a time.",
+      "body": "<p>I am writing a memoir. Its name is <b>A Life, Gathered</b>, and that title is also its method: it comes together a fragment at a time, the way hardened crumbs of speedway mud used to turn up in coat pockets all week after a night at the track.</p>\n      <p>The book braids a present-tense frame against the chronological past, held together by a spine I think of as <i>The Hands</i> — what they built, played, broke and mended. It is dry at baseline, with dark humour where the weight needs a counterbalance, and restraint used as texture rather than reticence.</p>\n      <p>There is an excerpt if you would like to read a little.</p>",
+      "links": [
+        {
+          "label": "Read an excerpt",
+          "url": "bio/A_Life_Gathered_excerpt.html"
+        }
+      ]
+    },
+    {
+      "id": "scream",
+      "rune": "⚙",
+      "kicker": "Free / libre software",
+      "title": "SCREAM",
+      "desc": "My open-source sprintcar speedway game — an homage to Premier.",
+      "body": "<p>I had this idea at thirteen or fourteen: to make a speedway game. I had been going to Premier Speedway for as long as I could remember — almost every season, from about six months old. My brother and I would spend the whole day getting so excited we invented our own version of fasting so we could fit as many Premier doughnuts into our tiny bellies as possible.</p>\n      <p><b>SCREAM</b> is my homage to that place, built with the skills I have gathered over almost half a century so that it could be appreciated, shared, and given away for free — and I do mean <i>free as in libre, not gratis</i>.</p>\n      <blockquote>&ldquo;Free software&rdquo; means software that respects users&rsquo; freedom and community &mdash; the freedom to run, copy, distribute, study, change and improve it. Think of &ldquo;free&rdquo; as in free speech, not free beer.<cite>&mdash; after the Free Software Foundation</cite></blockquote>\n      <div class=\"embed game\"><div class=\"game-poster\" data-game=\"https://itch.io/embed-upload/12341593?color=232323\" role=\"button\" tabindex=\"0\" aria-label=\"Load and play SCREAM\"><div class=\"gp-inner\"><span class=\"gp-play\">▶</span><span class=\"gp-title\">SCREAM</span><span class=\"gp-sub\">Click to load &amp; play</span></div></div><div class=\"cap\">Loads a live build in your browser. If it stalls, use the itch.io link below.</div></div>",
+      "links": [
+        {
+          "label": "Play / download on itch.io",
+          "url": "https://mahda.itch.io/scream"
+        },
+        {
+          "label": "Facebook group",
+          "url": "https://www.facebook.com/groups/screamracing"
+        },
+        {
+          "label": "YouTube channel",
+          "url": "https://www.youtube.com/@screamracing"
+        }
+      ]
+    },
+    {
+      "id": "pitstop",
+      "rune": "⚑",
+      "kicker": "Race-week hub",
+      "title": "The Pitstop",
+      "desc": "A fan-kept countdown and hub for the Grand Annual Sprintcar Classic.",
+      "body": "<p>The Pitstop is a fan-kept race-week hub and countdown for the <b>Grand Annual Sprintcar Classic</b> at Premier Speedway, Warrnambool — the schedule, the card, where to watch, and everything moving on the wire. Same maker, different livery: where this page is a manuscript, that one is an arcade sprintcar HUD.</p>\n      <p>It is not official, and it always defers to the club for the last word — but it is the fan&rsquo;s pit board.</p>",
+      "links": [
+        {
+          "label": "Open The Pitstop",
+          "url": "https://mahda.com.au/gasc/"
+        }
+      ]
+    },
+    {
+      "id": "reckoning",
+      "rune": "⚖",
+      "kicker": "Public monitoring page",
+      "title": "The Reckoning Desk",
+      "desc": "A survivor-kept record of the Christian Brothers insolvency & scheme.",
+      "body": "<p>The Reckoning Desk is a survivor-kept public monitoring page documenting the Christian Brothers (Oceania Province) insolvency and the proposed Creditors&rsquo; Scheme of Arrangement. It gathers publicly available information, links to primary sources, and tracks the key dates.</p>\n      <p>It is kept carefully and plainly. It is not legal advice, and it defers questions of law to the proper places.</p>",
+      "links": [
+        {
+          "label": "Open the Reckoning Desk",
+          "url": "https://mahda.com.au/reckoning-desk/"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "rune": "♫",
+      "kicker": "Demos & originals",
+      "title": "The Music",
+      "desc": "Years of demos, originals, covers and ukulele — gathered up.",
+      "body": "<p>I have played for a long time, across a lot of instruments, and much of it never left the room I was raised in. Some of it has now. Here is a gathering of demos, originals, covers and a little ukulele.</p>\n      <h3>Demos &mdash; over the years</h3>\n      <div class=\"embed tall\"><iframe scrolling=\"no\" frameborder=\"no\" allow=\"autoplay; encrypted-media\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2257360856&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\" title=\"Demos on SoundCloud\"></iframe></div>\n      <h3>Original music</h3>\n      <div class=\"embed\"><iframe src=\"https://www.youtube.com/embed/videoseries?list=PLSg_jt-Kio26xUEhrO2-m6MRGmXMEwxTH\" title=\"Original music playlist\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe></div>\n      <h3>Cover songs</h3>\n      <div class=\"embed\"><iframe src=\"https://www.youtube.com/embed/videoseries?list=PLSg_jt-Kio26EkkZHAkSxdioeP9eM2kcI\" title=\"Cover songs playlist\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe></div>\n      <h3>Ukulele</h3>\n      <div class=\"embed\"><iframe src=\"https://www.youtube.com/embed/videoseries?list=PLSg_jt-Kio27RKzZ7lp-wRq2kyJ1VZYWg\" title=\"Ukulele playlist\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe></div>",
+      "links": [
+        {
+          "label": "SoundCloud",
+          "url": "https://soundcloud.com/mahdachristophergreene"
+        }
+      ]
+    },
+    {
+      "id": "photos",
+      "rune": "▣",
+      "kicker": "Trackside photography",
+      "title": "The Gallery",
+      "desc": "Sprintcars, mud and light — a reel of shots from the speedway.",
+      "body": "<p>Years of nights at Premier, camera in hand — sprintcars, mud, dust and light. Here is a reel of them, gathered from the SCREAM photography album.</p>\n      <div class=\"gallery\">\n        <div class=\"stage\">\n          <button class=\"nav prev\" type=\"button\" aria-label=\"Previous\">&#8249;</button>\n          <button class=\"nav next\" type=\"button\" aria-label=\"Next\">&#8250;</button>\n        </div>\n        <div class=\"bar\">\n          <span class=\"count\">1 / 1</span>\n          <span class=\"ctrls\">\n            <button class=\"play\" type=\"button\"><span class=\"ic\">▶</span> Auto</button>\n          </span>\n        </div>\n        <div class=\"thumbs\" role=\"listbox\" aria-label=\"Photo thumbnails\"></div>\n      </div>",
+      "links": [
+        {
+          "label": "Full album on Google Photos",
+          "url": "https://photos.app.goo.gl/3KERwRboRG2MGaXK7"
+        }
+      ]
+    },
+    {
+      "id": "film",
+      "rune": "☷",
+      "kicker": "Film & video",
+      "title": "Film & Video",
+      "desc": "Editing, composition and moving pictures.",
+      "body": "<p>A gathering of film and video work — editing, composition and rendering, kinetic typography and the rest of the moving-picture craft.</p>\n      <div class=\"embed\"><iframe src=\"https://www.youtube.com/embed/videoseries?list=PLSg_jt-Kio26xPHg_qjvcqSFrR0teldg3\" title=\"Film and video playlist\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe></div>"
+    },
+    {
+      "id": "name",
+      "rune": "✡",
+      "kicker": "Lexicon Antiquum",
+      "title": "On the Name",
+      "desc": "Mahda — warrior hound, noble bear, luminous cradle.",
+      "body": "<p><b>Mahda</b> <i>(/&#712;m&#593;&#720;.d&#601;/) &mdash; n. prop.</i> A personal name of composite Western and Eastern origin, signifying a sovereign thinker, a primal warrior spirit, and a focused mind.</p>\n      <p>It is a phonetic bridge: the Old Irish roots <i>Mada / Madadh</i> — the sacred &ldquo;warrior hound&rdquo; of tribal loyalty and relentless protection — and <i>Matha</i>, &ldquo;bear&rdquo; or &ldquo;noble fighter&rdquo;, the Celtic marker of strength and leadership; joined with the ancient Persian <i>Mahda</i>, meaning &ldquo;luminous&rdquo;, &ldquo;cradle&rdquo; or &ldquo;moon-like&rdquo;.</p>\n      <p>It is the primary title in the triad <i>Mahda Christopher Greene</i> — an anchor of personal authority balancing human history against grounded, earthly reality.</p>"
+    }
+  ]
+}

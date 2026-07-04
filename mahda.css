@@ -471,6 +471,30 @@ h1.title .rubric{color:var(--rubric)}
 .embed{margin:0 0 18px;text-align:center}
 .embed iframe{border:1px solid var(--rule);border-radius:4px;width:100%;aspect-ratio:16/9;height:auto}
 .embed.tall iframe{aspect-ratio:auto;height:450px;max-width:560px}
+/* playable game build — full width, taller frame, dark seat while it loads */
+.embed.game iframe{aspect-ratio:auto;width:100%;max-width:100%;height:640px;background:#232323;display:block;border:1px solid var(--rule);border-radius:4px}
+@media(max-width:560px){.embed.game iframe{height:78vh;min-height:420px}}
+/* click-to-play poster — same footprint as the frame, no layout jump on swap */
+.embed.game .game-poster{
+  position:relative;width:100%;height:640px;cursor:pointer;overflow:hidden;
+  border:1px solid var(--rule);border-radius:4px;
+  background:
+    radial-gradient(120% 90% at 50% 30%, rgba(224,102,58,.14), transparent 60%),
+    linear-gradient(180deg,#26120b,#232323);
+  display:flex;align-items:center;justify-content:center;transition:.18s;
+}
+@media(max-width:560px){.embed.game .game-poster{height:78vh;min-height:420px}}
+.embed.game .game-poster:hover,.embed.game .game-poster:focus-visible{border-color:var(--gold);box-shadow:inset 0 0 60px rgba(224,102,58,.15)}
+.game-poster .gp-inner{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:20px}
+.game-poster .gp-play{
+  width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:28px;color:#fff;padding-left:5px;
+  background:radial-gradient(circle at 35% 30%, var(--gold), var(--gold-dim));
+  box-shadow:0 6px 20px rgba(0,0,0,.5),0 0 0 6px rgba(255,255,255,.06);transition:.18s;
+}
+.game-poster:hover .gp-play{transform:scale(1.06)}
+.game-poster .gp-title{font-family:var(--display);font-size:30px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#f3e3c4;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.game-poster .gp-sub{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#cba871}
 .embed .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-faint);margin-top:6px}
 .embed img{border:1px solid var(--rule);border-radius:4px}
 
@@ -489,6 +513,67 @@ h1.title .rubric{color:var(--rubric)}
 .skel{height:14px;background:linear-gradient(90deg,var(--leaf),var(--rule),var(--leaf));background-size:200% 100%;
   animation:sh 1.3s infinite;border-radius:3px;margin:9px 0}
 @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ============================== SLIDESHOW (gallery leaf) ============================== */
+.gallery{margin:2px 0 4px}
+.gallery .stage{
+  position:relative;width:100%;background:
+    radial-gradient(120% 90% at 50% 20%, rgba(0,0,0,.15), transparent 60%),
+    var(--panel-grad);
+  border:1px solid var(--rule);border-radius:6px;overflow:hidden;
+  aspect-ratio:4/3;box-shadow:inset 0 0 40px rgba(0,0,0,.25);
+}
+@media(max-width:560px){.gallery .stage{aspect-ratio:1/1}}
+.gallery .stage figure{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .5s ease;display:flex;align-items:center;justify-content:center}
+.gallery .stage figure.on{opacity:1}
+.gallery .stage img{width:100%;height:100%;object-fit:contain;display:block}
+.gallery .stage .ld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* prev / next arrows */
+.gallery .nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;cursor:pointer;
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--rule);
+  background:var(--plaque-grad);color:var(--ink);box-shadow:var(--plaque-emboss),0 4px 12px var(--shadow);
+  display:flex;align-items:center;justify-content:center;font-size:20px;transition:.15s;
+}
+.gallery .nav:hover{border-color:var(--gold);color:var(--gold)}
+.gallery .nav.prev{left:12px}
+.gallery .nav.next{right:12px}
+@media(max-width:560px){.gallery .nav{width:40px;height:40px}.gallery .nav.prev{left:8px}.gallery .nav.next{right:8px}}
+
+/* control bar under the stage: counter, autoplay, fullscreen link */
+.gallery .bar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;
+}
+.gallery .bar .count{color:var(--ink-soft)}
+.gallery .bar .ctrls{display:flex;gap:8px;align-items:center}
+.gallery .bar button{
+  font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  background:var(--plaque-grad);border:1px solid var(--rule);color:var(--ink-soft);
+  padding:6px 12px;border-radius:3px;box-shadow:var(--plaque-emboss);transition:.15s;display:inline-flex;align-items:center;gap:6px;
+}
+.gallery .bar button:hover{color:var(--ink);border-color:var(--gold)}
+.gallery .bar button.on{border-color:var(--gold);color:var(--gold)}
+.gallery .bar button .ic{font-size:12px}
+
+/* thumbnail strip */
+.gallery .thumbs{
+  display:grid;grid-auto-flow:column;grid-auto-columns:64px;gap:8px;overflow-x:auto;
+  padding:12px 2px 4px;scroll-snap-type:x proximity;scrollbar-width:thin;
+}
+@media(max-width:560px){.gallery .thumbs{grid-auto-columns:52px}}
+.gallery .thumbs::-webkit-scrollbar{height:7px}
+.gallery .thumbs::-webkit-scrollbar-thumb{background:var(--rule);border-radius:4px}
+.gallery .thumbs .th{
+  scroll-snap-align:center;cursor:pointer;border:1px solid var(--rule);border-radius:3px;overflow:hidden;
+  aspect-ratio:4/3;opacity:.55;transition:.15s;background:var(--leaf);
+}
+.gallery .thumbs .th img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery .thumbs .th:hover{opacity:.85}
+.gallery .thumbs .th.on{opacity:1;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.gallery .thumbs .th.dead{opacity:.25;filter:grayscale(1)}
+.gallery .stage .ld.err{padding:20px;text-align:center;line-height:1.5}
 
 /* ============================== FOOTER ============================== */
 footer{
