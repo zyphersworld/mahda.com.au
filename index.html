@@ -334,6 +334,14 @@ const PAGES_FALLBACK=[
     ]
   },
   {
+    id:'rsc', rune:'\u2394', kicker:'Developer tool', title:'jsonpath()',
+    desc:'An inspector for JSON embedded in Next.js RSC payloads.',
+    body:`<p><b>jsonpath()</b> is a small, single-file developer tool for pulling apart the JSON that Next.js embeds in its React Server Components (RSC) payloads. You give it a page URL and a dotted property path, and it resolves the value out of the server-rendered data \u2014 following <i>$ref</i> pointers, letting you walk the tree by hand, or handing back the whole parsed payload.</p>
+      <p>It runs entirely in the browser, with no build step and no dependencies. There is a tree explorer with breadcrumb navigation, a &ldquo;discover&rdquo; scan for likely content paths, and a share system that packs a whole config \u2014 or a pasted document \u2014 into a small PNG you can drag back in to restore the setup. Built for inspecting server-rendered data structures when you need to see exactly what shape the server sent.</p>
+      <p>It&rsquo;s a debugging utility \u2014 inspect only resources you&rsquo;re authorised to access, and respect each site&rsquo;s terms and copyright.</p>`,
+    links:[{label:'Open jsonpath()',url:'https://mahda.com.au/rsc/'}]
+  },
+  {
     id:'pitstop', rune:'\u2691', kicker:'Race-week hub', title:'The Pitstop',
     desc:'A fan-kept countdown and hub for the Grand Annual Sprintcar Classic.',
     body:`<p>The Pitstop is a fan-kept race-week hub and countdown for the <b>Grand Annual Sprintcar Classic</b> at Premier Speedway, Warrnambool \u2014 the schedule, the card, where to watch, and everything moving on the wire. Same maker, different livery: where this page is a manuscript, that one is an arcade sprintcar HUD.</p>

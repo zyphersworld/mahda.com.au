@@ -38,6 +38,20 @@
       ]
     },
     {
+      "id": "rsc",
+      "rune": "⎔",
+      "kicker": "Developer tool",
+      "title": "jsonpath()",
+      "desc": "An inspector for JSON embedded in Next.js RSC payloads.",
+      "body": "<p><b>jsonpath()</b> is a small, single-file developer tool for pulling apart the JSON that Next.js embeds in its React Server Components (RSC) payloads. You give it a page URL and a dotted property path, and it resolves the value out of the server-rendered data — following <i>$ref</i> pointers, letting you walk the tree by hand, or handing back the whole parsed payload.</p>\n      <p>It runs entirely in the browser, with no build step and no dependencies. There is a tree explorer with breadcrumb navigation, a &ldquo;discover&rdquo; scan for likely content paths, and a share system that packs a whole config — or a pasted document — into a small PNG you can drag back in to restore the setup. Built for inspecting server-rendered data structures when you need to see exactly what shape the server sent.</p>\n      <p>It&rsquo;s a debugging utility — inspect only resources you&rsquo;re authorised to access, and respect each site&rsquo;s terms and copyright.</p>",
+      "links": [
+        {
+          "label": "Open jsonpath()",
+          "url": "https://mahda.com.au/rsc/"
+        }
+      ]
+    },
+    {
       "id": "pitstop",
       "rune": "⚑",
       "kicker": "Race-week hub",
