@@ -1,90 +1,41 @@
 {
-  "builtAt": "2026-07-15T10:01:16.902Z",
-  "count": 12,
+  "builtAt": "2026-06-29T08:00:00.000Z",
+  "count": 5,
   "items": [
-    {
-      "src": "AFR",
-      "t": "Christian Brothers gifted property worth $2b to schools before collapse",
-      "d": "",
-      "date": "Fri, 26 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOSFp2YlE0ak84NkZRQlMta2I0Mm1xOXFHZlc1dzkyTk1xZHoxcVpaQ1BiSkZiVlhQTTdBVFp3X2JvZl96MlpZQ1ZEWTNqYXMzR2VJZVpwRXU3ME1XVGl0VzRId2pabTVvUDVia1JtWWdNQmczTEpsUUJ0a1VfVWhJbEI5a3lmbmptLU42VmVXWTFNbkRhSmhVUlQ0NklXQTFKM1FkMVJacU5UcHk4Ny14MEM5UWlUaWltTFczZHY0dk5pblA3WTc5OHhxbE4?oc=5"
-    },
-    {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Christian Brothers granted pause on abuse victim payouts",
-      "d": "",
-      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNaHRoTklueEtid2pWOTFsMXUwVXZoRlpMQ09nVm5iTXF5elN2X1JwODZmTk9HQ3dla1A2Z3FnNFZKck5EOUF1TVNfdmxndWx4aDVuTGthSXVVbmVjNGk3OTQ1cHptZGdQaXltb1EtLUs4SDZKWGZfTkZTQnd1S05ZOF9ObmxoOUJCbVhnQW5jV0xkTUxyTEM2VURDVWkyWlBMRTV6d2ZQbGtDbXZQ?oc=5"
-    },
     {
       "src": "The Catholic Leader",
       "t": "Christian Brothers facing bankruptcy after 183 years in Australia",
-      "d": "",
-      "date": "Wed, 24 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPbkJGRXhPMFYxS3piQldMeXFFcWN2ZVVMd2tRbDRHMVpoVTUwWHFpTEtLWENZTmZhNGFrUXF2amtDdTZfZFBZVVVOR3hPdHg3eEFzTHo3M1JoVjNnVzVucXhyRGZEYi1HaVZDVXhJWmZXYzQ0RmRGSS03aEhvN1A0OHJxME9DWTFpbWdIZGhQLVlPbnNTRVJKdWJjYnJpeWpiUDVhSkc4SVdkU3hiUVIyMg?oc=5"
+      "d": "Trustees seek a Creditors\u2019 Scheme to distribute remaining assets; provision flagged for 176 ageing brothers.",
+      "date": "2026-06-24T02:00:00Z",
+      "url": "https://catholicleader.com.au/news/australia/christian-brothers-facing-bankruptcy-after-183-years-in-australia/"
     },
     {
-      "src": "The Guardian",
-      "t": "Christian Brothers sold real estate worth millions for $1. Now it claims in court it lacks money to pay abuse survivors",
-      "d": "",
-      "date": "Sat, 27 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQZkJOZFZBaXZwYW5fMVNMcUVmSzMtSThwVHZ6dzdQV2ZIR25pUXRfdjR6YnpJdl9Wa1NXOWViMEVkRDRVSWtPc2FIZjc2Z2RaVzNFOFhSYTE1Rm1Dbm4zQnZna0I4X25HQndza1cxR2tkZERla3RjaGhrbDNPWEl3ZEF3UjBUN3NsWEhNY3p1WEpfdWQwZXJVdzdkVDIyUWFGNzB3Y1BpM2thSzFiWEVCaTcwRUNfSXY0eXYxM3ExZkprQ2NKTWZRZ3lnRGhrbWQtVTNybE5mRTh4YWs?oc=5"
+      "src": "The Canberra Times",
+      "t": "Victims of Christian Brothers to share in final assets",
+      "d": "Body responsible for restitution says it is on the brink of collapse; ~$216M to be split among survivors and creditors.",
+      "date": "2026-06-22T10:03:00Z",
+      "url": "https://www.canberratimes.com.au/story/9297154/victims-of-christian-brothers-to-share-in-final-assets/"
+    },
+    {
+      "src": "Australian Lawyers Alliance",
+      "t": "Wind-up plan risks justice for abuse survivors",
+      "d": "\u201CNot surprised, but appalled\u201D \u2014 advocates warn the move echoes a Royal-Commission-documented pattern of delay.",
+      "date": "2026-06-25T00:00:00Z",
+      "url": "https://lawyersalliance.com.au/Web/News/Media-releases-internal/2026/Christian-Brothers-wind-up-plan-risks-justice-for-abuse-survivors.aspx"
     },
     {
       "src": "CathNews",
       "t": "Christian Brothers seek financial solutions",
-      "d": "",
-      "date": "Mon, 22 Jun 2026 22:01:04 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
+      "d": "Scheme would pay survivors more than liquidation, the group says, but less than the full value of claims.",
+      "date": "2026-06-23T00:00:00Z",
+      "url": "https://cathnews.com/2026/06/23/christian-brothers-seek-financial-solutions/"
     },
     {
-      "src": "The Saturday Paper",
-      "t": "Christian Brothers face bankruptcy from abuse payments",
-      "d": "",
-      "date": "Thu, 25 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHNDS2pXWEpnSjhabUFHRkJWdDMyX0hWTW5ydXZsZzFUZTFORTF3Zi1qcXltT3YzY3ZWMkI4am0wTWMyMHo1UVhMd3Z0VUQtbTFfSmV5MzZPbzVwd1BveGE1MGxuTC1YOVd4bk1aYmp3T0M2eklJZkZvbkxUZHAxa1JyTkIybDNvY0JWR3BPWER6Y1hW?oc=5"
-    },
-    {
-      "src": "Survivors Network of those Abused by Priests",
-      "t": "Schools feel heat over redress after Christian Brothers collapse",
-      "d": "",
-      "date": "Tue, 23 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNRFdzQkZGTU5uUjZ6UzVkbjZHX050WW42X05tbldFX3BTSUdObWpycGdNSjhjYVJjYklnZDBQWm43dnhpZkxGVVpyVllWSGVOTjNjMGE4Umw4Y2xIWjFidTluNGFJUDNhWFIzZ3NRUmZtbUVBaXgwNk5lSnNZTTNyaHRhTEJmT3ozWmtpYmFQd0l3QmcwS0tGRHFfaUJBajdORWc?oc=5"
-    },
-    {
-      "src": "BBC",
-      "t": "Christian Brothers: Australian court pauses abuse victims' payouts as group claims bankruptcy",
-      "d": "",
-      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9ISzhELVBLX29HemZUWG9nbXIwTUxPQzZIWVl4bHRqNGg0N1g1Q0U1dGZyUjBibGRxOENxOExPZEhHc2syN1BiNG1ULU56M2VSRVY2YXcwWmdqQQ?oc=5"
-    },
-    {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Christian Brothers spending $1.7m a week on abuse cases",
-      "d": "",
-      "date": "Wed, 24 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPbEVjc19tV1hYd0dESkVyRXhtSXRwWjFjNHNlZUptdlZBSExfTnVUU1dUUXpaSmJzZ0RoZzg0VC1HbXRMYkVoWHFUVzRsU1BXQVBwS2ZZMkNHYVRSZVJicThNYk9RbFNaWGt5d0R6UHlXdnIzU1p0V0hDUWF2TDRLcFFta2YxdlhiUHR2S0s5eUk2emJtM09YZzVIZ2doZDlT?oc=5"
-    },
-    {
-      "src": "The Guardian",
-      "t": "‘Obviously disturbing’ if Christian Brothers’ $1 property sales deprive abuse survivors of pay, government tells court",
-      "d": "",
-      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQekVwakpYZjJ5UC1VMHgwbTFHcVpYZWE2bTdfeVYwYWh2dnp5YTk0R0Z4bjdJR0Fjb2tNT043aXJrSnRhdlN5WUp2MnBYMTZTcnZwTUREdE1zbjRnOF9YbklMNHYtSkhxWFVLNVVVWlUyN19qLVpxSGVmR3VXdnloTXlHcnlLcFFBdEFya0QtWVp0QU1iQm9HeVQ3aUZyaE9yTDJMTkRhQXJWOFVYWkVhbHpoQnB3TkV1bFZPWHNn?oc=5"
-    },
-    {
-      "src": "AFR",
-      "t": "Federal government weighs into ‘disturbing’ Christian Brothers bankruptcy",
-      "d": "",
-      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPVVN2UE9lRXNjdjNnajVlb2JrcGFBdVZ5NXdKeUZ3RWQ4QTlzOU9sTm00ZWRBcy1qUXNyak9lUFBERGtubmNxMDJUNG1pdlRTbFgzczg0LTNvb1pOc1BCUThObDhJMXVzM3ZZaUhySHB0dXJCZlJuN21wZkZUcW44TmtQWkJmSW5rUVZ0WTNtdDBBN2hiN2FRWUxnYldhU2tGQl9vV19DeERqU2lOVk5kWl9kcDZTZW43bldLd0I0X3VwQURF?oc=5"
-    },
-    {
-      "src": "The Saturday Paper",
-      "t": "The human cost of the Christian Brothers’ asset shifting",
-      "d": "",
-      "date": "Fri, 10 Jul 2026 14:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNbTNrRWg0TjVFRndOcG90TjFib0pnRFhweE0xSS1BZUFzVVVHdUlFTVJTRU80aHFHZnpMLXBBZDVENHpRUXJvWTZUdUU1RmRtekpBZ0FqVWtuMGJFZF81aFdSLUFZQ0hkc1hZOFFOeXM0TS0xOWVNS0d5dmhTckVQYW1YRkZQRm4xNkNPcjR3WXNZTVR4SUFIVURiUTl4ZXl0Ullid0s0VUItZw?oc=5"
+      "src": "Burke Mead Lawyers",
+      "t": "What the proposed scheme means for survivors",
+      "d": "Plain-English guide to the moratorium, the creditor vote and the adjudication panel.",
+      "date": "2026-06-29T00:00:00Z",
+      "url": "https://www.burkemeadlawyers.com.au/christian-brothers-compensation-scheme"
     }
   ]
 }
