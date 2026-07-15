@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-04",
+  "updated": "2026-07-15",
   "pages": [
     {
       "id": "memoir",
@@ -21,11 +21,11 @@
       "kicker": "Free / libre software",
       "title": "SCREAM",
       "desc": "My open-source sprintcar speedway game — an homage to Premier.",
-      "body": "<p>I had this idea at thirteen or fourteen: to make a speedway game. I had been going to Premier Speedway for as long as I could remember — almost every season, from about six months old. My brother and I would spend the whole day getting so excited we invented our own version of fasting so we could fit as many Premier doughnuts into our tiny bellies as possible.</p>\n      <p><b>SCREAM</b> is my homage to that place, built with the skills I have gathered over almost half a century so that it could be appreciated, shared, and given away for free — and I do mean <i>free as in libre, not gratis</i>.</p>\n      <blockquote>&ldquo;Free software&rdquo; means software that respects users&rsquo; freedom and community &mdash; the freedom to run, copy, distribute, study, change and improve it. Think of &ldquo;free&rdquo; as in free speech, not free beer.<cite>&mdash; after the Free Software Foundation</cite></blockquote>\n      <div class=\"embed game\"><div class=\"game-poster\" data-game=\"https://itch.io/embed-upload/12341593?color=232323\" role=\"button\" tabindex=\"0\" aria-label=\"Load and play SCREAM\"><div class=\"gp-inner\"><span class=\"gp-play\">▶</span><span class=\"gp-title\">SCREAM</span><span class=\"gp-sub\">Click to load &amp; play</span></div></div><div class=\"cap\">Loads a live build in your browser. If it stalls, use the itch.io link below.</div></div>",
+      "body": "<p>I had this idea at thirteen or fourteen: to make a speedway game. I had been going to Premier Speedway for as long as I could remember — almost every season, from about six months old. My brother and I would spend the whole day getting so excited we invented our own version of fasting so we could fit as many Premier doughnuts into our tiny bellies as possible.</p>\n      <p><b>SCREAM</b> is my homage to that place, built with the skills I have gathered over almost half a century so that it could be appreciated, shared, and given away for free — and I do mean <i>free as in libre, not gratis</i>.</p>\n      <blockquote>&ldquo;Free software&rdquo; means software that respects users&rsquo; freedom and community &mdash; the freedom to run, copy, distribute, study, change and improve it. Think of &ldquo;free&rdquo; as in free speech, not free beer.<cite>&mdash; after the Free Software Foundation</cite></blockquote>\n      <div class=\"embed game\"><div class=\"game-poster\" data-game=\"https://itch.io/embed-upload/18336226?color=232323\" role=\"button\" tabindex=\"0\" aria-label=\"Load and play SCREAM\"><div class=\"gp-inner\"><span class=\"gp-play\">▶</span><span class=\"gp-title\">SCREAM</span><span class=\"gp-sub\">Click to load &amp; play</span></div></div><div class=\"cap\">Loads a live build in your browser. If it stalls, use the itch.io link below.</div></div>",
       "links": [
         {
           "label": "Play / download on itch.io",
-          "url": "https://mahda.itch.io/scream"
+          "url": "https://mahda.itch.io/scream-2"
         },
         {
           "label": "Facebook group",
