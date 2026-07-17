@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-07-17T14:42:50.207Z",
+  "builtAt": "2026-07-17T16:14:36.686Z",
   "count": 12,
   "items": [
     {
@@ -31,6 +31,13 @@
       "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQZkJOZFZBaXZwYW5fMVNMcUVmSzMtSThwVHZ6dzdQV2ZIR25pUXRfdjR6YnpJdl9Wa1NXOWViMEVkRDRVSWtPc2FIZjc2Z2RaVzNFOFhSYTE1Rm1Dbm4zQnZna0I4X25HQndza1cxR2tkZERla3RjaGhrbDNPWEl3ZEF3UjBUN3NsWEhNY3p1WEpfdWQwZXJVdzdkVDIyUWFGNzB3Y1BpM2thSzFiWEVCaTcwRUNfSXY0eXYxM3ExZkprQ2NKTWZRZ3lnRGhrbWQtVTNybE5mRTh4YWs?oc=5"
     },
     {
+      "src": "CathNews",
+      "t": "Christian Brothers seek financial solutions",
+      "d": "",
+      "date": "Mon, 22 Jun 2026 22:01:04 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
+    },
+    {
       "src": "BBC",
       "t": "Christian Brothers: Australian court pauses abuse victims' payouts as group claims bankruptcy",
       "d": "",
@@ -43,13 +50,6 @@
       "d": "",
       "date": "Thu, 25 Jun 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHNDS2pXWEpnSjhabUFHRkJWdDMyX0hWTW5ydXZsZzFUZTFORTF3Zi1qcXltT3YzY3ZWMkI4am0wTWMyMHo1UVhMd3Z0VUQtbTFfSmV5MzZPbzVwd1BveGE1MGxuTC1YOVd4bk1aYmp3T0M2eklJZkZvbkxUZHAxa1JyTkIybDNvY0JWR3BPWER6Y1hW?oc=5"
-    },
-    {
-      "src": "CathNews",
-      "t": "Christian Brothers seek financial solutions",
-      "d": "",
-      "date": "Mon, 22 Jun 2026 22:01:04 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
     },
     {
       "src": "Survivors Network of those Abused by Priests",
