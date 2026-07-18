@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-07-18T03:53:29.336Z",
+  "builtAt": "2026-07-18T06:04:03.571Z",
   "count": 12,
   "items": [
     {
@@ -31,13 +31,6 @@
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPbkJGRXhPMFYxS3piQldMeXFFcWN2ZVVMd2tRbDRHMVpoVTUwWHFpTEtLWENZTmZhNGFrUXF2amtDdTZfZFBZVVVOR3hPdHg3eEFzTHo3M1JoVjNnVzVucXhyRGZEYi1HaVZDVXhJWmZXYzQ0RmRGSS03aEhvN1A0OHJxME9DWTFpbWdIZGhQLVlPbnNTRVJKdWJjYnJpeWpiUDVhSkc4SVdkU3hiUVIyMg?oc=5"
     },
     {
-      "src": "CathNews",
-      "t": "Christian Brothers seek financial solutions",
-      "d": "",
-      "date": "Mon, 22 Jun 2026 22:01:04 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
-    },
-    {
       "src": "The Saturday Paper",
       "t": "Christian Brothers face bankruptcy from abuse payments",
       "d": "",
@@ -50,6 +43,13 @@
       "d": "",
       "date": "Thu, 02 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9ISzhELVBLX29HemZUWG9nbXIwTUxPQzZIWVl4bHRqNGg0N1g1Q0U1dGZyUjBibGRxOENxOExPZEhHc2syN1BiNG1ULU56M2VSRVY2YXcwWmdqQQ?oc=5"
+    },
+    {
+      "src": "CathNews",
+      "t": "Christian Brothers seek financial solutions",
+      "d": "",
+      "date": "Tue, 23 Jun 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
     },
     {
       "src": "Survivors Network of those Abused by Priests",
