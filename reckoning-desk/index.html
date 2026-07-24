@@ -271,7 +271,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ledger">
           <div class="cell"><div class="k">Remaining assets</div><div class="v">~$216M<small>&asymp; 36 properties to be sold</small></div></div>
           <div class="cell"><div class="k">Paid to survivors, 45 yrs</div><div class="v">$480M+<small>compensation &amp; legal costs, 1980&ndash;2025</small></div></div>
-          <div class="cell"><div class="k">Recovery to creditors</div><div class="v alert">&lt; 100c<small>in the dollar &mdash; exact figure unset</small></div></div>
+          <div class="cell"><div class="k">Claims against the order</div><div class="v alert">~$774M<small>reported liabilities vs ~$239M in assets &amp; cash</small></div></div>
           <div class="cell"><div class="k">Brothers remaining</div><div class="v">176<small>average age 80.9 years</small></div></div>
           <div class="cell"><div class="k">Creditor vote threshold</div><div class="v">75%<small>by value, plus 50% by number</small></div></div>
           <div class="cell"><div class="k">In Australia since</div><div class="v">1843<small>183 years; nearing its end</small></div></div>
@@ -290,8 +290,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <ul class="stages">
           <li class="done"><div class="st-t">Insolvency announced <span class="tag done">done</span></div><div class="st-d">22 Jun 2026 &mdash; scheme proposed; liquidation flagged as the alternative.</div></li>
           <li class="done"><div class="st-t">Moratorium granted <span class="tag done">done</span></div><div class="st-d">2 Jul 2026 &mdash; Justice Nixon (NSW Supreme Court) stayed all civil claims, including settled matters awaiting payment.</div></li>
-          <li class="active"><div class="st-t">Financial disclosure due <span class="tag now">27 Jul</span></div><div class="st-d">Court-ordered full disclosure of the entities' finances, so survivors' lawyers can test the real position before any vote.</div></li>
-          <li><div class="st-t">Scheme-terms hearing <span class="tag pend">21 Sep</span></div><div class="st-d">Two-day hearing from 21 Sep to settle how the scheme operates, before any creditor vote. Claims stay frozen until then.</div></li>
+          <li class="done"><div class="st-t">Financial disclosure due <span class="tag done">27 Jul</span></div><div class="st-d">Court-ordered disclosure of the entities' finances has fallen due. Nothing about its contents has been made public.</div></li>
+          <li class="active"><div class="st-t">Scheme-terms hearing <span class="tag now">21 Sep</span></div><div class="st-d">Two-day hearing to settle how the scheme operates. Survivor-side lawyers are opposing it and probing whether EREA can be made the defendant instead.</div></li>
           <li><div class="st-t">Creditors vote <span class="tag pend">pending</span></div><div class="st-d">Needs 50% by number and 75% by value of claims in favour.</div></li>
           <li><div class="st-t">Court approval <span class="tag pend">pending</span></div><div class="st-d">Final sign-off. Without it, the scheme does not bind.</div></li>
         </ul>
@@ -378,6 +378,7 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 const VOICES=[
+  {who:'Koffels Solicitors',handle:'For survivor creditors',av:'KF',text:'Says the scheme should not be approved and is unfair to their clients given how it was constructed \u2014 and is investigating whether EREA can be made the proper defendant instead, so survivors need not join the scheme at all.',url:'https://koffels.com.au/christian-brothers-oceania-scheme-of-arrangement-court-update/'},
   {who:'A survivor, awaiting trial',handle:'via The Guardian',av:'SV',text:'One complainant said the sudden freeze felt like being stabbed in the back with a long, bladed knife; another had simply hoped to resolve their claim quickly and move on.',url:'https://www.theguardian.com/australia-news/2026/jul/02/christian-brothers-abuse-claims-moratorium'},
   {who:'The Commonwealth',handle:'Sera Mirzabegian SC, in court',av:'CW',text:'Told the NSW Supreme Court the government is concerned about whether the historic $1 property transfers to EREA were appropriate, saying the records raise more questions than they answer.',url:'https://www.insurancebusinessmag.com/au/news/breaking-news/christian-brothers-abuse-claims-frozen-under-proposed-creditors-scheme-581056.aspx'},
   {who:'Edmund Rice Education Australia',handle:'EREA statement',av:'ER',text:'Says it is a separate legal entity, not responsible for the Christian Brothers\u2019 liabilities, and will not sell school property to help \u2014 citing governance and fiduciary duties.',url:'https://snapnetwork.org/2026/06/27/christian-brothers-sold-real-estate-worth-millions-for-1-now-it-claims-in-court-it-lacks-money-to-pay-abuse-survivors/'},
