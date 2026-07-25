@@ -217,11 +217,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h1 class="title">The Reckoning Desk
     <span class="sub">Tracking the insolvency of the Trustees of the Christian Brothers &mdash; and what it means for the people they were always meant to answer to.</span>
   </h1>
-  <p class="standfirst">On <b>22 June 2026</b>, after 183 years in Australia, the Trustees of the Christian Brothers (Oceania Province) announced they would ask creditors and the Court to approve a <b>Creditors' Scheme of Arrangement</b> to wind up and distribute roughly <b>$216 million</b> in remaining assets. The creditors include the survivors of the abuse the order's members committed. This page is kept by one of them. It is not legal advice. It is a way of refusing to look away.</p>
+  <p class="standfirst">On <b>22 June 2026</b>, after 183 years in Australia, the Trustees of the Christian Brothers (Oceania Province) announced they would ask creditors and the Court to approve a <b>Creditors' Scheme of Arrangement</b> to wind up and distribute roughly <b>$216 million</b> in remaining assets. The creditors include the survivors of the abuse the order's members committed. On <b>24 July</b>, after weeks of scrutiny and survivor-led legal pressure, a linked entity &mdash; <b>EREA</b> &mdash; agreed to pay claims in full and be sued directly. This page is kept by a survivor. It is not legal advice. It is a way of refusing to look away &mdash; including when the looking starts to pay off.</p>
   <div class="clockbar" id="clockbar">
     <div class="ctx">
-      <p class="lbl" id="clockLbl">Countdown to the scheme-terms hearing</p>
-      <p class="ev" id="nextEvent">Claims frozen until the <em>two-day hearing from 21 September 2026</em></p>
+      <p class="lbl" id="clockLbl">Since EREA agreed to pay &amp; be sued</p>
+      <p class="ev" id="nextEvent">A revised scheme is being drafted &mdash; <em>a new hearing date is yet to be set</em></p>
     </div>
     <div class="counter" id="counter" aria-label="Time elapsed since the insolvency announcement">
       <div class="unit"><div class="n" id="cD">&mdash;</div><div class="u">Days</div></div>
@@ -288,15 +288,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="w-body">
         <ul class="stages">
-          <li class="done"><div class="st-t">Insolvency announced <span class="tag done">done</span></div><div class="st-d">22 Jun 2026 &mdash; scheme proposed; liquidation flagged as the alternative.</div></li>
-          <li class="done"><div class="st-t">Moratorium granted <span class="tag done">done</span></div><div class="st-d">2 Jul 2026 &mdash; Justice Nixon (NSW Supreme Court) stayed all civil claims, including settled matters awaiting payment.</div></li>
-          <li class="done"><div class="st-t">Financial disclosure due <span class="tag done">27 Jul</span></div><div class="st-d">Court-ordered disclosure of the entities' finances has fallen due. Nothing about its contents has been made public.</div></li>
-          <li class="active"><div class="st-t">Scheme-terms hearing <span class="tag now">21 Sep</span></div><div class="st-d">Two-day hearing to settle how the scheme operates. Survivor-side lawyers are opposing it and probing whether EREA can be made the defendant instead.</div></li>
-          <li><div class="st-t">Creditors vote <span class="tag pend">pending</span></div><div class="st-d">Needs 50% by number and 75% by value of claims in favour.</div></li>
+          <li class="done"><div class="st-t">Insolvency announced <span class="tag done">done</span></div><div class="st-d">22 Jun 2026 &mdash; order says it cannot pay; proposes selling assets, splitting proceeds.</div></li>
+          <li class="done"><div class="st-t">Moratorium granted <span class="tag done">done</span></div><div class="st-d">2 Jul 2026 &mdash; Justice Nixon stayed all civil claims to preserve the chance to weigh a scheme.</div></li>
+          <li class="done"><div class="st-t">EREA agrees to pay &amp; be sued <span class="tag done">24 Jul</span></div><div class="st-d">MOU signed: EREA to become the proper defendant; crystallised claims paid in full. The June scheme is superseded.</div></li>
+          <li class="active"><div class="st-t">Revised scheme drafted <span class="tag now">~6&ndash;8 wks</span></div><div class="st-d">Terms being finalised with creditors and their advisors. A new hearing date will be sought.</div></li>
+          <li><div class="st-t">Creditors vote <span class="tag pend">pending</span></div><div class="st-d">Needs 50% by number and 75% by value of claims in favour of the revised scheme.</div></li>
           <li><div class="st-t">Court approval <span class="tag pend">pending</span></div><div class="st-d">Final sign-off. Without it, the scheme does not bind.</div></li>
         </ul>
       </div>
-      <div class="w-foot"><span>Fail at any stage &rarr; liquidation</span><span>Lower return either way</span></div>
+      <div class="w-foot"><span>Revised scheme: better than liquidation</span><span>Still needs the vote &amp; the court</span></div>
     </section>
     <section class="widget">
       <div class="w-head">
@@ -361,16 +361,9 @@ const rel=d=>{try{const x=dayjs(d);return x.isValid()?x.fromNow():'';}catch(e){r
 const now=new Date();
 $('#todayStamp').textContent=now.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
 $('#buildStamp').textContent='RENDERED '+now.toLocaleString('en-AU',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).toUpperCase();
-const HEARING=new Date('2026-09-21T10:00:00+10:00'); // scheme-terms hearing, NSW Supreme Court
+const BACKDOWN=new Date('2026-07-24T00:00:00+10:00'); // EREA/CB MOU signed
 function tick(){
-  const diff=HEARING.getTime()-Date.now();
-  if(diff<=0){
-    // Once the hearing arrives, stop counting down and relabel.
-    $('#clockLbl').textContent='The scheme-terms hearing has begun';
-    $('#cD').textContent=$('#cH').textContent=$('#cM').textContent=$('#cS').textContent='\u2014';
-    return;
-  }
-  const s=Math.floor(diff/1000);
+  const s=Math.max(0,Math.floor((Date.now()-BACKDOWN.getTime())/1000));
   $('#cD').textContent=Math.floor(s/86400);
   $('#cH').textContent=String(Math.floor(s%86400/3600)).padStart(2,'0');
   $('#cM').textContent=String(Math.floor(s%3600/60)).padStart(2,'0');
@@ -378,7 +371,9 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 const VOICES=[
-  {who:'Koffels Solicitors',handle:'For survivor creditors',av:'KF',text:'Says the scheme should not be approved and is unfair to their clients given how it was constructed \u2014 and is investigating whether EREA can be made the proper defendant instead, so survivors need not join the scheme at all.',url:'https://koffels.com.au/christian-brothers-oceania-scheme-of-arrangement-court-update/'},
+  {who:'Rightside Legal',handle:'Grace Wilson, partner',av:'RL',text:'Called the backdown a significant win for survivors, saying: make no mistake, survivors fought for this \u2014 Edmund Rice are folding because the law is against them.',url:'https://www.dailyadvertiser.com.au/story/9317264/relief-as-christian-brothers-back-down-on-abuse-redress/'},
+  {who:'Tanya Plibersek',handle:'Social Services Minister',av:'TP',text:'Welcomed the deal but said survivors should never have been put in the position of wondering whether their claims would be met, and expects EREA to act in good faith on all matters.',url:'https://britbrief.co.uk/crime/victims/christian-brothers-abuse-victims-to-get-full-compensation.html'},
+  {who:'Koffels Solicitors',handle:'For survivor creditors',av:'KF',text:'Argued the original scheme should not be approved and was unfair to their clients \u2014 and pushed to make EREA the proper defendant, the outcome now agreed in the 24 July MOU.',url:'https://koffels.com.au/christian-brothers-oceania-scheme-of-arrangement-court-update/'},
   {who:'A survivor, awaiting trial',handle:'via The Guardian',av:'SV',text:'One complainant said the sudden freeze felt like being stabbed in the back with a long, bladed knife; another had simply hoped to resolve their claim quickly and move on.',url:'https://www.theguardian.com/australia-news/2026/jul/02/christian-brothers-abuse-claims-moratorium'},
   {who:'The Commonwealth',handle:'Sera Mirzabegian SC, in court',av:'CW',text:'Told the NSW Supreme Court the government is concerned about whether the historic $1 property transfers to EREA were appropriate, saying the records raise more questions than they answer.',url:'https://www.insurancebusinessmag.com/au/news/breaking-news/christian-brothers-abuse-claims-frozen-under-proposed-creditors-scheme-581056.aspx'},
   {who:'Edmund Rice Education Australia',handle:'EREA statement',av:'ER',text:'Says it is a separate legal entity, not responsible for the Christian Brothers\u2019 liabilities, and will not sell school property to help \u2014 citing governance and fiduciary duties.',url:'https://snapnetwork.org/2026/06/27/christian-brothers-sold-real-estate-worth-millions-for-1-now-it-claims-in-court-it-lacks-money-to-pay-abuse-survivors/'},
