@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-08-04T00:12:34.479Z",
+  "builtAt": "2026-08-04T03:47:37.433Z",
   "count": 12,
   "items": [
     {
@@ -45,18 +45,11 @@
       "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOWkI4MG1Md0JQWmVVNmFfWXBKOW5GSHJOZmtBbDhLQjYwVTViREFQblNZUldLY0xyNkZ1bnQ4dmFkcnAxZm9nZGwzNVVsX0xxOVJfeWNHREdUQ3ZuYVAtYURCNjBKRTU2LW9jd25vSjNWcFZNdUxuLU5McEdkbzZGUkE0bUhaUG9tWlVF?oc=5"
     },
     {
-      "src": "cathnews.com",
+      "src": "CathNews",
       "t": "Christian Brothers seek financial solutions",
       "d": "",
       "date": "Tue, 23 Jun 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
-    },
-    {
-      "src": "AFR",
-      "t": "Federal government weighs into ‘disturbing’ Christian Brothers bankruptcy",
-      "d": "",
-      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPVVN2UE9lRXNjdjNnajVlb2JrcGFBdVZ5NXdKeUZ3RWQ4QTlzOU9sTm00ZWRBcy1qUXNyak9lUFBERGtubmNxMDJUNG1pdlRTbFgzczg0LTNvb1pOc1BCUThObDhJMXVzM3ZZaUhySHB0dXJCZlJuN21wZkZUcW44TmtQWkJmSW5rUVZ0WTNtdDBBN2hiN2FRWUxnYldhU2tGQl9vV19DeERqU2lOVk5kWl9kcDZTZW43bldLd0I0X3VwQURF?oc=5"
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
@@ -73,6 +66,13 @@
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQekVwakpYZjJ5UC1VMHgwbTFHcVpYZWE2bTdfeVYwYWh2dnp5YTk0R0Z4bjdJR0Fjb2tNT043aXJrSnRhdlN5WUp2MnBYMTZTcnZwTUREdE1zbjRnOF9YbklMNHYtSkhxWFVLNVVVWlUyN19qLVpxSGVmR3VXdnloTXlHcnlLcFFBdEFya0QtWVp0QU1iQm9HeVQ3aUZyaE9yTDJMTkRhQXJWOFVYWkVhbHpoQnB3TkV1bFZPWHNn?oc=5"
     },
     {
+      "src": "AFR",
+      "t": "Federal government weighs into ‘disturbing’ Christian Brothers bankruptcy",
+      "d": "",
+      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPVVN2UE9lRXNjdjNnajVlb2JrcGFBdVZ5NXdKeUZ3RWQ4QTlzOU9sTm00ZWRBcy1qUXNyak9lUFBERGtubmNxMDJUNG1pdlRTbFgzczg0LTNvb1pOc1BCUThObDhJMXVzM3ZZaUhySHB0dXJCZlJuN21wZkZUcW44TmtQWkJmSW5rUVZ0WTNtdDBBN2hiN2FRWUxnYldhU2tGQl9vV19DeERqU2lOVk5kWl9kcDZTZW43bldLd0I0X3VwQURF?oc=5"
+    },
+    {
       "src": "The Guardian",
       "t": "Abuse survivors launch bid to transfer claims to entity that benefited from Christian Brothers’ wealth",
       "d": "",
@@ -81,10 +81,10 @@
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Edmund Rice Education to pay out victim-survivors of Christian Brothers",
+      "t": "Christian Brothers spending $1.7m a week on abuse cases",
       "d": "",
-      "date": "Thu, 23 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNaExJSXB6TkhESDJvZk5iYXdlaHlfRHBPR1VHbEcyTzFNRHBGWDZpOVF2SHp5UzEyME5PVWpKX19NTGNrdlhyTmQ3WHNXZnBEeXVFc192RlpxcWdkbnJjNDFYRkgwVmZsU2Y5S3RkNlBHcVhWZVAybU43Q0ZRVTZQODF6V1Q2a2ducUZYemNMYmVSb3JlWVVDb2k1RlVFbHItNU5QR0UxbVY?oc=5"
+      "date": "Wed, 24 Jun 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPbEVjc19tV1hYd0dESkVyRXhtSXRwWjFjNHNlZUptdlZBSExfTnVUU1dUUXpaSmJzZ0RoZzg0VC1HbXRMYkVoWHFUVzRsU1BXQVBwS2ZZMkNHYVRSZVJicThNYk9RbFNaWGt5d0R6UHlXdnIzU1p0V0hDUWF2TDRLcFFta2YxdlhiUHR2S0s5eUk2emJtM09YZzVIZ2doZDlT?oc=5"
     }
   ]
 }
