@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-08-04T06:26:12.891Z",
+  "builtAt": "2026-08-04T09:20:48.423Z",
   "count": 12,
   "items": [
     {
@@ -10,13 +10,6 @@
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOSFp2YlE0ak84NkZRQlMta2I0Mm1xOXFHZlc1dzkyTk1xZHoxcVpaQ1BiSkZiVlhQTTdBVFp3X2JvZl96MlpZQ1ZEWTNqYXMzR2VJZVpwRXU3ME1XVGl0VzRId2pabTVvUDVia1JtWWdNQmczTEpsUUJ0a1VfVWhJbEI5a3lmbmptLU42VmVXWTFNbkRhSmhVUlQ0NklXQTFKM1FkMVJacU5UcHk4Ny14MEM5UWlUaWltTFczZHY0dk5pblA3WTc5OHhxbE4?oc=5"
     },
     {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Christian Brothers granted pause on abuse victim payouts",
-      "d": "",
-      "date": "Wed, 01 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNaHRoTklueEtid2pWOTFsMXUwVXZoRlpMQ09nVm5iTXF5elN2X1JwODZmTk9HQ3dla1A2Z3FnNFZKck5EOUF1TVNfdmxndWx4aDVuTGthSXVVbmVjNGk3OTQ1cHptZGdQaXltb1EtLUs4SDZKWGZfTkZTQnd1S05ZOF9ObmxoOUJCbVhnQW5jV0xkTUxyTEM2VURDVWkyWlBMRTV6d2ZQbGtDbXZQ?oc=5"
-    },
-    {
       "src": "The Guardian",
       "t": "Taxpayers could pay millions to abuse survivors if Christian Brothers goes bankrupt, court documents reveal",
       "d": "",
@@ -24,18 +17,18 @@
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPMXB4ZjN6TEFXTUJETU84WG1DN3RzX1RkQjExTnM5VV80M3dyVERackVYN1lEVWktSS1fMTl5WEZLTTZrMml2N29sU1VJUS1iLVU5bDFjcWJuZVRMbkw3M0FuZFgxYmtmbmhkd2xvSHdPZldVZE50Mjlwd1ZYcXNWQVhHMnB4dUQ4Z3RFT1lCOEVPYkRscUtDVERHY3dKZG1pVGcyQ1hPVFNsdw?oc=5"
     },
     {
-      "src": "The Catholic Leader",
+      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
+      "t": "Christian Brothers granted pause on abuse victim payouts",
+      "d": "",
+      "date": "Wed, 01 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNaHRoTklueEtid2pWOTFsMXUwVXZoRlpMQ09nVm5iTXF5elN2X1JwODZmTk9HQ3dla1A2Z3FnNFZKck5EOUF1TVNfdmxndWx4aDVuTGthSXVVbmVjNGk3OTQ1cHptZGdQaXltb1EtLUs4SDZKWGZfTkZTQnd1S05ZOF9ObmxoOUJCbVhnQW5jV0xkTUxyTEM2VURDVWkyWlBMRTV6d2ZQbGtDbXZQ?oc=5"
+    },
+    {
+      "src": "catholicleader.com.au",
       "t": "Christian Brothers facing bankruptcy after 183 years in Australia",
       "d": "",
       "date": "Wed, 24 Jun 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPbkJGRXhPMFYxS3piQldMeXFFcWN2ZVVMd2tRbDRHMVpoVTUwWHFpTEtLWENZTmZhNGFrUXF2amtDdTZfZFBZVVVOR3hPdHg3eEFzTHo3M1JoVjNnVzVucXhyRGZEYi1HaVZDVXhJWmZXYzQ0RmRGSS03aEhvN1A0OHJxME9DWTFpbWdIZGhQLVlPbnNTRVJKdWJjYnJpeWpiUDVhSkc4SVdkU3hiUVIyMg?oc=5"
-    },
-    {
-      "src": "The Saturday Paper",
-      "t": "The human cost of the Christian Brothers’ asset shifting",
-      "d": "",
-      "date": "Sat, 11 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNbTNrRWg0TjVFRndOcG90TjFib0pnRFhweE0xSS1BZUFzVVVHdUlFTVJTRU80aHFHZnpMLXBBZDVENHpRUXJvWTZUdUU1RmRtekpBZ0FqVWtuMGJFZF81aFdSLUFZQ0hkc1hZOFFOeXM0TS0xOWVNS0d5dmhTckVQYW1YRkZQRm4xNkNPcjR3WXNZTVR4SUFIVURiUTl4ZXl0Ullid0s0VUItZw?oc=5"
     },
     {
       "src": "Michael West Media",
@@ -45,32 +38,18 @@
       "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOWkI4MG1Md0JQWmVVNmFfWXBKOW5GSHJOZmtBbDhLQjYwVTViREFQblNZUldLY0xyNkZ1bnQ4dmFkcnAxZm9nZGwzNVVsX0xxOVJfeWNHREdUQ3ZuYVAtYURCNjBKRTU2LW9jd25vSjNWcFZNdUxuLU5McEdkbzZGUkE0bUhaUG9tWlVF?oc=5"
     },
     {
+      "src": "thesaturdaypaper.com.au",
+      "t": "The human cost of the Christian Brothers’ asset shifting",
+      "d": "",
+      "date": "Sat, 11 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNbTNrRWg0TjVFRndOcG90TjFib0pnRFhweE0xSS1BZUFzVVVHdUlFTVJTRU80aHFHZnpMLXBBZDVENHpRUXJvWTZUdUU1RmRtekpBZ0FqVWtuMGJFZF81aFdSLUFZQ0hkc1hZOFFOeXM0TS0xOWVNS0d5dmhTckVQYW1YRkZQRm4xNkNPcjR3WXNZTVR4SUFIVURiUTl4ZXl0Ullid0s0VUItZw?oc=5"
+    },
+    {
       "src": "CathNews",
       "t": "Christian Brothers seek financial solutions",
       "d": "",
       "date": "Tue, 23 Jun 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQSzNvM3VXc3hkczJzOVc2ckZhdkpjNjBXQ3M3ZkhYSGRiZUNVNUZ1a3BwWXVyNnNkRHdCeHBYVWFjb21ObzVqd0Z1M1FVeDdiZFRPbk1oYWhhUzdYbURkaXpZMnlsMFJlN2sxVDVvQmRMamo4MjFSZVhDXzlPN2Y5Mkln?oc=5"
-    },
-    {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Previously unheard from survivors detail horrific abuse at Christian Brothers",
-      "d": "",
-      "date": "Mon, 27 Jul 2026 08:15:25 GMT",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNS3hDejBsYlJwbm9Ob0NkemMzMHF0R2d4Tm1Kbk12cUxIQ2dkUEtSaTdUVVM0cmtSNTVINDdtQVFkbXdwM0RSZmp2X0JFQ1ctM2lWeW5xN2VpX2ZOcE1hZjlVSWlFODNUTm9NLTZ2V05jWUxFeEI3TmI5U2pjTjYxWkY0bS1UNklRT2cwdTVjeXF6aTZwcU0yMWZpcHA4MXA2MktUbU9DMVBDeS1wQkFpcVVR?oc=5"
-    },
-    {
-      "src": "The Guardian",
-      "t": "‘Obviously disturbing’ if Christian Brothers’ $1 property sales deprive abuse survivors of pay, government tells court",
-      "d": "",
-      "date": "Wed, 01 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQekVwakpYZjJ5UC1VMHgwbTFHcVpYZWE2bTdfeVYwYWh2dnp5YTk0R0Z4bjdJR0Fjb2tNT043aXJrSnRhdlN5WUp2MnBYMTZTcnZwTUREdE1zbjRnOF9YbklMNHYtSkhxWFVLNVVVWlUyN19qLVpxSGVmR3VXdnloTXlHcnlLcFFBdEFya0QtWVp0QU1iQm9HeVQ3aUZyaE9yTDJMTkRhQXJWOFVYWkVhbHpoQnB3TkV1bFZPWHNn?oc=5"
-    },
-    {
-      "src": "AFR",
-      "t": "Federal government weighs into ‘disturbing’ Christian Brothers bankruptcy",
-      "d": "",
-      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPVVN2UE9lRXNjdjNnajVlb2JrcGFBdVZ5NXdKeUZ3RWQ4QTlzOU9sTm00ZWRBcy1qUXNyak9lUFBERGtubmNxMDJUNG1pdlRTbFgzczg0LTNvb1pOc1BCUThObDhJMXVzM3ZZaUhySHB0dXJCZlJuN21wZkZUcW44TmtQWkJmSW5rUVZ0WTNtdDBBN2hiN2FRWUxnYldhU2tGQl9vV19DeERqU2lOVk5kWl9kcDZTZW43bldLd0I0X3VwQURF?oc=5"
     },
     {
       "src": "The Guardian",
@@ -81,10 +60,31 @@
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Christian Brothers spending $1.7m a week on abuse cases",
+      "t": "Victims 'thrown into uncertainty' by Christian Brothers court ruling",
       "d": "",
-      "date": "Wed, 24 Jun 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPbEVjc19tV1hYd0dESkVyRXhtSXRwWjFjNHNlZUptdlZBSExfTnVUU1dUUXpaSmJzZ0RoZzg0VC1HbXRMYkVoWHFUVzRsU1BXQVBwS2ZZMkNHYVRSZVJicThNYk9RbFNaWGt5d0R6UHlXdnIzU1p0V0hDUWF2TDRLcFFta2YxdlhiUHR2S0s5eUk2emJtM09YZzVIZ2doZDlT?oc=5"
+      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPTExHb3hUODJOQmhkQmdBWkUzRTJnbXRaSTlESGh0Q0RSaXJ4XzVhUjRkLXpXcWp2cl9CMzFJSnhLMzZqdkN6ZVQ2ZC1Mb3p3clM2Y0tFRE9QLXJDdnBBc2F1QUFWbmJvR1dBWlY4RUgxSGdyWmw3VUQtbng5aHhsRW0zd0JxWVVBZlloYV9GWUFOVlc1Nm5NRXp1WlNqNVRWRFV0eEJn?oc=5"
+    },
+    {
+      "src": "AFR",
+      "t": "Federal government weighs into ‘disturbing’ Christian Brothers bankruptcy",
+      "d": "",
+      "date": "Thu, 02 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPVVN2UE9lRXNjdjNnajVlb2JrcGFBdVZ5NXdKeUZ3RWQ4QTlzOU9sTm00ZWRBcy1qUXNyak9lUFBERGtubmNxMDJUNG1pdlRTbFgzczg0LTNvb1pOc1BCUThObDhJMXVzM3ZZaUhySHB0dXJCZlJuN21wZkZUcW44TmtQWkJmSW5rUVZ0WTNtdDBBN2hiN2FRWUxnYldhU2tGQl9vV19DeERqU2lOVk5kWl9kcDZTZW43bldLd0I0X3VwQURF?oc=5"
+    },
+    {
+      "src": "thesaturdaypaper.com.au",
+      "t": "Christian Brothers face bankruptcy from abuse payments",
+      "d": "",
+      "date": "Thu, 25 Jun 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHNDS2pXWEpnSjhabUFHRkJWdDMyX0hWTW5ydXZsZzFUZTFORTF3Zi1qcXltT3YzY3ZWMkI4am0wTWMyMHo1UVhMd3Z0VUQtbTFfSmV5MzZPbzVwd1BveGE1MGxuTC1YOVd4bk1aYmp3T0M2eklJZkZvbkxUZHAxa1JyTkIybDNvY0JWR3BPWER6Y1hW?oc=5"
+    },
+    {
+      "src": "The Guardian",
+      "t": "‘Obviously disturbing’ if Christian Brothers’ $1 property sales deprive abuse survivors of pay, government tells court",
+      "d": "",
+      "date": "Wed, 01 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQekVwakpYZjJ5UC1VMHgwbTFHcVpYZWE2bTdfeVYwYWh2dnp5YTk0R0Z4bjdJR0Fjb2tNT043aXJrSnRhdlN5WUp2MnBYMTZTcnZwTUREdE1zbjRnOF9YbklMNHYtSkhxWFVLNVVVWlUyN19qLVpxSGVmR3VXdnloTXlHcnlLcFFBdEFya0QtWVp0QU1iQm9HeVQ3aUZyaE9yTDJMTkRhQXJWOFVYWkVhbHpoQnB3TkV1bFZPWHNn?oc=5"
     }
   ]
 }
