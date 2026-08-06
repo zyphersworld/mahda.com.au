@@ -1,0 +1,107 @@
+/* ============================================================
+   EKKLESIA 2027 — Livery system
+   Six named palettes, switched via [data-livery] on <html>.
+   Same pattern as the mahda.com.au livery set: Vellum, Brass,
+   Iron, Emerald, Sanctum, Sigil. Iron is the shipped default.
+   ============================================================ */
+
+:root {
+  /* shared, livery-independent tokens */
+  --radius: 2px;
+  --font-display: "Cinzel", serif;
+  --font-body: "IM Fell English", "IM Fell English SC", serif;
+  --font-seal: "UnifrakturMaguntia", serif;
+  --shadow-lift: 0 18px 50px -20px rgba(0, 0, 0, 0.65);
+  --ring: 0 0 0 2px var(--accent);
+}
+
+/* ---------- IRON (default) — steel night, fireworks gold ---------- */
+:root,
+[data-livery="iron"] {
+  --bg: #12151b;
+  --bg-soft: #171b22;
+  --surface: #1d222b;
+  --surface-2: #242a35;
+  --ink: #e9ebee;
+  --ink-dim: #a7adb8;
+  --accent: #c9a44c;
+  --accent-ink: #14171c;
+  --accent-2: #6f8fae;
+  --border: #2b313d;
+  --star: 255, 255, 255;
+}
+
+/* ---------- BRASS — bronze summer, warm chocolate ---------- */
+[data-livery="brass"] {
+  --bg: #231809;
+  --bg-soft: #2a1d0c;
+  --surface: #2f2210;
+  --surface-2: #3a2a14;
+  --ink: #f5ead4;
+  --ink-dim: #cbb48a;
+  --accent: #dba54a;
+  --accent-ink: #201404;
+  --accent-2: #9a6a34;
+  --border: #453117;
+  --star: 255, 226, 173;
+}
+
+/* ---------- VELLUM — parchment daylight, ink brown ---------- */
+[data-livery="vellum"] {
+  --bg: #f3ead2;
+  --bg-soft: #ece0c1;
+  --surface: #ece0c3;
+  --surface-2: #e2d3ab;
+  --ink: #2b2013;
+  --ink-dim: #6b5c3d;
+  --accent: #8c5a20;
+  --accent-ink: #fbf3e2;
+  --accent-2: #58643f;
+  --border: #cdb98a;
+  --star: 90, 70, 30;
+}
+
+/* ---------- EMERALD — deep garden green, brass leaf ---------- */
+[data-livery="emerald"] {
+  --bg: #0d1d14;
+  --bg-soft: #12271a;
+  --surface: #16301f;
+  --surface-2: #1c3a26;
+  --ink: #e7f3ea;
+  --ink-dim: #a6c4ae;
+  --accent: #5cb17e;
+  --accent-ink: #0b1a10;
+  --accent-2: #c79a4b;
+  --border: #234a2e;
+  --star: 200, 255, 214;
+}
+
+/* ---------- SANCTUM — violet vigil, gold leaf ---------- */
+[data-livery="sanctum"] {
+  --bg: #1a1225;
+  --bg-soft: #21172f;
+  --surface: #271b39;
+  --surface-2: #322247;
+  --ink: #f2ecf8;
+  --ink-dim: #bdaed0;
+  --accent: #c9a24a;
+  --accent-ink: #1c1327;
+  --accent-2: #9f7cc4;
+  --border: #392a4d;
+  --star: 224, 200, 255;
+}
+
+/* ---------- SIGIL — void black, ember rune red ---------- */
+[data-livery="sigil"] {
+  --bg: #09090b;
+  --bg-soft: #0e0e11;
+  --surface: #131316;
+  --surface-2: #1a1a1e;
+  --ink: #eae7e1;
+  --ink-dim: #8f8b85;
+  --accent: #b8432f;
+  --accent-ink: #0b0a09;
+  --accent-2: #7a7a82;
+  --border: #232327;
+  --star: 255, 170, 150;
+}

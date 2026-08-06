@@ -1,0 +1,126 @@
+{
+  "site": {
+    "name": "EKKLESIA 2027",
+    "tagline": "A Southern Summer of Fun and Fellowship",
+    "dates": "17 – 26 February 2027",
+    "dateStart": "2027-02-17",
+    "dateEnd": "2027-02-26",
+    "venueName": "New Life Christian Church Grounds",
+    "venueAddress": "41 Bromfield Street, Warrnambool VIC 3280, Australia",
+    "host": "New Life Christian Church",
+    "partner": "For the Love of God — Down Under",
+    "contactName": "Rick Clissold",
+    "contactEmail": "rclissol1@gmail.com"
+  },
+  "nav": [
+    { "id": "home", "label": "Home" },
+    { "id": "program", "label": "Program" },
+    { "id": "stay", "label": "Stay" },
+    { "id": "visit", "label": "Visit" },
+    { "id": "contact", "label": "Contact" }
+  ],
+  "pages": {
+    "home": {
+      "eyebrow": "New Life Christian Church · Warrnambool, Victoria",
+      "title": "EKKLESIA 2027",
+      "subtitle": "A Southern Summer of Fun and Fellowship",
+      "dateBadge": "17 – 26 FEBRUARY",
+      "venueLine": "New Life Christian Church Grounds · 41 Bromfield Street, Warrnambool VIC Australia",
+      "stats": [
+        { "value": "10", "label": "Days of Community" },
+        { "value": "3", "label": "Days of Encounter" }
+      ],
+      "cta": [
+        { "label": "Email Rick to Register Interest", "href": "mailto:rclissol1@gmail.com?subject=Ekklesia%202027%20%E2%80%93%20Registration%20Interest", "style": "primary" },
+        { "label": "See the Program", "href": "#/program", "style": "ghost" }
+      ],
+      "intro": {
+        "heading": "Called out, gathered together",
+        "body": [
+          "Ekklesia — ἐκκλησία — is the old word for a called-out assembly, the root of the word \u201cchurch\u201d itself. Ten days on the New Life Christian Church grounds in Warrnambool, closing out the Australian summer the way it should be closed out: outdoors, unhurried, and together.",
+          "Guest speakers, live music and an arts stream run through the gathering, building toward three dedicated Encounter days. Accommodation and meals are provided, with multiple options to suit families, singles and groups travelling in."
+        ]
+      },
+      "features": [
+        { "title": "Guest Speakers", "body": "Teaching and ministry sessions across the ten days, building toward the Encounter days. Lineup to be announced." },
+        { "title": "Music", "body": "Live worship and music woven through the program, morning and night." },
+        { "title": "Arts", "body": "A creative arts stream for anyone who'd rather make something than just watch it." },
+        { "title": "Accommodation & Meals", "body": "Multiple accommodation and meal options are available — get in touch with Rick to find what suits you." }
+      ]
+    },
+    "program": {
+      "eyebrow": "What's On",
+      "title": "Program",
+      "subtitle": "Ten days of community, building to three days of encounter.",
+      "sections": [
+        {
+          "heading": "Guest Speakers",
+          "body": "Teaching and ministry sessions run through the gathering. The speaker lineup is still being locked in — check back closer to February, or email Rick to be notified when it's announced."
+        },
+        {
+          "heading": "Music",
+          "body": "Live music and worship carry through the program, from casual evening sets to the gathered sessions during the Encounter days."
+        },
+        {
+          "heading": "Arts",
+          "body": "A hands-on arts stream runs alongside the main program for anyone who wants to create, not just attend."
+        },
+        {
+          "heading": "The Shape of the Ten Days",
+          "body": "The full ten days are open as community — people are welcome to come and go, camp, and take part loosely. Three of those days are set aside as dedicated Encounter days with a tighter, more focused program. Exact dates for the Encounter days will be confirmed with the full schedule."
+        }
+      ]
+    },
+    "stay": {
+      "eyebrow": "Accommodation & Meals",
+      "title": "Where You'll Stay, What You'll Eat",
+      "subtitle": "Multiple options are available — nothing is one-size-fits-all.",
+      "sections": [
+        {
+          "heading": "Accommodation",
+          "body": "Multiple accommodation options are available on and around the church grounds, from on-site camping to nearby options in Warrnambool. Let Rick know your situation — travelling as a family, a couple, solo, or in a group — and he can point you to what fits."
+        },
+        {
+          "heading": "Meals",
+          "body": "Meals are provided across the gathering. If you have dietary requirements or allergies, flag them with Rick when you register so catering can plan for them."
+        }
+      ],
+      "note": "* Multiple options available for both accommodation and meals — get in touch to talk through specifics."
+    },
+    "visit": {
+      "eyebrow": "Getting There",
+      "title": "Visit",
+      "subtitle": "New Life Christian Church Grounds, Warrnambool VIC.",
+      "address": "41 Bromfield Street, Warrnambool VIC 3280, Australia",
+      "mapHref": "https://www.google.com/maps/search/?api=1&query=41+Bromfield+Street+Warrnambool+VIC+Australia",
+      "sections": [
+        {
+          "heading": "Where it is",
+          "body": "Warrnambool sits on Victoria's south-west coast, at the end of the Great Ocean Road and on the Princes Highway — about a three-hour drive from Melbourne. The gathering runs on the New Life Christian Church grounds at 41 Bromfield Street."
+        },
+        {
+          "heading": "Travel & parking",
+          "body": "Details on parking, drop-off and travel into Warrnambool will be shared closer to the date. If you're coming from out of town and want to plan ahead, email Rick."
+        }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Get in Touch",
+      "title": "Contact",
+      "subtitle": "Questions, registrations, accommodation, dietary needs — Rick's the one to email.",
+      "person": {
+        "name": "Rick Clissold",
+        "email": "rclissol1@gmail.com",
+        "role": "Ekklesia 2027 Coordinator, New Life Christian Church"
+      },
+      "hosts": [
+        { "name": "New Life Christian Church", "note": "Host church and grounds, 41 Bromfield Street, Warrnambool VIC" },
+        { "name": "For the Love of God — Down Under", "note": "Event partner" }
+      ]
+    }
+  },
+  "footer": {
+    "line1": "New Life Christian Church · 41 Bromfield Street, Warrnambool VIC Australia",
+    "line2": "Ekklesia 2027 · 17–26 February · in partnership with For the Love of God — Down Under"
+  }
+}
