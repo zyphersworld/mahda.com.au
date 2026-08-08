@@ -1,20 +1,20 @@
 {
-  "builtAt": "2026-08-08T07:47:42.586Z",
+  "builtAt": "2026-08-08T08:38:22.089Z",
   "count": 12,
   "items": [
-    {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Christian Brothers granted pause on abuse victim payouts",
-      "d": "",
-      "date": "Wed, 01 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNaHRoTklueEtid2pWOTFsMXUwVXZoRlpMQ09nVm5iTXF5elN2X1JwODZmTk9HQ3dla1A2Z3FnNFZKck5EOUF1TVNfdmxndWx4aDVuTGthSXVVbmVjNGk3OTQ1cHptZGdQaXltb1EtLUs4SDZKWGZfTkZTQnd1S05ZOF9ObmxoOUJCbVhnQW5jV0xkTUxyTEM2VURDVWkyWlBMRTV6d2ZQbGtDbXZQ?oc=5"
-    },
     {
       "src": "The Guardian",
       "t": "Taxpayers could pay millions to abuse survivors if Christian Brothers goes bankrupt, court documents reveal",
       "d": "",
       "date": "Mon, 20 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPMXB4ZjN6TEFXTUJETU84WG1DN3RzX1RkQjExTnM5VV80M3dyVERackVYN1lEVWktSS1fMTl5WEZLTTZrMml2N29sU1VJUS1iLVU5bDFjcWJuZVRMbkw3M0FuZFgxYmtmbmhkd2xvSHdPZldVZE50Mjlwd1ZYcXNWQVhHMnB4dUQ4Z3RFT1lCOEVPYkRscUtDVERHY3dKZG1pVGcyQ1hPVFNsdw?oc=5"
+    },
+    {
+      "src": "abc.net.au",
+      "t": "Christian Brothers granted pause on abuse victim payouts",
+      "d": "",
+      "date": "Wed, 01 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNaHRoTklueEtid2pWOTFsMXUwVXZoRlpMQ09nVm5iTXF5elN2X1JwODZmTk9HQ3dla1A2Z3FnNFZKck5EOUF1TVNfdmxndWx4aDVuTGthSXVVbmVjNGk3OTQ1cHptZGdQaXltb1EtLUs4SDZKWGZfTkZTQnd1S05ZOF9ObmxoOUJCbVhnQW5jV0xkTUxyTEM2VURDVWkyWlBMRTV6d2ZQbGtDbXZQ?oc=5"
     },
     {
       "src": "AFR",
@@ -52,6 +52,13 @@
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9ISzhELVBLX29HemZUWG9nbXIwTUxPQzZIWVl4bHRqNGg0N1g1Q0U1dGZyUjBibGRxOENxOExPZEhHc2syN1BiNG1ULU56M2VSRVY2YXcwWmdqQQ?oc=5"
     },
     {
+      "src": "SMH.com.au",
+      "t": "Former Christian Brothers schools to compensate victims of clerical abuse after backflip",
+      "d": "",
+      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQcGhqUXFNdjFIeXNCZnNMb1l1VUdiNWF0X0x1SzZYSmJ0Q3RENGdaRnAycm1qTmRMNzRYaHVUaFpHRm1fZWJKMTBsSUhvOE1uQUw1bFlTT1NiSFRyc2U3dFNfeDJyZWQzYk5XZFNsQ2NuV3VDYUZnU1JSY1dZZk9lbWh2azZweG9mOTVsaFBZZUJndG9rR1lmRlNMLU9GZElBUXp6bjQ2SzBndjViV19OOHpfR0dRUmM1UmJ4cDF3cEM0Y3RaTEFkWExzdU5NZXJn?oc=5"
+    },
+    {
       "src": "The Guardian",
       "t": "Christian Brothers abuse victims to get ‘full’ compensation in backdown after controversial property sales",
       "d": "",
@@ -59,7 +66,7 @@
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQaE9oM21JVXNoRHNzNlYtSkdZa3lrbkRTWmFIZVM1LWFDd3JCemRMUmZHUW5SZzZIVUtfa0l5eG1WYm5heC1ja2hIVDYxRkZuTFROdWRWT01iQ0xzSFpHaFlUNUtwcGFXY2cxMWdpYVNRekZ4UHpoOG5UM3FxejRoNTRNd3FrcHBiRE9DVXpKUzMwNTFKaGx2eHFISmoxMzVId1cySFhwMG1PTlk?oc=5"
     },
     {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
+      "src": "abc.net.au",
       "t": "Edmund Rice Education to pay out victim-survivors of Christian Brothers",
       "d": "",
       "date": "Thu, 23 Jul 2026 07:00:00 GMT",
@@ -78,13 +85,6 @@
       "d": "",
       "date": "Thu, 25 Jun 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHNDS2pXWEpnSjhabUFHRkJWdDMyX0hWTW5ydXZsZzFUZTFORTF3Zi1qcXltT3YzY3ZWMkI4am0wTWMyMHo1UVhMd3Z0VUQtbTFfSmV5MzZPbzVwd1BveGE1MGxuTC1YOVd4bk1aYmp3T0M2eklJZkZvbkxUZHAxa1JyTkIybDNvY0JWR3BPWER6Y1hW?oc=5"
-    },
-    {
-      "src": "The Guardian",
-      "t": "‘Obviously disturbing’ if Christian Brothers’ $1 property sales deprive abuse survivors of pay, government tells court",
-      "d": "",
-      "date": "Wed, 01 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQekVwakpYZjJ5UC1VMHgwbTFHcVpYZWE2bTdfeVYwYWh2dnp5YTk0R0Z4bjdJR0Fjb2tNT043aXJrSnRhdlN5WUp2MnBYMTZTcnZwTUREdE1zbjRnOF9YbklMNHYtSkhxWFVLNVVVWlUyN19qLVpxSGVmR3VXdnloTXlHcnlLcFFBdEFya0QtWVp0QU1iQm9HeVQ3aUZyaE9yTDJMTkRhQXJWOFVYWkVhbHpoQnB3TkV1bFZPWHNn?oc=5"
     }
   ]
 }
