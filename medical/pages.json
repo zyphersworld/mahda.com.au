@@ -176,9 +176,34 @@
                 },
                 {
                   "k": "This is a recurrence",
-                  "v": "Very similar presentation approximately one year ago, which resulted in an ED attendance and a referral to Dr Clissold. Nothing structural in my circumstances has changed since."
+                  "v": "Very similar presentation approximately one year ago, which resulted in an ED attendance and referral to Dr Clissold. What has not changed is that I still have no secure housing. What has changed since has made things worse, not better — see below."
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "What has changed since the referral",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "I was referred to Dr Clissold from ED roughly a year ago. It would be inaccurate to say nothing has changed since then. Several things have — every one of them a deterioration or an added load."
+            },
+            {
+              "type": "list",
+              "items": [
+                "Three further changes of address. I have not held one place for more than about a year at any point since February 2025.",
+                "Licence cancelled, December 2025. I live in Koroit; every appointment, pharmacy and service is in Warrnambool. I now have no independent transport to my own care.",
+                "All medication ceased, January 2026, following the syncopal episode. Seven months untreated with known left ventricular hypertrophy.",
+                "Ongoing caregiving and relational demands involving an adult family member, carried alongside everything else with no support structure around it.",
+                "My priority housing application remains unresolved, with a formal complaint now lodged because correspondence went unanswered.",
+                "Approximately two weeks of severely disrupted sleep and rapid emotional dysregulation immediately preceding this presentation."
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "The stable element across the whole period is the absence of stable housing. Everything layered on top of it has accumulated."
             }
           ]
         },
@@ -363,7 +388,7 @@
                 },
                 {
                   "when": "Approx. August 2025",
-                  "what": "Emergency department presentation with a very similar picture to the current one. Referred to Dr Anna Clissold, South West Healthcare."
+                  "what": "Emergency department presentation with a very similar picture to the current one. Referred to Dr Anna Clissold, South West Healthcare. Three further changes of address, loss of licence, and cessation of all medication have followed since."
                 },
                 {
                   "when": "February 2025 onward",
