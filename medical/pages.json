@@ -67,7 +67,7 @@
                 },
                 {
                   "k": "MEDICATIONS",
-                  "v": "Currently on nothing. Ceased January 2026 after passing out at the wheel on 17 December 2025 while on amlodipine, candesartan and metoprolol, on a very hot day and dehydrated. Previously treated as resistant hypertension on four antihypertensives. See Medications."
+                  "v": "Candesartan 4 mg restarted 9 August 2026 on Dr Clissold's advice, after seven months on nothing. Nothing else restarted. I stopped in January 2026 after passing out at the wheel on 17 December while on amlodipine, candesartan and metoprolol. Previously treated as resistant hypertension on four antihypertensives. See Medications."
                 },
                 {
                   "k": "Under the care of",
@@ -79,7 +79,7 @@
                 },
                 {
                   "k": "Presenting pattern",
-                  "v": "Severe hypertension, recurrent. Recorded 222/151 on 9 August 2026."
+                  "v": "Severe hypertension, recurrent and currently sustained. Six home readings between 7 and 10 August 2026, five of them in crisis range, peaking at 228/149 with a pulse of 110. See Right now."
                 },
                 {
                   "k": "Also relevant",
@@ -152,7 +152,15 @@
               "items": [
                 {
                   "k": "Peak reading",
-                  "v": "222/151 — Sunday 9 August 2026, evening. Taken at a church function, not clinically."
+                  "v": "228/149, pulse 110 — Sunday 9 August 2026, 8:55pm. Six readings across four days, every one of them in hypertensive crisis range."
+                },
+                {
+                  "k": "Sustained, not a spike",
+                  "v": "All recorded diastolics between 7 and 10 August fall between 133 and 151, except one morning reading of 104. This is a sustained crisis-range picture over at least four days, off all antihypertensive therapy since January 2026."
+                },
+                {
+                  "k": "Treatment restarted",
+                  "v": "Candesartan 4 mg, first dose approximately 10:00pm Sunday 9 August 2026, on the advice of Dr Anna Clissold, using medication retained from January. Second dose approximately 5:00pm Monday 10 August. Deliberately low — one eighth of the previously prescribed 32 mg — because of the syncopal episode of 17 December 2025. Less than 24 hours in at the time of presentation."
                 },
                 {
                   "k": "Sleep",
@@ -180,7 +188,7 @@
           "blocks": [
             {
               "type": "para",
-              "text": "Sitting, five minutes still, arm supported at heart height, same arm each time. Readings above 180 systolic or 120 diastolic are flagged."
+              "text": "Home readings. Sitting, arm supported. Readings at or above 180 systolic or 120 diastolic are flagged — on this log that is all but one of them."
             },
             {
               "type": "table",
@@ -189,15 +197,64 @@
                 "Time",
                 "Reading",
                 "Pulse",
-                "Note"
+                "Notes"
               ],
               "rows": [
                 [
-                  "9 Aug 2026",
-                  "evening",
-                  "222/151",
+                  "Mon 10 Aug 2026",
+                  "5:40 pm",
+                  "207/141",
+                  "94",
+                  "40 min after 2nd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~5:00 pm",
                   "—",
-                  "Taken at worship practice. Not a clinical setting."
+                  "—",
+                  "Candesartan 4 mg — 2nd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "4:50 pm",
+                  "207/138",
+                  "86",
+                  "10 min before 2nd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "7:00 am",
+                  "174/104",
+                  "85",
+                  "~9 hrs after 1st dose"
+                ],
+                [
+                  "Sun 9 Aug 2026",
+                  "~10:00 pm",
+                  "—",
+                  "—",
+                  "Candesartan 4 mg — FIRST dose, after 7 months untreated"
+                ],
+                [
+                  "Sun 9 Aug 2026",
+                  "9:00 pm",
+                  "222/151",
+                  "106",
+                  "1 hr before 1st dose — untreated"
+                ],
+                [
+                  "Sun 9 Aug 2026",
+                  "8:55 pm",
+                  "228/149",
+                  "110",
+                  "1 hr before 1st dose — untreated"
+                ],
+                [
+                  "Fri 7 Aug 2026",
+                  "11:20 pm",
+                  "214/133",
+                  "77",
+                  "Untreated"
                 ],
                 [
                   "TO FILL",
@@ -211,7 +268,11 @@
             },
             {
               "type": "callout",
-              "text": "Keeping this log is the single most useful thing I can bring to an appointment. One reading is an anecdote. Two weeks of readings is evidence."
+              "text": "Six readings across four days, five of six in crisis range, diastolic between 133 and 151 throughout. Treatment began Sunday 9 August at approximately 10:00pm — so Friday's and both Sunday readings are entirely untreated, and Monday's three fall within the first 24 hours of a 4 mg restart. Candesartan takes around two weeks to reach full effect. Tachycardia of 106–110 accompanied the two highest readings, both taken an hour before the first dose."
+            },
+            {
+              "type": "para",
+              "text": "Context for interpretation: known hypertension and left ventricular hypertrophy, no antihypertensive therapy at all between January and 9 August 2026, and now less than 24 hours into a deliberately cautious 4 mg restart at one eighth of the previously prescribed dose. Treat me as effectively untreated at these readings."
             }
           ]
         },
@@ -440,7 +501,7 @@
     "meds": {
       "eyebrow": "Reference",
       "title": "Medications",
-      "lede": "Currently on nothing. Ceased January 2026, after a syncopal episode at the wheel on 17 December 2025. Three prior regimens are documented below.",
+      "lede": "Candesartan 4 mg restarted 9 August 2026 on Dr Clissold's advice, after seven months on nothing. Three prior regimens documented below.",
       "blocks": [
         {
           "type": "alert",
@@ -468,12 +529,16 @@
                 {
                   "when": "Since",
                   "what": "Nothing restarted. Approximately seven months untreated at the time of this presentation, with known hypertension and left ventricular hypertrophy."
+                },
+                {
+                  "when": "9 August 2026",
+                  "what": "Candesartan 4 mg recommenced on the advice of Dr Clissold, using medication retained from January. Second dose 5:00pm, 10 August. Deliberately low — one eighth of the previously prescribed dose — given the December syncope. Not yet at therapeutic effect."
                 }
               ]
             },
             {
               "type": "callout",
-              "text": "I stopped after a frightening adverse event on the medication, not because I disregarded it. I would like to be back on something. I need help rebuilding it safely, including rules for hot days."
+              "text": "I stopped after a frightening adverse event, not because I disregarded the treatment. I have now restarted at a low dose under Dr Clissold's direction. I need help rebuilding the rest of the regimen safely, including rules for hot days and dehydration."
             }
           ]
         },
@@ -556,6 +621,67 @@
             {
               "type": "callout",
               "text": "That note also establishes my baseline in a clinician's own words: 150 mmHg systolic was described as still high, but possibly too low for what I was accustomed to. My habitual systolic sat well above 150 while treated."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Medication still physically held",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "I kept my January medication rather than discarding it. What I still hold determines what can be restarted immediately versus what needs a new script — relevant given no GP appointment until 1 October and no licence to reach a pharmacy."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Medication",
+                "Still held?",
+                "Expiry",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "Candesartan",
+                  "Yes",
+                  "TO FILL",
+                  "In use — 4 mg from 9 Aug 2026"
+                ],
+                [
+                  "Amlodipine",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Metoprolol",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Atorvastatin",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Aspirin",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Quetiapine",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Check expiry dates. Seven months in storage is usually fine, but this was stored through summer in a caravan and heat degrades tablets. Bring the actual boxes to appointments."
             }
           ]
         },
