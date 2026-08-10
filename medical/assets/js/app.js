@@ -1,0 +1,397 @@
+/* ==========================================================================
+   app.js — Medical Handover
+   Same architecture as the other mahda.com.au subfolder sites:
+     - content comes from same-origin pages.json
+     - PAGES_FALLBACK is a baked-in copy so the page still works over file://
+     - hash router (#/id), six-livery switcher persisted to localStorage
+   Extra here: a "Clinical view" high-contrast toggle and a copy-to-clipboard
+   summary, both aimed at handing a phone to a stranger in a hurry.
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  var PAGES_FALLBACK = /*__FALLBACK__*/ {"site": {"mark": "M", "name": "Medical Handover", "sub": "Mahda Christopher Greene", "updated": "10 August 2026", "default": "start"}, "nav": [{"id": "start", "label": "Start here"}, {"id": "current", "label": "Right now"}, {"id": "cardiac", "label": "Cardiac"}, {"id": "mental", "label": "Mental health"}, {"id": "meds", "label": "Medications"}, {"id": "team", "label": "Care team"}, {"id": "context", "label": "Context"}, {"id": "docs", "label": "Documents"}], "pages": {"start": {"eyebrow": "Handover sheet", "title": "Start here", "lede": "This page exists so I don't have to explain everything from the beginning every time. Re-telling it costs me more than it saves you. Everything below is here to be read, printed, or photographed.", "blocks": [{"type": "alert", "heading": "The short version", "blocks": [{"type": "rows", "items": [{"k": "Name", "v": "Mahda Christopher Greene. Birth name Christopher Peter Greene — some records are under that name."}, {"k": "READ THIS FIRST", "v": "I have a documented rare troponin-antibody / false-positive issue. Some of my troponin readings are unreliable and have previously suggested myocardial infarction where none occurred. Please interpret troponin in that context and check my prior records before escalating."}, {"k": "Known cardiac", "v": "Left ventricular hypertrophy. Angina attributed to small-vessel compression. Obstructive coronary disease excluded by angiogram, 2019."}, {"k": "MEDICATIONS", "v": "Currently on nothing. Ceased January 2026 after passing out at the wheel on 17 December 2025 while on amlodipine, candesartan and metoprolol, on a very hot day and dehydrated. Previously treated as resistant hypertension on four antihypertensives. See Medications."}, {"k": "Under the care of", "v": "Dr Anna Clissold, South West Healthcare — referred from an ED presentation approximately one year ago."}, {"k": "Chest pain pattern", "v": "Multiple chest-pain presentations April–May 2025 found no acute cardiac event. Pain consistently eased as distress settled. This does not mean chest pain should be dismissed — it means the pattern is on record."}, {"k": "Presenting pattern", "v": "Severe hypertension, recurrent. Recorded 222/151 on 9 August 2026."}, {"k": "Also relevant", "v": "Complex trauma history. Currently a civil litigant in proceedings relating to historical institutional abuse."}, {"k": "Living situation", "v": "Residing in a caravan. No secure accommodation since February 2025."}]}]}, {"type": "panel", "heading": "What I'm asking for", "blocks": [{"type": "list", "items": ["Read this instead of asking me to start from the beginning. I will answer anything you ask — I'd just rather spend the energy on the part you actually need.", "Please pull my existing file before we talk. There is a prior ED presentation and a specialist referral already on record.", "If you write anything today, please document my housing situation as a contributing factor. That documentation is doing work outside this room.", "If I go quiet or short in conversation, it isn't hostility. It's usually exhaustion or the effort of re-telling."]}]}, {"type": "panel", "heading": "How to use this page", "blocks": [{"type": "list", "items": ["Tap Clinical view (top right) for high-contrast black-on-white. Good for handing the phone over.", "Print or Save as PDF gives you a clean handover sheet — the decoration drops out automatically.", "Copy summary puts the short version on the clipboard as plain text, for pasting into notes."]}, {"type": "copybar"}]}, {"type": "panel", "kind": "quiet", "heading": "A note on accuracy", "blocks": [{"type": "para", "text": "This page is written and maintained by me, not by a clinician. It is a summary for handover, not a medical record. Where something is unconfirmed or I'm unsure, it says so. Treat the source documents on the Documents page as authoritative over anything written here."}]}]}, "current": {"eyebrow": "Active episode", "title": "Right now", "lede": "The current picture, and how it fits the pattern.", "blocks": [{"type": "alert", "heading": "Presenting", "blocks": [{"type": "rows", "items": [{"k": "Peak reading", "v": "222/151 — Sunday 9 August 2026, evening. Taken at a church function, not clinically."}, {"k": "Sleep", "v": "Severely disrupted for approximately two weeks."}, {"k": "Mood", "v": "Rapid emotional dysregulation over the same two-week period."}, {"k": "Chest symptoms", "v": "TO FILL — angina present or absent, and whether it differs from my usual pattern."}, {"k": "This is a recurrence", "v": "Very similar presentation approximately one year ago, which resulted in an ED attendance and a referral to Dr Clissold. Nothing structural in my circumstances has changed since."}]}]}, {"type": "panel", "heading": "Blood pressure log", "blocks": [{"type": "para", "text": "Sitting, five minutes still, arm supported at heart height, same arm each time. Readings above 180 systolic or 120 diastolic are flagged."}, {"type": "table", "columns": ["Date", "Time", "Reading", "Pulse", "Note"], "rows": [["9 Aug 2026", "evening", "222/151", "—", "Taken at worship practice. Not a clinical setting."], ["TO FILL", "", "", "", ""]], "flagCol": 2}, {"type": "callout", "text": "Keeping this log is the single most useful thing I can bring to an appointment. One reading is an anecdote. Two weeks of readings is evidence."}]}, {"type": "panel", "heading": "What I'd like looked at", "blocks": [{"type": "list", "items": ["Repeat echocardiogram — has the left ventricular hypertrophy progressed since 2019?", "24-hour ambulatory blood pressure monitoring.", "End-organ review: renal function and urine ACR, ECG, fundoscopy.", "The sleep disruption investigated in its own right, not only as a symptom of stress. Sleep-disordered breathing has not been excluded.", "Whether short-term supported accommodation (PARC) is appropriate while housing remains unresolved. I was admitted to PARC in Warrnambool for approximately four weeks in late April 2025, so there is a prior admission on record."]}]}]}, "cardiac": {"eyebrow": "History", "title": "Cardiac", "lede": "First detected in 2019. Investigated then, and recurring since.", "blocks": [{"type": "panel", "heading": "Established findings", "blocks": [{"type": "rows", "items": [{"k": "Troponin caveat", "v": "Rare troponin-antibody / false-positive issue on record. Some readings are unreliable and have previously indicated MI where none occurred. Interpret accordingly."}, {"k": "Left ventricle", "v": "Enlarged — left ventricular hypertrophy."}, {"k": "Angina", "v": "Attributed to compression of small vessels. Not obstructive coronary disease."}, {"k": "Angiogram", "v": "2019. Excluded myocardial infarction and obstructive coronary disease."}, {"k": "Hypertension", "v": "Longstanding, recurrent, severe at peak. Current control status: TO FILL."}, {"k": "Chest pain pattern", "v": "Multiple presentations April–May 2025, no acute cardiac event found on any. Pain eased as psychological distress settled."}]}]}, {"type": "panel", "heading": "Timeline", "blocks": [{"type": "timeline", "items": [{"when": "2019", "what": "First episode detected while in custody. Raised troponin, suspected myocardial infarction. Angiogram excluded MI and obstructive coronary disease. Left ventricular hypertrophy identified; angina attributed to small-vessel compression. The troponin-antibody issue dates from around this workup."}, {"when": "18–20 April 2025", "what": "Hospital admission — chest pain alongside significant social stress. Situational crisis. No acute cardiac event."}, {"when": "28–29 April 2025", "what": "Further ED presentation. Chest tightness eased as psychological state settled. Reviewed and discharged with follow-up booked."}, {"when": "April–May 2025", "what": "Multiple further chest-pain presentations across this period. No acute cardiac event identified on any of them."}, {"when": "Late April 2025", "what": "Admitted to PARC, Warrnambool, for approximately four weeks."}, {"when": "Approx. August 2025", "what": "Emergency department presentation with a very similar picture to the current one. Referred to Dr Anna Clissold, South West Healthcare."}, {"when": "February 2025 onward", "what": "No secure accommodation. Sequence of temporary placements, currently a caravan. See Context."}, {"when": "Undated, earlier", "what": "Earlier regimen: metoprolol 50 mg bd, perindopril, clonidine, rosuvastatin, aspirin, promethazine, quetiapine."}, {"when": "Undated", "what": "Admission at University Hospital Geelong. Discharged on four antihypertensives across four classes — hydrochlorothiazide, carvedilol, candesartan 32 mg, amlodipine 10 mg — plus atorvastatin 80 mg, aspirin and quetiapine. Records held by Barwon Health."}, {"when": "23 November 2025", "what": "Dr Clissold revised the regimen and issued a written titration plan. Her note recorded that 150 mmHg systolic, while still high, might be below what I was accustomed to."}, {"when": "17 December 2025", "what": "Syncope while driving. Blood pressure very low. Very hot day, dehydrated. THC detected on subsequent bloods; licence cancelled."}, {"when": "January 2026", "what": "Ceased all medications following the December episode. Nothing restarted since — approximately seven months untreated."}, {"when": "Late July – August 2026", "what": "Approximately two weeks of severely disrupted sleep and rapid emotional dysregulation."}, {"when": "9 August 2026", "what": "Blood pressure recorded at 222/151."}, {"when": "10 August 2026", "what": "Emergency department attendance. TO FILL — outcome."}, {"when": "11 August 2026", "what": "Scheduled appointment with Dr Clissold."}, {"when": "1 October 2026", "what": "Earliest available appointment with regular GP."}]}]}, {"type": "panel", "kind": "quiet", "heading": "The pattern, stated plainly", "blocks": [{"type": "para", "text": "Two severe episodes, roughly twelve months apart, with the same presentation and the same unresolved housing situation in between. I am not asking anyone to treat that as proof of causation. I am asking that it be recorded, because nobody can act on a pattern that isn't written down."}]}]}, "mental": {"eyebrow": "Context", "title": "Mental health and trauma", "lede": "Included because it affects how I present, not because I want it to be the headline.", "blocks": [{"type": "panel", "heading": "What's relevant", "blocks": [{"type": "rows", "items": [{"k": "Background", "v": "Survivor of historical institutional abuse. Currently a civil litigant in related proceedings."}, {"k": "Current", "v": "Two weeks of severely disrupted sleep and rapid emotional dysregulation."}, {"k": "Psychiatric report", "v": "Dr Winton-Brown, completed 26 March 2025. The most comprehensive assessment on record. Held by me and by my solicitor."}, {"k": "Prior admissions", "v": "Multiple inpatient admissions dating from late teens / early-to-mid twenties. Two ED presentations in April 2025 within eleven days, both assessed as situational crisis. PARC, Warrnambool, approximately four weeks from late April 2025."}, {"k": "Diagnoses and risk history", "v": "Held in a separate private supplement rather than on this public page. Ask me and I will show you on my phone, or it can be sent to you directly."}, {"k": "Standing recommendation", "v": "Integrated, consistent psychiatric care plus trauma-directed psychological treatment (MBT, DBT, CPT, or long-term psychodynamic). This has been the recommendation for some time and has not been consistently available to me."}]}]}, {"type": "panel", "heading": "How I present, and what that does and doesn't mean", "blocks": [{"type": "list", "items": ["I am articulate, organised, and I produce a lot of work. None of that means I'm stable. It has repeatedly meant I get deprioritised against people who present less well with comparable need.", "I can give a clear, calm account of very bad circumstances. That's practice, not distance from them.", "Re-telling my history is itself costly. If it's already in my file, please read it there rather than asking me to perform it again.", "My creative and technical work is load-bearing — it's how I regulate. Interruptions to it are not the loss of a hobby."]}]}, {"type": "panel", "heading": "What helps", "blocks": [{"type": "list", "items": ["Direct speech. Say the actual thing. I don't need it softened.", "Telling me what happens next, and when.", "Writing things down and giving me a copy.", "Not treating competence as evidence that I'm fine."]}]}]}, "meds": {"eyebrow": "Reference", "title": "Medications", "lede": "Currently on nothing. Ceased January 2026, after a syncopal episode at the wheel on 17 December 2025. Three prior regimens are documented below.", "blocks": [{"type": "alert", "heading": "Currently taking nothing — and why", "blocks": [{"type": "para", "text": "I am not on any medication and have not been since January 2026. Please read that in sequence rather than as non-adherence:"}, {"type": "timeline", "items": [{"when": "23 November 2025", "what": "Dr Clissold revised my regimen and gave me a written, dose-by-dose titration plan, stepping candesartan up gradually. Her note warned that increasing too fast could drop my pressure enough to cause fainting."}, {"when": "17 December 2025", "what": "I passed out behind the wheel. Blood pressure was very low that day. It was a very hot day and I was dehydrated. Bloods later returned positive for THC — I had smoked the day before — and my licence was cancelled."}, {"when": "January 2026", "what": "I stopped all medications."}, {"when": "Since", "what": "Nothing restarted. Approximately seven months untreated at the time of this presentation, with known hypertension and left ventricular hypertrophy."}]}, {"type": "callout", "text": "I stopped after a frightening adverse event on the medication, not because I disregarded it. I would like to be back on something. I need help rebuilding it safely, including rules for hot days."}]}, {"type": "alert", "heading": "Allergies and adverse reactions", "blocks": [{"type": "rows", "items": [{"k": "Allergies", "v": "TO FILL — list, or write \"None known\". Do not leave blank."}, {"k": "Adverse event on record", "v": "Syncope while driving, 17 December 2025, on a combined regimen of amlodipine, candesartan and metoprolol. Contributing factors: extreme heat, dehydration, and cannabis use the preceding day."}]}]}, {"type": "panel", "heading": "Regimen 3 — Dr Clissold's plan, 23 November 2025", "blocks": [{"type": "para", "text": "The most recent plan, and the one I was on when I fainted. Provided in writing by Dr Anna Clissold. This is the plan to rebuild from."}, {"type": "table", "columns": ["When", "Medication", "Dose"], "rows": [["That evening (starting dose)", "Candesartan", "4 mg — half an 8 mg tablet"], ["Morning", "Aspirin", "100 mg"], ["Morning", "Metoprolol", "25 mg — half a tablet"], ["Morning", "Candesartan", "12 mg — one and a half tablets"], ["Midday", "Amlodipine", "10 mg"], ["Night", "Quetiapine", "25 mg"], ["Night", "Atorvastatin", "20 mg"]]}, {"type": "para", "text": "Titration: candesartan to be increased to 16 mg over approximately three days, stepped rather than doubled — the stated reason being that dropping too fast could take me below what I was used to and cause fainting."}, {"type": "callout", "text": "That note also establishes my baseline in a clinician's own words: 150 mmHg systolic was described as still high, but possibly too low for what I was accustomed to. My habitual systolic sat well above 150 while treated."}]}, {"type": "panel", "heading": "Regimen 2 — University Hospital Geelong discharge script", "blocks": [{"type": "para", "text": "Issued in my birth name, Christopher Peter Greene. Records held by Barwon Health, not South West Healthcare — they will not appear automatically in a Warrnambool file."}, {"type": "table", "columns": ["Medication", "Strength", "Dose", "Qty", "Repeats"], "rows": [["Hydrochlorothiazide", "25 mg", "25 mg PO daily, in the evening", "100", "0"], ["Carvedilol", "12.5 mg", "12.5 mg PO bd", "60", "0"], ["Candesartan cilexetil", "32 mg", "32 mg PO mane", "30", "0"], ["Amlodipine (as besilate)", "10 mg", "10 mg PO daily", "30", "0"], ["Atorvastatin", "80 mg", "80 mg PO daily", "30", "0"], ["Aspirin", "100 mg", "100 mg PO daily", "112", "0"], ["Quetiapine", "25 mg", "25 mg PO nocte (non-PBS)", "60", "0"]]}, {"type": "para", "text": "Four antihypertensives across four different classes — thiazide, beta blocker, ARB and calcium channel blocker — with candesartan and amlodipine both at maximum dose, alongside maximum-intensity statin therapy. That combination is the standard picture of resistant hypertension in a patient being treated as high cardiovascular risk."}, {"type": "callout", "text": "Every line reads zero repeats. That is normal for a discharge script — it supplies enough to reach a GP who then takes over prescribing. Relevant to how the supply ran down."}]}, {"type": "panel", "heading": "Regimen 1 — earlier handwritten list", "blocks": [{"type": "para", "text": "Date uncertain, and it belongs earlier in the sequence than the two above: it uses perindopril rather than candesartan, rosuvastatin rather than atorvastatin, and includes clonidine and promethazine, none of which appear in the later plans. Recorded here for completeness. TO FILL — confirm the date if you can."}, {"type": "table", "columns": ["Medication", "Dose", "Frequency"], "rows": [["Metoprolol", "50 mg", "Twice a day"], ["Perindopril arginine", "10 mg", "1 in the morning"], ["Clonidine", "100 micrograms", "1–2 twice a day, when needed"], ["Rosuvastatin (as calcium)", "20 mg", "1 in the morning"], ["Aspirin", "Dose not stated", "Once a day"], ["Promethazine", "25 mg", "1 at night"], ["Quetiapine", "25 mg", "½–1 every 6 hours"]]}]}, {"type": "panel", "heading": "Substance history", "blocks": [{"type": "rows", "items": [{"k": "Alcohol", "v": "Approximately six years abstinent. Around twenty years of heavy binge drinking before that."}, {"k": "Cannabis", "v": "Ongoing, reduced from heavier historical use, largely for anxiety. Raising it here deliberately: cannabis can cause postural hypotension in its own right, and I had used the day before the December syncope. Anyone rebuilding my antihypertensive regimen should have that in the picture."}, {"k": "Other", "v": "Further detail in the private supplement. Ask me — I will not be evasive."}]}]}, {"type": "panel", "kind": "quiet", "heading": "Keeping this accurate", "blocks": [{"type": "para", "text": "The most reliable source is a printed dispensing history from the pharmacy or My Health Record — not this page and not my memory. Ask for one and check it against the tables above."}]}]}, "team": {"eyebrow": "Contacts", "title": "Care team", "lede": "Who holds what. Please contact them directly rather than routing through me where you can.", "blocks": [{"type": "panel", "heading": "Clinical", "blocks": [{"type": "rows", "items": [{"k": "Specialist", "v": "Dr Anna Clissold, South West Healthcare. Referred from ED approximately one year ago. Holds the cardiac picture."}, {"k": "Regular GP", "v": "Dr Alex Koutsoukis, Ochre Health. Next available appointment 1 October 2026."}, {"k": "Previous GP", "v": "Dr Brendan Kaye. Holds earlier records."}, {"k": "Psychiatric report", "v": "Dr Winton-Brown — report dated 26 March 2025."}, {"k": "Mental health", "v": "Dirk Lynzaat, Onshore Counselling — mental health social worker, now retired. No current replacement. TO FILL if this changes."}, {"k": "Pharmacy", "v": "TO FILL"}]}]}, {"type": "panel", "heading": "Non-clinical", "blocks": [{"type": "rows", "items": [{"k": "Housing caseworker", "v": "Virginia, Salvos Connect, Warrnambool."}, {"k": "Housing department", "v": "DFFH Warrnambool. Priority Access application via the Victorian Housing Register. Complaint reference CM0079923."}, {"k": "Solicitor", "v": "Nicole Elliott-Struth, Arnold Thomas & Becker, Warrnambool."}, {"k": "Emergency contact", "v": "TO FILL — name, relationship, phone."}, {"k": "Next of kin", "v": "TO FILL"}]}]}, {"type": "panel", "kind": "quiet", "heading": "Me", "blocks": [{"type": "rows", "items": [{"k": "Phone", "v": "TO FILL"}, {"k": "Email", "v": "mahdagreenemoon@gmail.com"}, {"k": "Address", "v": "No fixed address. Caravan, Koroit VIC."}]}]}]}, "context": {"eyebrow": "Social", "title": "Housing and context", "lede": "Included because it is, in my view and on the evidence, the main modifiable factor in the clinical picture.", "blocks": [{"type": "panel", "heading": "Housing", "blocks": [{"type": "rows", "items": [{"k": "Current", "v": "Boarding in a caravan, Koroit."}, {"k": "Since", "v": "February 2025. No secure accommodation since. The instability began with a clinical crisis in April 2025, not with a housing choice."}, {"k": "Application", "v": "Priority Access, Victorian Housing Register, lodged via Salvos Connect at DFFH Warrnambool."}, {"k": "Property sought", "v": "Unit 2/10 Sturt Street, Koroit — previously occupied 2022 to February 2025, vacant since."}, {"k": "Support network", "v": "Mother lives next door to that property. Adult daughter one block away."}, {"k": "Complaint", "v": "CM0079923, lodged with DFFH. Resolution window to approximately 20 August 2026."}, {"k": "Prior response", "v": "A direct request regarding the Sturt Street property was previously refused verbally — \"not a chance\" — without written reasons. A written reconsideration request was sent to Warrnambool.Housing@dffh.vic.gov.au and went unanswered, which is what prompted the formal complaint."}, {"k": "Also contacted", "v": "Local members Roma Britnell and Jacinta Ermacora."}, {"k": "Supporting documents already lodged", "v": "Dr Winton-Brown's psychiatric report, GP letters, and evidence of urgency are already on the Priority Access application."}]}]}, {"type": "panel", "heading": "Accommodation and the 2025 crisis", "blocks": [{"type": "para", "text": "Six placements in sixteen months. Durations below are the figures I'm confident about; the dates are derived from them and are approximate."}, {"type": "table", "columns": ["Placement", "Approx. dates", "Duration", "Type"], "rows": [["Unit 2/10 Sturt Street, Koroit", "2021/2022 – Feb 2025", "~3 years", "Stable. Lease not in my name. No fault, no breach."], ["3/35 Elizabeth Street, Port Fairy", "Feb – Apr 2025", "~2 months", "Supported transfer via Tenancy Plus, Brophy's. Second tenant on lease."], ["Crisis accommodation", "from ~22 Apr 2025", "~1 week", "Bridging. Immediately following hospital discharge."], ["PARC, Warrnambool", "~late Apr – late May 2025", "4 weeks", "Prevention and Recovery Care admission."], ["Turn In Motel", "~late May – early Jul 2025", "~6 weeks", "Emergency accommodation."], ["Pastor Rick Clissold's late uncle's house", "~early Jul – mid Aug 2025", "~6 weeks", "Arranged privately through the church."], ["Boarding, 131 Mortlake Road", "~Aug 2025 – mid 2026", "almost 1 year", "Room with a family member."], ["Caravan, Commercial Road, Koroit", "mid 2026 – present", "ongoing", "Boarding. Current."]]}, {"type": "callout", "text": "From leaving Koroit in February 2025 to now: eighteen months, six placements, not one of them secure. The Koroit unit has been vacant that entire time."}, {"type": "para", "text": "The instability did not begin with drift. It began with a documented clinical crisis:"}, {"type": "timeline", "items": [{"when": "26 March 2025", "what": "Dr Winton-Brown's psychiatric report completed."}, {"when": "17 April 2025", "what": "I read the report. Severe destabilisation followed."}, {"when": "18–20 April 2025", "what": "Hospital admission — chest pain, significant social stress, suicidal ideation. Assessed as situational crisis."}, {"when": "20 April 2025", "what": "Re-presentation on discharge. Intended to sleep in my car. Future-focused, no plan or intent at review."}, {"when": "~22 April 2025", "what": "Crisis accommodation. The Port Fairy tenancy was over."}, {"when": "28 April 2025", "what": "A family violence intervention order matter arose in relation to that address. I did not contest it."}, {"when": "28–29 April 2025", "what": "Further ED presentation in situational crisis with suicidal ideation. Chest tightness eased as psychological state settled. Reviewed by the mental health team, discharged with follow-up booked."}, {"when": "Late April 2025", "what": "Admitted to PARC for four weeks. It worked."}]}, {"type": "callout", "text": "Two hospital presentations with suicidal ideation inside eleven days, then a four-week PARC admission. Sixteen months later nothing about my housing has been resolved."}, {"type": "rows", "items": [{"k": "Third parties", "v": "Deliberately unnamed. The intervention order matter involves another person and I keep her out of public documents. I will give detail directly if it is clinically necessary."}, {"k": "Superseded version", "v": "An earlier draft of mine placed the car / PARC / motel sequence in February–April 2025. That was wrong. The table above is correct — crisis accommodation began around 22 April, immediately after the hospital discharge."}, {"k": "Koroit tenancy start", "v": "TO FILL — recorded as August 2021 in one document and 2022 in another. Pick one and make everything consistent."}]}]}, {"type": "panel", "heading": "Transport", "blocks": [{"type": "para", "text": "My licence was cancelled in December 2025 following the syncopal episode and a positive THC result. I live in Koroit. Every GP appointment, specialist appointment, pharmacy visit and housing meeting is in Warrnambool."}, {"type": "para", "text": "This is a direct barrier to my own care, not a side issue. It is part of why the earliest GP appointment I could take was 1 October 2026, and it compounds every other access problem in this file."}, {"type": "rows", "items": [{"k": "Medical non-driving period", "v": "TO FILL — a syncopal episode at the wheel usually carries a fitness-to-drive restriction separate from the cancellation. Confirm what applies and what sign-off is needed to return."}]}]}, {"type": "panel", "heading": "Why this belongs in a medical file", "blocks": [{"type": "para", "text": "Two severe hypertensive episodes twelve months apart, with unresolved housing instability throughout. A clinician noting the accommodation situation as a contributing factor is not a formality — it is currently the strongest available evidence in an open housing application, and it may be the intervention that changes the trajectory more than any prescription will."}, {"type": "para", "text": "If you are willing to write that, a short letter stating the diagnosis, the recurrence, and your clinical view on accommodation instability as a contributing factor would be genuinely useful. Addressed \"To Whom It May Concern\" is fine."}]}, {"type": "panel", "kind": "quiet", "heading": "Legal", "blocks": [{"type": "para", "text": "I am a civil litigant in proceedings relating to historical institutional abuse. Those proceedings are ongoing and I keep specific detail out of public documents on legal advice. If detail is clinically necessary, ask me directly and I'll give it to you in the room."}]}]}, "docs": {"eyebrow": "Source records", "title": "Documents", "lede": "Authoritative records. These override anything summarised elsewhere on this page.", "blocks": [{"type": "panel", "heading": "On file", "blocks": [{"type": "doclist", "items": [{"label": "Dr Clissold's written medication plan", "date": "23 November 2025", "note": "Titration plan and baseline note — high value", "href": ""}, {"label": "University Hospital Geelong discharge script", "date": "Undated", "note": "Barwon Health — request separately", "href": ""}, {"label": "Geelong admission discharge summary", "date": "Undated", "note": "Barwon Health — not held by South West Healthcare", "href": ""}, {"label": "Angiogram report", "date": "2019", "note": "Excludes MI and obstructive coronary disease", "href": ""}, {"label": "Echocardiogram report", "date": "2019", "note": "Left ventricular hypertrophy", "href": ""}, {"label": "Records of 17 December 2025 episode", "date": "17 Dec 2025", "note": "Syncope while driving", "href": ""}, {"label": "ED discharge summary", "date": "Approx. August 2025", "note": "Prior presentation; referral to Dr Clissold", "href": ""}, {"label": "ED discharge summary", "date": "10 August 2026", "note": "Current presentation", "href": ""}, {"label": "Dr Winton-Brown psychiatric report", "date": "26 March 2025", "note": "Held by me and by my solicitor", "href": ""}, {"label": "GP or specialist letter for housing", "date": "TO FILL", "note": "To Whom It May Concern", "href": ""}]}]}, {"type": "panel", "kind": "quiet", "heading": "How to add one", "blocks": [{"type": "list", "items": ["Drop the PDF into the docs/ folder alongside this page.", "In pages.json, set that document's href to \"docs/filename.pdf\".", "Anything with an empty href shows as \"not uploaded\" rather than a broken link."]}, {"type": "callout", "text": "Records you don't have yet can be requested. South West Healthcare and your GP practice both hold copies of the 2019 and 2025 material — you can ask for them without an appointment."}]}]}}} /*__END__*/;
+
+  var LIVERIES = ["vellum", "iron", "brass", "emerald", "sanctum", "sigil"];
+  var DEFAULT_LIVERY = "vellum";
+  var LS_LIVERY = "mahda.medical.livery";
+  var LS_CLINICAL = "mahda.medical.clinical";
+
+  var DATA = null;
+  var router = null;
+
+  /* ---------------- tiny DOM helpers ---------------- */
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = String(text);
+    return n;
+  }
+  function frag() { return document.createDocumentFragment(); }
+  function $(sel, root) { return (root || document).querySelector(sel); }
+
+  /* ---------------- livery + clinical view ---------------- */
+  function applyLivery(name) {
+    var v = LIVERIES.indexOf(name) >= 0 ? name : DEFAULT_LIVERY;
+    document.documentElement.setAttribute("data-livery", v);
+    try { localStorage.setItem(LS_LIVERY, v); } catch (e) {}
+    var dots = document.querySelectorAll(".livery-dot");
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].setAttribute("aria-pressed", dots[i].dataset.livery === v ? "true" : "false");
+    }
+  }
+
+  function applyClinical(on) {
+    document.documentElement.setAttribute("data-clinical", on ? "on" : "off");
+    try { localStorage.setItem(LS_CLINICAL, on ? "on" : "off"); } catch (e) {}
+    var btn = $("#clinicalBtn");
+    if (btn) btn.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+
+  function buildLiveryDots() {
+    var host = $("#liveries");
+    if (!host) return;
+    host.innerHTML = "";
+    LIVERIES.forEach(function (name) {
+      var b = el("button", "livery-dot dot-" + name);
+      b.type = "button";
+      b.dataset.livery = name;
+      b.setAttribute("aria-pressed", "false");
+      b.setAttribute("aria-label", name.charAt(0).toUpperCase() + name.slice(1) + " livery");
+      b.title = name.charAt(0).toUpperCase() + name.slice(1);
+      b.addEventListener("click", function () { applyLivery(name); });
+      host.appendChild(b);
+    });
+  }
+
+  /* ---------------- block renderers ---------------- */
+  function renderBlocks(list) {
+    var f = frag();
+    (list || []).forEach(function (b) {
+      var n = renderBlock(b);
+      if (n) f.appendChild(n);
+    });
+    return f;
+  }
+
+  function renderBlock(b) {
+    if (!b || !b.type) return null;
+
+    switch (b.type) {
+
+      case "panel":
+      case "alert": {
+        var cls = "panel";
+        if (b.type === "alert") cls += " alert";
+        if (b.kind === "quiet") cls += " quiet";
+        var p = el("section", cls);
+        if (b.heading) p.appendChild(el("h2", null, b.heading));
+        p.appendChild(renderBlocks(b.blocks));
+        return p;
+      }
+
+      case "para":
+        return el("p", null, b.text);
+
+      case "lede":
+        return el("p", "lede", b.text);
+
+      case "callout":
+        return el("p", "callout", b.text);
+
+      case "list": {
+        var ul = el("ul");
+        (b.items || []).forEach(function (t) { ul.appendChild(el("li", null, t)); });
+        return ul;
+      }
+
+      case "rows": {
+        var dl = el("dl", "rows");
+        (b.items || []).forEach(function (it) {
+          var row = el("div", "row");
+          row.appendChild(el("dt", null, it.k));
+          var dd = el("dd", null, it.v);
+          if (/^TO FILL/.test(String(it.v || ""))) dd.style.color = "var(--ink-3)";
+          row.appendChild(dd);
+          dl.appendChild(row);
+        });
+        return dl;
+      }
+
+      case "timeline": {
+        var ol = el("ol", "tl");
+        (b.items || []).forEach(function (it) {
+          var li = el("li");
+          li.appendChild(el("span", "when", it.when));
+          li.appendChild(el("span", "what", it.what));
+          ol.appendChild(li);
+        });
+        return ol;
+      }
+
+      case "table": {
+        var wrapT = el("div", "tbl-scroll");
+        var t = el("table");
+        var thead = el("thead");
+        var trh = el("tr");
+        (b.columns || []).forEach(function (c) { trh.appendChild(el("th", null, c)); });
+        thead.appendChild(trh);
+        t.appendChild(thead);
+        var tb = el("tbody");
+        (b.rows || []).forEach(function (r) {
+          var tr = el("tr");
+          r.forEach(function (cell, i) {
+            var td = el("td", null, cell === "" ? "—" : cell);
+            if (b.flagCol === i && isFlagged(cell)) td.className = "flagged";
+            if (/^TO FILL/.test(String(cell || ""))) td.style.color = "var(--ink-3)";
+            tr.appendChild(td);
+          });
+          tb.appendChild(tr);
+        });
+        t.appendChild(tb);
+        wrapT.appendChild(t);
+        return wrapT;
+      }
+
+      case "doclist": {
+        var ul2 = el("ul", "doclist");
+        (b.items || []).forEach(function (d) {
+          var li = el("li");
+          if (d.href) {
+            var a = el("a", null, d.label);
+            a.href = d.href;
+            li.appendChild(a);
+          } else {
+            var s = el("span", "missing", d.label + " — not uploaded");
+            li.appendChild(s);
+          }
+          var meta = el("span", "meta", [d.date, d.note].filter(Boolean).join(" · "));
+          li.appendChild(meta);
+          ul2.appendChild(li);
+        });
+        return ul2;
+      }
+
+      case "copybar": {
+        var bar = el("div", "copybar");
+        var copy = el("button", "btn", "Copy summary");
+        copy.type = "button";
+        copy.addEventListener("click", function () { copySummary(copy); });
+        var pr = el("button", "btn", "Print / Save as PDF");
+        pr.type = "button";
+        pr.addEventListener("click", function () { window.print(); });
+        bar.appendChild(copy);
+        bar.appendChild(pr);
+        return bar;
+      }
+
+      case "tags": {
+        var box = el("div");
+        (b.items || []).forEach(function (tg) {
+          box.appendChild(el("span", "tag" + (tg.hot ? " hot" : ""), tg.label || tg));
+        });
+        return box;
+      }
+
+      default:
+        return null;
+    }
+  }
+
+  function isFlagged(reading) {
+    var m = String(reading || "").match(/(\d{2,3})\s*\/\s*(\d{2,3})/);
+    if (!m) return false;
+    return Number(m[1]) >= 180 || Number(m[2]) >= 120;
+  }
+
+  /* ---------------- page render ---------------- */
+  function renderPage(id) {
+    var page = DATA.pages[id];
+    var app = $("#app");
+    app.innerHTML = "";
+    if (!page) {
+      var miss = el("section", "panel");
+      miss.appendChild(el("h2", null, "Not found"));
+      miss.appendChild(el("p", null, "That section doesn't exist. Try Start here."));
+      app.appendChild(miss);
+      return;
+    }
+
+    var head = el("header", "page-head");
+    if (page.eyebrow) head.appendChild(el("p", "eyebrow", page.eyebrow));
+    head.appendChild(el("h1", null, page.title));
+    if (page.lede) head.appendChild(el("p", "lede", page.lede));
+    app.appendChild(head);
+
+    app.appendChild(renderBlocks(page.blocks));
+
+    document.title = page.title + " — " + DATA.site.name + " — " + DATA.site.sub;
+
+    var links = document.querySelectorAll(".nav a");
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].dataset.id === id) links[i].setAttribute("aria-current", "page");
+      else links[i].removeAttribute("aria-current");
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function buildNav() {
+    var host = $("#nav");
+    host.innerHTML = "";
+    (DATA.nav || []).forEach(function (item) {
+      var a = el("a", null, item.label);
+      a.href = "#/" + item.id;
+      a.dataset.id = item.id;
+      host.appendChild(a);
+    });
+  }
+
+  function buildMasthead() {
+    $("#brandMark").textContent = DATA.site.mark || "M";
+    $("#brandName").textContent = DATA.site.name || "";
+    $("#brandSub").textContent = DATA.site.sub || "";
+    var u = $("#updated");
+    if (u) u.textContent = "Last updated " + (DATA.site.updated || "—");
+    var u2 = $("#updatedFoot");
+    if (u2) u2.textContent = "Last updated " + (DATA.site.updated || "—");
+  }
+
+  /* ---------------- copy summary ---------------- */
+  function summaryText() {
+    var out = [];
+    out.push(DATA.site.name + " — " + DATA.site.sub);
+    out.push("Last updated " + DATA.site.updated);
+    out.push("");
+    var start = DATA.pages.start;
+    (start.blocks || []).forEach(function (b) {
+      if (b.type !== "alert" && b.type !== "panel") return;
+      if (b.kind === "quiet") return;
+      if (b.heading) out.push(b.heading.toUpperCase());
+      (b.blocks || []).forEach(function (inner) {
+        if (inner.type === "rows") {
+          (inner.items || []).forEach(function (it) { out.push("  " + it.k + ": " + it.v); });
+        } else if (inner.type === "list") {
+          (inner.items || []).forEach(function (t) { out.push("  - " + t); });
+        } else if (inner.type === "para") {
+          out.push("  " + inner.text);
+        }
+      });
+      out.push("");
+    });
+    return out.join("\n").trim();
+  }
+
+  function copySummary(btn) {
+    var text = summaryText();
+    var done = function (ok) {
+      var old = btn.textContent;
+      btn.textContent = ok ? "Copied" : "Copy failed";
+      setTimeout(function () { btn.textContent = old; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+
+  function fallbackCopy(text, done) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      done(!!ok);
+    } catch (e) { done(false); }
+  }
+
+  /* ---------------- boot ---------------- */
+  function boot(data) {
+    DATA = data;
+    buildMasthead();
+    buildNav();
+    buildLiveryDots();
+
+    var savedLivery = null, savedClinical = null;
+    try {
+      savedLivery = localStorage.getItem(LS_LIVERY);
+      savedClinical = localStorage.getItem(LS_CLINICAL);
+    } catch (e) {}
+    applyLivery(savedLivery || DEFAULT_LIVERY);
+    applyClinical(savedClinical === "on");
+
+    var cb = $("#clinicalBtn");
+    if (cb) {
+      cb.addEventListener("click", function () {
+        applyClinical(document.documentElement.getAttribute("data-clinical") !== "on");
+      });
+    }
+    var pb = $("#printBtn");
+    if (pb) pb.addEventListener("click", function () { window.print(); });
+
+    loadPrivate();
+
+    router = new Router({ fallback: DATA.site.default || "start" });
+    (DATA.nav || []).forEach(function (item) {
+      router.add(item.id, renderPage);
+    });
+    Object.keys(DATA.pages).forEach(function (id) {
+      if (!router.routes[id]) router.add(id, renderPage);
+    });
+    router.start();
+  }
+
+  /* ---------------- optional private supplement ----------------
+     private.json is NOT shipped in the deployed folder by default. If it is
+     present alongside index.html, its pages are merged in and its nav items
+     appended, marked as private. If it is absent, nothing happens and no
+     error is shown. See README. */
+  function loadPrivate() {
+    fetch("private.json", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("absent"); return r.json(); })
+      .then(function (priv) {
+        if (!priv || !priv.pages) return;
+        Object.keys(priv.pages).forEach(function (id) {
+          DATA.pages[id] = priv.pages[id];
+          if (router && !router.routes[id]) router.add(id, renderPage);
+        });
+        (priv.nav || []).forEach(function (item) {
+          if (DATA.nav.some(function (n) { return n.id === item.id; })) return;
+          DATA.nav.push(item);
+          var host = $("#nav");
+          var a = el("a", "private-link", item.label);
+          a.href = "#/" + item.id;
+          a.dataset.id = item.id;
+          a.title = "Private supplement — not published";
+          host.appendChild(a);
+        });
+        var badge = $("#privateBadge");
+        if (badge) badge.hidden = false;
+      })
+      .catch(function () { /* absent by design */ });
+  }
+
+  function start() {
+    fetch("pages.json", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.json(); })
+      .then(boot)
+      .catch(function () {
+        if (PAGES_FALLBACK) boot(PAGES_FALLBACK);
+        else {
+          var app = $("#app");
+          if (app) app.textContent = "Content failed to load.";
+        }
+      });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-AU" data-livery="vellum" data-clinical="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medical Handover — Mahda Christopher Greene</title>
+
+<!-- This page contains personal health information. Keep it out of search
+     engines. Do not remove these two lines. -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Personal clinical handover summary.">
+<meta name="theme-color" content="#efe7d6">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/liveries.css">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body>
+
+<a class="skip" href="#app">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark" id="brandMark">M</span>
+      <div>
+        <h2 class="brand-name" id="brandName">Medical Handover</h2>
+        <span class="brand-sub" id="brandSub"></span>
+      </div>
+    </div>
+    <div class="mast-tools">
+      <div class="liveries" id="liveries" role="group" aria-label="Colour theme"></div>
+      <button class="btn" id="clinicalBtn" type="button" aria-pressed="false">Clinical view</button>
+      <button class="btn" id="printBtn" type="button">Print</button>
+      <span class="private-badge" id="privateBadge" hidden>Private supplement loaded</span>
+      <span class="updated" id="updated"></span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap" id="nav"></div>
+</nav>
+
+<main>
+  <div class="wrap" id="app"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>This is a self-maintained summary, not a medical record.</strong> Source documents take precedence over anything written here. Written by the patient for handover purposes.</p>
+    <p class="updated" id="updatedFoot"></p>
+    <p class="no-print"><a href="https://mahda.com.au/">mahda.com.au</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/router.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+/* ==========================================================================
+   liveries.css — six-livery system, same tokens as mahda.com.au / gasc / ekklesia
+   Default here is VELLUM (light, high contrast) because this page gets read
+   by clinicians on phones under bright ED lighting. Iron is still available.
+   ========================================================================== */
+
+:root {
+  --font-display: "Cinzel", Georgia, serif;
+  --font-body: "IM Fell English", Georgia, serif;
+  --font-black: "UnifrakturMaguntia", "Cinzel", serif;
+  --font-data: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+
+  --rad: 2px;
+  --maxw: 60rem;
+  --gap: 1.25rem;
+  --transition: 320ms cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ---------- VELLUM — parchment, ink, rubric red (DEFAULT) ---------- */
+[data-livery="vellum"] {
+  --bg:          #efe7d6;
+  --bg-2:        #e4d9c2;
+  --panel:       #f7f1e3;
+  --panel-2:     #ece2cd;
+  --ink:         #241d15;
+  --ink-2:       #4d4335;
+  --ink-3:       #6e6350;
+  --rule:        #bfae8c;
+  --accent:      #9a2f28;
+  --accent-2:    #c4562c;
+  --accent-ink:  #fdf8ee;
+  --alert:       #8c1f16;
+  --ok:          #3f6136;
+  --grain:       rgba(90, 70, 40, .05);
+  --shadow:      0 1px 0 rgba(255,255,255,.6), 0 10px 26px rgba(60,45,20,.14);
+}
+
+/* ---------- IRON — steel night, cold gold ---------- */
+[data-livery="iron"] {
+  --bg:          #14171a;
+  --bg-2:        #0d0f11;
+  --panel:       #1e2226;
+  --panel-2:     #262b30;
+  --ink:         #e7e3da;
+  --ink-2:       #b3ada1;
+  --ink-3:       #8b857a;
+  --rule:        #3a4148;
+  --accent:      #c9a227;
+  --accent-2:    #e0be4a;
+  --accent-ink:  #14171a;
+  --alert:       #d4553f;
+  --ok:          #6f9f5e;
+  --grain:       rgba(255, 255, 255, .028);
+  --shadow:      0 1px 0 rgba(255,255,255,.05), 0 12px 30px rgba(0,0,0,.5);
+}
+
+/* ---------- BRASS — warm metal, lamp light ---------- */
+[data-livery="brass"] {
+  --bg:          #241c12;
+  --bg-2:        #191309;
+  --panel:       #322718;
+  --panel-2:     #3d301e;
+  --ink:         #f0e2c6;
+  --ink-2:       #c8b492;
+  --ink-3:       #9c8a6c;
+  --rule:        #5c4a2d;
+  --accent:      #d9a441;
+  --accent-2:    #f0c66b;
+  --accent-ink:  #241c12;
+  --alert:       #e0693f;
+  --ok:          #86a55e;
+  --grain:       rgba(255, 226, 170, .035);
+  --shadow:      0 1px 0 rgba(255,225,170,.06), 0 12px 30px rgba(0,0,0,.5);
+}
+
+/* ---------- EMERALD — moss, bog oak, knotwork green ---------- */
+[data-livery="emerald"] {
+  --bg:          #101a15;
+  --bg-2:        #0a110d;
+  --panel:       #17251d;
+  --panel-2:     #1e2f25;
+  --ink:         #e2ecdf;
+  --ink-2:       #a9bda4;
+  --ink-3:       #7e9179;
+  --rule:        #32483a;
+  --accent:      #4fae7a;
+  --accent-2:    #7fd2a2;
+  --accent-ink:  #08120c;
+  --alert:       #d4713f;
+  --ok:          #6bc98d;
+  --grain:       rgba(200, 255, 220, .03);
+  --shadow:      0 1px 0 rgba(190,255,215,.05), 0 12px 30px rgba(0,0,0,.5);
+}
+
+/* ---------- SANCTUM — chapel stone, candle, blue glass ---------- */
+[data-livery="sanctum"] {
+  --bg:          #12151f;
+  --bg-2:        #0b0d15;
+  --panel:       #1b2030;
+  --panel-2:     #232a3d;
+  --ink:         #e6e8f2;
+  --ink-2:       #adb3c8;
+  --ink-3:       #838aa2;
+  --rule:        #343c55;
+  --accent:      #8f9fe0;
+  --accent-2:    #b9c4f2;
+  --accent-ink:  #0b0d15;
+  --alert:       #e07a6a;
+  --ok:          #7bbd9b;
+  --grain:       rgba(220, 228, 255, .03);
+  --shadow:      0 1px 0 rgba(210,220,255,.05), 0 12px 30px rgba(0,0,0,.55);
+}
+
+/* ---------- SIGIL — vellum gone dark, sigil violet ---------- */
+[data-livery="sigil"] {
+  --bg:          #191320;
+  --bg-2:        #100b16;
+  --panel:       #241b2e;
+  --panel-2:     #2e2339;
+  --ink:         #ece4f2;
+  --ink-2:       #bcaec9;
+  --ink-3:       #93869f;
+  --rule:        #453553;
+  --accent:      #b57ae0;
+  --accent-2:    #d3a8f0;
+  --accent-ink:  #120c17;
+  --alert:       #e0705f;
+  --ok:          #7cbf9a;
+  --grain:       rgba(235, 210, 255, .035);
+  --shadow:      0 1px 0 rgba(230,205,255,.05), 0 12px 30px rgba(0,0,0,.55);
+}
+
+/* ---------- CLINICAL — not a livery dot. Toggled by the "Clinical view"
+     button. Strips ornament to maximum-contrast black on white for
+     handing the phone to a stranger, or for printing. ---------- */
+[data-clinical="on"] {
+  --bg:          #ffffff;
+  --bg-2:        #ffffff;
+  --panel:       #ffffff;
+  --panel-2:     #f4f4f4;
+  --ink:         #000000;
+  --ink-2:       #1f1f1f;
+  --ink-3:       #444444;
+  --rule:        #9a9a9a;
+  --accent:      #a00000;
+  --accent-2:    #a00000;
+  --accent-ink:  #ffffff;
+  --alert:       #a00000;
+  --ok:          #14571f;
+  --grain:       transparent;
+  --shadow:      none;
+  --font-display: "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-body:   "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-black:  "Helvetica Neue", Arial, system-ui, sans-serif;
+}
