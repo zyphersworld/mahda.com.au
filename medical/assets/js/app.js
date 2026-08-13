@@ -10,7 +10,1737 @@
 (function () {
   "use strict";
 
-  var PAGES_FALLBACK = /*__FALLBACK__*/ {"site": {"mark": "M", "name": "Medical Handover", "sub": "Mahda Christopher Greene", "updated": "10 August 2026", "default": "start"}, "nav": [{"id": "start", "label": "Start here"}, {"id": "current", "label": "Right now"}, {"id": "cardiac", "label": "Cardiac"}, {"id": "mental", "label": "Mental health"}, {"id": "meds", "label": "Medications"}, {"id": "team", "label": "Care team"}, {"id": "context", "label": "Context"}, {"id": "docs", "label": "Documents"}], "pages": {"start": {"eyebrow": "Handover sheet", "title": "Start here", "lede": "This page exists so I don't have to explain everything from the beginning every time. Re-telling it costs me more than it saves you. Everything below is here to be read, printed, or photographed.", "blocks": [{"type": "alert", "heading": "The short version", "blocks": [{"type": "rows", "items": [{"k": "Name", "v": "Mahda Christopher Greene. Birth name Christopher Peter Greene — some records are under that name."}, {"k": "READ THIS FIRST", "v": "I have a documented rare troponin-antibody / false-positive issue. Some of my troponin readings are unreliable and have previously suggested myocardial infarction where none occurred. Please interpret troponin in that context and check my prior records before escalating."}, {"k": "Known cardiac", "v": "Left ventricular hypertrophy. Angina attributed to small-vessel compression. Obstructive coronary disease excluded by angiogram, 2019."}, {"k": "MEDICATIONS", "v": "Candesartan 4 mg restarted 9 August 2026 on Dr Clissold's advice, after seven months on nothing. Nothing else restarted. I stopped in January 2026 after passing out at the wheel on 17 December while on amlodipine, candesartan and metoprolol. Previously treated as resistant hypertension on four antihypertensives. See Medications."}, {"k": "Under the care of", "v": "Dr Anna Clissold, South West Healthcare — referred from an ED presentation approximately one year ago."}, {"k": "Chest pain pattern", "v": "Multiple chest-pain presentations April–May 2025 found no acute cardiac event. Pain consistently eased as distress settled. This does not mean chest pain should be dismissed — it means the pattern is on record."}, {"k": "Presenting pattern", "v": "Severe hypertension, recurrent and currently sustained. Six home readings between 7 and 10 August 2026, five of them in crisis range, peaking at 228/149 with a pulse of 110. See Right now."}, {"k": "Also relevant", "v": "Complex trauma history. Currently a civil litigant in proceedings relating to historical institutional abuse."}, {"k": "Living situation", "v": "Residing in a caravan. No secure accommodation since February 2025."}]}]}, {"type": "panel", "heading": "What I'm asking for", "blocks": [{"type": "list", "items": ["Read this instead of asking me to start from the beginning. I will answer anything you ask — I'd just rather spend the energy on the part you actually need.", "Please pull my existing file before we talk. There is a prior ED presentation and a specialist referral already on record.", "If you write anything today, please document my housing situation as a contributing factor. That documentation is doing work outside this room.", "If I go quiet or short in conversation, it isn't hostility. It's usually exhaustion or the effort of re-telling."]}]}, {"type": "panel", "heading": "How to use this page", "blocks": [{"type": "list", "items": ["Tap Clinical view (top right) for high-contrast black-on-white. Good for handing the phone over.", "Print or Save as PDF gives you a clean handover sheet — the decoration drops out automatically.", "Copy summary puts the short version on the clipboard as plain text, for pasting into notes."]}, {"type": "copybar"}]}, {"type": "panel", "kind": "quiet", "heading": "A note on accuracy", "blocks": [{"type": "para", "text": "This page is written and maintained by me, not by a clinician. It is a summary for handover, not a medical record. Where something is unconfirmed or I'm unsure, it says so. Treat the source documents on the Documents page as authoritative over anything written here."}]}]}, "current": {"eyebrow": "Active episode", "title": "Right now", "lede": "The current picture, and how it fits the pattern.", "blocks": [{"type": "alert", "heading": "Presenting", "blocks": [{"type": "rows", "items": [{"k": "Peak reading", "v": "228/149, pulse 110 — Sunday 9 August 2026, 8:55pm. Six readings across four days, every one of them in hypertensive crisis range."}, {"k": "Sustained, not a spike", "v": "All recorded diastolics between 7 and 10 August fall between 133 and 151, except one morning reading of 104. This is a sustained crisis-range picture over at least four days, off all antihypertensive therapy since January 2026."}, {"k": "Treatment restarted", "v": "Candesartan 4 mg, first dose approximately 10:00pm Sunday 9 August 2026, on the advice of Dr Anna Clissold, using medication retained from January. Second dose approximately 5:00pm Monday 10 August. Deliberately low — one eighth of the previously prescribed 32 mg — because of the syncopal episode of 17 December 2025. Less than 24 hours in at the time of presentation."}, {"k": "Sleep", "v": "Severely disrupted for approximately two weeks."}, {"k": "Mood", "v": "Rapid emotional dysregulation over the same two-week period."}, {"k": "Chest symptoms", "v": "TO FILL — angina present or absent, and whether it differs from my usual pattern."}, {"k": "This is a recurrence", "v": "Very similar presentation approximately one year ago, which resulted in an ED attendance and referral to Dr Clissold. What has not changed is that I still have no secure housing. What has changed since has made things worse, not better — see below."}]}]}, {"type": "panel", "heading": "What has changed since the referral", "blocks": [{"type": "para", "text": "I was referred to Dr Clissold from ED roughly a year ago. It would be inaccurate to say nothing has changed since then. Several things have — every one of them a deterioration or an added load."}, {"type": "list", "items": ["Three further changes of address. I have not held one place for more than about a year at any point since February 2025.", "Licence cancelled, December 2025. I live in Koroit; every appointment, pharmacy and service is in Warrnambool. I now have no independent transport to my own care.", "All medication ceased, January 2026, following the syncopal episode. Seven months untreated with known left ventricular hypertrophy.", "Ongoing caregiving and relational demands involving an adult family member, carried alongside everything else with no support structure around it.", "My priority housing application remains unresolved, with a formal complaint now lodged because correspondence went unanswered.", "Approximately two weeks of severely disrupted sleep and rapid emotional dysregulation immediately preceding this presentation."]}, {"type": "callout", "text": "The stable element across the whole period is the absence of stable housing. Everything layered on top of it has accumulated."}]}, {"type": "panel", "heading": "Blood pressure log", "blocks": [{"type": "para", "text": "Home readings. Sitting, arm supported. Readings at or above 180 systolic or 120 diastolic are flagged — on this log that is all but one of them."}, {"type": "table", "columns": ["Date", "Time", "Reading", "Pulse", "Notes"], "rows": [["Mon 10 Aug 2026", "5:40 pm", "207/141", "94", "40 min after 2nd dose"], ["Mon 10 Aug 2026", "~5:00 pm", "—", "—", "Candesartan 4 mg — 2nd dose"], ["Mon 10 Aug 2026", "4:50 pm", "207/138", "86", "10 min before 2nd dose"], ["Mon 10 Aug 2026", "7:00 am", "174/104", "85", "~9 hrs after 1st dose"], ["Sun 9 Aug 2026", "~10:00 pm", "—", "—", "Candesartan 4 mg — FIRST dose, after 7 months untreated"], ["Sun 9 Aug 2026", "9:00 pm", "222/151", "106", "1 hr before 1st dose — untreated"], ["Sun 9 Aug 2026", "8:55 pm", "228/149", "110", "1 hr before 1st dose — untreated"], ["Fri 7 Aug 2026", "11:20 pm", "214/133", "77", "Untreated"], ["TO FILL", "", "", "", ""]], "flagCol": 2}, {"type": "callout", "text": "Six readings across four days, five of six in crisis range, diastolic between 133 and 151 throughout. Treatment began Sunday 9 August at approximately 10:00pm — so Friday's and both Sunday readings are entirely untreated, and Monday's three fall within the first 24 hours of a 4 mg restart. Candesartan takes around two weeks to reach full effect. Tachycardia of 106–110 accompanied the two highest readings, both taken an hour before the first dose."}, {"type": "para", "text": "Context for interpretation: known hypertension and left ventricular hypertrophy, no antihypertensive therapy at all between January and 9 August 2026, and now less than 24 hours into a deliberately cautious 4 mg restart at one eighth of the previously prescribed dose. Treat me as effectively untreated at these readings."}]}, {"type": "panel", "heading": "What I'd like looked at", "blocks": [{"type": "list", "items": ["Repeat echocardiogram — has the left ventricular hypertrophy progressed since 2019?", "24-hour ambulatory blood pressure monitoring.", "End-organ review: renal function and urine ACR, ECG, fundoscopy.", "The sleep disruption investigated in its own right, not only as a symptom of stress. Sleep-disordered breathing has not been excluded.", "Whether short-term supported accommodation (PARC) is appropriate while housing remains unresolved. I was admitted to PARC in Warrnambool for approximately four weeks in late April 2025, so there is a prior admission on record."]}]}]}, "cardiac": {"eyebrow": "History", "title": "Cardiac", "lede": "First detected in 2019. Investigated then, and recurring since.", "blocks": [{"type": "panel", "heading": "Established findings", "blocks": [{"type": "rows", "items": [{"k": "Troponin caveat", "v": "Rare troponin-antibody / false-positive issue on record. Some readings are unreliable and have previously indicated MI where none occurred. Interpret accordingly."}, {"k": "Left ventricle", "v": "Enlarged — left ventricular hypertrophy."}, {"k": "Angina", "v": "Attributed to compression of small vessels. Not obstructive coronary disease."}, {"k": "Angiogram", "v": "2019. Excluded myocardial infarction and obstructive coronary disease."}, {"k": "Hypertension", "v": "Longstanding, recurrent, severe at peak. Current control status: TO FILL."}, {"k": "Chest pain pattern", "v": "Multiple presentations April–May 2025, no acute cardiac event found on any. Pain eased as psychological distress settled."}]}]}, {"type": "panel", "heading": "Timeline", "blocks": [{"type": "timeline", "items": [{"when": "2019", "what": "First episode detected while in custody. Raised troponin, suspected myocardial infarction. Angiogram excluded MI and obstructive coronary disease. Left ventricular hypertrophy identified; angina attributed to small-vessel compression. The troponin-antibody issue dates from around this workup."}, {"when": "18–20 April 2025", "what": "Hospital admission — chest pain alongside significant social stress. Situational crisis. No acute cardiac event."}, {"when": "28–29 April 2025", "what": "Further ED presentation. Chest tightness eased as psychological state settled. Reviewed and discharged with follow-up booked."}, {"when": "April–May 2025", "what": "Multiple further chest-pain presentations across this period. No acute cardiac event identified on any of them."}, {"when": "Late April 2025", "what": "Admitted to PARC, Warrnambool, for approximately four weeks."}, {"when": "Approx. August 2025", "what": "Emergency department presentation with a very similar picture to the current one. Referred to Dr Anna Clissold, South West Healthcare. Three further changes of address, loss of licence, and cessation of all medication have followed since."}, {"when": "February 2025 onward", "what": "No secure accommodation. Sequence of temporary placements, currently a caravan. See Context."}, {"when": "Undated, earlier", "what": "Earlier regimen: metoprolol 50 mg bd, perindopril, clonidine, rosuvastatin, aspirin, promethazine, quetiapine."}, {"when": "Undated", "what": "Admission at University Hospital Geelong. Discharged on four antihypertensives across four classes — hydrochlorothiazide, carvedilol, candesartan 32 mg, amlodipine 10 mg — plus atorvastatin 80 mg, aspirin and quetiapine. Records held by Barwon Health."}, {"when": "23 November 2025", "what": "Dr Clissold revised the regimen and issued a written titration plan. Her note recorded that 150 mmHg systolic, while still high, might be below what I was accustomed to."}, {"when": "17 December 2025", "what": "Syncope while driving. Blood pressure very low. Very hot day, dehydrated. THC detected on subsequent bloods; licence cancelled."}, {"when": "January 2026", "what": "Ceased all medications following the December episode. Nothing restarted since — approximately seven months untreated."}, {"when": "Late July – August 2026", "what": "Approximately two weeks of severely disrupted sleep and rapid emotional dysregulation."}, {"when": "9 August 2026", "what": "Blood pressure recorded at 222/151."}, {"when": "10 August 2026", "what": "Emergency department attendance. TO FILL — outcome."}, {"when": "11 August 2026", "what": "Scheduled appointment with Dr Clissold."}, {"when": "1 October 2026", "what": "Earliest available appointment with regular GP."}]}]}, {"type": "panel", "kind": "quiet", "heading": "The pattern, stated plainly", "blocks": [{"type": "para", "text": "Two severe episodes, roughly twelve months apart, with the same presentation and the same unresolved housing situation in between. I am not asking anyone to treat that as proof of causation. I am asking that it be recorded, because nobody can act on a pattern that isn't written down."}]}]}, "mental": {"eyebrow": "Context", "title": "Mental health and trauma", "lede": "Included because it affects how I present, not because I want it to be the headline.", "blocks": [{"type": "panel", "heading": "What's relevant", "blocks": [{"type": "rows", "items": [{"k": "Background", "v": "Survivor of historical institutional abuse. Currently a civil litigant in related proceedings."}, {"k": "Current", "v": "Two weeks of severely disrupted sleep and rapid emotional dysregulation."}, {"k": "Psychiatric report", "v": "Dr Winton-Brown, completed 26 March 2025. The most comprehensive assessment on record. Held by me and by my solicitor."}, {"k": "Prior admissions", "v": "Multiple inpatient admissions dating from late teens / early-to-mid twenties. Two ED presentations in April 2025 within eleven days, both assessed as situational crisis. PARC, Warrnambool, approximately four weeks from late April 2025."}, {"k": "Diagnoses and risk history", "v": "Held in a separate private supplement rather than on this public page. Ask me and I will show you on my phone, or it can be sent to you directly."}, {"k": "Standing recommendation", "v": "Integrated, consistent psychiatric care plus trauma-directed psychological treatment (MBT, DBT, CPT, or long-term psychodynamic). This has been the recommendation for some time and has not been consistently available to me."}]}]}, {"type": "panel", "heading": "How I present, and what that does and doesn't mean", "blocks": [{"type": "list", "items": ["I am articulate, organised, and I produce a lot of work. None of that means I'm stable. It has repeatedly meant I get deprioritised against people who present less well with comparable need.", "I can give a clear, calm account of very bad circumstances. That's practice, not distance from them.", "Re-telling my history is itself costly. If it's already in my file, please read it there rather than asking me to perform it again.", "My creative and technical work is load-bearing — it's how I regulate. Interruptions to it are not the loss of a hobby."]}]}, {"type": "panel", "heading": "What helps", "blocks": [{"type": "list", "items": ["Direct speech. Say the actual thing. I don't need it softened.", "Telling me what happens next, and when.", "Writing things down and giving me a copy.", "Not treating competence as evidence that I'm fine."]}]}]}, "meds": {"eyebrow": "Reference", "title": "Medications", "lede": "Candesartan 4 mg restarted 9 August 2026 on Dr Clissold's advice, after seven months on nothing. Three prior regimens documented below.", "blocks": [{"type": "alert", "heading": "Currently taking nothing — and why", "blocks": [{"type": "para", "text": "I am not on any medication and have not been since January 2026. Please read that in sequence rather than as non-adherence:"}, {"type": "timeline", "items": [{"when": "23 November 2025", "what": "Dr Clissold revised my regimen and gave me a written, dose-by-dose titration plan, stepping candesartan up gradually. Her note warned that increasing too fast could drop my pressure enough to cause fainting."}, {"when": "17 December 2025", "what": "I passed out behind the wheel. Blood pressure was very low that day. It was a very hot day and I was dehydrated. Bloods later returned positive for THC — I had smoked the day before — and my licence was cancelled."}, {"when": "January 2026", "what": "I stopped all medications."}, {"when": "Since", "what": "Nothing restarted. Approximately seven months untreated at the time of this presentation, with known hypertension and left ventricular hypertrophy."}, {"when": "9 August 2026", "what": "Candesartan 4 mg recommenced on the advice of Dr Clissold, using medication retained from January. Second dose 5:00pm, 10 August. Deliberately low — one eighth of the previously prescribed dose — given the December syncope. Not yet at therapeutic effect."}]}, {"type": "callout", "text": "I stopped after a frightening adverse event, not because I disregarded the treatment. I have now restarted at a low dose under Dr Clissold's direction. I need help rebuilding the rest of the regimen safely, including rules for hot days and dehydration."}]}, {"type": "alert", "heading": "Allergies and adverse reactions", "blocks": [{"type": "rows", "items": [{"k": "Allergies", "v": "TO FILL — list, or write \"None known\". Do not leave blank."}, {"k": "Adverse event on record", "v": "Syncope while driving, 17 December 2025, on a combined regimen of amlodipine, candesartan and metoprolol. Contributing factors: extreme heat, dehydration, and cannabis use the preceding day."}]}]}, {"type": "panel", "heading": "Regimen 3 — Dr Clissold's plan, 23 November 2025", "blocks": [{"type": "para", "text": "The most recent plan, and the one I was on when I fainted. Provided in writing by Dr Anna Clissold. This is the plan to rebuild from."}, {"type": "table", "columns": ["When", "Medication", "Dose"], "rows": [["That evening (starting dose)", "Candesartan", "4 mg — half an 8 mg tablet"], ["Morning", "Aspirin", "100 mg"], ["Morning", "Metoprolol", "25 mg — half a tablet"], ["Morning", "Candesartan", "12 mg — one and a half tablets"], ["Midday", "Amlodipine", "10 mg"], ["Night", "Quetiapine", "25 mg"], ["Night", "Atorvastatin", "20 mg"]]}, {"type": "para", "text": "Titration: candesartan to be increased to 16 mg over approximately three days, stepped rather than doubled — the stated reason being that dropping too fast could take me below what I was used to and cause fainting."}, {"type": "callout", "text": "That note also establishes my baseline in a clinician's own words: 150 mmHg systolic was described as still high, but possibly too low for what I was accustomed to. My habitual systolic sat well above 150 while treated."}]}, {"type": "panel", "heading": "Medication still physically held", "blocks": [{"type": "para", "text": "I kept my January medication rather than discarding it. What I still hold determines what can be restarted immediately versus what needs a new script — relevant given no GP appointment until 1 October and no licence to reach a pharmacy."}, {"type": "table", "columns": ["Medication", "Still held?", "Expiry", "Notes"], "rows": [["Candesartan", "Yes", "TO FILL", "In use — 4 mg from 9 Aug 2026"], ["Amlodipine", "TO FILL", "TO FILL", ""], ["Metoprolol", "TO FILL", "TO FILL", ""], ["Atorvastatin", "TO FILL", "TO FILL", ""], ["Aspirin", "TO FILL", "TO FILL", ""], ["Quetiapine", "TO FILL", "TO FILL", ""]]}, {"type": "callout", "text": "Check expiry dates. Seven months in storage is usually fine, but this was stored through summer in a caravan and heat degrades tablets. Bring the actual boxes to appointments."}]}, {"type": "panel", "heading": "Regimen 2 — University Hospital Geelong discharge script", "blocks": [{"type": "para", "text": "Issued in my birth name, Christopher Peter Greene. Records held by Barwon Health, not South West Healthcare — they will not appear automatically in a Warrnambool file."}, {"type": "table", "columns": ["Medication", "Strength", "Dose", "Qty", "Repeats"], "rows": [["Hydrochlorothiazide", "25 mg", "25 mg PO daily, in the evening", "100", "0"], ["Carvedilol", "12.5 mg", "12.5 mg PO bd", "60", "0"], ["Candesartan cilexetil", "32 mg", "32 mg PO mane", "30", "0"], ["Amlodipine (as besilate)", "10 mg", "10 mg PO daily", "30", "0"], ["Atorvastatin", "80 mg", "80 mg PO daily", "30", "0"], ["Aspirin", "100 mg", "100 mg PO daily", "112", "0"], ["Quetiapine", "25 mg", "25 mg PO nocte (non-PBS)", "60", "0"]]}, {"type": "para", "text": "Four antihypertensives across four different classes — thiazide, beta blocker, ARB and calcium channel blocker — with candesartan and amlodipine both at maximum dose, alongside maximum-intensity statin therapy. That combination is the standard picture of resistant hypertension in a patient being treated as high cardiovascular risk."}, {"type": "callout", "text": "Every line reads zero repeats. That is normal for a discharge script — it supplies enough to reach a GP who then takes over prescribing. Relevant to how the supply ran down."}]}, {"type": "panel", "heading": "Regimen 1 — earlier handwritten list", "blocks": [{"type": "para", "text": "Date uncertain, and it belongs earlier in the sequence than the two above: it uses perindopril rather than candesartan, rosuvastatin rather than atorvastatin, and includes clonidine and promethazine, none of which appear in the later plans. Recorded here for completeness. TO FILL — confirm the date if you can."}, {"type": "table", "columns": ["Medication", "Dose", "Frequency"], "rows": [["Metoprolol", "50 mg", "Twice a day"], ["Perindopril arginine", "10 mg", "1 in the morning"], ["Clonidine", "100 micrograms", "1–2 twice a day, when needed"], ["Rosuvastatin (as calcium)", "20 mg", "1 in the morning"], ["Aspirin", "Dose not stated", "Once a day"], ["Promethazine", "25 mg", "1 at night"], ["Quetiapine", "25 mg", "½–1 every 6 hours"]]}]}, {"type": "panel", "heading": "Substance history", "blocks": [{"type": "rows", "items": [{"k": "Alcohol", "v": "Approximately six years abstinent. Around twenty years of heavy binge drinking before that."}, {"k": "Cannabis", "v": "Ongoing, reduced from heavier historical use, largely for anxiety. Raising it here deliberately: cannabis can cause postural hypotension in its own right, and I had used the day before the December syncope. Anyone rebuilding my antihypertensive regimen should have that in the picture."}, {"k": "Other", "v": "Further detail in the private supplement. Ask me — I will not be evasive."}]}]}, {"type": "panel", "kind": "quiet", "heading": "Keeping this accurate", "blocks": [{"type": "para", "text": "The most reliable source is a printed dispensing history from the pharmacy or My Health Record — not this page and not my memory. Ask for one and check it against the tables above."}]}]}, "team": {"eyebrow": "Contacts", "title": "Care team", "lede": "Who holds what. Please contact them directly rather than routing through me where you can.", "blocks": [{"type": "panel", "heading": "Clinical", "blocks": [{"type": "rows", "items": [{"k": "Specialist", "v": "Dr Anna Clissold, South West Healthcare. Referred from ED approximately one year ago. Holds the cardiac picture."}, {"k": "Regular GP", "v": "Dr Alex Koutsoukis, Ochre Health. Next available appointment 1 October 2026."}, {"k": "Previous GP", "v": "Dr Brendan Kaye. Holds earlier records."}, {"k": "Psychiatric report", "v": "Dr Winton-Brown — report dated 26 March 2025."}, {"k": "Mental health", "v": "Dirk Lynzaat, Onshore Counselling — mental health social worker, now retired. No current replacement. TO FILL if this changes."}, {"k": "Pharmacy", "v": "TO FILL"}]}]}, {"type": "panel", "heading": "Non-clinical", "blocks": [{"type": "rows", "items": [{"k": "Housing caseworker", "v": "Virginia, Salvos Connect, Warrnambool."}, {"k": "Housing department", "v": "DFFH Warrnambool. Priority Access application via the Victorian Housing Register. Complaint reference CM0079923."}, {"k": "Solicitor", "v": "Nicole Elliott-Struth, Arnold Thomas & Becker, Warrnambool."}, {"k": "Emergency contact", "v": "TO FILL — name, relationship, phone."}, {"k": "Next of kin", "v": "TO FILL"}]}]}, {"type": "panel", "kind": "quiet", "heading": "Me", "blocks": [{"type": "rows", "items": [{"k": "Phone", "v": "TO FILL"}, {"k": "Email", "v": "mahdagreenemoon@gmail.com"}, {"k": "Address", "v": "No fixed address. Caravan, Koroit VIC."}]}]}]}, "context": {"eyebrow": "Social", "title": "Housing and context", "lede": "Included because it is, in my view and on the evidence, the main modifiable factor in the clinical picture.", "blocks": [{"type": "panel", "heading": "Housing", "blocks": [{"type": "rows", "items": [{"k": "Current", "v": "Boarding in a caravan, Koroit."}, {"k": "Since", "v": "February 2025. No secure accommodation since. The instability began with a clinical crisis in April 2025, not with a housing choice."}, {"k": "Application", "v": "Priority Access, Victorian Housing Register, lodged via Salvos Connect at DFFH Warrnambool."}, {"k": "Property sought", "v": "Unit 2/10 Sturt Street, Koroit — previously occupied 2022 to February 2025, vacant since."}, {"k": "Support network", "v": "Mother lives next door to that property. Adult daughter one block away."}, {"k": "Complaint", "v": "CM0079923, lodged with DFFH. Resolution window to approximately 20 August 2026."}, {"k": "Prior response", "v": "A direct request regarding the Sturt Street property was previously refused verbally — \"not a chance\" — without written reasons. A written reconsideration request was sent to Warrnambool.Housing@dffh.vic.gov.au and went unanswered, which is what prompted the formal complaint."}, {"k": "Also contacted", "v": "Local members Roma Britnell and Jacinta Ermacora."}, {"k": "Supporting documents already lodged", "v": "Dr Winton-Brown's psychiatric report, GP letters, and evidence of urgency are already on the Priority Access application."}]}]}, {"type": "panel", "heading": "Accommodation and the 2025 crisis", "blocks": [{"type": "para", "text": "Six placements in sixteen months. Durations below are the figures I'm confident about; the dates are derived from them and are approximate."}, {"type": "table", "columns": ["Placement", "Approx. dates", "Duration", "Type"], "rows": [["Unit 2/10 Sturt Street, Koroit", "2021/2022 – Feb 2025", "~3 years", "Stable. Lease not in my name. No fault, no breach."], ["3/35 Elizabeth Street, Port Fairy", "Feb – Apr 2025", "~2 months", "Supported transfer via Tenancy Plus, Brophy's. Second tenant on lease."], ["Crisis accommodation", "from ~22 Apr 2025", "~1 week", "Bridging. Immediately following hospital discharge."], ["PARC, Warrnambool", "~late Apr – late May 2025", "4 weeks", "Prevention and Recovery Care admission."], ["Turn In Motel", "~late May – early Jul 2025", "~6 weeks", "Emergency accommodation."], ["Pastor Rick Clissold's late uncle's house", "~early Jul – mid Aug 2025", "~6 weeks", "Arranged privately through the church."], ["Boarding, 131 Mortlake Road", "~Aug 2025 – mid 2026", "almost 1 year", "Room with a family member."], ["Caravan, Commercial Road, Koroit", "mid 2026 – present", "ongoing", "Boarding. Current."]]}, {"type": "callout", "text": "From leaving Koroit in February 2025 to now: eighteen months, six placements, not one of them secure. The Koroit unit has been vacant that entire time."}, {"type": "para", "text": "The instability did not begin with drift. It began with a documented clinical crisis:"}, {"type": "timeline", "items": [{"when": "26 March 2025", "what": "Dr Winton-Brown's psychiatric report completed."}, {"when": "17 April 2025", "what": "I read the report. Severe destabilisation followed."}, {"when": "18–20 April 2025", "what": "Hospital admission — chest pain, significant social stress, suicidal ideation. Assessed as situational crisis."}, {"when": "20 April 2025", "what": "Re-presentation on discharge. Intended to sleep in my car. Future-focused, no plan or intent at review."}, {"when": "~22 April 2025", "what": "Crisis accommodation. The Port Fairy tenancy was over."}, {"when": "28 April 2025", "what": "A family violence intervention order matter arose in relation to that address. I did not contest it."}, {"when": "28–29 April 2025", "what": "Further ED presentation in situational crisis with suicidal ideation. Chest tightness eased as psychological state settled. Reviewed by the mental health team, discharged with follow-up booked."}, {"when": "Late April 2025", "what": "Admitted to PARC for four weeks. It worked."}]}, {"type": "callout", "text": "Two hospital presentations with suicidal ideation inside eleven days, then a four-week PARC admission. Sixteen months later nothing about my housing has been resolved."}, {"type": "rows", "items": [{"k": "Third parties", "v": "Deliberately unnamed. The intervention order matter involves another person and I keep her out of public documents. I will give detail directly if it is clinically necessary."}, {"k": "Superseded version", "v": "An earlier draft of mine placed the car / PARC / motel sequence in February–April 2025. That was wrong. The table above is correct — crisis accommodation began around 22 April, immediately after the hospital discharge."}, {"k": "Koroit tenancy start", "v": "TO FILL — recorded as August 2021 in one document and 2022 in another. Pick one and make everything consistent."}]}]}, {"type": "panel", "heading": "Transport", "blocks": [{"type": "para", "text": "My licence was cancelled in December 2025 following the syncopal episode and a positive THC result. I live in Koroit. Every GP appointment, specialist appointment, pharmacy visit and housing meeting is in Warrnambool."}, {"type": "para", "text": "This is a direct barrier to my own care, not a side issue. It is part of why the earliest GP appointment I could take was 1 October 2026, and it compounds every other access problem in this file."}, {"type": "rows", "items": [{"k": "Medical non-driving period", "v": "TO FILL — a syncopal episode at the wheel usually carries a fitness-to-drive restriction separate from the cancellation. Confirm what applies and what sign-off is needed to return."}]}]}, {"type": "panel", "heading": "Why this belongs in a medical file", "blocks": [{"type": "para", "text": "Two severe hypertensive episodes twelve months apart, with unresolved housing instability throughout. A clinician noting the accommodation situation as a contributing factor is not a formality — it is currently the strongest available evidence in an open housing application, and it may be the intervention that changes the trajectory more than any prescription will."}, {"type": "para", "text": "If you are willing to write that, a short letter stating the diagnosis, the recurrence, and your clinical view on accommodation instability as a contributing factor would be genuinely useful. Addressed \"To Whom It May Concern\" is fine."}]}, {"type": "panel", "kind": "quiet", "heading": "Legal", "blocks": [{"type": "para", "text": "I am a civil litigant in proceedings relating to historical institutional abuse. Those proceedings are ongoing and I keep specific detail out of public documents on legal advice. If detail is clinically necessary, ask me directly and I'll give it to you in the room."}]}]}, "docs": {"eyebrow": "Source records", "title": "Documents", "lede": "Authoritative records. These override anything summarised elsewhere on this page.", "blocks": [{"type": "panel", "heading": "On file", "blocks": [{"type": "doclist", "items": [{"label": "Dr Clissold's written medication plan", "date": "23 November 2025", "note": "Titration plan and baseline note — high value", "href": ""}, {"label": "University Hospital Geelong discharge script", "date": "Undated", "note": "Barwon Health — request separately", "href": ""}, {"label": "Geelong admission discharge summary", "date": "Undated", "note": "Barwon Health — not held by South West Healthcare", "href": ""}, {"label": "Angiogram report", "date": "2019", "note": "Excludes MI and obstructive coronary disease", "href": ""}, {"label": "Echocardiogram report", "date": "2019", "note": "Left ventricular hypertrophy", "href": ""}, {"label": "Records of 17 December 2025 episode", "date": "17 Dec 2025", "note": "Syncope while driving", "href": ""}, {"label": "ED discharge summary", "date": "Approx. August 2025", "note": "Prior presentation; referral to Dr Clissold", "href": ""}, {"label": "ED discharge summary", "date": "10 August 2026", "note": "Current presentation", "href": ""}, {"label": "Dr Winton-Brown psychiatric report", "date": "26 March 2025", "note": "Held by me and by my solicitor", "href": ""}, {"label": "GP or specialist letter for housing", "date": "TO FILL", "note": "To Whom It May Concern", "href": ""}]}]}, {"type": "panel", "kind": "quiet", "heading": "How to add one", "blocks": [{"type": "list", "items": ["Drop the PDF into the docs/ folder alongside this page.", "In pages.json, set that document's href to \"docs/filename.pdf\".", "Anything with an empty href shows as \"not uploaded\" rather than a broken link."]}, {"type": "callout", "text": "Records you don't have yet can be requested. South West Healthcare and your GP practice both hold copies of the 2019 and 2025 material — you can ask for them without an appointment."}]}]}}} /*__END__*/;
+  var PAGES_FALLBACK = /*__FALLBACK__*/ {
+  "site": {
+    "mark": "M",
+    "name": "Medical Handover",
+    "sub": "Mahda Christopher Greene",
+    "updated": "13 August 2026, evening — ED presentation",
+    "default": "start"
+  },
+  "nav": [
+    {
+      "id": "start",
+      "label": "Start here"
+    },
+    {
+      "id": "current",
+      "label": "Right now"
+    },
+    {
+      "id": "cardiac",
+      "label": "Cardiac"
+    },
+    {
+      "id": "mental",
+      "label": "Mental health"
+    },
+    {
+      "id": "meds",
+      "label": "Medications"
+    },
+    {
+      "id": "team",
+      "label": "Care team"
+    },
+    {
+      "id": "context",
+      "label": "Context"
+    },
+    {
+      "id": "docs",
+      "label": "Documents"
+    }
+  ],
+  "pages": {
+    "start": {
+      "eyebrow": "Handover sheet",
+      "title": "Start here",
+      "lede": "This page exists so I don't have to explain everything from the beginning every time. Re-telling it costs me more than it saves you. Everything below is here to be read, printed, or photographed.",
+      "blocks": [
+        {
+          "type": "alert",
+          "heading": "The short version",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Name",
+                  "v": "Mahda Christopher Greene. Birth name Christopher Peter Greene — some records are under that name."
+                },
+                {
+                  "k": "READ THIS FIRST",
+                  "v": "I have a documented rare troponin-antibody / false-positive issue. Some of my troponin readings are unreliable and have previously suggested myocardial infarction where none occurred. Please interpret troponin in that context and check my prior records before escalating."
+                },
+                {
+                  "k": "ALLERGY",
+                  "v": "Isosorbide mononitrate — headache. Recorded on script."
+                },
+                {
+                  "k": "Known cardiac",
+                  "v": "Left ventricular hypertrophy. Angina attributed to small-vessel compression. Obstructive coronary disease excluded by angiogram, 2019."
+                },
+                {
+                  "k": "MEDICATIONS",
+                  "v": "From 12 August 2026: aspirin 100 mg daily, carvedilol 3.125 mg twice daily, candesartan 8 mg mane — prescribed by Dr Clissold 11 August. Prior to 9 August I had taken nothing since January 2026, having stopped after passing out at the wheel on 17 December 2025. See Medications."
+                },
+                {
+                  "k": "Under the care of",
+                  "v": "Dr Anna Clissold, South West Healthcare — referred from an ED presentation approximately one year ago."
+                },
+                {
+                  "k": "Chest pain pattern",
+                  "v": "Multiple chest-pain presentations April–May 2025 found no acute cardiac event. Pain consistently eased as distress settled. This does not mean chest pain should be dismissed — it means the pattern is on record."
+                },
+                {
+                  "k": "Presenting pattern",
+                  "v": "Two separate things, now distinguished: an elevated baseline around 160/95 that does not dip overnight, with large reactive spikes on top of it. Peak 228/149 (9 Aug). Spike of 197/125 on 11 Aug fell to 160/90 in 40 minutes on rest and rehydration alone."
+                },
+                {
+                  "k": "Also relevant",
+                  "v": "Complex trauma history. Currently a civil litigant in proceedings relating to historical institutional abuse."
+                },
+                {
+                  "k": "Living situation",
+                  "v": "Residing in a caravan. No secure accommodation since February 2025."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "What I'm asking for",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Read this instead of asking me to start from the beginning. I will answer anything you ask — I'd just rather spend the energy on the part you actually need.",
+                "Please pull my existing file before we talk. There is a prior ED presentation and a specialist referral already on record.",
+                "If you write anything today, please document my housing situation as a contributing factor. That documentation is doing work outside this room.",
+                "If I go quiet or short in conversation, it isn't hostility. It's usually exhaustion or the effort of re-telling."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "How to use this page",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Tap Clinical view (top right) for high-contrast black-on-white. Good for handing the phone over.",
+                "Print or Save as PDF gives you a clean handover sheet — the decoration drops out automatically.",
+                "Copy summary puts the short version on the clipboard as plain text, for pasting into notes."
+              ]
+            },
+            {
+              "type": "copybar"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "A note on accuracy",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "This page is written and maintained by me, not by a clinician. It is a summary for handover, not a medical record. Where something is unconfirmed or I'm unsure, it says so. Treat the source documents on the Documents page as authoritative over anything written here."
+            }
+          ]
+        }
+      ]
+    },
+    "current": {
+      "eyebrow": "Active episode",
+      "title": "Right now",
+      "lede": "The current picture as at the evening of 13 August 2026, including tonight's episode.",
+      "blocks": [
+        {
+          "type": "alert",
+          "heading": "Tonight — 13 August, evening. This is why I am presenting.",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "7:15 pm",
+                  "v": "Sharp pain, right temple, sudden onset, brief. At the same time I could feel my pulse throughout my body. BP 169/118, pulse 76."
+                },
+                {
+                  "k": "Minutes later",
+                  "v": "Sharp pain, right leg. Brief. Same side as the temple pain."
+                },
+                {
+                  "k": "Trigger",
+                  "v": "Both followed a period of heavy crying. Emotional, not exertional."
+                },
+                {
+                  "k": "7:47 pm",
+                  "v": "195/123, pulse 73 — taken after seated rest, a meal and one beer. It ROSE 26 systolic points during rest."
+                },
+                {
+                  "k": "Why that matters",
+                  "v": "Rest has reliably dropped me roughly 30 points all week. Tonight it did the opposite."
+                },
+                {
+                  "k": "Disclosure",
+                  "v": "One beer and a salty meal (corned beef) before the 7:47 reading. Neither accounts for the temple or leg pain."
+                },
+                {
+                  "k": "Notified",
+                  "v": "Dr Anna Clissold, evening of 13 August, with the full day's readings."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "No reading on 13 August fell below 170/109. The one-sided head pain and the one-sided leg pain are the reason for presenting, not the blood pressure alone."
+            }
+          ]
+        },
+        {
+          "type": "alert",
+          "heading": "Presenting",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Working picture",
+                  "v": "Elevated baseline that does not dip overnight, plus large situational spikes on top. Established over seven days of readings, 7–13 August 2026. On 13 August no reading fell below 170/109."
+                },
+                {
+                  "k": "Peak",
+                  "v": "228/149, pulse 110 — Sunday 9 August, untreated."
+                },
+                {
+                  "k": "Tonight",
+                  "v": "195/123 at 7:47pm on 13 August, preceded by right temple pain and right leg pain. See the alert above."
+                },
+                {
+                  "k": "Non-dipping",
+                  "v": "12:01am 12 August: 162/99. Blood pressure normally falls 10–20% overnight; mine did not, and this was with no dehydration and no daytime stressors. Non-dipping is significant in its own right."
+                },
+                {
+                  "k": "Diurnal pattern",
+                  "v": "Evenings have been consistently worse than mornings. That pattern broke on 13 August — the whole day sat high (9am 188/117, 11:30am 201/128, 3:18pm 170/109 settled), with the evening higher again at 195/123."
+                },
+                {
+                  "k": "Lability",
+                  "v": "197/125 with pulse 114 at ~1:30pm on 11 August, after 25 minutes seated. Fell to 160/90, pulse 91, within 40 minutes on rest and rehydration alone. A sustained baseline does not move 37/35 in 40 minutes — that spike was situational."
+                },
+                {
+                  "k": "Treatment",
+                  "v": "Aspirin, carvedilol and candesartan commenced 12 August 2026. Two days in, the evening peak is unchanged: 191/125 on day one, 195/123 on day two. See Medications."
+                },
+                {
+                  "k": "Cuff caveat",
+                  "v": "Home readings taken on a wrist cuff, which over-reads if the wrist is not held at heart height. TO FILL — whether an upper-arm cuff has been obtained."
+                },
+                {
+                  "k": "Still open",
+                  "v": "TO FILL — chest X-ray result, the right-sided pleuritic rib pain, and the persistent right upper chest rash. All three raised 11 August."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "alert",
+          "heading": "Symptoms first raised 10 August — still open",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Breathing",
+                  "v": "Shorter than normal all day. New today."
+                },
+                {
+                  "k": "Right side",
+                  "v": "Persistent pressure/pain under the right ribs or just below. Described as feeling like sore lungs. New today."
+                },
+                {
+                  "k": "Left side, last week",
+                  "v": "Severe cramping from around Tuesday 4 August, lasting three days. Felt like a tennis-ball-sized pressure just below the left ribcage. Preceded the blood pressure escalation."
+                },
+                {
+                  "k": "General",
+                  "v": "Feeling \"wonky\" all day — described as similar to the light-headed feeling of fasting or a keto high."
+                },
+                {
+                  "k": "Emotional",
+                  "v": "Rapid emotional dysregulation, roughly two weeks. My own read is extreme anxiety masked by rapid activity. Not withdrawal."
+                },
+                {
+                  "k": "Raised with",
+                  "v": "Dr Clissold, evening of 10 August. Plan is a chest X-ray on 11 August. She has also raised the possibility of a separate process such as infection."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "The abdominal cramping came first, then the blood pressure escalation. That ordering has not yet been investigated. Renal function has not been checked during this episode."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "What has changed since the referral",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "I was referred to Dr Clissold from ED roughly a year ago. It would be inaccurate to say nothing has changed since then. Several things have — every one of them a deterioration or an added load."
+            },
+            {
+              "type": "list",
+              "items": [
+                "Three further changes of address. I have not held one place for more than about a year at any point since February 2025.",
+                "Licence cancelled, December 2025. I live in Koroit; every appointment, pharmacy and service is in Warrnambool. I now have no independent transport to my own care.",
+                "All medication ceased, January 2026, following the syncopal episode. Seven months untreated with known left ventricular hypertrophy.",
+                "Ongoing caregiving and relational demands involving an adult family member, carried alongside everything else with no support structure around it.",
+                "My priority housing application remains unresolved, with a formal complaint now lodged because correspondence went unanswered.",
+                "Approximately two weeks of severely disrupted sleep and rapid emotional dysregulation immediately preceding this presentation."
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "The stable element across the whole period is the absence of stable housing. Everything layered on top of it has accumulated."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Blood pressure log",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Home readings. Sitting, arm supported. Readings at or above 180 systolic or 120 diastolic are flagged — on this log that is all but one of them."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Date",
+                "Time",
+                "Reading",
+                "Pulse",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "Thu 13 Aug 2026",
+                  "7:47 pm",
+                  "195/123",
+                  "73",
+                  "After seated rest, meal, one beer — ROSE 26 points during rest"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "7:15 pm",
+                  "169/118",
+                  "76",
+                  "Sharp right temple pain + palpable pulse; right leg pain minutes later. After heavy crying"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "3:18 pm",
+                  "170/109",
+                  "72",
+                  "Settled, after an emotional morning"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "11:30 am",
+                  "201/128",
+                  "69",
+                  "Just after walking to the kitchen"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "9:00 am",
+                  "188/117",
+                  "81",
+                  "On waking. Day 2 of carvedilol"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "11:52 pm",
+                  "191/125",
+                  "75",
+                  "After 10 min seated rest — ROSE from the 11:02pm reading"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "11:02 pm",
+                  "180/124",
+                  "78",
+                  "After band practice, Thai meal, car trip. Day 1 of carvedilol"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "morning",
+                  "—",
+                  "—",
+                  "Aspirin 100 mg · carvedilol 3.125 mg · candesartan 8 mg — regimen commenced"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "12:01 am",
+                  "162/99",
+                  "89",
+                  "Non-dipping — essentially unchanged from 9 hrs earlier"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "~2:10 pm",
+                  "160/90",
+                  "91",
+                  "After 10 min rest and rehydration, at appointment"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "~1:30 pm",
+                  "197/125",
+                  "114",
+                  "After 25 min seated. Dehydrated"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "11:00 am",
+                  "201/119",
+                  "81",
+                  ""
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "9:00 am",
+                  "160/103",
+                  "95",
+                  "~2h20 after 8 mg dose"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "6:40 am",
+                  "—",
+                  "—",
+                  "Candesartan 8 mg"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "6:23 am",
+                  "207/122",
+                  "83",
+                  "On waking — 4 mg had not held overnight"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~7:40 pm",
+                  "175/117",
+                  "101",
+                  "~40 min after 3rd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~7:00 pm",
+                  "—",
+                  "—",
+                  "Candesartan 4 mg — 3rd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~6:30 pm",
+                  "201/136",
+                  "108",
+                  ""
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "5:40 pm",
+                  "207/141",
+                  "94",
+                  "40 min after 2nd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~5:00 pm",
+                  "—",
+                  "—",
+                  "Candesartan 4 mg — 2nd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "4:50 pm",
+                  "207/138",
+                  "86",
+                  "10 min before 2nd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "7:00 am",
+                  "174/104",
+                  "85",
+                  ""
+                ],
+                [
+                  "Sun 9 Aug 2026",
+                  "~10:00 pm",
+                  "—",
+                  "—",
+                  "Candesartan 4 mg — FIRST dose after 7 months untreated"
+                ],
+                [
+                  "Sun 9 Aug 2026",
+                  "9:00 pm",
+                  "222/151",
+                  "106",
+                  "Untreated"
+                ],
+                [
+                  "Sun 9 Aug 2026",
+                  "8:55 pm",
+                  "228/149",
+                  "110",
+                  "Untreated"
+                ],
+                [
+                  "Fri 7 Aug 2026",
+                  "11:20 pm",
+                  "214/133",
+                  "77",
+                  "Untreated"
+                ],
+                [
+                  "TO FILL",
+                  "",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "flagCol": 2
+            },
+            {
+              "type": "callout",
+              "text": "Twenty-three readings across seven days. Two components: an elevated baseline that does not dip overnight, and large reactive spikes above it. On 13 August, day two of carvedilol, nothing fell below 170/109 and the evening reading rose during rest — the first time this week rest has not brought it down. Evening peaks are unchanged since treatment began (191/125 day one, 195/123 day two). Home readings on a wrist cuff."
+            },
+            {
+              "type": "para",
+              "text": "Context: known hypertension and left ventricular hypertrophy, no antihypertensive therapy at all between January and 9 August 2026. Candesartan restarted 9 August at 4 mg, increased to 8 mg on 11 August. Full three-drug regimen from 12 August. Readings above are wrist-cuff measurements and may over-read."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "What I'd like looked at",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "The right temple pain and right leg pain on 13 August — sudden, one-sided, brief, with BP 195/123. Exclusion of a vascular or neurological cause.",
+                "24-hour ambulatory blood pressure monitoring. The lability and the non-dipping pattern are exactly what it is designed to catch, and spot readings are a poor guide to my actual load.",
+                "Repeat echocardiogram — has the left ventricular hypertrophy progressed since 2019?",
+                "End-organ review: renal function and urine ACR, ECG, fundoscopy.",
+                "Renal function specifically. Three days of severe left-sided abdominal cramping from ~4 August preceded the blood pressure escalation and has not been investigated.",
+                "The chest X-ray result, and the right-sided pleuritic pain — deep, not tender to press, no worse on twisting, sharp on deep inspiration.",
+                "The persistent itchy rash on my right upper chest, present roughly three weeks, same side as the pain.",
+                "The sleep disruption investigated in its own right. Sleep-disordered breathing has not been excluded, and it is a common driver of hypertension that will not come down.",
+                "Whether an upper-arm cuff should replace the wrist cuff I have been using."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Current plan — Dr Clissold, 11 August",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Regimen",
+                  "v": "Aspirin 100 mg daily · Carvedilol 3.125 mg twice daily · Candesartan 8 mg mane. Commenced 12 August 2026."
+                },
+                {
+                  "k": "Rationale",
+                  "v": "Beta blocker plus ARB covers both the elevated baseline and the tachycardia. Carvedilol started low."
+                },
+                {
+                  "k": "REVIEW DATE",
+                  "v": "30 carvedilol tablets, no repeats, twice daily — approximately 15 days, running out around 26 August 2026. A review is expected before then. TO FILL — confirm booked."
+                },
+                {
+                  "k": "First dose",
+                  "v": "Taken sitting. No standing quickly for the following hour. Well hydrated. First-dose dizziness is the main risk, particularly after the dehydration of 11 August."
+                },
+                {
+                  "k": "Pulse caveat",
+                  "v": "Carvedilol blunts heart rate, so pulse becomes a less reliable signal. Keep logging it — the trend is what matters."
+                },
+                {
+                  "k": "Imaging",
+                  "v": "Chest X-ray. TO FILL — result."
+                },
+                {
+                  "k": "Anticipated",
+                  "v": "Troponin and full cardiac cycle if I present to ED. See the troponin-antibody note on Start here before ordering."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "alert",
+          "heading": "If any of this happens — call 000",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Managing at home on the night of 10 August with a support person on the property who is aware of the situation. These are the thresholds for stopping and calling an ambulance rather than reassessing."
+            },
+            {
+              "type": "list",
+              "items": [
+                "Chest pain or pressure",
+                "Worsening shortness of breath, or breathlessness lying flat",
+                "Severe or sudden headache",
+                "Vision changes — blurring, doubling, spots",
+                "Weakness or numbness on one side, facial droop, or trouble speaking",
+                "Confusion, or being told I am not making sense",
+                "Vomiting",
+                "Fainting, or near-fainting on standing"
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Do not drive. Get up slowly all night — sit on the edge before standing, light on before moving. Syncope on standing is the mechanism of the 17 December 2025 episode."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Booked and pending",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Echocardiogram",
+                  "v": "Thursday 20 August 2026, 4:00pm. Warrnambool Physicians Group, Suite 4, rear of St John of God Hospital. Ph 5562 9444. This answers the central open question: has the left ventricular hypertrophy progressed since 2019?"
+                },
+                {
+                  "k": "Medication review",
+                  "v": "Required before approximately 26 August 2026, when the carvedilol supply is exhausted. TO FILL — confirm booked."
+                },
+                {
+                  "k": "Transport",
+                  "v": "TO FILL — no driver's licence. Koroit to Warrnambool, 4pm Thursday. Arrange in advance."
+                },
+                {
+                  "k": "Ask on the day",
+                  "v": "Request a copy of the echocardiogram report, and ask that it be sent to Dr Clissold and to my GP."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "cardiac": {
+      "eyebrow": "History",
+      "title": "Cardiac",
+      "lede": "First detected in 2019. Investigated then, and recurring since.",
+      "blocks": [
+        {
+          "type": "panel",
+          "heading": "Established findings",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Troponin caveat",
+                  "v": "Rare troponin-antibody / false-positive issue on record. Some readings are unreliable and have previously indicated MI where none occurred. Interpret accordingly."
+                },
+                {
+                  "k": "Left ventricle",
+                  "v": "Enlarged — left ventricular hypertrophy."
+                },
+                {
+                  "k": "Angina",
+                  "v": "Attributed to compression of small vessels. Not obstructive coronary disease."
+                },
+                {
+                  "k": "Angiogram",
+                  "v": "2019. Excluded myocardial infarction and obstructive coronary disease."
+                },
+                {
+                  "k": "Hypertension",
+                  "v": "Longstanding, recurrent, severe at peak. Current control status: TO FILL."
+                },
+                {
+                  "k": "Chest pain pattern",
+                  "v": "Multiple presentations April–May 2025, no acute cardiac event found on any. Pain eased as psychological distress settled."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Timeline",
+          "blocks": [
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "when": "2019",
+                  "what": "First episode detected while in custody. Raised troponin, suspected myocardial infarction. Angiogram excluded MI and obstructive coronary disease. Left ventricular hypertrophy identified; angina attributed to small-vessel compression. The troponin-antibody issue dates from around this workup."
+                },
+                {
+                  "when": "18–20 April 2025",
+                  "what": "Hospital admission — chest pain alongside significant social stress. Situational crisis. No acute cardiac event."
+                },
+                {
+                  "when": "28–29 April 2025",
+                  "what": "Further ED presentation. Chest tightness eased as psychological state settled. Reviewed and discharged with follow-up booked."
+                },
+                {
+                  "when": "April–May 2025",
+                  "what": "Multiple further chest-pain presentations across this period. No acute cardiac event identified on any of them."
+                },
+                {
+                  "when": "Late April 2025",
+                  "what": "Admitted to PARC, Warrnambool, for approximately four weeks."
+                },
+                {
+                  "when": "Approx. August 2025",
+                  "what": "Emergency department presentation with a very similar picture to the current one. Referred to Dr Anna Clissold, South West Healthcare. Three further changes of address, loss of licence, and cessation of all medication have followed since."
+                },
+                {
+                  "when": "February 2025 onward",
+                  "what": "No secure accommodation. Sequence of temporary placements, currently a caravan. See Context."
+                },
+                {
+                  "when": "Undated, earlier",
+                  "what": "Earlier regimen: metoprolol 50 mg bd, perindopril, clonidine, rosuvastatin, aspirin, promethazine, quetiapine."
+                },
+                {
+                  "when": "Undated",
+                  "what": "Admission at University Hospital Geelong. Discharged on four antihypertensives across four classes — hydrochlorothiazide, carvedilol, candesartan 32 mg, amlodipine 10 mg — plus atorvastatin 80 mg, aspirin and quetiapine. Records held by Barwon Health."
+                },
+                {
+                  "when": "23 November 2025",
+                  "what": "Dr Clissold revised the regimen and issued a written titration plan. Her note recorded that 150 mmHg systolic, while still high, might be below what I was accustomed to."
+                },
+                {
+                  "when": "17 December 2025",
+                  "what": "Syncope while driving. Blood pressure very low. Very hot day, dehydrated. THC detected on subsequent bloods; licence cancelled."
+                },
+                {
+                  "when": "January 2026",
+                  "what": "Ceased all medications following the December episode. Nothing restarted since — approximately seven months untreated."
+                },
+                {
+                  "when": "Late July – August 2026",
+                  "what": "Approximately two weeks of severely disrupted sleep and rapid emotional dysregulation."
+                },
+                {
+                  "when": "9 August 2026",
+                  "what": "Blood pressure recorded at 222/151."
+                },
+                {
+                  "when": "10 August 2026",
+                  "what": "Emergency department attendance. TO FILL — outcome."
+                },
+                {
+                  "when": "11 August 2026",
+                  "what": "Scheduled appointment with Dr Clissold."
+                },
+                {
+                  "when": "1 October 2026",
+                  "what": "Earliest available appointment with regular GP."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "The pattern, stated plainly",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Two severe episodes, roughly twelve months apart, with the same presentation and the same unresolved housing situation in between. I am not asking anyone to treat that as proof of causation. I am asking that it be recorded, because nobody can act on a pattern that isn't written down."
+            }
+          ]
+        }
+      ]
+    },
+    "mental": {
+      "eyebrow": "Context",
+      "title": "Mental health and trauma",
+      "lede": "Included because it affects how I present, not because I want it to be the headline.",
+      "blocks": [
+        {
+          "type": "panel",
+          "heading": "What's relevant",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Background",
+                  "v": "Survivor of historical institutional abuse. Currently a civil litigant in related proceedings."
+                },
+                {
+                  "k": "Current",
+                  "v": "Two weeks of severely disrupted sleep and rapid emotional dysregulation."
+                },
+                {
+                  "k": "Psychiatric report",
+                  "v": "Dr Winton-Brown, completed 26 March 2025. The most comprehensive assessment on record. Held by me and by my solicitor."
+                },
+                {
+                  "k": "Prior admissions",
+                  "v": "Multiple inpatient admissions dating from late teens / early-to-mid twenties. Two ED presentations in April 2025 within eleven days, both assessed as situational crisis. PARC, Warrnambool, approximately four weeks from late April 2025."
+                },
+                {
+                  "k": "Diagnoses and risk history",
+                  "v": "Held in a separate private supplement rather than on this public page. Ask me and I will show you on my phone, or it can be sent to you directly."
+                },
+                {
+                  "k": "Standing recommendation",
+                  "v": "Integrated, consistent psychiatric care plus trauma-directed psychological treatment (MBT, DBT, CPT, or long-term psychodynamic). This has been the recommendation for some time and has not been consistently available to me."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "No current mental health plan",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "I have no current mental health care plan and no treating counsellor. My previous mental health social worker, Dirk Lynzaat of Onshore Counselling, has fully retired and is no longer registered."
+            },
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "The barrier",
+                  "v": "He advised (12 August 2026) that he is not aware of local counsellors who bulk bill under a Medicare referral, and that most charge a gap fee. He was unusual in accepting the Medicare rebate alone for people on Centrelink payments."
+                },
+                {
+                  "k": "Lead",
+                  "v": "South West Mind & Body (swmb.com.au) — counsellors with sound reputations, but a gap fee is expected."
+                },
+                {
+                  "k": "To ask",
+                  "v": "Whether a public community mental health place is available, which would not carry a gap fee. TO FILL — raise with Dr Clissold."
+                },
+                {
+                  "k": "Standing recommendation",
+                  "v": "Integrated, consistent psychiatric care plus trauma-directed psychological treatment. This has been the recommendation since March 2025 and has not been able to be sustained."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "The gap is financial and structural, not a matter of unwillingness. I have been asking."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "How I present, and what that does and doesn't mean",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "I am articulate, organised, and I produce a lot of work. None of that means I'm stable. It has repeatedly meant I get deprioritised against people who present less well with comparable need.",
+                "I can give a clear, calm account of very bad circumstances. That's practice, not distance from them.",
+                "Re-telling my history is itself costly. If it's already in my file, please read it there rather than asking me to perform it again.",
+                "My creative and technical work is load-bearing — it's how I regulate. Interruptions to it are not the loss of a hobby."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "What helps",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Direct speech. Say the actual thing. I don't need it softened.",
+                "Telling me what happens next, and when.",
+                "Writing things down and giving me a copy.",
+                "Not treating competence as evidence that I'm fine."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "meds": {
+      "eyebrow": "Reference",
+      "title": "Medications",
+      "lede": "Three-drug regimen commenced 12 August 2026 after seven months untreated. Allergy: isosorbide mononitrate. Prior regimens documented below.",
+      "blocks": [
+        {
+          "type": "alert",
+          "heading": "How I came to be untreated — read before assuming non-adherence",
+          "blocks": [
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "when": "23 November 2025",
+                  "what": "Dr Clissold revised my regimen and issued a written, dose-by-dose titration plan. Her note warned that increasing too fast could drop my pressure enough to cause fainting."
+                },
+                {
+                  "when": "17 December 2025",
+                  "what": "I passed out behind the wheel. Blood pressure very low. Very hot day, dehydrated. Bloods later returned THC — I had smoked the day before — and my licence was cancelled."
+                },
+                {
+                  "when": "January 2026",
+                  "what": "I stopped all medications following that episode."
+                },
+                {
+                  "when": "January – August 2026",
+                  "what": "Seven months untreated, with known hypertension and left ventricular hypertrophy."
+                },
+                {
+                  "when": "9 August 2026",
+                  "what": "Candesartan 4 mg recommenced on Dr Clissold's advice, using medication retained from January."
+                },
+                {
+                  "when": "11 August 2026",
+                  "what": "Increased to 8 mg. Full three-drug regimen prescribed."
+                },
+                {
+                  "when": "12 August 2026",
+                  "what": "Aspirin, carvedilol and candesartan commenced."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "I stopped after a frightening adverse event on the medication, not because I disregarded it. I am back on treatment and I want to stay on it. What I need help with is the parts that keep breaking — continuity of prescribing, transport to a pharmacy, and rules for hot days."
+            }
+          ]
+        },
+        {
+          "type": "alert",
+          "heading": "Allergies and adverse reactions",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Isosorbide mononitrate",
+                  "v": "Headache. Recorded on prescription."
+                },
+                {
+                  "k": "Other allergies",
+                  "v": "TO FILL — list, or record \"None otherwise known\"."
+                },
+                {
+                  "k": "Adverse event on record",
+                  "v": "Syncope while driving, 17 December 2025, on amlodipine + candesartan + metoprolol. Contributing factors: extreme heat, dehydration, and cannabis use the preceding day."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Current regimen — from 12 August 2026",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Prescribed by Dr Anna Clissold, 11 August 2026, after five days of readings established both an elevated baseline and marked lability."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Medication",
+                "Dose",
+                "Frequency",
+                "Purpose"
+              ],
+              "rows": [
+                [
+                  "Aspirin",
+                  "100 mg",
+                  "Once daily",
+                  "Antiplatelet"
+                ],
+                [
+                  "Carvedilol",
+                  "3.125 mg",
+                  "**Twice daily**",
+                  "Beta blocker — baseline pressure and heart rate. Started low"
+                ],
+                [
+                  "Candesartan",
+                  "8 mg",
+                  "Morning",
+                  "ARB — blood pressure. Titrated up from 4 mg on 11 Aug"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Carvedilol: 30 tablets, no repeats, twice daily — approximately 15 days, exhausted around 26 August 2026. A review is expected before that date. With no GP appointment available until 1 October and no driver's licence, this must be booked early rather than at day 14."
+            },
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "First-dose precaution",
+                  "v": "Taken sitting, well hydrated, no standing quickly for the following hour."
+                },
+                {
+                  "k": "Monitoring caveat",
+                  "v": "Carvedilol blunts heart rate, so pulse becomes a less reliable indicator. Continue logging it — the trend is what matters, not the individual number."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Regimen 3 — Dr Clissold's plan, 23 November 2025",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "The most recent plan, and the one I was on when I fainted. Provided in writing by Dr Anna Clissold. This is the plan to rebuild from."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "When",
+                "Medication",
+                "Dose"
+              ],
+              "rows": [
+                [
+                  "That evening (starting dose)",
+                  "Candesartan",
+                  "4 mg — half an 8 mg tablet"
+                ],
+                [
+                  "Morning",
+                  "Aspirin",
+                  "100 mg"
+                ],
+                [
+                  "Morning",
+                  "Metoprolol",
+                  "25 mg — half a tablet"
+                ],
+                [
+                  "Morning",
+                  "Candesartan",
+                  "12 mg — one and a half tablets"
+                ],
+                [
+                  "Midday",
+                  "Amlodipine",
+                  "10 mg"
+                ],
+                [
+                  "Night",
+                  "Quetiapine",
+                  "25 mg"
+                ],
+                [
+                  "Night",
+                  "Atorvastatin",
+                  "20 mg"
+                ]
+              ]
+            },
+            {
+              "type": "para",
+              "text": "Titration: candesartan to be increased to 16 mg over approximately three days, stepped rather than doubled — the stated reason being that dropping too fast could take me below what I was used to and cause fainting."
+            },
+            {
+              "type": "callout",
+              "text": "That note also establishes my baseline in a clinician's own words: 150 mmHg systolic was described as still high, but possibly too low for what I was accustomed to. My habitual systolic sat well above 150 while treated."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Medication still physically held",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "I kept my January medication rather than discarding it. What I still hold determines what can be restarted immediately versus what needs a new script — relevant given no GP appointment until 1 October and no licence to reach a pharmacy."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Medication",
+                "Still held?",
+                "Expiry",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "Candesartan",
+                  "Yes",
+                  "TO FILL",
+                  "In use — 4 mg from 9 Aug 2026"
+                ],
+                [
+                  "Amlodipine",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Metoprolol",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Atorvastatin",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Aspirin",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ],
+                [
+                  "Quetiapine",
+                  "TO FILL",
+                  "TO FILL",
+                  ""
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Check expiry dates. Seven months in storage is usually fine, but this was stored through summer in a caravan and heat degrades tablets. Bring the actual boxes to appointments."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Regimen 2 — University Hospital Geelong discharge script",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Issued in my birth name, Christopher Peter Greene. Records held by Barwon Health, not South West Healthcare — they will not appear automatically in a Warrnambool file."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Medication",
+                "Strength",
+                "Dose",
+                "Qty",
+                "Repeats"
+              ],
+              "rows": [
+                [
+                  "Hydrochlorothiazide",
+                  "25 mg",
+                  "25 mg PO daily, in the evening",
+                  "100",
+                  "0"
+                ],
+                [
+                  "Carvedilol",
+                  "12.5 mg",
+                  "12.5 mg PO bd",
+                  "60",
+                  "0"
+                ],
+                [
+                  "Candesartan cilexetil",
+                  "32 mg",
+                  "32 mg PO mane",
+                  "30",
+                  "0"
+                ],
+                [
+                  "Amlodipine (as besilate)",
+                  "10 mg",
+                  "10 mg PO daily",
+                  "30",
+                  "0"
+                ],
+                [
+                  "Atorvastatin",
+                  "80 mg",
+                  "80 mg PO daily",
+                  "30",
+                  "0"
+                ],
+                [
+                  "Aspirin",
+                  "100 mg",
+                  "100 mg PO daily",
+                  "112",
+                  "0"
+                ],
+                [
+                  "Quetiapine",
+                  "25 mg",
+                  "25 mg PO nocte (non-PBS)",
+                  "60",
+                  "0"
+                ]
+              ]
+            },
+            {
+              "type": "para",
+              "text": "Four antihypertensives across four different classes — thiazide, beta blocker, ARB and calcium channel blocker — with candesartan and amlodipine both at maximum dose, alongside maximum-intensity statin therapy. That combination is the standard picture of resistant hypertension in a patient being treated as high cardiovascular risk."
+            },
+            {
+              "type": "callout",
+              "text": "Every line reads zero repeats. That is normal for a discharge script — it supplies enough to reach a GP who then takes over prescribing. Relevant to how the supply ran down."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Regimen 1 — earlier handwritten list",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Date uncertain, and it belongs earlier in the sequence than the two above: it uses perindopril rather than candesartan, rosuvastatin rather than atorvastatin, and includes clonidine and promethazine, none of which appear in the later plans. Recorded here for completeness. TO FILL — confirm the date if you can."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Medication",
+                "Dose",
+                "Frequency"
+              ],
+              "rows": [
+                [
+                  "Metoprolol",
+                  "50 mg",
+                  "Twice a day"
+                ],
+                [
+                  "Perindopril arginine",
+                  "10 mg",
+                  "1 in the morning"
+                ],
+                [
+                  "Clonidine",
+                  "100 micrograms",
+                  "1–2 twice a day, when needed"
+                ],
+                [
+                  "Rosuvastatin (as calcium)",
+                  "20 mg",
+                  "1 in the morning"
+                ],
+                [
+                  "Aspirin",
+                  "Dose not stated",
+                  "Once a day"
+                ],
+                [
+                  "Promethazine",
+                  "25 mg",
+                  "1 at night"
+                ],
+                [
+                  "Quetiapine",
+                  "25 mg",
+                  "½–1 every 6 hours"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Substance history",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Alcohol",
+                  "v": "Approximately six years abstinent. Around twenty years of heavy binge drinking before that."
+                },
+                {
+                  "k": "Cannabis",
+                  "v": "Ongoing, reduced from heavier historical use, largely for anxiety. Current state as at 10 August 2026: smoking reduced, one cannabis edible taken instead. Relevant clinically and stated deliberately — cannabis raises heart rate and blood pressure and can cause postural hypotension, an edible remains active for six to eight hours or longer, and I had used the day before the syncopal episode of 17 December 2025. Anyone interpreting my heart rate or rebuilding my antihypertensive regimen should have this in the picture."
+                },
+                {
+                  "k": "Other",
+                  "v": "Further detail in the private supplement. Ask me — I will not be evasive."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "Keeping this accurate",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "The most reliable source is a printed dispensing history from the pharmacy or My Health Record — not this page and not my memory. Ask for one and check it against the tables above."
+            }
+          ]
+        }
+      ]
+    },
+    "team": {
+      "eyebrow": "Contacts",
+      "title": "Care team",
+      "lede": "Who holds what. Please contact them directly rather than routing through me where you can.",
+      "blocks": [
+        {
+          "type": "panel",
+          "heading": "Clinical",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Specialist",
+                  "v": "Dr Anna Clissold, South West Healthcare. Referred from ED approximately one year ago. Holds the cardiac picture."
+                },
+                {
+                  "k": "Regular GP",
+                  "v": "Dr Alex Koutsoukis, Ochre Health. Next available appointment 1 October 2026."
+                },
+                {
+                  "k": "Previous GP",
+                  "v": "Dr Brendan Kaye. Holds earlier records."
+                },
+                {
+                  "k": "Psychiatric report",
+                  "v": "Dr Winton-Brown — report dated 26 March 2025."
+                },
+                {
+                  "k": "Mental health",
+                  "v": "Dirk Lynzaat, Onshore Counselling — mental health social worker, now retired. No current replacement. TO FILL if this changes."
+                },
+                {
+                  "k": "Pharmacy",
+                  "v": "TO FILL"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Non-clinical",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Housing caseworker",
+                  "v": "Virginia, Salvos Connect, Warrnambool."
+                },
+                {
+                  "k": "Housing department",
+                  "v": "DFFH Warrnambool. Priority Access application via the Victorian Housing Register. Complaint reference CM0079923."
+                },
+                {
+                  "k": "Solicitor",
+                  "v": "Nicole Elliott-Struth, Arnold Thomas & Becker, Warrnambool."
+                },
+                {
+                  "k": "Emergency contact",
+                  "v": "TO FILL — name, relationship, phone."
+                },
+                {
+                  "k": "Next of kin",
+                  "v": "TO FILL"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "Me",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Phone",
+                  "v": "TO FILL"
+                },
+                {
+                  "k": "Email",
+                  "v": "mahdagreenemoon@gmail.com"
+                },
+                {
+                  "k": "Address",
+                  "v": "No fixed address. Caravan, Koroit VIC."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "context": {
+      "eyebrow": "Social",
+      "title": "Housing and context",
+      "lede": "Included because it is, in my view and on the evidence, the main modifiable factor in the clinical picture.",
+      "blocks": [
+        {
+          "type": "panel",
+          "heading": "Housing",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Current",
+                  "v": "Boarding in a caravan, Koroit."
+                },
+                {
+                  "k": "Since",
+                  "v": "February 2025. No secure accommodation since. The instability began with a clinical crisis in April 2025, not with a housing choice."
+                },
+                {
+                  "k": "Application",
+                  "v": "Priority Access, Victorian Housing Register, lodged via Salvos Connect at DFFH Warrnambool."
+                },
+                {
+                  "k": "Property sought",
+                  "v": "Unit 2/10 Sturt Street, Koroit — previously occupied 2022 to February 2025, vacant since."
+                },
+                {
+                  "k": "Support network",
+                  "v": "Mother lives next door to that property. Adult daughter one block away."
+                },
+                {
+                  "k": "Complaint",
+                  "v": "CM0079923, lodged with DFFH. Resolution window to approximately 20 August 2026."
+                },
+                {
+                  "k": "Prior response",
+                  "v": "A direct request regarding the Sturt Street property was previously refused verbally — \"not a chance\" — without written reasons. A written reconsideration request was sent to Warrnambool.Housing@dffh.vic.gov.au and went unanswered, which is what prompted the formal complaint."
+                },
+                {
+                  "k": "Also contacted",
+                  "v": "Local members Roma Britnell and Jacinta Ermacora."
+                },
+                {
+                  "k": "Supporting documents already lodged",
+                  "v": "Dr Winton-Brown's psychiatric report, GP letters, and evidence of urgency are already on the Priority Access application."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Accommodation and the 2025 crisis",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Six placements in sixteen months. Durations below are the figures I'm confident about; the dates are derived from them and are approximate."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Placement",
+                "Approx. dates",
+                "Duration",
+                "Type"
+              ],
+              "rows": [
+                [
+                  "Unit 2/10 Sturt Street, Koroit",
+                  "2021/2022 – Feb 2025",
+                  "~3 years",
+                  "Stable. Lease not in my name. No fault, no breach."
+                ],
+                [
+                  "3/35 Elizabeth Street, Port Fairy",
+                  "Feb – Apr 2025",
+                  "~2 months",
+                  "Supported transfer via Tenancy Plus, Brophy's. Second tenant on lease."
+                ],
+                [
+                  "Crisis accommodation",
+                  "from ~22 Apr 2025",
+                  "~1 week",
+                  "Bridging. Immediately following hospital discharge."
+                ],
+                [
+                  "PARC, Warrnambool",
+                  "~late Apr – late May 2025",
+                  "4 weeks",
+                  "Prevention and Recovery Care admission."
+                ],
+                [
+                  "Turn In Motel",
+                  "~late May – early Jul 2025",
+                  "~6 weeks",
+                  "Emergency accommodation."
+                ],
+                [
+                  "Pastor Rick Clissold's late uncle's house",
+                  "~early Jul – mid Aug 2025",
+                  "~6 weeks",
+                  "Arranged privately through the church."
+                ],
+                [
+                  "Boarding, 131 Mortlake Road",
+                  "~Aug 2025 – mid 2026",
+                  "almost 1 year",
+                  "Room with a family member."
+                ],
+                [
+                  "Caravan, Commercial Road, Koroit",
+                  "mid 2026 – present",
+                  "ongoing",
+                  "Boarding. Current."
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "From leaving Koroit in February 2025 to now: eighteen months, six placements, not one of them secure. The Koroit unit has been vacant that entire time."
+            },
+            {
+              "type": "para",
+              "text": "The instability did not begin with drift. It began with a documented clinical crisis:"
+            },
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "when": "26 March 2025",
+                  "what": "Dr Winton-Brown's psychiatric report completed."
+                },
+                {
+                  "when": "17 April 2025",
+                  "what": "I read the report. Severe destabilisation followed."
+                },
+                {
+                  "when": "18–20 April 2025",
+                  "what": "Hospital admission — chest pain, significant social stress, suicidal ideation. Assessed as situational crisis."
+                },
+                {
+                  "when": "20 April 2025",
+                  "what": "Re-presentation on discharge. Intended to sleep in my car. Future-focused, no plan or intent at review."
+                },
+                {
+                  "when": "~22 April 2025",
+                  "what": "Crisis accommodation. The Port Fairy tenancy was over."
+                },
+                {
+                  "when": "28 April 2025",
+                  "what": "A family violence intervention order matter arose in relation to that address. I did not contest it."
+                },
+                {
+                  "when": "28–29 April 2025",
+                  "what": "Further ED presentation in situational crisis with suicidal ideation. Chest tightness eased as psychological state settled. Reviewed by the mental health team, discharged with follow-up booked."
+                },
+                {
+                  "when": "Late April 2025",
+                  "what": "Admitted to PARC for four weeks. It worked."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Two hospital presentations with suicidal ideation inside eleven days, then a four-week PARC admission. Sixteen months later nothing about my housing has been resolved."
+            },
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Third parties",
+                  "v": "Deliberately unnamed. The intervention order matter involves another person and I keep her out of public documents. I will give detail directly if it is clinically necessary."
+                },
+                {
+                  "k": "Superseded version",
+                  "v": "An earlier draft of mine placed the car / PARC / motel sequence in February–April 2025. That was wrong. The table above is correct — crisis accommodation began around 22 April, immediately after the hospital discharge."
+                },
+                {
+                  "k": "Koroit tenancy start",
+                  "v": "TO FILL — recorded as August 2021 in one document and 2022 in another. Pick one and make everything consistent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Transport",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "My licence was cancelled in December 2025 following the syncopal episode and a positive THC result. I live in Koroit. Every GP appointment, specialist appointment, pharmacy visit and housing meeting is in Warrnambool."
+            },
+            {
+              "type": "para",
+              "text": "This is a direct barrier to my own care, not a side issue. It is part of why the earliest GP appointment I could take was 1 October 2026, and it compounds every other access problem in this file."
+            },
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Medical non-driving period",
+                  "v": "TO FILL — a syncopal episode at the wheel usually carries a fitness-to-drive restriction separate from the cancellation. Confirm what applies and what sign-off is needed to return."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Why this belongs in a medical file",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Two severe hypertensive episodes twelve months apart, with unresolved housing instability throughout. A clinician noting the accommodation situation as a contributing factor is not a formality — it is currently the strongest available evidence in an open housing application, and it may be the intervention that changes the trajectory more than any prescription will."
+            },
+            {
+              "type": "para",
+              "text": "If you are willing to write that, a short letter stating the diagnosis, the recurrence, and your clinical view on accommodation instability as a contributing factor would be genuinely useful. Addressed \"To Whom It May Concern\" is fine."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "Legal",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "I am a civil litigant in proceedings relating to historical institutional abuse. Those proceedings are ongoing and I keep specific detail out of public documents on legal advice. If detail is clinically necessary, ask me directly and I'll give it to you in the room."
+            }
+          ]
+        }
+      ]
+    },
+    "docs": {
+      "eyebrow": "Source records",
+      "title": "Documents",
+      "lede": "Authoritative records. These override anything summarised elsewhere on this page.",
+      "blocks": [
+        {
+          "type": "panel",
+          "heading": "On file",
+          "blocks": [
+            {
+              "type": "doclist",
+              "items": [
+                {
+                  "label": "Dr Clissold's written medication plan",
+                  "date": "23 November 2025",
+                  "note": "Titration plan and baseline note — high value",
+                  "href": ""
+                },
+                {
+                  "label": "University Hospital Geelong discharge script",
+                  "date": "Undated",
+                  "note": "Barwon Health — request separately",
+                  "href": ""
+                },
+                {
+                  "label": "Geelong admission discharge summary",
+                  "date": "Undated",
+                  "note": "Barwon Health — not held by South West Healthcare",
+                  "href": ""
+                },
+                {
+                  "label": "Angiogram report",
+                  "date": "2019",
+                  "note": "Excludes MI and obstructive coronary disease",
+                  "href": ""
+                },
+                {
+                  "label": "Echocardiogram report",
+                  "date": "2019",
+                  "note": "Left ventricular hypertrophy",
+                  "href": ""
+                },
+                {
+                  "label": "Records of 17 December 2025 episode",
+                  "date": "17 Dec 2025",
+                  "note": "Syncope while driving",
+                  "href": ""
+                },
+                {
+                  "label": "ED discharge summary",
+                  "date": "Approx. August 2025",
+                  "note": "Prior presentation; referral to Dr Clissold",
+                  "href": ""
+                },
+                {
+                  "label": "ED discharge summary",
+                  "date": "10 August 2026",
+                  "note": "Current presentation",
+                  "href": ""
+                },
+                {
+                  "label": "Dr Winton-Brown psychiatric report",
+                  "date": "26 March 2025",
+                  "note": "Held by me and by my solicitor",
+                  "href": ""
+                },
+                {
+                  "label": "GP or specialist letter for housing",
+                  "date": "TO FILL",
+                  "note": "To Whom It May Concern",
+                  "href": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "How to add one",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Drop the PDF into the docs/ folder alongside this page.",
+                "In pages.json, set that document's href to \"docs/filename.pdf\".",
+                "Anything with an empty href shows as \"not uploaded\" rather than a broken link."
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Records you don't have yet can be requested. South West Healthcare and your GP practice both hold copies of the 2019 and 2025 material — you can ask for them without an appointment."
+            }
+          ]
+        }
+      ]
+    }
+  }
+} /*__END__*/;
 
   var LIVERIES = ["vellum", "iron", "brass", "emerald", "sanctum", "sigil"];
   var DEFAULT_LIVERY = "vellum";

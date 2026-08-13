@@ -3,7 +3,7 @@
     "mark": "M",
     "name": "Medical Handover",
     "sub": "Mahda Christopher Greene",
-    "updated": "10 August 2026",
+    "updated": "13 August 2026, evening — ED presentation",
     "default": "start"
   },
   "nav": [
@@ -62,12 +62,16 @@
                   "v": "I have a documented rare troponin-antibody / false-positive issue. Some of my troponin readings are unreliable and have previously suggested myocardial infarction where none occurred. Please interpret troponin in that context and check my prior records before escalating."
                 },
                 {
+                  "k": "ALLERGY",
+                  "v": "Isosorbide mononitrate — headache. Recorded on script."
+                },
+                {
                   "k": "Known cardiac",
                   "v": "Left ventricular hypertrophy. Angina attributed to small-vessel compression. Obstructive coronary disease excluded by angiogram, 2019."
                 },
                 {
                   "k": "MEDICATIONS",
-                  "v": "Candesartan 4 mg restarted 9 August 2026 on Dr Clissold's advice, after seven months on nothing. Nothing else restarted. I stopped in January 2026 after passing out at the wheel on 17 December while on amlodipine, candesartan and metoprolol. Previously treated as resistant hypertension on four antihypertensives. See Medications."
+                  "v": "From 12 August 2026: aspirin 100 mg daily, carvedilol 3.125 mg twice daily, candesartan 8 mg mane — prescribed by Dr Clissold 11 August. Prior to 9 August I had taken nothing since January 2026, having stopped after passing out at the wheel on 17 December 2025. See Medications."
                 },
                 {
                   "k": "Under the care of",
@@ -79,7 +83,7 @@
                 },
                 {
                   "k": "Presenting pattern",
-                  "v": "Severe hypertension, recurrent and currently sustained. Six home readings between 7 and 10 August 2026, five of them in crisis range, peaking at 228/149 with a pulse of 110. See Right now."
+                  "v": "Two separate things, now distinguished: an elevated baseline around 160/95 that does not dip overnight, with large reactive spikes on top of it. Peak 228/149 (9 Aug). Spike of 197/125 on 11 Aug fell to 160/90 in 40 minutes on rest and rehydration alone."
                 },
                 {
                   "k": "Also relevant",
@@ -141,8 +145,51 @@
     "current": {
       "eyebrow": "Active episode",
       "title": "Right now",
-      "lede": "The current picture, and how it fits the pattern.",
+      "lede": "The current picture as at the evening of 13 August 2026, including tonight's episode.",
       "blocks": [
+        {
+          "type": "alert",
+          "heading": "Tonight — 13 August, evening. This is why I am presenting.",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "7:15 pm",
+                  "v": "Sharp pain, right temple, sudden onset, brief. At the same time I could feel my pulse throughout my body. BP 169/118, pulse 76."
+                },
+                {
+                  "k": "Minutes later",
+                  "v": "Sharp pain, right leg. Brief. Same side as the temple pain."
+                },
+                {
+                  "k": "Trigger",
+                  "v": "Both followed a period of heavy crying. Emotional, not exertional."
+                },
+                {
+                  "k": "7:47 pm",
+                  "v": "195/123, pulse 73 — taken after seated rest, a meal and one beer. It ROSE 26 systolic points during rest."
+                },
+                {
+                  "k": "Why that matters",
+                  "v": "Rest has reliably dropped me roughly 30 points all week. Tonight it did the opposite."
+                },
+                {
+                  "k": "Disclosure",
+                  "v": "One beer and a salty meal (corned beef) before the 7:47 reading. Neither accounts for the temple or leg pain."
+                },
+                {
+                  "k": "Notified",
+                  "v": "Dr Anna Clissold, evening of 13 August, with the full day's readings."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "No reading on 13 August fell below 170/109. The one-sided head pain and the one-sided leg pain are the reason for presenting, not the blood pressure alone."
+            }
+          ]
+        },
         {
           "type": "alert",
           "heading": "Presenting",
@@ -151,34 +198,81 @@
               "type": "rows",
               "items": [
                 {
-                  "k": "Peak reading",
-                  "v": "228/149, pulse 110 — Sunday 9 August 2026, 8:55pm. Six readings across four days, every one of them in hypertensive crisis range."
+                  "k": "Working picture",
+                  "v": "Elevated baseline that does not dip overnight, plus large situational spikes on top. Established over seven days of readings, 7–13 August 2026. On 13 August no reading fell below 170/109."
                 },
                 {
-                  "k": "Sustained, not a spike",
-                  "v": "All recorded diastolics between 7 and 10 August fall between 133 and 151, except one morning reading of 104. This is a sustained crisis-range picture over at least four days, off all antihypertensive therapy since January 2026."
+                  "k": "Peak",
+                  "v": "228/149, pulse 110 — Sunday 9 August, untreated."
                 },
                 {
-                  "k": "Treatment restarted",
-                  "v": "Candesartan 4 mg, first dose approximately 10:00pm Sunday 9 August 2026, on the advice of Dr Anna Clissold, using medication retained from January. Second dose approximately 5:00pm Monday 10 August. Deliberately low — one eighth of the previously prescribed 32 mg — because of the syncopal episode of 17 December 2025. Less than 24 hours in at the time of presentation."
+                  "k": "Tonight",
+                  "v": "195/123 at 7:47pm on 13 August, preceded by right temple pain and right leg pain. See the alert above."
                 },
                 {
-                  "k": "Sleep",
-                  "v": "Severely disrupted for approximately two weeks."
+                  "k": "Non-dipping",
+                  "v": "12:01am 12 August: 162/99. Blood pressure normally falls 10–20% overnight; mine did not, and this was with no dehydration and no daytime stressors. Non-dipping is significant in its own right."
                 },
                 {
-                  "k": "Mood",
-                  "v": "Rapid emotional dysregulation over the same two-week period."
+                  "k": "Diurnal pattern",
+                  "v": "Evenings have been consistently worse than mornings. That pattern broke on 13 August — the whole day sat high (9am 188/117, 11:30am 201/128, 3:18pm 170/109 settled), with the evening higher again at 195/123."
                 },
                 {
-                  "k": "Chest symptoms",
-                  "v": "TO FILL — angina present or absent, and whether it differs from my usual pattern."
+                  "k": "Lability",
+                  "v": "197/125 with pulse 114 at ~1:30pm on 11 August, after 25 minutes seated. Fell to 160/90, pulse 91, within 40 minutes on rest and rehydration alone. A sustained baseline does not move 37/35 in 40 minutes — that spike was situational."
                 },
                 {
-                  "k": "This is a recurrence",
-                  "v": "Very similar presentation approximately one year ago, which resulted in an ED attendance and referral to Dr Clissold. What has not changed is that I still have no secure housing. What has changed since has made things worse, not better — see below."
+                  "k": "Treatment",
+                  "v": "Aspirin, carvedilol and candesartan commenced 12 August 2026. Two days in, the evening peak is unchanged: 191/125 on day one, 195/123 on day two. See Medications."
+                },
+                {
+                  "k": "Cuff caveat",
+                  "v": "Home readings taken on a wrist cuff, which over-reads if the wrist is not held at heart height. TO FILL — whether an upper-arm cuff has been obtained."
+                },
+                {
+                  "k": "Still open",
+                  "v": "TO FILL — chest X-ray result, the right-sided pleuritic rib pain, and the persistent right upper chest rash. All three raised 11 August."
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "alert",
+          "heading": "Symptoms first raised 10 August — still open",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Breathing",
+                  "v": "Shorter than normal all day. New today."
+                },
+                {
+                  "k": "Right side",
+                  "v": "Persistent pressure/pain under the right ribs or just below. Described as feeling like sore lungs. New today."
+                },
+                {
+                  "k": "Left side, last week",
+                  "v": "Severe cramping from around Tuesday 4 August, lasting three days. Felt like a tennis-ball-sized pressure just below the left ribcage. Preceded the blood pressure escalation."
+                },
+                {
+                  "k": "General",
+                  "v": "Feeling \"wonky\" all day — described as similar to the light-headed feeling of fasting or a keto high."
+                },
+                {
+                  "k": "Emotional",
+                  "v": "Rapid emotional dysregulation, roughly two weeks. My own read is extreme anxiety masked by rapid activity. Not withdrawal."
+                },
+                {
+                  "k": "Raised with",
+                  "v": "Dr Clissold, evening of 10 August. Plan is a chest X-ray on 11 August. She has also raised the possibility of a separate process such as infection."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "The abdominal cramping came first, then the blood pressure escalation. That ordering has not yet been investigated. Renal function has not been checked during this episode."
             }
           ]
         },
@@ -226,6 +320,132 @@
               ],
               "rows": [
                 [
+                  "Thu 13 Aug 2026",
+                  "7:47 pm",
+                  "195/123",
+                  "73",
+                  "After seated rest, meal, one beer — ROSE 26 points during rest"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "7:15 pm",
+                  "169/118",
+                  "76",
+                  "Sharp right temple pain + palpable pulse; right leg pain minutes later. After heavy crying"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "3:18 pm",
+                  "170/109",
+                  "72",
+                  "Settled, after an emotional morning"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "11:30 am",
+                  "201/128",
+                  "69",
+                  "Just after walking to the kitchen"
+                ],
+                [
+                  "Thu 13 Aug 2026",
+                  "9:00 am",
+                  "188/117",
+                  "81",
+                  "On waking. Day 2 of carvedilol"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "11:52 pm",
+                  "191/125",
+                  "75",
+                  "After 10 min seated rest — ROSE from the 11:02pm reading"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "11:02 pm",
+                  "180/124",
+                  "78",
+                  "After band practice, Thai meal, car trip. Day 1 of carvedilol"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "morning",
+                  "—",
+                  "—",
+                  "Aspirin 100 mg · carvedilol 3.125 mg · candesartan 8 mg — regimen commenced"
+                ],
+                [
+                  "Wed 12 Aug 2026",
+                  "12:01 am",
+                  "162/99",
+                  "89",
+                  "Non-dipping — essentially unchanged from 9 hrs earlier"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "~2:10 pm",
+                  "160/90",
+                  "91",
+                  "After 10 min rest and rehydration, at appointment"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "~1:30 pm",
+                  "197/125",
+                  "114",
+                  "After 25 min seated. Dehydrated"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "11:00 am",
+                  "201/119",
+                  "81",
+                  ""
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "9:00 am",
+                  "160/103",
+                  "95",
+                  "~2h20 after 8 mg dose"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "6:40 am",
+                  "—",
+                  "—",
+                  "Candesartan 8 mg"
+                ],
+                [
+                  "Tue 11 Aug 2026",
+                  "6:23 am",
+                  "207/122",
+                  "83",
+                  "On waking — 4 mg had not held overnight"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~7:40 pm",
+                  "175/117",
+                  "101",
+                  "~40 min after 3rd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~7:00 pm",
+                  "—",
+                  "—",
+                  "Candesartan 4 mg — 3rd dose"
+                ],
+                [
+                  "Mon 10 Aug 2026",
+                  "~6:30 pm",
+                  "201/136",
+                  "108",
+                  ""
+                ],
+                [
                   "Mon 10 Aug 2026",
                   "5:40 pm",
                   "207/141",
@@ -251,28 +471,28 @@
                   "7:00 am",
                   "174/104",
                   "85",
-                  "~9 hrs after 1st dose"
+                  ""
                 ],
                 [
                   "Sun 9 Aug 2026",
                   "~10:00 pm",
                   "—",
                   "—",
-                  "Candesartan 4 mg — FIRST dose, after 7 months untreated"
+                  "Candesartan 4 mg — FIRST dose after 7 months untreated"
                 ],
                 [
                   "Sun 9 Aug 2026",
                   "9:00 pm",
                   "222/151",
                   "106",
-                  "1 hr before 1st dose — untreated"
+                  "Untreated"
                 ],
                 [
                   "Sun 9 Aug 2026",
                   "8:55 pm",
                   "228/149",
                   "110",
-                  "1 hr before 1st dose — untreated"
+                  "Untreated"
                 ],
                 [
                   "Fri 7 Aug 2026",
@@ -293,11 +513,11 @@
             },
             {
               "type": "callout",
-              "text": "Six readings across four days, five of six in crisis range, diastolic between 133 and 151 throughout. Treatment began Sunday 9 August at approximately 10:00pm — so Friday's and both Sunday readings are entirely untreated, and Monday's three fall within the first 24 hours of a 4 mg restart. Candesartan takes around two weeks to reach full effect. Tachycardia of 106–110 accompanied the two highest readings, both taken an hour before the first dose."
+              "text": "Twenty-three readings across seven days. Two components: an elevated baseline that does not dip overnight, and large reactive spikes above it. On 13 August, day two of carvedilol, nothing fell below 170/109 and the evening reading rose during rest — the first time this week rest has not brought it down. Evening peaks are unchanged since treatment began (191/125 day one, 195/123 day two). Home readings on a wrist cuff."
             },
             {
               "type": "para",
-              "text": "Context for interpretation: known hypertension and left ventricular hypertrophy, no antihypertensive therapy at all between January and 9 August 2026, and now less than 24 hours into a deliberately cautious 4 mg restart at one eighth of the previously prescribed dose. Treat me as effectively untreated at these readings."
+              "text": "Context: known hypertension and left ventricular hypertrophy, no antihypertensive therapy at all between January and 9 August 2026. Candesartan restarted 9 August at 4 mg, increased to 8 mg on 11 August. Full three-drug regimen from 12 August. Readings above are wrist-cuff measurements and may over-read."
             }
           ]
         },
@@ -308,11 +528,108 @@
             {
               "type": "list",
               "items": [
+                "The right temple pain and right leg pain on 13 August — sudden, one-sided, brief, with BP 195/123. Exclusion of a vascular or neurological cause.",
+                "24-hour ambulatory blood pressure monitoring. The lability and the non-dipping pattern are exactly what it is designed to catch, and spot readings are a poor guide to my actual load.",
                 "Repeat echocardiogram — has the left ventricular hypertrophy progressed since 2019?",
-                "24-hour ambulatory blood pressure monitoring.",
                 "End-organ review: renal function and urine ACR, ECG, fundoscopy.",
-                "The sleep disruption investigated in its own right, not only as a symptom of stress. Sleep-disordered breathing has not been excluded.",
-                "Whether short-term supported accommodation (PARC) is appropriate while housing remains unresolved. I was admitted to PARC in Warrnambool for approximately four weeks in late April 2025, so there is a prior admission on record."
+                "Renal function specifically. Three days of severe left-sided abdominal cramping from ~4 August preceded the blood pressure escalation and has not been investigated.",
+                "The chest X-ray result, and the right-sided pleuritic pain — deep, not tender to press, no worse on twisting, sharp on deep inspiration.",
+                "The persistent itchy rash on my right upper chest, present roughly three weeks, same side as the pain.",
+                "The sleep disruption investigated in its own right. Sleep-disordered breathing has not been excluded, and it is a common driver of hypertension that will not come down.",
+                "Whether an upper-arm cuff should replace the wrist cuff I have been using."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Current plan — Dr Clissold, 11 August",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Regimen",
+                  "v": "Aspirin 100 mg daily · Carvedilol 3.125 mg twice daily · Candesartan 8 mg mane. Commenced 12 August 2026."
+                },
+                {
+                  "k": "Rationale",
+                  "v": "Beta blocker plus ARB covers both the elevated baseline and the tachycardia. Carvedilol started low."
+                },
+                {
+                  "k": "REVIEW DATE",
+                  "v": "30 carvedilol tablets, no repeats, twice daily — approximately 15 days, running out around 26 August 2026. A review is expected before then. TO FILL — confirm booked."
+                },
+                {
+                  "k": "First dose",
+                  "v": "Taken sitting. No standing quickly for the following hour. Well hydrated. First-dose dizziness is the main risk, particularly after the dehydration of 11 August."
+                },
+                {
+                  "k": "Pulse caveat",
+                  "v": "Carvedilol blunts heart rate, so pulse becomes a less reliable signal. Keep logging it — the trend is what matters."
+                },
+                {
+                  "k": "Imaging",
+                  "v": "Chest X-ray. TO FILL — result."
+                },
+                {
+                  "k": "Anticipated",
+                  "v": "Troponin and full cardiac cycle if I present to ED. See the troponin-antibody note on Start here before ordering."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "alert",
+          "heading": "If any of this happens — call 000",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Managing at home on the night of 10 August with a support person on the property who is aware of the situation. These are the thresholds for stopping and calling an ambulance rather than reassessing."
+            },
+            {
+              "type": "list",
+              "items": [
+                "Chest pain or pressure",
+                "Worsening shortness of breath, or breathlessness lying flat",
+                "Severe or sudden headache",
+                "Vision changes — blurring, doubling, spots",
+                "Weakness or numbness on one side, facial droop, or trouble speaking",
+                "Confusion, or being told I am not making sense",
+                "Vomiting",
+                "Fainting, or near-fainting on standing"
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Do not drive. Get up slowly all night — sit on the edge before standing, light on before moving. Syncope on standing is the mechanism of the 17 December 2025 episode."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Booked and pending",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Echocardiogram",
+                  "v": "Thursday 20 August 2026, 4:00pm. Warrnambool Physicians Group, Suite 4, rear of St John of God Hospital. Ph 5562 9444. This answers the central open question: has the left ventricular hypertrophy progressed since 2019?"
+                },
+                {
+                  "k": "Medication review",
+                  "v": "Required before approximately 26 August 2026, when the carvedilol supply is exhausted. TO FILL — confirm booked."
+                },
+                {
+                  "k": "Transport",
+                  "v": "TO FILL — no driver's licence. Koroit to Warrnambool, 4pm Thursday. Arrange in advance."
+                },
+                {
+                  "k": "Ask on the day",
+                  "v": "Request a copy of the echocardiogram report, and ask that it be sent to Dr Clissold and to my GP."
+                }
               ]
             }
           ]
@@ -493,6 +810,41 @@
         },
         {
           "type": "panel",
+          "heading": "No current mental health plan",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "I have no current mental health care plan and no treating counsellor. My previous mental health social worker, Dirk Lynzaat of Onshore Counselling, has fully retired and is no longer registered."
+            },
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "The barrier",
+                  "v": "He advised (12 August 2026) that he is not aware of local counsellors who bulk bill under a Medicare referral, and that most charge a gap fee. He was unusual in accepting the Medicare rebate alone for people on Centrelink payments."
+                },
+                {
+                  "k": "Lead",
+                  "v": "South West Mind & Body (swmb.com.au) — counsellors with sound reputations, but a gap fee is expected."
+                },
+                {
+                  "k": "To ask",
+                  "v": "Whether a public community mental health place is available, which would not carry a gap fee. TO FILL — raise with Dr Clissold."
+                },
+                {
+                  "k": "Standing recommendation",
+                  "v": "Integrated, consistent psychiatric care plus trauma-directed psychological treatment. This has been the recommendation since March 2025 and has not been able to be sustained."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "The gap is financial and structural, not a matter of unwillingness. I have been asking."
+            }
+          ]
+        },
+        {
+          "type": "panel",
           "heading": "How I present, and what that does and doesn't mean",
           "blocks": [
             {
@@ -526,44 +878,48 @@
     "meds": {
       "eyebrow": "Reference",
       "title": "Medications",
-      "lede": "Candesartan 4 mg restarted 9 August 2026 on Dr Clissold's advice, after seven months on nothing. Three prior regimens documented below.",
+      "lede": "Three-drug regimen commenced 12 August 2026 after seven months untreated. Allergy: isosorbide mononitrate. Prior regimens documented below.",
       "blocks": [
         {
           "type": "alert",
-          "heading": "Currently taking nothing — and why",
+          "heading": "How I came to be untreated — read before assuming non-adherence",
           "blocks": [
-            {
-              "type": "para",
-              "text": "I am not on any medication and have not been since January 2026. Please read that in sequence rather than as non-adherence:"
-            },
             {
               "type": "timeline",
               "items": [
                 {
                   "when": "23 November 2025",
-                  "what": "Dr Clissold revised my regimen and gave me a written, dose-by-dose titration plan, stepping candesartan up gradually. Her note warned that increasing too fast could drop my pressure enough to cause fainting."
+                  "what": "Dr Clissold revised my regimen and issued a written, dose-by-dose titration plan. Her note warned that increasing too fast could drop my pressure enough to cause fainting."
                 },
                 {
                   "when": "17 December 2025",
-                  "what": "I passed out behind the wheel. Blood pressure was very low that day. It was a very hot day and I was dehydrated. Bloods later returned positive for THC — I had smoked the day before — and my licence was cancelled."
+                  "what": "I passed out behind the wheel. Blood pressure very low. Very hot day, dehydrated. Bloods later returned THC — I had smoked the day before — and my licence was cancelled."
                 },
                 {
                   "when": "January 2026",
-                  "what": "I stopped all medications."
+                  "what": "I stopped all medications following that episode."
                 },
                 {
-                  "when": "Since",
-                  "what": "Nothing restarted. Approximately seven months untreated at the time of this presentation, with known hypertension and left ventricular hypertrophy."
+                  "when": "January – August 2026",
+                  "what": "Seven months untreated, with known hypertension and left ventricular hypertrophy."
                 },
                 {
                   "when": "9 August 2026",
-                  "what": "Candesartan 4 mg recommenced on the advice of Dr Clissold, using medication retained from January. Second dose 5:00pm, 10 August. Deliberately low — one eighth of the previously prescribed dose — given the December syncope. Not yet at therapeutic effect."
+                  "what": "Candesartan 4 mg recommenced on Dr Clissold's advice, using medication retained from January."
+                },
+                {
+                  "when": "11 August 2026",
+                  "what": "Increased to 8 mg. Full three-drug regimen prescribed."
+                },
+                {
+                  "when": "12 August 2026",
+                  "what": "Aspirin, carvedilol and candesartan commenced."
                 }
               ]
             },
             {
               "type": "callout",
-              "text": "I stopped after a frightening adverse event, not because I disregarded the treatment. I have now restarted at a low dose under Dr Clissold's direction. I need help rebuilding the rest of the regimen safely, including rules for hot days and dehydration."
+              "text": "I stopped after a frightening adverse event on the medication, not because I disregarded it. I am back on treatment and I want to stay on it. What I need help with is the parts that keep breaking — continuity of prescribing, transport to a pharmacy, and rules for hot days."
             }
           ]
         },
@@ -575,12 +931,72 @@
               "type": "rows",
               "items": [
                 {
-                  "k": "Allergies",
-                  "v": "TO FILL — list, or write \"None known\". Do not leave blank."
+                  "k": "Isosorbide mononitrate",
+                  "v": "Headache. Recorded on prescription."
+                },
+                {
+                  "k": "Other allergies",
+                  "v": "TO FILL — list, or record \"None otherwise known\"."
                 },
                 {
                   "k": "Adverse event on record",
-                  "v": "Syncope while driving, 17 December 2025, on a combined regimen of amlodipine, candesartan and metoprolol. Contributing factors: extreme heat, dehydration, and cannabis use the preceding day."
+                  "v": "Syncope while driving, 17 December 2025, on amlodipine + candesartan + metoprolol. Contributing factors: extreme heat, dehydration, and cannabis use the preceding day."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Current regimen — from 12 August 2026",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Prescribed by Dr Anna Clissold, 11 August 2026, after five days of readings established both an elevated baseline and marked lability."
+            },
+            {
+              "type": "table",
+              "columns": [
+                "Medication",
+                "Dose",
+                "Frequency",
+                "Purpose"
+              ],
+              "rows": [
+                [
+                  "Aspirin",
+                  "100 mg",
+                  "Once daily",
+                  "Antiplatelet"
+                ],
+                [
+                  "Carvedilol",
+                  "3.125 mg",
+                  "**Twice daily**",
+                  "Beta blocker — baseline pressure and heart rate. Started low"
+                ],
+                [
+                  "Candesartan",
+                  "8 mg",
+                  "Morning",
+                  "ARB — blood pressure. Titrated up from 4 mg on 11 Aug"
+                ]
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Carvedilol: 30 tablets, no repeats, twice daily — approximately 15 days, exhausted around 26 August 2026. A review is expected before that date. With no GP appointment available until 1 October and no driver's licence, this must be booked early rather than at day 14."
+            },
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "First-dose precaution",
+                  "v": "Taken sitting, well hydrated, no standing quickly for the following hour."
+                },
+                {
+                  "k": "Monitoring caveat",
+                  "v": "Carvedilol blunts heart rate, so pulse becomes a less reliable indicator. Continue logging it — the trend is what matters, not the individual number."
                 }
               ]
             }
@@ -857,7 +1273,7 @@
                 },
                 {
                   "k": "Cannabis",
-                  "v": "Ongoing, reduced from heavier historical use, largely for anxiety. Raising it here deliberately: cannabis can cause postural hypotension in its own right, and I had used the day before the December syncope. Anyone rebuilding my antihypertensive regimen should have that in the picture."
+                  "v": "Ongoing, reduced from heavier historical use, largely for anxiety. Current state as at 10 August 2026: smoking reduced, one cannabis edible taken instead. Relevant clinically and stated deliberately — cannabis raises heart rate and blood pressure and can cause postural hypotension, an edible remains active for six to eight hours or longer, and I had used the day before the syncopal episode of 17 December 2025. Anyone interpreting my heart rate or rebuilding my antihypertensive regimen should have this in the picture."
                 },
                 {
                   "k": "Other",

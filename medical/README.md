@@ -304,3 +304,60 @@ The Geelong material sits with **Barwon Health**, under **Christopher Peter
 Greene**. South West Healthcare will not have it. That's a separate records
 request from the Warrnambool ones, and it's the admission that established you
 as resistant hypertension — worth having.
+
+
+---
+
+## Update log — 12 August 2026
+
+**The picture resolved into two separate problems.** Five days of readings, plus
+the 11 August pair, separated them cleanly:
+
+- **An elevated baseline of roughly 160/95 that does not dip overnight.**
+  12:01am on 12 August read 162/99 — essentially unchanged from nine hours
+  earlier. BP normally falls 10–20% overnight. Non-dipping is significant on
+  its own.
+- **Large reactive spikes on top of it.** 197/125 with a pulse of 114 at
+  1:30pm on 11 August, after 25 minutes seated and dehydrated. Down to 160/90,
+  pulse 91, within 40 minutes on rest and water alone. A sustained baseline
+  does not move 37/35 in 40 minutes.
+
+Both are on the page as distinct findings, because they need different answers.
+
+**Current regimen, from 12 August 2026** — prescribed by Dr Clissold on the
+11th: aspirin 100 mg daily, **carvedilol 3.125 mg twice daily**, candesartan
+8 mg mane. Beta blocker plus ARB covers both the baseline and the tachycardia.
+
+**ALLERGY NOW RECORDED: isosorbide mononitrate — headache.** This was the most
+important blank on the site. It's on the front page summary and the
+Medications page.
+
+**The Medications page no longer opens with "currently taking nothing."** It
+opens with a timeline showing how the seven untreated months happened —
+November plan, December syncope, January cessation, August restart. The order
+is the argument, and it now reads correctly at a glance.
+
+### Diary item that needs booking
+
+**Carvedilol runs out around 26 August 2026.** 30 tablets, no repeats, twice
+daily is roughly 15 days. Dr Clissold is expecting a review before then. With
+no GP available until 1 October and no driver's licence, this needs booking
+now, not at day 14. It's flagged `TO FILL` on the Right now page — mark it
+confirmed once it's in the diary.
+
+### New TO FILLs
+
+- **Chest X-ray result** — taken 11 August, outcome not recorded
+- **The right-sided pleuritic pain** — deep, not tender to press, no worse on
+  twisting, sharp on deep inspiration. Was it addressed?
+- **The rash** — right upper chest, three weeks, same side as the pain
+- **Upper-arm cuff** — all readings so far are wrist-cuff, which over-reads if
+  the wrist isn't at heart height. Worth confirming whether to switch
+- **Other allergies** — one is now recorded; confirm whether there are others
+
+### Still outstanding from earlier
+
+Koroit tenancy start (2021 or 2022) · date of the handwritten regimen · Geelong
+admission date · medical non-driving period · which January medications are
+still physically held · **renal function** (the left-sided cramping of ~4 August
+preceded the whole escalation and remains uninvestigated)
