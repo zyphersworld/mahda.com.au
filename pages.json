@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-15",
+  "updated": "2026-08-15",
   "pages": [
     {
       "id": "memoir",
@@ -38,20 +38,6 @@
       ]
     },
     {
-      "id": "rsc",
-      "rune": "⎔",
-      "kicker": "Developer tool",
-      "title": "jsonpath()",
-      "desc": "An inspector for JSON embedded in Next.js RSC payloads.",
-      "body": "<p><b>jsonpath()</b> is a small, single-file developer tool for pulling apart the JSON that Next.js embeds in its React Server Components (RSC) payloads. You give it a page URL and a dotted property path, and it resolves the value out of the server-rendered data — following <i>$ref</i> pointers, letting you walk the tree by hand, or handing back the whole parsed payload.</p>\n      <p>It runs entirely in the browser, with no build step and no dependencies. There is a tree explorer with breadcrumb navigation, a &ldquo;discover&rdquo; scan for likely content paths, and a share system that packs a whole config — or a pasted document — into a small PNG you can drag back in to restore the setup. Built for inspecting server-rendered data structures when you need to see exactly what shape the server sent.</p>\n      <p>It&rsquo;s a debugging utility — inspect only resources you&rsquo;re authorised to access, and respect each site&rsquo;s terms and copyright.</p>",
-      "links": [
-        {
-          "label": "Open jsonpath()",
-          "url": "https://mahda.com.au/rsc/"
-        }
-      ]
-    },
-    {
       "id": "pitstop",
       "rune": "⚑",
       "kicker": "Race-week hub",
@@ -76,6 +62,42 @@
         {
           "label": "Open the Reckoning Desk",
           "url": "https://mahda.com.au/reckoning-desk/"
+        }
+      ]
+    },
+    {
+      "id": "refuge",
+      "rune": "⛩",
+      "kicker": "A proposal",
+      "title": "A Place of Refuge",
+      "desc": "An independent, permanent refuge for survivors of institutional trauma.",
+      "body": "<p>This is a proposal for a permanent, independently governed <b>refuge for people who have experienced spiritual or institutional trauma</b> — at the hands of any church, school, or institution — and who have nowhere safe to go. A registered non-profit, run day to day by employed staff, open to anyone regardless of which institution caused the harm.</p>\n      <p>The argument behind it is simple: the existing systems deliver records, support and redress, but they produce no <i>secure place to be</i>. This is meant to be that place. It would be governed by an arm&rsquo;s-length board of health, clinical, governance and lived-experience people, all recruited independently. A founding constitutional term is fixed: the founder will not occupy resident accommodation — every dwelling is for a resident.</p>\n      <blockquote>The same hands and the same world that harmed me also made me. This is what I would build with them.</blockquote>\n      <p>It is a discussion draft, held quietly while the proper legal questions are worked through. Not yet a public campaign — a plan being done properly.</p>"
+    },
+    {
+      "id": "housing",
+      "rune": "☷",
+      "kicker": "An open matter",
+      "title": "The Waiting List",
+      "desc": "Living in a caravan while a priority housing application grinds on.",
+      "body": "<p>I am boarding in a caravan in Koroit. For eighteen months before that it was six placements — the instability itself is a consequence of past harm, and I&rsquo;ve put that on the record where it counts.</p>\n      <p>A priority housing application has been stalled for months. I&rsquo;ve got a formal complaint running with the Department of Families, Fairness and Housing — reference <b>CM0079923</b> — and I&rsquo;m pushing the same request through a caseworker at Salvos Connect, my solicitor, and two local MPs. The specific ask has been plain and unchanged: <i>Unit 2/10 Sturt Street, Koroit</i>, a place I lived from 2022 until February 2025, which has sat vacant since.</p>\n      <p>I keep this here not for sympathy but for the record — because a system that produces silence should at least be visible while it does it.</p>",
+      "links": [
+        {
+          "label": "Open the Waiting List",
+          "url": "https://mahda.com.au/waiting-list/"
+        }
+      ]
+    },
+    {
+      "id": "medical",
+      "rune": "⚕",
+      "kicker": "Emergency handover",
+      "title": "Medical Handover",
+      "desc": "A standing ED handover — the things a hospital needs to know, fast.",
+      "body": "<p>This is a plain, standing <b>emergency-department handover</b>: the things a hospital needs to know about me quickly, kept in one place so I don&rsquo;t have to explain them from a gurney. It exists because my cardiovascular history is complicated and two details in particular can go badly wrong if they&rsquo;re missed.</p>\n      <p><b>Two flags, first, always.</b> I have a <i>documented troponin-antibody false positive</i> — it must be raised before any bloods are taken. And I am <i>allergic to isosorbide mononitrate</i>.</p>\n      <p>Diagnoses on record: hypertensive cardiomyopathy, left ventricular hypertrophy, coronary microvascular dysfunction, chronic myocardial ischaemia. A 2019 angiogram excluded obstructive disease. I&rsquo;m under a current medication regimen prescribed by my treating doctor, with readings logged.</p>\n      <p>The live handover page carries the current detail; there&rsquo;s also an offline single-file version for when there&rsquo;s no signal. This panel is a signpost, not the document itself.</p>",
+      "links": [
+        {
+          "label": "Open the handover page",
+          "url": "https://mahda.com.au/medical/"
         }
       ]
     },
