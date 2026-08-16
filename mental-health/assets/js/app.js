@@ -1,15 +1,24 @@
 /* ==========================================================================
    app.js — Mental Health
-   Same architecture as the other mahda.com.au subfolder sites:
-     - content comes from same-origin pages.json
-     - PAGES_FALLBACK is a baked-in copy so the page still works over file://
+   mahda.com.au/mental-health/
+
+   Architecture matches the other subfolder sites:
+     - content from same-origin pages.json
+     - PAGES_FALLBACK baked in, so the page still works if pages.json 404s
+       or the site is opened straight off disk
      - hash router (#/id), six-livery switcher persisted to localStorage
+
    Extra here, borrowed from the medical handover site: a "Plain view"
-   high-contrast toggle and a copy-to-clipboard summary, both aimed at
-   someone reading this cold, possibly on a phone, possibly in a hurry.
+   high-contrast toggle and copy-to-clipboard, both aimed at someone
+   reading this cold, on a phone, possibly in a hurry.
    ========================================================================== */
 (function () {
   "use strict";
+
+  /* Deploy path, absolute. A relative path silently resolves against the
+     domain root when the visitor lands on /mental-health with no trailing
+     slash, which 404s every asset. */
+  var BASE = "/mental-health/";
 
   var PAGES_FALLBACK = {
     "meta": { "title": "Mental Health — Mahda Greene", "updated": "16 August 2026" },
@@ -28,14 +37,17 @@
       { "id": "help", "title": "If You're Trying to Help", "eyebrow": "Practical",
         "content": "<p class=\"lede\">Short version: say it plainly, once, and don't mistake calm for fine.</p><h3>Do</h3><ul><li>Take physical complaints seriously, blood pressure especially &mdash; I have a real cardiac history, and it's usually the more reliable signal.</li><li>Ask directly rather than guess. &ldquo;Have you slept? Have you eaten?&rdquo; gets further than &ldquo;are you okay?&rdquo;</li><li>Push for rest over reassurance. I don't need to hear the ideas are good. I need to hear it's time to stop for the night.</li><li>If I seem unusually calm, articulate and productive rather than obviously distressed, don't take that as evidence everything's fine. Read <a href=\"#/pattern\">The Pattern</a>.</li><li>Say the serious thing once, clearly. I'll hear it. I don't need it repeated four different ways.</li></ul><h3>Don't</h3><ul><li>Don't try to argue me out of something mid-flow. It doesn't work and it burns the conversation. Suggest sleep, food or a pause instead of debating the idea itself.</li><li>Don't assume high output means things are fine. For me it's frequently the opposite signal.</li><li>Don't sit on a real concern to keep things comfortable. Awkward and said once beats smooth and unsaid.</li></ul><p>If something is genuinely urgent, skip straight to <a href=\"#/contacts\">Who to Call</a>.</p>" },
       { "id": "contacts", "title": "Who to Call", "eyebrow": "Contacts",
-        "content": "<div class=\"contactcard urgent\"><p class=\"contactlabel\">Immediate danger &mdash; chest pain, breathlessness, confusion, safety concern</p><p class=\"contactnum\">000</p></div><div class=\"contactcard\"><p class=\"contactlabel\">South West Healthcare &mdash; Mental Health Triage (24/7, Warrnambool &amp; Glenelg region)</p><p class=\"contactnum\">1800 808 284</p><p class=\"contactnote\">This is the right first call for a mental health concern that isn't an emergency &mdash; not a last resort. If you're holding my phone because I've handed it to you, this is the number.</p></div><div class=\"contactcard\"><p class=\"contactlabel\">Nurse-on-Call (24/7, physical health &amp; triage)</p><p class=\"contactnum\">1300 60 60 24</p></div><div class=\"contactcard\"><p class=\"contactlabel\">Lifeline (24/7)</p><p class=\"contactnum\">13 11 14</p></div><div class=\"contactcard\"><p class=\"contactlabel\">My treating specialist &mdash; Specialist Outpatient Clinic, South West Healthcare</p><p class=\"contactnum\">(03) 5563 1256</p></div>" },
+        "content": "<div class=\"contactcard urgent\"><p class=\"contactlabel\">Immediate danger &mdash; chest pain, breathlessness, confusion, safety concern</p><p class=\"contactnum\"><a href=\"tel:000\">000</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">South West Healthcare &mdash; Mental Health Triage (24/7, Warrnambool &amp; Glenelg region)</p><p class=\"contactnum\"><a href=\"tel:1800808284\">1800 808 284</a></p><p class=\"contactnote\">This is the right first call for a mental health concern that isn't an emergency &mdash; not a last resort. If you're holding my phone because I've handed it to you, this is the number.</p></div><div class=\"contactcard\"><p class=\"contactlabel\">Nurse-on-Call (24/7, physical health &amp; triage)</p><p class=\"contactnum\"><a href=\"tel:1300606024\">1300 60 60 24</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">Lifeline (24/7)</p><p class=\"contactnum\"><a href=\"tel:131114\">13 11 14</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">My treating specialist &mdash; Specialist Outpatient Clinic, South West Healthcare</p><p class=\"contactnum\"><a href=\"tel:0355631256\">(03) 5563 1256</a></p></div>" },
       { "id": "faq", "title": "Common Questions", "eyebrow": "FAQ",
         "content": "<div class=\"faqitem\"><p class=\"faqq\">He seems completely fine, really sharp and productive &mdash; are you sure?</p><p class=\"faqa\">That's the pattern, not evidence against it. See <a href=\"#/pattern\">The Pattern</a>.</p></div><div class=\"faqitem\"><p class=\"faqq\">Should I call someone right now?</p><p class=\"faqa\">If there's a direct safety concern, yes &mdash; 000. Otherwise the mental health triage line is the right first call, not something to hold off on. See <a href=\"#/contacts\">Who to Call</a>.</p></div><div class=\"faqitem\"><p class=\"faqq\">Is this a diagnosis? Is it permanent?</p><p class=\"faqa\">No label here is final. This page describes an observed pattern, not a clinical diagnosis. That's between me and my treating team.</p></div><div class=\"faqitem\"><p class=\"faqq\">What do I actually say to him?</p><p class=\"faqa\">Plainly, and once. Repeating it four ways doesn't help &mdash; saying it clearly the first time does.</p></div><div class=\"faqitem\"><p class=\"faqq\">Why does this page exist instead of him just telling people?</p><p class=\"faqa\">Because writing it once, carefully, when it's easier to think clearly, works better than explaining it live, in the moment, when it usually isn't.</p></div>" }
     ]
   };
 
   var LIVERIES = ["vellum", "brass", "iron", "emerald", "sanctum", "sigil"];
-  var LIVERY_LABELS = { vellum: "Vellum", brass: "Brass", iron: "Iron", emerald: "Emerald", sanctum: "Sanctum", sigil: "Sigil" };
+  var LIVERY_LABELS = {
+    vellum: "Vellum", brass: "Brass", iron: "Iron",
+    emerald: "Emerald", sanctum: "Sanctum", sigil: "Sigil"
+  };
   var DEFAULT_LIVERY = "vellum";
   var LS_LIVERY = "mahda.mentalhealth.livery";
   var LS_PLAIN = "mahda.mentalhealth.plain";
@@ -51,12 +63,17 @@
   }
   function $(sel, root) { return (root || document).querySelector(sel); }
 
+  /* ---------------- livery + plain view ---------------- */
   function applyLivery(name) {
     var v = LIVERIES.indexOf(name) >= 0 ? name : DEFAULT_LIVERY;
     document.documentElement.setAttribute("data-livery", v);
     try { localStorage.setItem(LS_LIVERY, v); } catch (e) {}
-    var sw = $("#liveryLabel");
-    if (sw) sw.textContent = LIVERY_LABELS[v];
+    var lbl = $("#liveryLabel");
+    if (lbl) lbl.textContent = LIVERY_LABELS[v];
+    var swatches = document.querySelectorAll(".swatch");
+    for (var i = 0; i < swatches.length; i++) {
+      swatches[i].setAttribute("aria-pressed", swatches[i].dataset.livery === v ? "true" : "false");
+    }
   }
 
   function applyPlain(on) {
@@ -66,8 +83,10 @@
     if (btn) btn.setAttribute("aria-pressed", on ? "true" : "false");
   }
 
+  /* ---------------- rendering ---------------- */
   function buildNav() {
     var nav = $("#siteNav");
+    if (!nav) return;
     nav.innerHTML = "";
     DATA.nav.forEach(function (item) {
       var a = el("a", "navlink", item.label);
@@ -94,11 +113,10 @@
   function renderPage(id) {
     var page = findPage(id) || DATA.pages[0];
     var main = $("#pageBody");
-    var eyebrow = el("p", "eyebrow", page.eyebrow || "");
-    var h1 = el("h1", "pagetitle", page.title);
+    if (!main) return;
     main.innerHTML = "";
-    main.appendChild(eyebrow);
-    main.appendChild(h1);
+    if (page.eyebrow) main.appendChild(el("p", "eyebrow", page.eyebrow));
+    main.appendChild(el("h1", "pagetitle", page.title));
     var body = el("div", "pagecontent");
     body.innerHTML = page.content;
     main.appendChild(body);
@@ -107,16 +125,14 @@
     window.scrollTo(0, 0);
   }
 
+  /* ---------------- copy as text ---------------- */
   function buildSummaryText() {
-    var lines = [];
-    lines.push(DATA.meta.title);
-    lines.push("");
+    var lines = [DATA.meta.title, ""];
     DATA.pages.forEach(function (p) {
       lines.push("— " + p.title + " —");
       var tmp = document.createElement("div");
       tmp.innerHTML = p.content;
-      var text = tmp.textContent.replace(/\s+/g, " ").trim();
-      lines.push(text);
+      lines.push(tmp.textContent.replace(/\s+/g, " ").trim());
       lines.push("");
     });
     return lines.join("\n");
@@ -125,12 +141,12 @@
   function wireCopyButton() {
     var btn = $("#copySummary");
     if (!btn) return;
+    btn.dataset.label = btn.textContent;
     btn.addEventListener("click", function () {
       var text = buildSummaryText();
       var done = function () {
-        var orig = btn.textContent;
         btn.textContent = "Copied";
-        setTimeout(function () { btn.textContent = orig; }, 1600);
+        setTimeout(function () { btn.textContent = btn.dataset.label; }, 1600);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done, done);
@@ -151,9 +167,11 @@
   function wireLiverySwitcher() {
     var wrap = $("#liveryMenu");
     if (!wrap) return;
+    wrap.innerHTML = "";
     LIVERIES.forEach(function (name) {
       var b = el("button", "swatch swatch-" + name, "");
       b.type = "button";
+      b.dataset.livery = name;
       b.title = LIVERY_LABELS[name];
       b.setAttribute("aria-label", "Switch to " + LIVERY_LABELS[name] + " livery");
       b.addEventListener("click", function () { applyLivery(name); });
@@ -165,13 +183,14 @@
     var btn = $("#plainToggle");
     if (!btn) return;
     btn.addEventListener("click", function () {
-      var isPlain = document.documentElement.classList.contains("plain");
-      applyPlain(!isPlain);
+      applyPlain(!document.documentElement.classList.contains("plain"));
     });
   }
 
+  /* ---------------- boot ---------------- */
   function boot(data) {
-    DATA = data;
+    DATA = (data && data.pages && data.pages.length) ? data : PAGES_FALLBACK;
+
     buildNav();
     wireLiverySwitcher();
     wirePlainToggle();
@@ -183,16 +202,28 @@
     applyLivery(storedLivery || DEFAULT_LIVERY);
     applyPlain(storedPlain === "1");
 
-    router = new Router({ fallback: DATA.pages[0].id, onChange: renderPage });
+    router = new Router({ fallback: DATA.pages[0].id });
+
+    /* Every page gets a registered route. Without this the router falls
+       through to the fallback on every hash change and the nav renders
+       the same page forever — which is what was wrong with build one. */
+    DATA.pages.forEach(function (p) {
+      router.add(p.id, renderPage);
+    });
+
     router.start();
   }
 
   function init() {
-    fetch("assets/data/pages.json", { cache: "no-store" })
-      .then(function (r) { if (!r.ok) throw new Error("no pages.json"); return r.json(); })
+    fetch(BASE + "assets/data/pages.json", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("pages.json " + r.status); return r.json(); })
       .then(boot)
       .catch(function () { boot(PAGES_FALLBACK); });
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();

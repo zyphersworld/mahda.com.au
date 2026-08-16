@@ -4,11 +4,26 @@
     "updated": "16 August 2026"
   },
   "nav": [
-    { "id": "status", "label": "Right Now" },
-    { "id": "pattern", "label": "The Pattern" },
-    { "id": "help", "label": "How to Help" },
-    { "id": "contacts", "label": "Who to Call" },
-    { "id": "faq", "label": "Common Questions" }
+    {
+      "id": "status",
+      "label": "Right Now"
+    },
+    {
+      "id": "pattern",
+      "label": "The Pattern"
+    },
+    {
+      "id": "help",
+      "label": "How to Help"
+    },
+    {
+      "id": "contacts",
+      "label": "Who to Call"
+    },
+    {
+      "id": "faq",
+      "label": "Common Questions"
+    }
   ],
   "pages": [
     {
@@ -33,7 +48,7 @@
       "id": "contacts",
       "title": "Who to Call",
       "eyebrow": "Contacts",
-      "content": "<div class=\"contactcard urgent\"><p class=\"contactlabel\">Immediate danger — chest pain, breathlessness, confusion, safety concern</p><p class=\"contactnum\">000</p></div><div class=\"contactcard\"><p class=\"contactlabel\">South West Healthcare — Mental Health Triage (24/7, Warrnambool &amp; Glenelg region)</p><p class=\"contactnum\">1800 808 284</p><p class=\"contactnote\">This is the right first call for a mental health concern that isn't an emergency — not a last resort. If you're holding my phone because I've handed it to you, this is the number.</p></div><div class=\"contactcard\"><p class=\"contactlabel\">Nurse-on-Call (24/7, physical health &amp; triage)</p><p class=\"contactnum\">1300 60 60 24</p></div><div class=\"contactcard\"><p class=\"contactlabel\">Lifeline (24/7)</p><p class=\"contactnum\">13 11 14</p></div><div class=\"contactcard\"><p class=\"contactlabel\">My treating specialist — Specialist Outpatient Clinic, South West Healthcare</p><p class=\"contactnum\">(03) 5563 1256</p></div>"
+      "content": "<div class=\"contactcard urgent\"><p class=\"contactlabel\">Immediate danger — chest pain, breathlessness, confusion, safety concern</p><p class=\"contactnum\"><a href=\"tel:000\">000</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">South West Healthcare — Mental Health Triage (24/7, Warrnambool &amp; Glenelg region)</p><p class=\"contactnum\"><a href=\"tel:1800808284\">1800 808 284</a></p><p class=\"contactnote\">This is the right first call for a mental health concern that isn't an emergency — not a last resort. If you're holding my phone because I've handed it to you, this is the number.</p></div><div class=\"contactcard\"><p class=\"contactlabel\">Nurse-on-Call (24/7, physical health &amp; triage)</p><p class=\"contactnum\"><a href=\"tel:1300606024\">1300 60 60 24</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">Lifeline (24/7)</p><p class=\"contactnum\"><a href=\"tel:131114\">13 11 14</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">My treating specialist — Specialist Outpatient Clinic, South West Healthcare</p><p class=\"contactnum\"><a href=\"tel:0355631256\">(03) 5563 1256</a></p></div>"
     },
     {
       "id": "faq",
