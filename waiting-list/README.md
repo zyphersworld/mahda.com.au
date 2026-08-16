@@ -23,6 +23,28 @@ Change `pages.json` only. Update the `meta.updated` date every time you touch
 it — this page's whole credibility rests on being visibly current, since it's
 built to be handed to journalists, MP offices, and potentially the Ombudsman.
 
+## Analytics
+
+Google Analytics (GA4) is wired in but inactive — both `index.html` and
+`404.html` have a placeholder ID (`G-XXXXXXXXXX`) that needs replacing before
+it does anything:
+
+1. Create a free GA4 property at analytics.google.com (needs a Google login)
+2. Copy the Measurement ID it gives you (looks like `G-ABC1234XYZ`)
+3. Find-and-replace `G-XXXXXXXXXX` with that ID in both HTML files —
+   two occurrences in each file
+
+This is a single-page app (the hash router never triggers a real page
+reload), so basic GA4 would only ever record one visit total, never which
+sections people actually read. `assets/js/app.js` fires a virtual pageview
+on every section change to work around that — nothing to configure, it
+just works once the ID above is in place.
+
+Worth knowing: this page's likely readers include DFFH staff, an Ombudsman
+investigator, and journalists — people who sometimes notice and mind being
+tracked more than an average visitor. Not a reason not to run analytics,
+just worth being aware of.
+
 ## Keeping the reach numbers honest
 
 The Reach page states figures as read directly off the platform's own
@@ -44,7 +66,7 @@ can't be confirmed.
 Iron is the default deliberately — this is a ledger, not a proposal. The
 other five liveries are one click away and persist via localStorage.
 
-## Deliberately not included
+## Deliberately kept minimal
 
-No analytics, no tracking beyond Google Fonts. This page does not itself
-track its own visitors.
+No tracking beyond Google Fonts and the GA4 setup described above (inactive
+until you add your Measurement ID). No third-party scripts beyond those two.
