@@ -1,0 +1,226 @@
+/* ==========================================================================
+   styles.css — Mental Health
+   Six liveries as CSS custom properties on [data-livery], same pattern as
+   the other mahda.com.au subfolder sites. A "plain" mode (toggled on
+   <html>) simplifies type and contrast for someone reading this cold.
+   ========================================================================== */
+
+:root {
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  --font-body: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radius: 10px;
+  --maxw: 720px;
+}
+
+/* ---------- Liveries ---------- */
+html[data-livery="vellum"] {
+  --bg: #f5f0e6; --surface: #fffdf8; --text: #2b2620; --muted: #6b6255;
+  --accent: #a3762b; --accent-strong: #7d5a1f; --border: #ddd2ba; --urgent: #a23b2e;
+}
+html[data-livery="brass"] {
+  --bg: #221a10; --surface: #2c2216; --text: #f3e9d6; --muted: #c3b18c;
+  --accent: #d9a441; --accent-strong: #f0be5f; --border: #4a3a22; --urgent: #e06a52;
+}
+html[data-livery="iron"] {
+  --bg: #21252b; --surface: #2a2f36; --text: #e8ecef; --muted: #97a1aa;
+  --accent: #7fa0bf; --accent-strong: #a9c4dc; --border: #3a4148; --urgent: #e2836f;
+}
+html[data-livery="emerald"] {
+  --bg: #0e1e17; --surface: #142c1e; --text: #e3f0e7; --muted: #8fb29c;
+  --accent: #4caf7d; --accent-strong: #74c99c; --border: #2f5340; --urgent: #e2836f;
+}
+html[data-livery="sanctum"] {
+  --bg: #191631; --surface: #221d40; --text: #e9e6f5; --muted: #a79fcf;
+  --accent: #9585e0; --accent-strong: #b6aaf0; --border: #3a3468; --urgent: #e88fb0;
+}
+html[data-livery="sigil"] {
+  --bg: #1b151f; --surface: #251a29; --text: #f3e6ee; --muted: #c398b3;
+  --accent: #e0499b; --accent-strong: #f07cb6; --border: #3a2534; --urgent: #ff8a6b;
+}
+
+/* ---------- Reset-ish ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .25s ease, color .25s ease;
+}
+a { color: var(--accent-strong); text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent-strong); outline-offset: 2px; }
+
+/* ---------- Header ---------- */
+.sitehead {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.sitehead-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 20px 0;
+}
+.sitetitle {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin: 0 0 2px;
+}
+.sitesub {
+  color: var(--muted);
+  font-size: .92rem;
+  margin: 0 0 16px;
+}
+.toolrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 12px;
+}
+.liverywrap { display: flex; align-items: center; gap: 8px; }
+#liveryMenu { display: flex; gap: 6px; }
+.swatch {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 1px solid var(--border);
+  cursor: pointer; padding: 0;
+}
+.swatch-vellum { background: #a3762b; }
+.swatch-brass { background: #d9a441; }
+.swatch-iron { background: #7fa0bf; }
+.swatch-emerald { background: #4caf7d; }
+.swatch-sanctum { background: #9585e0; }
+.swatch-sigil { background: #e0499b; }
+#liveryLabel { font-size: .82rem; color: var(--muted); min-width: 52px; }
+
+.toolbtn {
+  font-size: .82rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.toolbtn:hover { border-color: var(--accent); }
+.toolbtn[aria-pressed="true"] { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+nav#siteNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  padding: 4px 0 16px;
+}
+.navlink {
+  font-size: .92rem;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+}
+.navlink:hover { color: var(--text); }
+.navlink.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+
+/* ---------- Main ---------- */
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 36px 20px 80px;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .74rem;
+  color: var(--accent-strong);
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+.pagetitle {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  margin: 0 0 22px;
+}
+.pagecontent p { margin: 0 0 16px; }
+.pagecontent .lede { font-size: 1.08rem; color: var(--text); }
+.pagecontent h3 { font-family: var(--font-display); font-size: 1.15rem; margin: 28px 0 10px; }
+.pagecontent ul { margin: 0 0 16px; padding-left: 22px; }
+.pagecontent li { margin-bottom: 8px; }
+
+/* Status box on the home page */
+.statusbox {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin: 0 0 20px;
+}
+.statuslabel {
+  margin: 0 0 6px;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.statusdate { text-transform: none; letter-spacing: 0; }
+.statustext { margin: 0; font-size: 1.02rem; }
+
+/* Contact cards */
+.contactcard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+.contactcard.urgent { border-color: var(--urgent); border-left: 4px solid var(--urgent); }
+.contactlabel { margin: 0 0 4px; font-size: .88rem; color: var(--muted); }
+.contactnum { margin: 0; font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; }
+.contactnote { margin: 8px 0 0; font-size: .88rem; color: var(--muted); }
+
+/* FAQ */
+.faqitem { margin-bottom: 20px; }
+.faqq { font-weight: 700; margin: 0 0 4px; }
+.faqa { margin: 0; color: var(--text); }
+
+/* Copy button row */
+.copyrow { margin-top: 32px; }
+#copySummary {
+  font-size: .85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+#copySummary:hover { border-color: var(--accent); }
+
+/* ---------- Plain view ---------- */
+html.plain body { font-size: 1.12rem; line-height: 1.75; }
+html.plain .pagetitle { font-size: 1.8rem; }
+html.plain .pagecontent .lede { font-size: 1.15rem; }
+html.plain .contactnum { font-size: 1.6rem; }
+html.plain #liveryMenu { display: none; }
+html.plain .liverywrap #liveryLabel { display: none; }
+
+footer.sitefoot {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px 60px;
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+@media (max-width: 480px) {
+  .pagetitle { font-size: 1.6rem; }
+  .toolrow { gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
