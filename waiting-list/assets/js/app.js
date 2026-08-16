@@ -147,10 +147,17 @@
     main.setAttribute('tabindex', '-1');
 
     // Track each section as its own virtual pageview — this is a single-page
-    // app, so without this GA only ever sees one visit, never which sections
-    // people actually read. No-ops safely if analytics isn't configured yet.
-    if (typeof gtag === 'function') {
-      gtag('event', 'page_view', {
+    // app, so without this, analytics only ever sees one visit, never which
+    // sections people actually read. Pushes to the dataLayer (the GTM way),
+    // not gtag() — GTM's base snippet doesn't define a gtag() function.
+    // IMPORTANT: this push alone does nothing in GA4 until a matching
+    // trigger is set up inside the GTM container itself — a Custom Event
+    // trigger listening for "virtual_page_view", firing a GA4 Event or
+    // Page View tag. That's a one-time setup inside tagmanager.google.com,
+    // not something this code can do on its own.
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'virtual_page_view',
         page_title: pg.title,
         page_path: '/waiting-list/#/' + pg.id
       });

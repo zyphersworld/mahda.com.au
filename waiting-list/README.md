@@ -1,7 +1,7 @@
 # The Waiting List — site folder
 
-Drop this whole `reckoning/` folder into the web root so it serves at
-`mahda.com.au/reckoning/`. No build step, no dependencies, all links relative.
+Drop this whole `waiting-list/` folder into the web root so it serves at
+`mahda.com.au/waiting-list/`. No build step, no dependencies, all links relative.
 Same engine as the medical and refuge sites: `pages.json` drives content, a
 hash router handles navigation, six liveries via CSS variables (Iron is the
 default here — this page is meant to read as a hard, factual ledger, not a
@@ -9,7 +9,7 @@ polished pitch).
 
 ## Files
 
-    reckoning/
+    waiting-list/
       index.html                 shell only — no copy lives here
       404.html
       pages.json                 ALL editable copy
@@ -25,25 +25,24 @@ built to be handed to journalists, MP offices, and potentially the Ombudsman.
 
 ## Analytics
 
-Google Analytics (GA4) is wired in but inactive — both `index.html` and
-`404.html` have a placeholder ID (`G-XXXXXXXXXX`) that needs replacing before
-it does anything:
+Google Tag Manager is installed and live — container `GTM-NL6F28VS`, the
+same one used on the Christian Brothers insolvency site. Both `index.html`
+and `404.html` have the standard two-part GTM snippet: the script in
+`<head>` and the `<noscript>` iframe immediately after `<body>`.
 
-1. Create a free GA4 property at analytics.google.com (needs a Google login)
-2. Copy the Measurement ID it gives you (looks like `G-ABC1234XYZ`)
-3. Find-and-replace `G-XXXXXXXXXX` with that ID in both HTML files —
-   two occurrences in each file
+Because this is a single-page app (the hash router never triggers a real
+page reload), a bare GTM install only ever sees one page view per visit.
+`assets/js/app.js` pushes a `virtual_page_view` event to `dataLayer` on
+every section change to work around that.
 
-This is a single-page app (the hash router never triggers a real page
-reload), so basic GA4 would only ever record one visit total, never which
-sections people actually read. `assets/js/app.js` fires a virtual pageview
-on every section change to work around that — nothing to configure, it
-just works once the ID above is in place.
-
-Worth knowing: this page's likely readers include DFFH staff, an Ombudsman
-investigator, and journalists — people who sometimes notice and mind being
-tracked more than an average visitor. Not a reason not to run analytics,
-just worth being aware of.
+**One thing this code can't do on its own:** that dataLayer push means
+nothing in GA4 until a matching trigger exists inside the GTM container
+itself — a Custom Event trigger listening for `virtual_page_view`, wired to
+fire a GA4 Page View or Event tag. That's a one-time setup inside
+tagmanager.google.com, not something in this codebase. If it's already
+configured for the other site sharing this container, section views here
+should start showing up the same way. If not, that's the one manual step
+left.
 
 ## Keeping the reach numbers honest
 
