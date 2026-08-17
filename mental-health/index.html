@@ -1,41 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" data-livery="vellum">
+<html lang="en-AU" data-theme="vellum">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Right Now</title>
+<meta name="description" content="A direct explanation, so I don't have to give it in person right now.">
 <meta name="robots" content="noindex, nofollow">
-<title>Mental Health — Mahda Greene</title>
-<link rel="stylesheet" href="/mental-health/assets/css/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/liveries.css">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
 
-<header class="sitehead">
-  <div class="sitehead-inner">
-    <p class="sitetitle">Mental Health</p>
-    <p class="sitesub">A page to send someone, instead of explaining it live.</p>
+<a class="skip" href="#main">Skip to content</a>
+<div class="theme-fade" aria-hidden="true"></div>
 
-    <div class="toolrow">
-      <div class="liverywrap">
-        <div id="liveryMenu"></div>
-        <span id="liveryLabel">Vellum</span>
-      </div>
-      <button id="plainToggle" class="toolbtn" type="button" aria-pressed="false">Plain view</button>
-    </div>
-
-    <nav id="siteNav" aria-label="Section navigation"></nav>
+<div class="docket">
+  <div class="wrap">
+    <span><b id="docket-status">Personal, unlisted</b></span>
+    <span>Updated <b id="docket-updated">17 August 2026</b></span>
+    <span class="spacer"></span>
+    <span class="liveries" id="liveries" role="group" aria-label="Livery"></span>
   </div>
-</header>
+</div>
 
-<main id="pageBody"></main>
+<div class="wrap">
 
-<footer class="sitefoot">
-  <div class="copyrow">
-    <button id="copySummary" type="button">Copy full page as text</button>
-  </div>
-  <p>Unlisted — shared only with people I send the link to directly.</p>
-</footer>
+  <header class="masthead">
+    <p class="eyebrow">Personal &middot; direct link only</p>
+    <h1 id="mast-title">Right Now</h1>
+    <p class="standfirst" id="mast-standfirst">A direct explanation, so I don't have to give it in person right now.</p>
+    <div class="knot" aria-hidden="true"></div>
+  </header>
 
-<script src="/mental-health/assets/js/router.js"></script>
-<script src="/mental-health/assets/js/app.js"></script>
+  <nav class="plaques" id="nav" aria-label="Sections"></nav>
+
+  <main id="main"></main>
+
+  <footer class="foot">
+    <p>Mahda Christopher Greene &middot; Koroit, Victoria &middot; <a href="mailto:mahdagreenemoon@gmail.com">mahdagreenemoon@gmail.com</a></p>
+  </footer>
+
+</div>
+
+<script src="assets/js/app.js"></script>
 </body>
 </html>

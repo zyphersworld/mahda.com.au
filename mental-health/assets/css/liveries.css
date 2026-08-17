@@ -1,0 +1,141 @@
+/* ==========================================================================
+   liveries.css — six-livery system, same tokens as mahda.com.au / gasc /
+   ekklesia / medical.
+
+   Default here is VELLUM. This page is a public-facing proposal that will be
+   read by council officers, MPs and prospective board members, and printed.
+   Iron remains available and is one click away.
+
+   Applied via [data-theme] on <html>:
+     vellum   → aged paper (default)
+     brass    → steampunk copper + verdigris
+     iron     → dark iron & ember
+     emerald  → Celtic green & gold
+     sanctum  → deep indigo/violet
+     sigil    → black + chaos-magenta
+   ========================================================================== */
+
+:root,
+[data-theme="vellum"] {
+  --bg:        #efe7d4;
+  --bg-2:      #e4d9c0;
+  --panel:     #f7f1e2;
+  --panel-2:   #ece2ca;
+  --ink:       #241f18;
+  --ink-2:     #4a4136;
+  --muted:     #7c705c;
+  --rule:      #c8b894;
+  --rule-soft: #ddd0b1;
+  --accent:    #8a2b16;
+  --accent-2:  #b8863a;
+  --ok:        #3f6b3a;
+  --warn:      #8a5a12;
+  --shadow:    0 1px 0 rgba(255,255,255,.6), 0 10px 26px rgba(58,44,20,.13);
+  --grain:     .05;
+}
+
+[data-theme="brass"] {
+  --bg:        #241c14;
+  --bg-2:      #1b150f;
+  --panel:     #33281c;
+  --panel-2:   #3d3022;
+  --ink:       #f2e2c4;
+  --ink-2:     #d8c39c;
+  --muted:     #a08f70;
+  --rule:      #6e5634;
+  --rule-soft: #4c3c24;
+  --accent:    #d9a441;
+  --accent-2:  #5fa38c;
+  --ok:        #7fb08a;
+  --warn:      #e0a55c;
+  --shadow:    0 1px 0 rgba(255,220,160,.07), 0 12px 30px rgba(0,0,0,.5);
+  --grain:     .07;
+}
+
+[data-theme="iron"] {
+  --bg:        #16181a;
+  --bg-2:      #101214;
+  --panel:     #202427;
+  --panel-2:   #272c30;
+  --ink:       #e6e9ec;
+  --ink-2:     #c2c8ce;
+  --muted:     #8b949c;
+  --rule:      #3a4148;
+  --rule-soft: #2a3035;
+  --accent:    #d1553a;
+  --accent-2:  #7f9bb0;
+  --ok:        #79a884;
+  --warn:      #d79a4a;
+  --shadow:    0 1px 0 rgba(255,255,255,.04), 0 12px 30px rgba(0,0,0,.55);
+  --grain:     .06;
+}
+
+[data-theme="emerald"] {
+  --bg:        #0f1c16;
+  --bg-2:      #0a1410;
+  --panel:     #16281f;
+  --panel-2:   #1d3327;
+  --ink:       #e7f0e6;
+  --ink-2:     #c3d6c4;
+  --muted:     #86a08b;
+  --rule:      #2f5340;
+  --rule-soft: #23402f;
+  --accent:    #cba43f;
+  --accent-2:  #5fae86;
+  --ok:        #74c295;
+  --warn:      #d3a94e;
+  --shadow:    0 1px 0 rgba(255,255,255,.04), 0 12px 30px rgba(0,0,0,.5);
+  --grain:     .06;
+}
+
+[data-theme="sanctum"] {
+  --bg:        #14122a;
+  --bg-2:      #0e0d1e;
+  --panel:     #1e1b3c;
+  --panel-2:   #262249;
+  --ink:       #e8e5f7;
+  --ink-2:     #c6c1e4;
+  --muted:     #8d87b4;
+  --rule:      #3a3468;
+  --rule-soft: #2b2650;
+  --accent:    #c9a24a;
+  --accent-2:  #8f7fd6;
+  --ok:        #8fbfa8;
+  --warn:      #d0a355;
+  --shadow:    0 1px 0 rgba(255,255,255,.05), 0 12px 30px rgba(0,0,0,.55);
+  --grain:     .07;
+}
+
+[data-theme="sigil"] {
+  --bg:        #0b0b0d;
+  --bg-2:      #050506;
+  --panel:     #151518;
+  --panel-2:   #1c1c21;
+  --ink:       #f0eef2;
+  --ink-2:     #cfc9d4;
+  --muted:     #8b8494;
+  --rule:      #33303a;
+  --rule-soft: #262329;
+  --accent:    #d4358f;
+  --accent-2:  #6fd0c7;
+  --ok:        #6fd0a2;
+  --warn:      #d99a3c;
+  --shadow:    0 1px 0 rgba(255,255,255,.05), 0 12px 34px rgba(0,0,0,.7);
+  --grain:     .08;
+}
+
+/* Crossfade overlay used when switching livery ------------------------------ */
+.theme-fade {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity .22s ease;
+}
+.theme-fade.on { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-fade { transition: none; }
+}

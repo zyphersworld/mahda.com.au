@@ -3,7 +3,7 @@
     "mark": "M",
     "name": "Medical Handover",
     "sub": "Mahda Christopher Greene",
-    "updated": "13 August 2026, evening — ED presentation",
+    "updated": "17 August 2026 — following the 15–16 August crisis",
     "default": "start"
   },
   "nav": [
@@ -145,11 +145,46 @@
     "current": {
       "eyebrow": "Active episode",
       "title": "Right now",
-      "lede": "The current picture as at the evening of 13 August 2026, including tonight's episode.",
+      "lede": "The current picture as at 17 August 2026, including the crisis overnight 15–16 August.",
       "blocks": [
         {
           "type": "alert",
-          "heading": "Tonight — 13 August, evening. This is why I am presenting.",
+          "heading": "15–16 August — the most significant episode to date",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Readings",
+                  "v": "Sustained hypertensive crisis, roughly 198/128 down to 189/137 across 12+ hours, minimally responsive to medication already in the regimen."
+                },
+                {
+                  "k": "Alongside",
+                  "v": "Approximately 48 hours of dissociation and physical unsteadiness — constant, not intermittent, described as swaying/unsteady on my feet throughout."
+                },
+                {
+                  "k": "Context",
+                  "v": "Preceded by roughly two weeks of high-intensity, low-sleep parallel work across several projects at once. Spent the night of 15–16 August alone, overnight, in a church building — by choice, undisclosed in advance. Approximately four hours' sleep."
+                },
+                {
+                  "k": "Disclosed",
+                  "v": "Told my treating specialist directly that this is beyond what she alone can manage. She agreed. Referred to Jayce, Warrnambool Adult Mental Health Team, for a formal plan. Appointment pending."
+                },
+                {
+                  "k": "Also raised",
+                  "v": "Periods of memory gaps for my own recent actions, and weeks that felt fuzzy or dream-like — raised with my specialist as part of the same disclosure, being assessed rather than self-diagnosed."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "This episode is now the most clinically significant thing on this page. The 13 August entry below is kept as the prior episode, not superseded or retracted."
+            }
+          ]
+        },
+        {
+          "type": "alert",
+          "heading": "13 August, evening — earlier episode, same fortnight",
           "blocks": [
             {
               "type": "rows",
@@ -785,12 +820,20 @@
                   "v": "Survivor of historical institutional abuse. Currently a civil litigant in related proceedings."
                 },
                 {
+                  "k": "Also relevant",
+                  "v": "Ongoing grief connected to the end of a long-term caregiving role and relationship, not yet fully processed. Surfaced directly this week."
+                },
+                {
                   "k": "Current",
-                  "v": "Two weeks of severely disrupted sleep and rapid emotional dysregulation."
+                  "v": "Managing an acute exacerbation. Overnight 15–16 August: a sustained hypertensive crisis and roughly 48 hours of dissociation and physical unsteadiness, following approximately two weeks of markedly high-intensity, low-sleep output across multiple concurrent projects."
                 },
                 {
                   "k": "Psychiatric report",
                   "v": "Dr Winton-Brown, completed 26 March 2025. The most comprehensive assessment on record. Held by me and by my solicitor."
+                },
+                {
+                  "k": "Memory",
+                  "v": "Periods of memory gaps for my own recent actions — finding work I'd started with no recollection of starting it, alongside weeks that felt fuzzy or dream-like. Raised directly with my treating specialist and being assessed as part of the current referral. Not self-diagnosed; not settled."
                 },
                 {
                   "k": "Prior admissions",
@@ -810,17 +853,17 @@
         },
         {
           "type": "panel",
-          "heading": "No current mental health plan",
+          "heading": "Mental health plan — now in progress",
           "blocks": [
             {
               "type": "para",
-              "text": "I have no current mental health care plan and no treating counsellor. My previous mental health social worker, Dirk Lynzaat of Onshore Counselling, has fully retired and is no longer registered."
+              "text": "I disclosed the scale of what's been happening to my treating specialist directly on 16 August, and we agree a formal plan is needed. I've been referred back to Jayce at Warrnambool Adult Mental Health Team. Appointment pending — ask me or check with South West Healthcare for current status."
             },
             {
               "type": "rows",
               "items": [
                 {
-                  "k": "The barrier",
+                  "k": "Why there wasn’t one until now",
                   "v": "He advised (12 August 2026) that he is not aware of local counsellors who bulk bill under a Medicare referral, and that most charge a gap fee. He was unusual in accepting the Medicare rebate alone for people on Centrelink payments."
                 },
                 {
@@ -853,7 +896,9 @@
                 "I am articulate, organised, and I produce a lot of work. None of that means I'm stable. It has repeatedly meant I get deprioritised against people who present less well with comparable need.",
                 "I can give a clear, calm account of very bad circumstances. That's practice, not distance from them.",
                 "Re-telling my history is itself costly. If it's already in my file, please read it there rather than asking me to perform it again.",
-                "My creative and technical work is load-bearing — it's how I regulate. Interruptions to it are not the loss of a hobby."
+                "My creative and technical work is load-bearing — it's how I regulate. Interruptions to it are not the loss of a hobby.",
+                "The output itself has a documented shape worth knowing: parallel project count across creative, technical, legal and advocacy work grew from roughly three concurrent threads in mid-June to eight from late July onward, with after-midnight working sessions clustering in the two highest-intensity weeks. The largest single piece of work in the whole period was completed on 15 August — the day before the crisis. That sequence is on record, not guessed at.",
+                "I've also caught it myself, twice, before the crisis: paused a planned in-person meeting when I recognised I needed to slow down, and separately told my daughter directly I was managing something that meant taking things slowly. Worth knowing there's some retained self-awareness inside the pattern, not just the pattern itself."
               ]
             }
           ]

@@ -1,229 +1,194 @@
 /* ==========================================================================
-   app.js — Mental Health
-   mahda.com.au/mental-health/
-
-   Architecture matches the other subfolder sites:
-     - content from same-origin pages.json
-     - PAGES_FALLBACK baked in, so the page still works if pages.json 404s
-       or the site is opened straight off disk
-     - hash router (#/id), six-livery switcher persisted to localStorage
-
-   Extra here, borrowed from the medical handover site: a "Plain view"
-   high-contrast toggle and copy-to-clipboard, both aimed at someone
-   reading this cold, on a phone, possibly in a hurry.
+   app.js — Right Now (mental health status page)
+   Same architecture as mahda.com.au / gasc / ekklesia / medical:
+     · same-origin pages.json drives all content
+     · a baked-in FALLBACK array so the page works from file:// with no server
+     · hash router (#/id) so every section is shareable and back works
+     · six-livery switcher with crossfade, persisted to localStorage
+   Editing copy: change pages.json only. Nothing here needs touching.
    ========================================================================== */
 (function () {
-  "use strict";
+  'use strict';
 
-  /* Deploy path, absolute. A relative path silently resolves against the
-     domain root when the visitor lands on /mental-health with no trailing
-     slash, which 404s every asset. */
-  var BASE = "/mental-health/";
+  var LIVERIES = [
+    { id: 'vellum',  label: 'Vellum',  swatch: '#efe7d4' },
+    { id: 'brass',   label: 'Brass',   swatch: '#d9a441' },
+    { id: 'iron',    label: 'Iron',    swatch: '#3a4148' },
+    { id: 'emerald', label: 'Emerald', swatch: '#2f5340' },
+    { id: 'sanctum', label: 'Sanctum', swatch: '#3a3468' },
+    { id: 'sigil',   label: 'Sigil',   swatch: '#d4358f' }
+  ];
+  var DEFAULT_LIVERY = 'iron';
+  var STORE_KEY = 'mentalhealth.livery';
 
-  var PAGES_FALLBACK = {
-    "meta": { "title": "Mental Health — Mahda Greene", "updated": "16 August 2026" },
-    "nav": [
-      { "id": "status", "label": "Right Now" },
-      { "id": "pattern", "label": "The Pattern" },
-      { "id": "help", "label": "How to Help" },
-      { "id": "contacts", "label": "Who to Call" },
-      { "id": "faq", "label": "Common Questions" }
-    ],
-    "pages": [
-      { "id": "status", "title": "Right Now", "eyebrow": "Start here",
-        "content": "<p class=\"lede\">If I sent you this link instead of explaining something out loud, this is why. It's easier for me to write this once, carefully, than to say it well in the middle of things.</p><div class=\"statusbox\"><p class=\"statuslabel\">Current status &mdash; <span class=\"statusdate\">[update this date]</span></p><p class=\"statustext\">[One line, plain: what's going on right now, and what's being done about it. Edit this block whenever you send the link &mdash; everything else on the site stays as-is.]</p></div><p>Everything else here is permanent background &mdash; the pattern, how to actually help, and who to call. It doesn't change day to day, so it's safe to send this link to someone once and not worry about it going stale.</p><p>Start with <a href=\"#/pattern\">The Pattern</a> if this is the first time someone's reading it. Go straight to <a href=\"#/contacts\">Who to Call</a> if something's urgent.</p>" },
-      { "id": "pattern", "title": "The Pattern, Plainly", "eyebrow": "Background",
-        "content": "<p class=\"lede\">This isn't a diagnosis. I'm not qualified to give myself one and I'm not going to put a label here that hasn't come from someone who is. This is what I've observed, described plainly.</p><p>I go through periods &mdash; this current one has been building for weeks &mdash; where output goes up a lot. Several projects at once, across completely different areas, all of them getting finished rather than just started. Sleep need drops, and it doesn't register as tiredness the way it normally would.</p><p><strong>The part people usually miss: it doesn't look like a crisis from the outside.</strong> It looks like I'm doing unusually well &mdash; calm, fluent, on top of things. That smoothness is the signal, not the absence of one. If I seem more capable than usual and you know something's off underneath, trust the second thing.</p><p>My body tends to register it even when I don't &mdash; blood pressure that won't settle, especially overnight, has been the clearest physical marker so far. I have a documented cardiac history that makes this more than a background detail.</p><p>I'm working with my treating specialist and reconnecting with the local Adult Mental Health Team on a proper plan. This page will be updated as that develops.</p>" },
-      { "id": "help", "title": "If You're Trying to Help", "eyebrow": "Practical",
-        "content": "<p class=\"lede\">Short version: say it plainly, once, and don't mistake calm for fine.</p><h3>Do</h3><ul><li>Take physical complaints seriously, blood pressure especially &mdash; I have a real cardiac history, and it's usually the more reliable signal.</li><li>Ask directly rather than guess. &ldquo;Have you slept? Have you eaten?&rdquo; gets further than &ldquo;are you okay?&rdquo;</li><li>Push for rest over reassurance. I don't need to hear the ideas are good. I need to hear it's time to stop for the night.</li><li>If I seem unusually calm, articulate and productive rather than obviously distressed, don't take that as evidence everything's fine. Read <a href=\"#/pattern\">The Pattern</a>.</li><li>Say the serious thing once, clearly. I'll hear it. I don't need it repeated four different ways.</li></ul><h3>Don't</h3><ul><li>Don't try to argue me out of something mid-flow. It doesn't work and it burns the conversation. Suggest sleep, food or a pause instead of debating the idea itself.</li><li>Don't assume high output means things are fine. For me it's frequently the opposite signal.</li><li>Don't sit on a real concern to keep things comfortable. Awkward and said once beats smooth and unsaid.</li></ul><p>If something is genuinely urgent, skip straight to <a href=\"#/contacts\">Who to Call</a>.</p>" },
-      { "id": "contacts", "title": "Who to Call", "eyebrow": "Contacts",
-        "content": "<div class=\"contactcard urgent\"><p class=\"contactlabel\">Immediate danger &mdash; chest pain, breathlessness, confusion, safety concern</p><p class=\"contactnum\"><a href=\"tel:000\">000</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">South West Healthcare &mdash; Mental Health Triage (24/7, Warrnambool &amp; Glenelg region)</p><p class=\"contactnum\"><a href=\"tel:1800808284\">1800 808 284</a></p><p class=\"contactnote\">This is the right first call for a mental health concern that isn't an emergency &mdash; not a last resort. If you're holding my phone because I've handed it to you, this is the number.</p></div><div class=\"contactcard\"><p class=\"contactlabel\">Nurse-on-Call (24/7, physical health &amp; triage)</p><p class=\"contactnum\"><a href=\"tel:1300606024\">1300 60 60 24</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">Lifeline (24/7)</p><p class=\"contactnum\"><a href=\"tel:131114\">13 11 14</a></p></div><div class=\"contactcard\"><p class=\"contactlabel\">My treating specialist &mdash; Specialist Outpatient Clinic, South West Healthcare</p><p class=\"contactnum\"><a href=\"tel:0355631256\">(03) 5563 1256</a></p></div>" },
-      { "id": "faq", "title": "Common Questions", "eyebrow": "FAQ",
-        "content": "<div class=\"faqitem\"><p class=\"faqq\">He seems completely fine, really sharp and productive &mdash; are you sure?</p><p class=\"faqa\">That's the pattern, not evidence against it. See <a href=\"#/pattern\">The Pattern</a>.</p></div><div class=\"faqitem\"><p class=\"faqq\">Should I call someone right now?</p><p class=\"faqa\">If there's a direct safety concern, yes &mdash; 000. Otherwise the mental health triage line is the right first call, not something to hold off on. See <a href=\"#/contacts\">Who to Call</a>.</p></div><div class=\"faqitem\"><p class=\"faqq\">Is this a diagnosis? Is it permanent?</p><p class=\"faqa\">No label here is final. This page describes an observed pattern, not a clinical diagnosis. That's between me and my treating team.</p></div><div class=\"faqitem\"><p class=\"faqq\">What do I actually say to him?</p><p class=\"faqa\">Plainly, and once. Repeating it four ways doesn't help &mdash; saying it clearly the first time does.</p></div><div class=\"faqitem\"><p class=\"faqq\">Why does this page exist instead of him just telling people?</p><p class=\"faqa\">Because writing it once, carefully, when it's easier to think clearly, works better than explaining it live, in the moment, when it usually isn't.</p></div>" }
-    ]
-  };
+  /* Baked fallback — generated from pages.json at build time so the page still
+     works when opened directly from disk. If you edit pages.json on the server,
+     this copy goes stale; that only affects file:// preview. */
+  var FALLBACK = {"meta": {"title": "Right Now", "standfirst": "A direct explanation, so I don't have to give it in person right now.", "status": "Personal, unlisted", "version": "v2", "updated": "17 August 2026"}, "pages": [{"id": "home", "nav": "Right now", "title": "Right now", "kicker": "Written by me, current as of the date above", "body": "<p class=\"lede dropcap\">I'm managing a manic episode. It reached a physical crisis point overnight on 15–16 August — a sustained hypertensive spike and about 48 hours of dissociation and unsteadiness. I've disclosed this to my treating specialist, and we agree a formal mental health plan is needed. I've been referred to Jayce at Warrnambool Adult Mental Health Team — appointment pending.</p><p>I've also raised something else with her directly: periods of memory gaps for my own recent actions, and weeks that have felt fuzzy or dream-like. That's being assessed as part of the same referral. I'm naming it here because I'd rather you hear it from me, plainly, than piece it together or wonder what's not being said.</p><p>I'm safe. I'm not in immediate danger. This isn't a crisis in progress — it's a real, ongoing thing I'm actively managing with medical support, not something I'm hiding or pretending isn't happening.</p><p>If you've been sent this link, it's because explaining all of this out loud, in the moment, takes energy I don't always have to spare right now. This page says it once, properly, so I don't have to keep saying it.</p><div class=\"callout\"><p>If you're worried about me right now specifically — not about the general situation, but about this moment — see <a href=\"#/who\">Who to call</a>.</p></div>"}, {"id": "pattern", "nav": "The pattern, plainly", "title": "The pattern, plainly", "kicker": "What's actually been happening", "body": "<p>Over recent weeks I've been running a lot of projects in parallel — creative, legal, technical, advocacy — at a pace and volume well beyond my normal baseline. That's not a vague impression; it's on record. The number of concurrent projects grew from around three in mid-June to eight from late July onward. Working sessions after midnight clustered specifically in the two highest-intensity weeks. The single largest piece of work in the whole period was finished on 15 August — the day before the crisis.</p><p>Real work has come out of it — that part is true, and it can make the underlying pattern easy to miss or wave away, including by me. Ideas have arrived quickly and fully formed. Long stretches have passed without much sleep, without feeling particularly tired.</p><p>Two other things are part of the honest picture, not separate from it:</p><ul><li><strong>Memory gaps.</strong> Periods of finding work I'd clearly started, with no memory of starting it, alongside stretches of time that felt fuzzy or dream-like rather than solid. I've raised this directly with my treating specialist. It's being assessed, not settled, and not something I'm putting a label on myself.</li><li><strong>Some self-caught moments, inside the pattern.</strong> I paused a planned in-person meeting at one point specifically because I recognised I needed to slow down. I told my daughter directly, separately, that I was managing something that meant taking things slowly. Worth knowing the awareness hasn't been entirely absent — it just hasn't been enough on its own.</li></ul><p>That pace built for roughly two weeks before it reached a physical breaking point: the sustained hypertensive crisis and about 48 hours of dissociation on 15–16 August. That's not a separate, unrelated health scare. It's the same pattern, showing up in the body once it couldn't keep going the way it had been.</p><p>Part of what's underneath this period, worth naming honestly rather than leaving as a gap: for several years I was a carer for someone I loved deeply, in a role that asked a lot of me and that I took seriously. That role, and the relationship it was part of, ended. I've been carrying real grief about it that I haven't always given proper space to, underneath everything else that's been happening. This week, some of that surfaced directly, for the first time in a while. It's mine to carry, not something I'm going to detail further here, but it's part of the honest picture of what's been sitting underneath the pace of these last weeks.</p><p>I've named all of this to my treating specialist directly, and I'm working with her on an actual plan — not just a conversation about it once. That's the honest, current state of things.</p>"}, {"id": "help", "nav": "If you're trying to help", "title": "If you're trying to help", "kicker": "What actually helps, and what doesn't", "body": "<h3>What helps</h3><ul><li>Believing me when I say I'm tired, even if I seem energetic or productive — the two aren't the same thing right now.</li><li>Simple, practical things: checking in briefly, food, not needing a long conversation every time.</li><li>Saying something once rather than repeating the same concern several times — I've usually already heard it.</li><li>Respecting it when I say I need space, and also when I say I need someone there — both are real, at different times.</li></ul><h3>What doesn't help</h3><ul><li>Panic, or treating this as an emergency it isn't — see <a href=\"#/who\">Who to call</a> for when it actually is one.</li><li>Trying to resolve it in one conversation. It isn't going to resolve in one conversation.</li><li>Bringing it up with other people without asking me first.</li><li>Ultimatums, or framing this as a choice I'm making badly rather than something I'm actively getting support for.</li></ul>"}, {"id": "who", "nav": "Who to call", "title": "Who to call", "kicker": "Real numbers, current as of the date above", "body": "<div class=\"rows\"><div class=\"row\"><div class=\"k\">Emergency</div><div class=\"v\"><a href=\"tel:000\">000</a> — if this is a genuine emergency, right now.</div></div><div class=\"row\"><div class=\"k\">SWH Mental Health Triage</div><div class=\"v\"><a href=\"tel:1800808284\">1800 808 284</a> — South West Healthcare, 24/7.</div></div><div class=\"row\"><div class=\"k\">NURSE-ON-CALL</div><div class=\"v\"><a href=\"tel:136024\">1300 60 60 24</a> — statewide, 24/7.</div></div><div class=\"row\"><div class=\"k\">Lifeline</div><div class=\"v\"><a href=\"tel:131114\">13 11 14</a> — 24/7 crisis support.</div></div><div class=\"row\"><div class=\"k\">My specialist clinic</div><div class=\"v\">Specialist Outpatient Clinic, South West Healthcare — <a href=\"tel:0355631256\">(03) 5563 1256</a>, business hours.</div></div></div>"}, {"id": "faq", "nav": "Common questions", "title": "Common questions", "kicker": "Things people usually ask", "body": "<h3>Is this the first time?</h3><p>No. It's a pattern I'm working on understanding and managing properly, not a single one-off event.</p><h3>What's this about memory gaps — is that serious?</h3><p>It's real, and I'm not going to pretend it isn't. It's also genuinely being assessed, not diagnosed by me on a website. I'd rather name it plainly than have it be the thing nobody mentions.</p><h3>Should I call an ambulance?</h3><p>Only if there's a genuine emergency happening right now — not because you're worried about the general situation. If you're unsure, NURSE-ON-CALL (1300 60 60 24) can help you work out what's actually needed.</p><h3>What can I actually do right now?</h3><p>Honestly, probably less than it feels like. Reading this page is most of it. See <a href=\"#/help\">If you're trying to help</a> for the rest.</p><h3>Are you getting help?</h3><p>Yes. I've disclosed this to my treating specialist and we're putting a formal plan in place, including a referral to Warrnambool Adult Mental Health Team. This page exists because that process is real and ongoing, not instead of it.</p>"}]};
 
-  var LIVERIES = ["vellum", "brass", "iron", "emerald", "sanctum", "sigil"];
-  var LIVERY_LABELS = {
-    vellum: "Vellum", brass: "Brass", iron: "Iron",
-    emerald: "Emerald", sanctum: "Sanctum", sigil: "Sigil"
-  };
-  var DEFAULT_LIVERY = "vellum";
-  var LS_LIVERY = "mahda.mentalhealth.livery";
-  var LS_PLAIN = "mahda.mentalhealth.plain";
+  var data = null;
 
-  var DATA = null;
-  var router = null;
-
-  function el(tag, cls, text) {
-    var n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (text != null) n.textContent = String(text);
-    return n;
+  /* ---------------------------------------------------------------- liveries */
+  function readStored() {
+    try { return window.localStorage.getItem(STORE_KEY); } catch (e) { return null; }
   }
-  function $(sel, root) { return (root || document).querySelector(sel); }
+  function writeStored(v) {
+    try { window.localStorage.setItem(STORE_KEY, v); } catch (e) { /* private mode */ }
+  }
 
-  /* ---------------- livery + plain view ---------------- */
-  function applyLivery(name) {
-    var v = LIVERIES.indexOf(name) >= 0 ? name : DEFAULT_LIVERY;
-    document.documentElement.setAttribute("data-livery", v);
-    try { localStorage.setItem(LS_LIVERY, v); } catch (e) {}
-    var lbl = $("#liveryLabel");
-    if (lbl) lbl.textContent = LIVERY_LABELS[v];
-    var swatches = document.querySelectorAll(".swatch");
-    for (var i = 0; i < swatches.length; i++) {
-      swatches[i].setAttribute("aria-pressed", swatches[i].dataset.livery === v ? "true" : "false");
+  function applyLivery(id, animate) {
+    var valid = LIVERIES.some(function (l) { return l.id === id; });
+    if (!valid) id = DEFAULT_LIVERY;
+
+    var fade = document.querySelector('.theme-fade');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function set() {
+      document.documentElement.setAttribute('data-theme', id);
+      writeStored(id);
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.liveries button'),
+        function (b) { b.setAttribute('aria-pressed', String(b.dataset.livery === id)); }
+      );
+    }
+
+    if (animate && fade && !reduce) {
+      fade.classList.add('on');
+      window.setTimeout(function () {
+        set();
+        window.setTimeout(function () { fade.classList.remove('on'); }, 20);
+      }, 180);
+    } else {
+      set();
     }
   }
 
-  function applyPlain(on) {
-    document.documentElement.classList.toggle("plain", !!on);
-    try { localStorage.setItem(LS_PLAIN, on ? "1" : "0"); } catch (e) {}
-    var btn = $("#plainToggle");
-    if (btn) btn.setAttribute("aria-pressed", on ? "true" : "false");
-  }
-
-  /* ---------------- rendering ---------------- */
-  function buildNav() {
-    var nav = $("#siteNav");
-    if (!nav) return;
-    nav.innerHTML = "";
-    DATA.nav.forEach(function (item) {
-      var a = el("a", "navlink", item.label);
-      a.href = "#/" + item.id;
-      a.dataset.id = item.id;
-      nav.appendChild(a);
+  function buildLiveryControls() {
+    var host = document.getElementById('liveries');
+    if (!host) return;
+    LIVERIES.forEach(function (l) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.livery = l.id;
+      b.title = l.label;
+      b.setAttribute('aria-label', 'Livery: ' + l.label);
+      b.setAttribute('aria-pressed', 'false');
+      b.style.setProperty('--swatch', l.swatch);
+      b.addEventListener('click', function () { applyLivery(l.id, true); });
+      host.appendChild(b);
     });
   }
 
-  function setActiveNav(id) {
-    var links = document.querySelectorAll(".navlink");
-    for (var i = 0; i < links.length; i++) {
-      links[i].classList.toggle("active", links[i].dataset.id === id);
-    }
+  /* ------------------------------------------------------------------ router */
+  function currentId() {
+    var h = window.location.hash.replace(/^#\/?/, '').trim();
+    return h || 'home';
   }
 
   function findPage(id) {
-    for (var i = 0; i < DATA.pages.length; i++) {
-      if (DATA.pages[i].id === id) return DATA.pages[i];
+    if (!data || !data.pages) return null;
+    for (var i = 0; i < data.pages.length; i++) {
+      if (data.pages[i].id === id) return data.pages[i];
     }
     return null;
   }
 
-  function renderPage(id) {
-    var page = findPage(id) || DATA.pages[0];
-    var main = $("#pageBody");
+  function buildNav() {
+    var nav = document.getElementById('nav');
+    if (!nav || !data) return;
+    nav.innerHTML = '';
+    data.pages.forEach(function (pg, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'plaque';
+      b.dataset.target = pg.id;
+      b.innerHTML = '<span class="num">' +
+        String(i + 1).padStart(2, '0') + '</span>' + escapeHtml(pg.nav || pg.title);
+      b.addEventListener('click', function () { window.location.hash = '#/' + pg.id; });
+      nav.appendChild(b);
+    });
+  }
+
+  function markNav(id) {
+    Array.prototype.forEach.call(document.querySelectorAll('.plaque'), function (b) {
+      if (b.dataset.target === id) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function render() {
+    var id = currentId();
+    var pg = findPage(id) || findPage('home');
+    var main = document.getElementById('main');
     if (!main) return;
-    main.innerHTML = "";
-    if (page.eyebrow) main.appendChild(el("p", "eyebrow", page.eyebrow));
-    main.appendChild(el("h1", "pagetitle", page.title));
-    var body = el("div", "pagecontent");
-    body.innerHTML = page.content;
-    main.appendChild(body);
-    setActiveNav(page.id);
-    document.title = page.title + " — " + DATA.meta.title;
-    window.scrollTo(0, 0);
+
+    if (!pg) {
+      main.innerHTML = '<section class="panel"><h2>Content not loaded</h2>' +
+        '<p>pages.json could not be read and no fallback is present. ' +
+        'Serve this folder over http rather than opening the file directly.</p></section>';
+      return;
+    }
+
+    main.innerHTML =
+      '<section class="panel" aria-labelledby="pg-title">' +
+        (pg.kicker ? '<p class="kicker">' + escapeHtml(pg.kicker) + '</p>' : '') +
+        '<h2 id="pg-title">' + escapeHtml(pg.title) + '</h2>' +
+        pg.body +
+      '</section>';
+
+    markNav(pg.id);
+    document.title = pg.title + ' \u00b7 ' + (data.meta && data.meta.title || 'Right Now');
+    main.setAttribute('tabindex', '-1');
+    // Deliberately no analytics on this page. It's personal and unlisted —
+    // whoever's reading it shouldn't be tracked for doing so.
   }
 
-  /* ---------------- copy as text ---------------- */
-  function buildSummaryText() {
-    var lines = [DATA.meta.title, ""];
-    DATA.pages.forEach(function (p) {
-      lines.push("— " + p.title + " —");
-      var tmp = document.createElement("div");
-      tmp.innerHTML = p.content;
-      lines.push(tmp.textContent.replace(/\s+/g, " ").trim());
-      lines.push("");
-    });
-    return lines.join("\n");
+  /* ------------------------------------------------------------------- boot */
+  function fillMeta() {
+    if (!data || !data.meta) return;
+    var m = data.meta;
+    var t = document.getElementById('mast-title');
+    var s = document.getElementById('mast-standfirst');
+    var st = document.getElementById('docket-status');
+    var vr = document.getElementById('docket-version');
+    var up = document.getElementById('docket-updated');
+    if (t) t.textContent = m.title;
+    if (s) s.textContent = m.standfirst;
+    if (st) st.textContent = m.status;
+    if (vr) vr.textContent = m.version;
+    if (up) up.textContent = m.updated;
   }
 
-  function wireCopyButton() {
-    var btn = $("#copySummary");
-    if (!btn) return;
-    btn.dataset.label = btn.textContent;
-    btn.addEventListener("click", function () {
-      var text = buildSummaryText();
-      var done = function () {
-        btn.textContent = "Copied";
-        setTimeout(function () { btn.textContent = btn.dataset.label; }, 1600);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, done);
-      } else {
-        var ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand("copy"); } catch (e) {}
-        document.body.removeChild(ta);
-        done();
-      }
-    });
-  }
-
-  function wireLiverySwitcher() {
-    var wrap = $("#liveryMenu");
-    if (!wrap) return;
-    wrap.innerHTML = "";
-    LIVERIES.forEach(function (name) {
-      var b = el("button", "swatch swatch-" + name, "");
-      b.type = "button";
-      b.dataset.livery = name;
-      b.title = LIVERY_LABELS[name];
-      b.setAttribute("aria-label", "Switch to " + LIVERY_LABELS[name] + " livery");
-      b.addEventListener("click", function () { applyLivery(name); });
-      wrap.appendChild(b);
-    });
-  }
-
-  function wirePlainToggle() {
-    var btn = $("#plainToggle");
-    if (!btn) return;
-    btn.addEventListener("click", function () {
-      applyPlain(!document.documentElement.classList.contains("plain"));
-    });
-  }
-
-  /* ---------------- boot ---------------- */
-  function boot(data) {
-    DATA = (data && data.pages && data.pages.length) ? data : PAGES_FALLBACK;
-
+  function start(loaded) {
+    data = loaded;
+    fillMeta();
     buildNav();
-    wireLiverySwitcher();
-    wirePlainToggle();
-    wireCopyButton();
-
-    var storedLivery = null, storedPlain = null;
-    try { storedLivery = localStorage.getItem(LS_LIVERY); } catch (e) {}
-    try { storedPlain = localStorage.getItem(LS_PLAIN); } catch (e) {}
-    applyLivery(storedLivery || DEFAULT_LIVERY);
-    applyPlain(storedPlain === "1");
-
-    router = new Router({ fallback: DATA.pages[0].id });
-
-    /* Every page gets a registered route. Without this the router falls
-       through to the fallback on every hash change and the nav renders
-       the same page forever — which is what was wrong with build one. */
-    DATA.pages.forEach(function (p) {
-      router.add(p.id, renderPage);
-    });
-
-    router.start();
+    render();
+    window.addEventListener('hashchange', render);
   }
 
-  function init() {
-    fetch(BASE + "assets/data/pages.json", { cache: "no-store" })
-      .then(function (r) { if (!r.ok) throw new Error("pages.json " + r.status); return r.json(); })
-      .then(boot)
-      .catch(function () { boot(PAGES_FALLBACK); });
+  function boot() {
+    applyLivery(readStored() || DEFAULT_LIVERY, false);
+    buildLiveryControls();
+
+    fetch('pages.json', { cache: 'no-cache' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('http ' + r.status);
+        return r.json();
+      })
+      .then(start)
+      .catch(function () { start(FALLBACK); });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    init();
+    boot();
   }
 })();

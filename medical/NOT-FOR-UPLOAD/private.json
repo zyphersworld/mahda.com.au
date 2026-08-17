@@ -1,0 +1,183 @@
+{
+  "nav": [
+    {
+      "id": "psych",
+      "label": "Psych detail"
+    },
+    {
+      "id": "risk",
+      "label": "Risk history"
+    }
+  ],
+  "pages": {
+    "psych": {
+      "eyebrow": "Private supplement",
+      "title": "Psychiatric detail",
+      "lede": "This section is deliberately not on the public page. It exists so I can hand it to a clinician without saying it out loud.",
+      "blocks": [
+        {
+          "type": "panel",
+          "heading": "Diagnoses on record",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Primary",
+                  "v": "Complex PTSD. Per Dr Winton-Brown's assessment this is the diagnosis that fits best, and I agree with it."
+                },
+                {
+                  "k": "Also carried",
+                  "v": "Borderline Personality Disorder. Bipolar Affective Disorder. Alcohol Use Disorder. Cannabis Use Disorder."
+                },
+                {
+                  "k": "Source",
+                  "v": "Dr Winton-Brown psychiatric report, 26 March 2025. Earlier diagnoses accumulated across multiple admissions from late teens onward."
+                },
+                {
+                  "k": "My position",
+                  "v": "I am not arguing with any of it. I mention the layering because a list this long usually means different clinicians saw different parts of the same thing at different times, and I'd rather you knew that than assumed a settled picture."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Substance history",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "Alcohol",
+                  "v": "Started drinking at school, following the abuse. Around twenty years of heavy binge drinking. Approximately six years abstinent now."
+                },
+                {
+                  "k": "Cannabis",
+                  "v": "Heavy from around age fifteen or sixteen. Reduced but ongoing, largely for anxiety. Directly relevant twice over: cannabis can cause postural hypotension, and I had used the day before the syncopal episode of 17 December 2025 while on three antihypertensives. It also cost me my licence, which is now a barrier to attending appointments."
+                },
+                {
+                  "k": "Other",
+                  "v": "Brief period of synthetic cannabis use. Methamphetamine on a handful of occasions, historical."
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "text": "Six years off alcohol is the single hardest thing on this page and I'd rather it wasn't buried in a list."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "Standing treatment recommendation",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Integrated, consistent psychiatric care, plus trauma-directed psychological treatment — MBT, DBT, CPT, or long-term psychodynamic — with substance-use support alongside it."
+            },
+            {
+              "type": "para",
+              "text": "This has been the recommendation for some time. It has not been consistently available to me, largely because I have not had a fixed address long enough to hold a place in any service."
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "Onset",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "Serious recurring mental illness from late teens to early-mid twenties, with multiple inpatient admissions. The onset overlaps the deaths of my first musical mentor and my grandmother, who was the moral centre of my childhood."
+            }
+          ]
+        }
+      ]
+    },
+    "risk": {
+      "eyebrow": "Private supplement",
+      "title": "Risk history",
+      "lede": "Written plainly because a polite version of this page would be useless to you.",
+      "blocks": [
+        {
+          "type": "alert",
+          "heading": "Documented episodes",
+          "blocks": [
+            {
+              "type": "rows",
+              "items": [
+                {
+                  "k": "April 2025",
+                  "v": "Hospital admission 18–20 April with chest pain, significant social stress, and suicidal ideation. Assessed as a situational crisis. On review I was future-focused with no plan or intent."
+                },
+                {
+                  "k": "April 2025",
+                  "v": "Further ED presentation 28–29 April in situational crisis with suicidal ideation. Chest tightness eased as psychological state settled. Reviewed by the mental health team and discharged once mood had settled, with follow-up booked."
+                },
+                {
+                  "k": "December 2025",
+                  "v": "Syncope while driving, 17 December 2025. Not a self-harm event — low blood pressure, extreme heat, dehydration, on three antihypertensives, with cannabis use the previous day. Recorded here so it is not misfiled as intentional."
+                },
+                {
+                  "k": "Pattern",
+                  "v": "My crises have been situational — triggered by specific events — rather than free-floating. That has been true every time so far. It is not a guarantee about the future and I am not offering it as one."
+                },
+                {
+                  "k": "Current",
+                  "v": "TO FILL — update this honestly every time it changes. Present or absent, ideation, plan, intent. If this line is stale it is worse than useless."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "What has actually helped",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "PARC. The four weeks in late April 2025 worked. It is why I am asking for it again.",
+                "Having somewhere to make things. Music, code, writing. When that stops, everything else gets worse quickly.",
+                "Rick and Anna Clissold, and the church community around them.",
+                "Being told the truth about what is happening and when."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "heading": "What makes it worse",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Having to re-tell the whole history to a new person. This page exists because of that.",
+                "Being deprioritised because I present articulately.",
+                "Unanswered correspondence and open-ended waiting with no stated timeframe.",
+                "Losing the space to work."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "kind": "quiet",
+          "heading": "Forensic history",
+          "blocks": [
+            {
+              "type": "para",
+              "text": "There is a forensic history — offending between 2017 and 2023 in the context of a marriage breakdown and untreated illness, with periods in custody, and rehabilitation programs completed. I am not hiding it and I will answer questions about it directly."
+            },
+            {
+              "type": "para",
+              "text": "I have deliberately not itemised it here. It is documented in Dr Winton-Brown's report and in court records, both of which are more accurate than a summary I write about myself. Ask me and I will tell you, or ask for the report."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
