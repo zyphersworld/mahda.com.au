@@ -151,6 +151,20 @@ nav.plaques {
   transition: transform .14s ease, color .14s ease, border-color .14s ease;
 }
 .plaque:hover { color: var(--ink); border-color: var(--accent-2); transform: translateY(-1px); }
+.plaque[data-target="share"] {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 1px var(--accent-2);
+  animation: shareGlow 3.2s ease-in-out infinite;
+}
+.plaque[data-target="share"]:hover { animation: none; }
+@keyframes shareGlow {
+  0%, 100% { box-shadow: 0 0 0 1px var(--accent-2); }
+  50% { box-shadow: 0 0 0 1px var(--accent-2), 0 0 8px 1px var(--accent-2); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plaque[data-target="share"] { animation: none; }
+}
+
 .plaque[aria-current="page"] {
   color: var(--ink);
   border-color: var(--accent);
