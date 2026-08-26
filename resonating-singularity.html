@@ -1,0 +1,4409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Resonating Singularity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Instrument-panel palette. Token names preserved so every component
+       re-skins from one place; semantics remapped to a scientific register. */
+    --iron: #0d1117;            /* ground */
+    --iron-2: #161b22;          /* raised surface */
+    --parchment: #d6dee8;       /* primary text */
+    --parchment-dim: #9aa7b6;   /* secondary text */
+    --gilt: #4fb8d4;            /* instrument accent / measurement */
+    --gilt-dim: #2f7f96;
+    --oxblood: #a8443c;         /* refuted / corrected */
+    --oxblood-bright: #e5675c;
+    --ink: #0a0d12;
+    --ash: #6e7c8c;             /* muted / annotation */
+    --border: rgba(120, 150, 175, 0.20);
+    --border-strong: rgba(120, 150, 175, 0.42);
+    --signal: #d9a441;          /* retained warm accent, used sparingly */
+    --confirm: #3fb950;         /* confirmed result */
+    --display: 'IBM Plex Serif', Georgia, serif;
+    --body: 'IBM Plex Sans', system-ui, sans-serif;
+    --blackletter: 'IBM Plex Serif', Georgia, serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--iron);
+    background-image:
+      linear-gradient(rgba(120,150,175,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,150,175,0.035) 1px, transparent 1px);
+    background-size: 48px 48px, 48px 48px;
+    color: var(--parchment);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--gilt); }
+  ::selection { background: var(--oxblood); color: var(--parchment); }
+
+  :focus-visible {
+    outline: 2px solid var(--gilt);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3, .nav-item {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--parchment);
+  }
+  h2 { border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  /* ---------- NAV ---------- */
+  nav.plaques {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: rgba(22,20,15,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 12px;
+  }
+  .plaque {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--parchment-dim);
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-radius: 2px 2px 0 0;
+    padding: 9px 15px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    text-decoration: none;
+  }
+  .plaque:hover { color: var(--gilt); }
+  .plaque.active { color: var(--gilt); border-bottom-color: var(--gilt); background: rgba(79,184,212,0.06); }
+
+  /* ---------- LAYOUT ---------- */
+  .chapter { display: none; padding: 60px 24px 100px; max-width: 880px; margin: 0 auto; }
+  .chapter.active { display: block; animation: fadein 0.5s ease; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .chapter h2 { font-size: 30px; margin: 0 0 6px; }
+  .chapter .eyebrow { display: block; margin-bottom: 10px; }
+  .lede { color: var(--parchment-dim); font-size: 17px; line-height: 1.6; margin: 0 0 32px; max-width: 680px; }
+
+  p { margin: 0 0 18px; }
+  .panel {
+    background: rgba(233,223,197,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin: 0 0 24px;
+  }
+  .panel h3 { font-size: 17px; margin: 0 0 12px; }
+
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+    margin: 44px 0;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--oxblood-bright);
+    border: 1px solid var(--oxblood);
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin: 0 6px 6px 0;
+  }
+
+
+  /* ---------- SCIENTIFIC REPORT COMPONENTS ---------- */
+  .abstract {
+    border-left: 3px solid var(--gilt);
+    background: rgba(79,184,212,0.05);
+    padding: 16px 20px;
+    margin: 0 0 30px;
+    font-size: 15.5px;
+    color: var(--parchment-dim);
+  }
+  .abstract strong { color: var(--parchment); }
+
+  .result-banner {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    border: 1px solid var(--confirm);
+    background: rgba(63,185,80,0.07);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 0 0 26px;
+  }
+  .result-banner .rb-tag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--confirm); font-weight: 600;
+    border: 1px solid var(--confirm); border-radius: 2px; padding: 3px 8px;
+  }
+  .result-banner .rb-text { font-size: 15px; color: var(--parchment); }
+
+  .datatable {
+    width: 100%; border-collapse: collapse; margin: 0 0 24px;
+    font-family: var(--mono); font-size: 13px;
+  }
+  .datatable caption {
+    caption-side: top; text-align: left; font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ash); padding-bottom: 8px;
+  }
+  .datatable th {
+    text-align: left; font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ash);
+    font-weight: 500; padding: 7px 10px; border-bottom: 1px solid var(--border-strong);
+  }
+  .datatable td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--parchment-dim); }
+  .datatable td.num { text-align: right; color: var(--parchment); }
+  .datatable tr.highlight td { background: rgba(79,184,212,0.08); color: var(--gilt); font-weight: 600; }
+  .datatable tr.refuted td { color: var(--oxblood-bright); }
+
+  .verdict-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 12px; margin: 0 0 26px; }
+  .verdict-card { border: 1px solid var(--border); border-radius: 4px; padding: 14px 16px; background: var(--iron-2); }
+  .verdict-card .vc-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ash); margin-bottom: 6px; }
+  .verdict-card .vc-value { font-family: var(--mono); font-size: 20px; color: var(--gilt); }
+  .verdict-card .vc-note { font-size: 13px; color: var(--parchment-dim); margin-top: 6px; line-height: 1.5; }
+
+  .status-pill {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.09em; text-transform: uppercase; padding: 2px 8px;
+    border-radius: 2px; border: 1px solid currentColor;
+  }
+  .status-pill.cleared { color: var(--confirm); }
+  .status-pill.refuted { color: var(--oxblood-bright); }
+  .status-pill.note { color: var(--ash); }
+
+  .proof-block {
+    font-family: var(--mono); font-size: 14px; text-align: center;
+    background: var(--iron-2); border: 1px solid var(--border-strong);
+    border-radius: 4px; padding: 20px; margin: 0 0 24px; line-height: 2;
+  }
+  .proof-block .pb-eq { color: var(--gilt); font-size: 16px; }
+  .proof-block .pb-match { color: var(--confirm); font-weight: 600; }
+
+  .correction-note {
+    border-left: 3px solid var(--oxblood);
+    background: rgba(168,68,60,0.07);
+    padding: 14px 18px; margin: 0 0 24px;
+    font-size: 14.5px; color: var(--parchment-dim);
+  }
+  .correction-note strong { color: var(--oxblood-bright); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    padding: 70px 24px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(30px, 5vw, 46px);
+    color: var(--parchment);
+    margin: 6px 0 6px;
+    letter-spacing: -0.02em;
+  }
+  .hero .subtitle {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin: 0 0 26px;
+  }
+  #sphereCanvas {
+    display: block;
+    margin: 0 auto;
+    cursor: grab;
+    touch-action: none;
+  }
+  #sphereCanvas:active { cursor: grabbing; }
+  .sphere-wrap {
+    position: relative;
+    width: 400px;
+    max-width: 92vw;
+    margin: 0 auto 14px;
+  }
+
+  .seed-source-panel {
+    max-width: 560px;
+    margin: 4px auto 14px;
+    background: rgba(233,223,197,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 16px;
+  }
+  .seed-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .seed-tab {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    color: var(--ash);
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .seed-tab:hover { border-color: var(--border-strong); color: var(--parchment-dim); }
+  .seed-tab.active { background: var(--gilt); border-color: var(--gilt); color: var(--iron); font-weight: 600; }
+  .seed-body {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .seed-body input[type=text], .seed-body select {
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--parchment);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  .seed-body input[type=text] { width: 170px; }
+  .seed-body input[type=text]:focus, .seed-body select:focus { border-color: var(--gilt); }
+  .seed-body input[type=color] {
+    width: 40px; height: 34px; padding: 2px; border: 1px solid var(--border-strong);
+    border-radius: 3px; background: none; cursor: pointer;
+  }
+  .seed-body label {
+    font-family: var(--mono); font-size: 11px; color: var(--ash);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .seed-body button {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    border-radius: 3px;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  .seed-body button:hover { background: var(--gilt); color: var(--iron); }
+  .seed-inline-result {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--oxblood-bright);
+    font-weight: 600;
+  }
+  .seed-weights-display {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .weights-line {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--gilt-dim);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .config-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 0 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ash);
+  }
+  .config-row label { display: flex; align-items: center; gap: 6px; }
+  .config-row input[type=number] {
+    width: 60px;
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--parchment);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  .config-row input[type=number]:focus { border-color: var(--gilt); }
+  .config-row button {
+    font-family: var(--display);
+    font-size: 10.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    border-radius: 3px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .config-row button:hover:not(:disabled) { background: var(--gilt); color: var(--iron); }
+  .config-row button:disabled { opacity: 0.35; cursor: not-allowed; }
+  .config-row .sat-count { color: var(--oxblood-bright); }
+
+  .digit-bars-title {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin: 0 0 10px;
+    text-align: center;
+  }
+  .settle-panel {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .settle-status {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ash);
+    margin-bottom: 8px;
+  }
+  .settle-status.ready { color: var(--gilt); font-weight: 600; }
+  .settle-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .settle-buttons button {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    border-radius: 3px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  .settle-buttons button:disabled { opacity: 0.3; cursor: not-allowed; }
+  .settle-buttons button:hover:not(:disabled) { background: var(--gilt); color: var(--iron); }
+  .settle-buttons button.playing { background: var(--oxblood); border-color: var(--oxblood-bright); color: var(--parchment); }
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .audio-controls button {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--oxblood);
+    border: 1px solid var(--oxblood-bright);
+    color: var(--parchment);
+    border-radius: 3px;
+    padding: 7px 16px;
+    cursor: pointer;
+  }
+  .audio-controls button:hover { background: var(--oxblood-bright); }
+  .audio-controls button.playing { background: var(--gilt); border-color: var(--gilt); color: var(--iron); }
+  .audio-controls label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ash);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .audio-controls select {
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    font-family: var(--mono);
+    font-size: 11px;
+    border-radius: 3px;
+    padding: 5px 8px;
+    cursor: pointer;
+  }
+  .audio-controls select:focus { border-color: var(--gilt); outline: none; }
+  .digit-bar-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-bottom: 4px;
+    padding-left: 20px;
+  }
+  .digit-bar-header .h-track { flex: 1; }
+  .digit-bar-header .h-count { width: 24px; text-align: center; }
+  .digit-bar-header .h-hz { width: 44px; text-align: right; }
+  .digit-bar-header .h-vol { width: 54px; text-align: center; }
+  .digit-bar-header .h-pan { width: 54px; text-align: center; }
+  .digit-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .digit-bar-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gilt-dim);
+    width: 12px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .digit-bar-track {
+    flex: 1;
+    min-width: 60px;
+    height: 11px;
+    background: var(--iron-2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .digit-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gilt-dim), var(--oxblood-bright));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  .digit-bar-count {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ash);
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .digit-bar-hz {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gilt-dim);
+    width: 44px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .digit-bar-row input[type=range] {
+    width: 54px;
+    flex-shrink: 0;
+    accent-color: var(--gilt);
+    height: 4px;
+  }
+  .seed-current {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ash);
+    text-align: center;
+    margin: 0 0 6px;
+  }
+  .seed-current .sv { color: var(--gilt); }
+
+  .sphere-picker {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 0 10px;
+  }
+  .sphere-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    color: var(--ash);
+    border-radius: 14px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .sphere-chip:hover { border-color: var(--border-strong); color: var(--parchment-dim); }
+  .sphere-chip.active {
+    background: rgba(79,184,212,0.12);
+    border-color: var(--gilt);
+    color: var(--gilt);
+    font-weight: 600;
+  }
+  .sphere-chip .chip-nodes {
+    color: var(--parchment-dim);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .selected-sphere-banner {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--parchment-dim);
+    text-align: center;
+    margin: 0 0 8px;
+  }
+  .selected-sphere-banner strong { color: var(--gilt); }
+
+  /* ---- Simulation stage + HUD overlays ---- */
+  .sim-hint {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ash);
+    text-align: center;
+    margin: 0 0 14px;
+    line-height: 1.5;
+  }
+  .hero.sim-hero {
+    padding: 8px 0 32px;
+    text-align: center;
+  }
+  .sim-stage {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    height: min(78vh, 720px);
+    min-height: 520px;
+    background: var(--iron);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.35);
+  }
+  .sim-stage .sphere-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse at center, rgba(79,184,212,0.04) 0%, transparent 55%),
+      var(--iron);
+  }
+  .sim-stage #sphereCanvas {
+    width: min(100%, 100%);
+    height: min(100%, 100%);
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .sim-stage:fullscreen,
+  .sim-stage:-webkit-full-screen {
+    max-width: none;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  /* HUD chrome */
+  .hud-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.92) 0%, rgba(13,17,23,0.55) 70%, transparent 100%);
+    pointer-events: none;
+  }
+  .hud-top > * { pointer-events: auto; }
+  .hud-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hud-status .global-unity { margin: 0; gap: 8px; }
+  .hud-status .seed-current { margin: 0; text-align: left; font-size: 10.5px; }
+  .hud-nav-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hud-nav-row .breadcrumb { margin: 0; justify-content: flex-start; min-height: 18px; }
+  .hud-view-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .hud-view-btns .rotate-btn {
+    padding: 6px 10px;
+    font-size: 10px;
+    background: rgba(22,27,34,0.85);
+    backdrop-filter: blur(6px);
+  }
+  .hud-sphere-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .hud-sphere-row .sphere-picker { margin: 0; justify-content: flex-start; }
+  .hud-sphere-row .selected-sphere-banner {
+    margin: 0;
+    font-size: 10.5px;
+    text-align: left;
+    opacity: 0.9;
+  }
+
+  .hud-dock {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .hud-dock-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    writing-mode: horizontal-tb;
+    background: rgba(22,27,34,0.88);
+    border: 1px solid var(--border-strong);
+    color: var(--parchment-dim);
+    border-radius: 4px;
+    padding: 8px 10px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    min-width: 72px;
+    text-align: center;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .hud-dock-btn:hover { color: var(--gilt); border-color: var(--gilt-dim); }
+  .hud-dock-btn.active {
+    color: var(--iron);
+    background: var(--gilt);
+    border-color: var(--gilt);
+    font-weight: 600;
+  }
+
+  .hud-panel {
+    position: absolute;
+    z-index: 24;
+    width: min(340px, calc(100% - 100px));
+    max-height: min(62%, calc(100% - 120px));
+    display: none;
+    flex-direction: column;
+    background: rgba(13,17,23,0.92);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    overflow: hidden;
+  }
+  .hud-panel.open { display: flex; }
+  .hud-panel.right { right: 92px; top: 50%; transform: translateY(-50%); }
+  .hud-panel.bottom {
+    left: 12px; right: 12px; bottom: 12px;
+    width: auto;
+    max-width: none;
+    max-height: 42%;
+    transform: none;
+  }
+  .hud-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .hud-panel-head h4 {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gilt);
+    font-weight: 600;
+  }
+  .hud-panel-close {
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--ash);
+    border-radius: 3px;
+    width: 26px; height: 26px;
+    cursor: pointer;
+  }
+  .hud-panel-close:hover { color: var(--parchment); border-color: var(--border-strong); }
+  .hud-panel-body {
+    padding: 12px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    text-align: left;
+  }
+  .hud-panel-body .sim-hint {
+    text-align: left;
+    margin: 0 0 10px;
+    font-size: 11px;
+  }
+  .hud-panel .props-panel,
+  .hud-panel .seed-source-panel,
+  .hud-panel .audio-suite,
+  .hud-panel .seismograph-panel {
+    max-width: none;
+    margin: 0;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  .hud-panel .props-panel h4 { display: none; }
+  .hud-panel .audio-suite-columns {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .hud-panel .audio-col-main,
+  .hud-panel .audio-col-side { min-width: 0; }
+  .hud-panel .seismograph-panel #seismographCanvas {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+  }
+  .sim-config-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sim-config-grid .config-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 10px;
+    background: rgba(22,27,34,0.7);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .sim-config-grid .config-group .group-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ash);
+    width: 100%;
+    margin-bottom: 2px;
+  }
+  .hud-readout-slot .sphere-readout {
+    position: static;
+    display: inline-block;
+    background: rgba(13,17,23,0.75);
+  }
+  @media (max-width: 640px) {
+    .hud-dock { right: 6px; }
+    .hud-dock-btn { min-width: 56px; padding: 6px 7px; font-size: 9px; }
+    .hud-panel.right { right: 70px; width: min(300px, calc(100% - 80px)); }
+    .sim-stage { min-height: 460px; height: min(70vh, 640px); }
+  }
+
+  .props-panel {
+    max-width: 560px;
+    margin: 0 auto 14px;
+    background: rgba(233,223,197,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .props-panel h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gilt-dim);
+    margin: 0 0 10px;
+  }
+  .props-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 12px;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .props-grid label { color: var(--ash); text-align: right; }
+  .props-grid input[type=text],
+  .props-grid input[type=number] {
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--parchment);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 6px 8px;
+    width: 100%;
+  }
+  .props-grid input:focus { border-color: var(--gilt); outline: none; }
+  .props-grid .props-readonly {
+    color: var(--parchment-dim);
+  }
+  .props-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .props-actions button {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    border-radius: 3px;
+    padding: 7px 12px;
+    cursor: pointer;
+  }
+  .props-actions button:hover { background: var(--gilt); color: var(--iron); }
+  .props-actions button.primary {
+    background: var(--gilt);
+    color: var(--iron);
+    border-color: var(--gilt);
+  }
+  .props-actions button.primary:hover { background: var(--parchment); }
+  .props-empty {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ash);
+    text-align: center;
+    padding: 6px 0;
+  }
+  .sphere-chip .chip-enter {
+    margin-left: 6px;
+    font-size: 10px;
+    color: var(--gilt);
+    border-left: 1px solid var(--border);
+    padding-left: 6px;
+  }
+
+  .global-unity {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0 0 8px;
+    font-family: var(--display);
+  }
+  .global-unity .gu-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+  .global-unity .gu-val {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--oxblood-bright);
+    text-shadow: 0 0 16px rgba(176,74,88,0.4);
+    transition: color 0.4s;
+  }
+  .global-unity .gu-detail {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ash);
+  }
+  .sphere-readout .unity-val { color: var(--oxblood-bright); font-weight: 600; }
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    min-height: 22px;
+    margin-bottom: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ash);
+  }
+  .breadcrumb .crumb {
+    cursor: pointer;
+    color: var(--gilt-dim);
+    border-bottom: 1px dotted transparent;
+  }
+  .breadcrumb .crumb:hover { color: var(--gilt); border-bottom-color: var(--gilt); }
+  .breadcrumb .crumb.current { color: var(--parchment-dim); cursor: default; }
+  .breadcrumb .sep { color: var(--ash); opacity: 0.5; }
+
+  .sphere-readout {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ash);
+    line-height: 1.6;
+    pointer-events: none;
+    text-align: left;
+    background: rgba(22,20,15,0.55);
+    padding: 6px 9px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+  .sphere-readout .feedback-val { color: var(--gilt); font-weight: 600; }
+  .node-tooltip {
+    position: absolute;
+    pointer-events: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    background: rgba(22,20,15,0.95);
+    border: 1px solid var(--border-strong);
+    color: var(--parchment);
+    padding: 6px 10px;
+    border-radius: 3px;
+    transform: translate(-50%, -130%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 5;
+  }
+  .node-tooltip.show { opacity: 1; }
+  .node-tooltip .tt-root { color: var(--oxblood-bright); font-weight: 600; }
+
+  #settledStatus {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ash);
+    margin: 0 0 12px;
+    transition: color 0.4s;
+  }
+  .sample-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .sample-controls button {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    border-radius: 3px;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  .sample-controls button:hover:not(:disabled) { background: var(--gilt); color: var(--iron); }
+  .sample-controls button:disabled { opacity: 0.3; cursor: not-allowed; }
+  .sample-controls button.playing { background: var(--oxblood); border-color: var(--oxblood-bright); color: var(--parchment); }
+  .sample-info {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ash);
+    margin: 10px 0 0;
+  }
+
+  .convergence-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .convergence-table th {
+    text-align: left;
+    font-family: var(--display);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ash);
+    font-weight: 500;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .convergence-table td {
+    padding: 5px 8px;
+    color: var(--parchment-dim);
+    border-bottom: 1px solid var(--border);
+  }
+  .convergence-table tr.reseed-tier td {
+    color: var(--oxblood-bright);
+    font-weight: 600;
+  }
+  .convergence-table tr.reseed-tier td:first-child::after {
+    content: ' ★';
+    font-size: 10px;
+  }
+
+  .hero-caption {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ash);
+    letter-spacing: 0.05em;
+    max-width: 520px;
+    margin: 4px auto 0;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .hero-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .rotate-btn {
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .rotate-btn:hover { background: var(--gilt); color: var(--iron); }
+  .rotate-btn.ghost { border-color: var(--border); color: var(--ash); }
+  .rotate-btn.ghost:hover { background: var(--iron-2); color: var(--parchment); border-color: var(--border-strong); }
+
+  /* ---------- GEMATRIA CALCULATOR ---------- */
+  .calc-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .calc-input-row input[type=text] {
+    flex: 1;
+    min-width: 220px;
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    color: var(--parchment);
+    font-family: var(--mono);
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+  .calc-input-row input[type=text]:focus { border-color: var(--gilt); }
+  .calc-input-row button {
+    font-family: var(--display);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--gilt);
+    color: var(--iron);
+    border: none;
+    border-radius: 3px;
+    padding: 0 22px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .calc-input-row button:hover { background: var(--parchment); }
+  .calc-hint { font-family: var(--mono); font-size: 12px; color: var(--ash); margin: 0 0 22px; }
+
+  .translit-line {
+    font-family: var(--mono);
+    font-size: 26px;
+    letter-spacing: 0.02em;
+    color: var(--gilt);
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 0 0 20px;
+    direction: rtl;
+    text-align: center;
+  }
+
+  .use-seed-btn {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--oxblood);
+    color: var(--oxblood-bright);
+    border-radius: 3px;
+    padding: 8px 14px;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .use-seed-btn:hover { background: var(--oxblood); color: var(--parchment); }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .method-card {
+    background: rgba(233,223,197,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    text-align: center;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .method-card.match { border-color: var(--oxblood-bright); background: rgba(138,51,65,0.15); }
+  .method-name { font-family: var(--display); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ash); margin-bottom: 8px; }
+  .method-value { font-family: var(--mono); font-size: 22px; color: var(--parchment); }
+  .method-root { font-family: var(--mono); font-size: 13px; color: var(--gilt); margin-top: 4px; }
+
+  .convergence-note {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--parchment-dim);
+  }
+  .convergence-note.hit { border-color: var(--oxblood-bright); color: var(--oxblood-bright); background: rgba(138,51,65,0.1); }
+
+  .compare-slot { margin-top: 30px; }
+  .word-history { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .history-chip {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    color: var(--parchment-dim);
+    cursor: pointer;
+  }
+  .history-chip:hover { border-color: var(--gilt); color: var(--gilt); }
+  .history-chip .root-badge { color: var(--gilt); font-weight: 600; }
+
+  /* ---------- WORKING CARDS ---------- */
+  .figure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 24px 0; }
+  .figure-card {
+    background: rgba(233,223,197,0.03);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gilt-dim);
+    border-radius: 4px;
+    padding: 16px 20px;
+  }
+  .figure-card.converged { border-left-color: var(--oxblood-bright); }
+  .figure-card h4 { font-family: var(--display); font-size: 15px; color: var(--parchment); margin: 0 0 6px; letter-spacing: 0.03em; }
+  .figure-card .fc-meta { font-family: var(--mono); font-size: 12px; color: var(--gilt); }
+  .figure-card .fc-desc { font-size: 15px; color: var(--parchment-dim); margin-top: 8px; }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline { border-left: 2px solid var(--border-strong); margin-left: 8px; padding-left: 28px; }
+  .tl-item { position: relative; margin-bottom: 30px; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -34px;
+    top: 4px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--iron);
+    border: 2px solid var(--gilt);
+  }
+  .tl-item.resolved::before { background: var(--gilt); }
+  .tl-item.open::before { border-color: var(--oxblood-bright); }
+  .tl-tag { font-family: var(--mono); font-size: 11px; color: var(--gilt); letter-spacing: 0.06em; }
+  .tl-item h4 { font-family: var(--display); font-size: 16px; color: var(--parchment); margin: 4px 0 6px; }
+  .tl-item p { font-size: 15px; color: var(--parchment-dim); margin: 0; }
+
+  /* ---------- SYNTHESIS ---------- */
+  .fork-box {
+    border: 1px solid var(--oxblood);
+    background: rgba(138,51,65,0.08);
+    border-radius: 4px;
+    padding: 26px 28px;
+    margin-top: 30px;
+  }
+  .fork-box h3 { color: var(--oxblood-bright); font-size: 16px; }
+
+  .audio-suite {
+    max-width: 820px;
+    margin: 0 auto 18px;
+    background: rgba(233,223,197,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 20px 20px;
+  }
+  .audio-suite-columns {
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .audio-col-main { flex: 1.5; min-width: 340px; }
+  .audio-col-side { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 16px; }
+  .side-section {
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+  .side-section:first-child { border-top: none; padding-top: 0; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gilt-dim);
+    margin: 0 0 8px;
+    text-align: left;
+  }
+
+  .seismograph-panel {
+    max-width: 820px;
+    margin: 0 auto 18px;
+    background: rgba(233,223,197,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 20px 20px;
+  }
+  #seismographCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+    background: var(--iron);
+    margin-bottom: 10px;
+  }
+  .session-timer {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ash);
+    text-align: right;
+    margin: 8px 0 0;
+    letter-spacing: 0.04em;
+  }
+
+  .seismo-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .seismo-toolbar button {
+    font-family: var(--display);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--iron-2);
+    border: 1px solid var(--border-strong);
+    color: var(--gilt);
+    border-radius: 3px;
+    padding: 6px 11px;
+    cursor: pointer;
+  }
+  .seismo-toolbar button:hover { background: var(--gilt); color: var(--iron); }
+  .seismo-position-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ash);
+    margin-left: 4px;
+  }
+
+  .seismo-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 6px 10px;
+  }
+  .seismo-channel-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ash);
+  }
+  .seismo-digit-label { width: 12px; font-weight: 700; flex-shrink: 0; }
+  .seismo-channel-row input[type=color] {
+    width: 20px; height: 20px; padding: 0; border: 1px solid var(--border-strong);
+    border-radius: 2px; background: none; cursor: pointer; flex-shrink: 0;
+  }
+  .seismo-channel-row input[type=range] { width: 44px; height: 3px; accent-color: var(--gilt); flex-shrink: 0; }
+  .seismo-channel-row input[type=checkbox] { accent-color: var(--gilt); flex-shrink: 0; }
+  .stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin: 24px 0; }
+  .stat { flex: 1; min-width: 140px; text-align: center; background: rgba(233,223,197,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 18px; }
+  .stat .num { font-family: var(--mono); font-size: 28px; color: var(--gilt); }
+  .stat .lbl { font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ash); margin-top: 6px; }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px 60px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ash);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  @media (max-width: 640px) {
+    .chapter { padding: 40px 16px 80px; }
+    body { font-size: 17px; }
+    .hero h1 { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero" style="max-width:880px;margin:0 auto;padding:48px 24px 26px;text-align:left;">
+  <p class="eyebrow">Investigation report · compiled August 2026</p>
+  <h1>The Resonating Singularity</h1>
+  <p class="subtitle">a metaphysical model, and the numerical claim that was tested to destruction</p>
+  <div class="abstract">
+    <strong>Abstract.</strong> A personally-derived cosmological model (nested spheres of observing nodes,
+    rotation as distortion, no privileged scale) was assembled independently of any existing tradition,
+    then checked against physics and against several religious and philosophical systems. Separately, a
+    numerical claim arising alongside it — that four mythological names independently converge on the same
+    Hebrew gematria digital root — was subjected to twenty-seven rounds of adversarial testing.
+    <strong>The model's structural parallels held. The numerical claim did not.</strong> This report presents
+    both outcomes, the full elimination sequence, the corrections made along the way, and the live instruments
+    used to reach them.
+  </div>
+</div>
+<nav class="plaques" id="navBar">
+  <a class="plaque active" data-chapter="findings">01 · Findings</a>
+  <a class="plaque" data-chapter="method">02 · Method</a>
+  <a class="plaque" data-chapter="calculator">03 · Instrument</a>
+  <a class="plaque" data-chapter="simulation">04 · Simulation</a>
+  <a class="plaque" data-chapter="philosophy">05 · The Model</a>
+  <a class="plaque" data-chapter="discussion">06 · Discussion</a>
+</nav>
+<section class="chapter active" id="findings">
+  <span class="eyebrow">Section 01</span>
+  <h2>Findings</h2>
+  <p class="lede">The headline claim was that four names — Hecate, Kali Ma, Loki, Bucephalus — independently
+  land on Hebrew gematria digital root 11. The claim is now fully explained.</p>
+
+  <div class="result-banner">
+    <span class="rb-tag">Resolved</span>
+    <span class="rb-text">A 1-in-341 transliteration-policy choice, applied to four provably independent names.</span>
+  </div>
+
+  <h3>The decisive test</h3>
+  <p>Earlier rounds all asked whether something about the <em>names</em> explained the result — theme, pantheon,
+  alternate spellings, numeral system. Nothing fit. The question that resolved it was narrower: <strong>how large
+  is the space of defensible transliteration policies, and where in that space does the original sit?</strong></p>
+  <p>The discretion was never in the letters. It was in the vowel-length policy — whether each vowel counts as
+  long (marked with a mater lectionis) or short (dropped). Four names, twelve vowel slots, plus one genuine
+  hard/soft-C ambiguity: <strong>8,192 possible policies</strong>, each defensible to some degree. All were tested exhaustively.</p>
+
+  <table class="datatable">
+    <caption>Exhaustive scan · all 8,192 transliteration policies</caption>
+    <thead><tr><th>Largest shared-root cluster</th><th class="num">Policies</th><th class="num">Share of space</th></tr></thead>
+    <tbody>
+      <tr class="highlight"><td>4 of 4 &nbsp;<span class="status-pill note">the original</span></td><td class="num">24</td><td class="num">0.29%</td></tr>
+      <tr><td>3 of 4</td><td class="num">400</td><td class="num">4.88%</td></tr>
+      <tr><td>2 of 4</td><td class="num">3,760</td><td class="num">45.90%</td></tr>
+      <tr><td>1 of 4 (no convergence)</td><td class="num">4,008</td><td class="num">48.93%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Proof of independence</h3>
+  <p>Across all 8,192 policies each name reaches root 11 at its own rate. If the four are statistically
+  independent — no shared property, no linking structure — the joint rate must equal the product of the marginals.</p>
+
+  <table class="datatable">
+    <caption>Per-name marginal rates</caption>
+    <thead><tr><th>Name</th><th class="num">Reaches root 11</th></tr></thead>
+    <tbody>
+      <tr><td>Loki</td><td class="num">50.0%</td></tr>
+      <tr><td>Hecate</td><td class="num">25.0%</td></tr>
+      <tr><td>Kali Ma</td><td class="num">25.0%</td></tr>
+      <tr><td>Bucephalus</td><td class="num">9.4%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="proof-block">
+    <span class="pb-eq">0.25 × 0.25 × 0.50 × 0.09375 = 0.29296875%</span><br>
+    <span style="color:var(--ash);font-size:12px;">predicted, assuming independence</span><br><br>
+    <span class="pb-eq">24 ⁄ 8192 = 0.29296875%</span><br>
+    <span style="color:var(--ash);font-size:12px;">observed</span><br><br>
+    <span class="pb-match">Exact match to eight decimal places.</span>
+  </div>
+
+  <p>The joint outcome is precisely the product of four independent marginals. There is no correlation between
+  these names and no structure for a mystery to occupy — the arithmetic leaves no room for one. This also explains,
+  retroactively, why substituting names one at a time produced perfectly symmetric results in an earlier round:
+  independence was already visible then, and is now proven rather than inferred.</p>
+
+  <h3>Independent confirmation of the figure</h3>
+  <p>An earlier round measured the same rarity through a completely different parameterisation — keep/drop
+  decisions rather than long/short vowel classification — and arrived at 3 of 1,024 = <strong>0.29%</strong>.
+  This scan, framed differently and run separately, arrived at 24 of 8,192 = <strong>0.29%</strong>. Two independent
+  framings of "the space of defensible choices," same answer.</p>
+
+  <div class="correction-note">
+    <strong>Attribution, stated precisely — an earlier draft got this wrong.</strong> Two separate choices were
+    made by two different parties, and only one carried goal-directed discretion. The <em>names</em> were selected
+    by Mahda on intuition, from figures encountered in prior study, assembled for personal reasons during a
+    difficult period — with no numerical consideration at any point. The <em>transliteration policy</em> was chosen
+    by Claude afterward, in a session already framed around producing a gematria result. The forking-paths problem
+    lives entirely in the second step. This distinction is load-bearing: because the names were fixed before any
+    number existed, the original test was genuinely pre-specified, which is exactly what made the result worth
+    twenty-seven rounds of scrutiny rather than dismissal at the outset.
+  </div>
+</section>
+<section class="chapter" id="method">
+  <span class="eyebrow">Section 02</span>
+  <h2>Method &amp; Elimination Sequence</h2>
+  <p class="lede">Each row is a hypothesis that could have explained the convergence, and the test built to
+  falsify it. Nine rounds cleared; the tenth resolved the case.</p>
+
+  <table class="datatable">
+    <caption>Hypotheses tested, in order</caption>
+    <thead><tr><th>Hypothesis</th><th>Test</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr><td>Pure chance</td><td>200,000-trial Monte Carlo</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr><td>Artifact of ordinary language</td><td>150 real control names, same algorithm</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr><td>Property of pantheons generally</td><td>8 unrelated pantheons</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr><td>Property of the death/chaos theme</td><td>29-name themed pool</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr><td>One name carrying the pattern</td><td>Symmetric substitution, all slots</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr><td>Property of tiered numeral systems</td><td>Greek isopsephy, same names</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr><td>Model-level transliteration tendency</td><td>Blind replication, isolated instances</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr><td>Seed-type or residue-class bias</td><td>1.61M-sample battery, 8 input types</td><td><span class="status-pill cleared">cleared</span></td></tr>
+      <tr class="highlight"><td>Transliteration-policy discretion</td><td>Exhaustive 8,192-policy scan</td><td><strong>CAUSE IDENTIFIED</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Corrections made during the investigation</h3>
+  <p>These are recorded rather than absorbed, because a document that corrects itself in public shouldn't
+  quietly rewrite its own history.</p>
+  <table class="datatable">
+    <caption>Claims revised or withdrawn</caption>
+    <thead><tr><th>Original claim</th><th>Correction</th></tr></thead>
+    <tbody>
+      <tr class="refuted"><td>Rarity of 1-in-1,400 (0.07%)</td><td>Garden-of-forking-paths error; true figure ≈ 1-in-67 (1.5%)</td></tr>
+      <tr class="refuted"><td>"Three independent methods converge"</td><td>Hechrachi and Katan are the same invariant — one signal, not three</td></tr>
+      <tr class="refuted"><td>Atbash as an independent fourth check</td><td>Bound by exact identity: every Atbash pair sums to ≡5 (mod 9)</td></tr>
+      <tr class="refuted"><td>Structured null model would raise the rarity</td><td>Tested with empirical letter frequencies; figure unchanged</td></tr>
+      <tr class="refuted"><td>Word-survey clusters as findings</td><td>Look-elsewhere artifacts; 4-word cliques occur in ~40% of random batches</td></tr>
+    </tbody>
+  </table>
+</section>
+<section class="chapter" id="calculator">
+  <span class="eyebrow">Section 03</span>
+  <h2>Comparative Instrument</h2>
+  <p class="lede">Four real letter-number traditions, side by side. Retained as a comparison baseline — the
+  point is that none of them behaves specially, which is what the elimination sequence established.</p>
+  <div class="panel">
+    <div class="calc-input-row">
+      <input type="text" id="calcInput" placeholder="Try a name, a word, a phrase..." autocomplete="off">
+      <button id="calcBtn">Calculate</button>
+    </div>
+    <div class="config-row" style="margin-bottom:14px;">
+      <label>System
+        <select id="systemSelect">
+          <option value="hebrew">Hebrew Gematria (4 methods)</option>
+          <option value="greek">Greek Isopsephy (2 methods)</option>
+          <option value="arabic">Arabic Abjad (2 methods)</option>
+          <option value="english">English Numerology (2 methods)</option>
+        </select>
+      </label>
+    </div>
+    <p class="calc-hint" id="calcHint">English input is transliterated using the same bias-free, mechanical algorithm used for every control test in this investigation (K/hard-C→ק, T→ט, S→ס, F/PH→פ, matres lectionis at word boundaries only). Hebrew input is used as-is. Worth knowing: typing the original six figures here won't reproduce their documented root-11 convergence — that's not a bug, it's Section 0.17's actual finding. The convergence only existed under the hand-chosen spellings; this calculator deliberately doesn't reproduce those judgment calls.</p>
+
+    <div id="translitDisplay" class="translit-line" style="display:none;"></div>
+    <div id="methodGrid" class="method-grid"></div>
+    <div id="convergenceNote" class="convergence-note" style="display:none;"></div>
+    <button id="useAsSeedBtn" class="use-seed-btn" style="display:none;">↑ Use this word as the sphere's resonance seed</button>
+
+    <div class="compare-slot">
+      <p class="eyebrow" style="margin-bottom:10px;">History — click any past word to compare its root against the current one</p>
+      <div id="wordHistory" class="word-history"></div>
+    </div>
+  </div>
+  <div class="verdict-grid" style="margin-top:26px;">
+    <div class="verdict-card"><div class="vc-label">Any single pair sharing a root</div><div class="vc-value">~1 in 10</div><div class="vc-note">Ordinary. Expected for any two words in any system tested.</div></div>
+    <div class="verdict-card"><div class="vc-label">Standard/reduced pairs agreeing</div><div class="vc-value">Mechanical</div><div class="vc-note">Frequently forced by the value table, not independent confirmation.</div></div>
+    <div class="verdict-card"><div class="vc-label">Systems showing intrinsic bias</div><div class="vc-value">0 of 4</div><div class="vc-note">Hebrew, Greek, Arabic and English all behave as unbiased sums.</div></div>
+  </div>
+</section>
+<section class="chapter" id="simulation">
+  <span class="eyebrow">Section 04</span>
+  <h2>Model Simulation</h2>
+  <p class="lede">The model's own mechanism, built literally and instrumented: a resonating source, observer
+  nodes that distort what they receive, a feedback loop, and fractal recursion. Run at scale, it produces
+  no emergent convergence — a null result, reported as such.</p>
+
+  <div class="verdict-grid">
+    <div class="verdict-card"><div class="vc-label">Seed-type battery</div><div class="vc-value">1.61M samples</div><div class="vc-note">8 input types (word, tarot, card, coin, random, bits, RGBA, hex). All statistically identical.</div></div>
+    <div class="verdict-card"><div class="vc-label">Residue-class bias</div><div class="vc-value">None found</div><div class="vc-note">mod-37 scanned exhaustively; mod-9973 sampled at 300 classes. Both null under retest.</div></div>
+    <div class="verdict-card"><div class="vc-label">Convergence at scale</div><div class="vc-value">≤ 6 of 8</div><div class="vc-note">Deterministic coprime systems cluster <em>less</em> than true randomness, not more.</div></div>
+  </div>
+
+  <p class="sim-hint">
+    Live stage · drag to rotate · scroll to zoom · HUD panels on the right collapse/expand over the sim
+  </p>
+
+<div class="hero sim-hero">
+  <div class="sim-stage" id="simStage">
+
+    <!-- 3D viewport fills the stage -->
+    <div class="sphere-wrap" id="sphereWrap">
+      <canvas id="sphereCanvas" width="640" height="640"></canvas>
+      <div class="sphere-readout" id="sphereReadout"></div>
+      <div class="node-tooltip" id="nodeTooltip"></div>
+    </div>
+
+    <!-- Top HUD: status + navigation -->
+    <div class="hud-top">
+      <div class="hud-status">
+        <div class="global-unity">
+          <span class="gu-label">Unity</span>
+          <span class="gu-val" id="globalUnityVal">—</span>
+          <span class="gu-detail" id="globalUnityDetail"></span>
+          <span class="gu-detail" id="visibilityBadge" style="color:var(--oxblood-bright);"></span>
+        </div>
+        <div class="seed-current" id="seedCurrent">seed: <span class="sv">unset</span></div>
+      </div>
+      <div class="hud-nav-row">
+        <div class="breadcrumb" id="breadcrumb"></div>
+        <div class="hud-view-btns">
+          <button class="rotate-btn" id="pulseBtn">Pulse</button>
+          <button class="rotate-btn ghost" id="enterSphereBtn" style="display:none;">↘ Enter</button>
+          <button class="rotate-btn ghost" id="zoomOutBtn" style="display:none;">↑ Back</button>
+          <button class="rotate-btn ghost" id="fullscreenBtn">⛶</button>
+        </div>
+      </div>
+      <div class="hud-sphere-row">
+        <div class="sphere-picker" id="spherePicker"></div>
+        <div class="selected-sphere-banner" id="selectedSphereBanner">Select a sphere or node · open Inspector to edit</div>
+      </div>
+    </div>
+
+    <!-- Dock: panel toggles -->
+    <div class="hud-dock" id="hudDock">
+      <button type="button" class="hud-dock-btn" data-hud="inspect">Inspect</button>
+      <button type="button" class="hud-dock-btn" data-hud="seed">Seed</button>
+      <button type="button" class="hud-dock-btn" data-hud="struct">Struct</button>
+      <button type="button" class="hud-dock-btn" data-hud="signal">Signal</button>
+      <button type="button" class="hud-dock-btn" data-hud="seismo">Seismo</button>
+    </div>
+
+    <!-- Panel: Inspector -->
+    <div class="hud-panel right" id="hud-inspect" data-hud-panel="inspect">
+      <div class="hud-panel-head">
+        <h4 id="propsTitle">Inspector</h4>
+        <button type="button" class="hud-panel-close" data-hud-close="inspect" aria-label="Close">×</button>
+      </div>
+      <div class="hud-panel-body">
+        <div class="props-panel" id="propsPanel">
+          <div id="propsBody" class="props-empty">Select a sphere or node to inspect and edit properties.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Resonance seed -->
+    <div class="hud-panel right" id="hud-seed" data-hud-panel="seed">
+      <div class="hud-panel-head">
+        <h4>Resonance seed</h4>
+        <button type="button" class="hud-panel-close" data-hud-close="seed" aria-label="Close">×</button>
+      </div>
+      <div class="hud-panel-body">
+        <p class="sim-hint">Applies to the <em>selected</em> sphere only.</p>
+        <div class="seed-source-panel">
+          <div class="seed-tabs" id="seedTabs">
+            <button class="seed-tab active" data-source="word">Word</button>
+            <button class="seed-tab" data-source="tarot">Tarot</button>
+            <button class="seed-tab" data-source="cards">Card</button>
+            <button class="seed-tab" data-source="coin">Coin</button>
+            <button class="seed-tab" data-source="random">Rand</button>
+            <button class="seed-tab" data-source="bits">Bits</button>
+            <button class="seed-tab" data-source="rgba">RGBA</button>
+            <button class="seed-tab" data-source="hex">Hex</button>
+          </div>
+          <div class="seed-body" id="seedBody-word">
+            <input type="text" id="seedInput" placeholder="word or phrase..." autocomplete="off">
+            <button id="setSeedBtn">Set seed</button>
+          </div>
+          <div class="seed-body" id="seedBody-tarot" style="display:none;">
+            <select id="tarotArcanaType">
+              <option value="major">Major Arcana</option>
+              <option value="minor">Minor Arcana</option>
+            </select>
+            <select id="tarotMajorSelect"></select>
+            <select id="tarotSuitSelect" style="display:none;"></select>
+            <select id="tarotRankSelect" style="display:none;"></select>
+            <button id="tarotRandomBtn">Draw</button>
+            <button id="tarotSetBtn">Set seed</button>
+          </div>
+          <div class="seed-body" id="seedBody-cards" style="display:none;">
+            <select id="cardSuitSelect"></select>
+            <select id="cardRankSelect"></select>
+            <button id="cardRandomBtn">Draw</button>
+            <button id="cardSetBtn">Set seed</button>
+          </div>
+          <div class="seed-body" id="seedBody-coin" style="display:none;">
+            <button id="coinFlipBtn">Flip coin</button>
+            <span id="coinResultLabel" class="seed-inline-result"></span>
+          </div>
+          <div class="seed-body" id="seedBody-random" style="display:none;">
+            <label>Min <input type="number" id="randMinInput" value="1" style="width:70px;"></label>
+            <label>Max <input type="number" id="randMaxInput" value="999" style="width:70px;"></label>
+            <button id="randomRollBtn">Roll</button>
+          </div>
+          <div class="seed-body" id="seedBody-bits" style="display:none;">
+            <input type="text" id="bitsInput" placeholder="10110101" maxlength="24">
+            <button id="bitsRandomBtn">Random 8-bit</button>
+            <button id="bitsSetBtn">Set seed</button>
+          </div>
+          <div class="seed-body" id="seedBody-rgba" style="display:none;">
+            <input type="color" id="rgbaColorInput" value="#c9a35c">
+            <label>α <input type="range" id="rgbaAlphaInput" min="0" max="255" value="255" style="width:70px;"></label>
+            <button id="rgbaRandomBtn">Random</button>
+            <button id="rgbaSetBtn">Set seed</button>
+          </div>
+          <div class="seed-body" id="seedBody-hex" style="display:none;">
+            <input type="text" id="hexInput" placeholder="1A2B3C" maxlength="12">
+            <button id="hexRandomBtn">Random</button>
+            <button id="hexSetBtn">Set seed</button>
+          </div>
+          <div class="seed-weights-display" id="seedWeightsDisplay"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Structure -->
+    <div class="hud-panel right" id="hud-struct" data-hud-panel="struct">
+      <div class="hud-panel-head">
+        <h4>Structure &amp; tempo</h4>
+        <button type="button" class="hud-panel-close" data-hud-close="struct" aria-label="Close">×</button>
+      </div>
+      <div class="hud-panel-body">
+        <div class="sim-config-grid">
+          <div class="config-group">
+            <span class="group-label">Nodes</span>
+            <label><input type="number" id="nodeCountInput" min="4" max="90" value="40" style="width:60px;"></label>
+            <button id="applyNodeCountBtn">Apply</button>
+          </div>
+          <div class="config-group">
+            <span class="group-label">Network</span>
+            <button id="addSphereBtn">+ Sphere</button>
+            <span>(<span class="sat-count" id="satCount">0</span>/6)</span>
+            <button id="clearSpheresBtn">Clear</button>
+          </div>
+          <div class="config-group">
+            <span class="group-label">Speed</span>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;">
+              <input type="range" id="deltaMultiplierSlider" min="1" max="30" step="1" value="1" style="flex:1;">
+              <span id="deltaMultiplierVal" class="sat-count">1×</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Signal -->
+    <div class="hud-panel right" id="hud-signal" data-hud-panel="signal">
+      <div class="hud-panel-head">
+        <h4>Signal &amp; audio</h4>
+        <button type="button" class="hud-panel-close" data-hud-close="signal" aria-label="Close">×</button>
+      </div>
+      <div class="hud-panel-body">
+        <div class="audio-suite">
+          <div class="audio-controls">
+            <button id="audioToggleBtn">▶ Chord</button>
+            <label>Master <input type="range" id="masterVolSlider" min="0" max="100" value="60"></label>
+            <label>Scale
+              <select id="scaleSelect">
+                <option value="Major Pentatonic">Maj Pent</option>
+                <option value="Minor Pentatonic">Min Pent</option>
+                <option value="Major (Ionian)">Major</option>
+                <option value="Natural Minor (Aeolian)">Nat Minor</option>
+                <option value="Harmonic Minor">Harm Minor</option>
+                <option value="Phrygian">Phrygian</option>
+                <option value="Whole Tone">Whole Tone</option>
+                <option value="Chromatic">Chromatic</option>
+              </select>
+            </label>
+            <label>Oct
+              <select id="octaveSelect">
+                <option value="65.41">C2</option>
+                <option value="130.81" selected>C3</option>
+                <option value="261.63">C4</option>
+                <option value="523.25">C5</option>
+              </select>
+            </label>
+            <button id="fadeToggleBtn" class="playing">Fade: On</button>
+            <button id="interestToggleBtn" class="playing">Interest: On</button>
+          </div>
+          <div class="audio-suite-columns">
+            <div class="audio-col-main">
+              <p class="section-label">Digit history</p>
+              <div class="digit-bar-header">
+                <span class="h-track"></span>
+                <span class="h-count">n</span>
+                <span class="h-hz">Hz</span>
+                <span class="h-vol">vol</span>
+                <span class="h-pan">pan</span>
+              </div>
+              <div id="digitBarsContainer"></div>
+              <p class="session-timer" id="digitBarsTimer">Running for 00:00</p>
+            </div>
+            <div class="audio-col-side">
+              <div class="side-section">
+                <p class="section-label">Frozen sample</p>
+                <p id="settledStatus">Waiting for digits 1–9 to settle...</p>
+                <div class="sample-controls">
+                  <button id="generateSampleBtn" disabled>Freeze</button>
+                  <button id="playSampleBtn" disabled>▶ Loop</button>
+                  <button id="downloadSampleBtn" disabled>⬇ WAV</button>
+                </div>
+                <p class="sample-info" id="sampleInfo"></p>
+              </div>
+              <div class="side-section">
+                <p class="section-label">Agreement</p>
+                <table class="convergence-table">
+                  <thead><tr><th>Level</th><th>n</th></tr></thead>
+                  <tbody id="convergenceTableBody"></tbody>
+                </table>
+                <p class="session-timer" id="convergenceTimer">Running for 00:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Seismograph (bottom drawer) -->
+    <div class="hud-panel bottom" id="hud-seismo" data-hud-panel="seismo">
+      <div class="hud-panel-head">
+        <h4>Seismograph</h4>
+        <button type="button" class="hud-panel-close" data-hud-close="seismo" aria-label="Close">×</button>
+      </div>
+      <div class="hud-panel-body">
+        <p class="sim-hint">Drag to scrub · scroll to zoom time</p>
+        <div class="seismograph-panel">
+          <canvas id="seismographCanvas" width="900" height="220"></canvas>
+          <div class="seismo-toolbar">
+            <button id="seismoZoomOutBtn" title="Zoom out">−</button>
+            <button id="seismoZoomInBtn" title="Zoom in">+</button>
+            <button id="seismoJumpLiveBtn" title="Jump to live">⏵ Live</button>
+            <span class="seismo-position-label" id="seismoPositionLabel"></span>
+          </div>
+          <div class="seismo-controls" id="seismoControls"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</section>
+<section class="chapter" id="philosophy">
+  <span class="eyebrow">Section 05</span>
+  <h2>The model, as stated</h2>
+  <p class="lede">Built from a single image — a glass sphere, hexagonal panels, a source resonating outward through it — then pushed until it either broke or held.</p>
+
+  <div class="panel">
+    <h3>The core claim</h3>
+    <p>There is a singularity — a single source. It resonates: emits a frequency outward. Picture a glass sphere built from hexagonal nodes, each one a lens. Each node receives the singularity's frequency and transmits it back outward — distorted by having passed through that particular lens. The spheres nest, propagating outward without end, and the outermost sphere's output feeds back into the singularity itself. The loop closes.</p>
+    <p>Each node is an observer. What an observer experiences as "reality" is the frequency as it arrives at their specific lens — already bent before it's seen at all. The spheres can be <em>rotated</em>. Rotation distorts what the singularity transmits before it reaches any given node.</p>
+    <p>What rotates the spheres is, provisionally, called <em>consciousness</em> — and whether that consciousness has free will, or is itself just another layer of the mechanism, is left open. Not resolved. Held as genuinely unknown.</p>
+  </div>
+
+  <div class="panel">
+    <h3>The fractal extension</h3>
+    <p>A later refinement: the hexagonal lens-nodes aren't flat facets. Each one is itself a sphere — its own set of hexagonal nodes, each a lens, each a sphere again. Every node is simultaneously observer and source. Distortion compounds, but so does correction, because the feedback loop applies at every scale independently. There is no privileged scale — the singularity at the center and the one inside a single hexagonal panel are the same kind of thing, differing only in the distance from which they're observed.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Where it meets established science</h3>
+    <p>Four elements of the model land on genuinely established physics, not stretched analogy: rotation-as-distortion is the same mathematics as Lorentz transformations in special relativity. The fractal recursion matches renormalization group theory. The hexagonal sphere geometry matches real icosahedral structures nature actually uses. The feedback loop matches ordinary cybernetics and self-organized criticality.</p>
+    <p>One central claim doesn't clear the bar: consciousness as the literal mechanism of rotation isn't supported by physics as it currently stands. That's stated plainly here rather than smoothed over — a philosophical claim, not a scientific one, at least for now.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Structural echoes, found independently</h3>
+    <p>Arrived at without consulting these traditions, then checked against them afterward:</p>
+    <ul>
+      <li><strong>Lurianic Kabbalah</strong> — shevirat ha-kelim, the shattering of the vessels: light entering vessels that can't fully contain it, scattering outward, drawn back through tikkun. The same feedback loop, independently derived.</li>
+      <li><strong>Indra's Net</strong> — an infinite net of jewels, each reflecting all the others, each containing the whole net within it.</li>
+      <li><strong>Leibniz's monads</strong> — windowless units, each a private perspective mirroring the entire universe at its own scale.</li>
+      <li><strong>Perichoresis</strong> — the standard theological term for how the Trinity's three persons relate. Coined by Gregory of Nazianzus in the 4th century. It's Greek for <em>rotation</em>. Verified, not assumed — and the strongest single echo found anywhere in this whole investigation.</li>
+    </ul>
+  </div>
+</section>
+<section class="chapter" id="discussion">
+  <span class="eyebrow">Section 06</span>
+  <h2>Discussion</h2>
+  <p class="lede">Two claims were tested. They came apart, and the separation is the most useful result here.</p>
+
+  <h3>What did not survive</h3>
+  <p>The numerical claim. Fully explained as a 1-in-341 policy choice on four independent names, with the
+  independence proven to eight decimal places. Along the way the headline rarity was corrected by a factor of
+  roughly twenty, three "independent methods" collapsed into one, and several apparent findings turned out to be
+  look-elsewhere artifacts. None of that was forced by outside criticism; each correction came from a test built
+  specifically to try to break the previous round's conclusion.</p>
+
+  <h3>What did survive</h3>
+  <p>The model itself — which never depended on the numbers meaning anything. Its structural parallels were
+  arrived at independently and checked afterward:</p>
+  <table class="datatable">
+    <caption>Structural correspondences, verified</caption>
+    <thead><tr><th>Model element</th><th>Established parallel</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Rotation as distortion</td><td>Lorentz transformations (a boost <em>is</em> a hyperbolic rotation)</td><td><span class="status-pill cleared">direct</span></td></tr>
+      <tr><td>Self-similarity at every scale</td><td>Renormalization group theory</td><td><span class="status-pill cleared">direct</span></td></tr>
+      <tr><td>Hexagonal sphere geometry</td><td>Icosahedral symmetry (viral capsids, C60)</td><td><span class="status-pill cleared">direct</span></td></tr>
+      <tr><td>Output feeding back to source</td><td>Cybernetics, self-organized criticality</td><td><span class="status-pill cleared">direct</span></td></tr>
+      <tr><td>Every node contains the whole</td><td>Perichoresis — Greek for <em>rotation</em>, 4th century</td><td><span class="status-pill cleared">verified</span></td></tr>
+      <tr><td>Boundary encodes the volume</td><td>Holographic principle</td><td><span class="status-pill note">frontier</span></td></tr>
+      <tr><td>Consciousness as the rotating agent</td><td>No supported physical mechanism</td><td><span class="status-pill refuted">unsupported</span></td></tr>
+    </tbody>
+  </table>
+
+  <p>The last row is stated plainly rather than smuggled past. It remains a philosophical claim, not a scientific
+  one, and the closest empirical tests of it — PEAR, the Global Consciousness Project — did not replicate.</p>
+
+  <h3>On the outcome</h3>
+  <p>A claim that survives every test is a good result. A claim that finally fails a well-designed test is also a
+  good result, and arguably a rarer one, because it requires the person holding the claim to keep building tests
+  capable of destroying it. That is what happened here. The model was never contingent on the arithmetic; the
+  arithmetic turned out to be explicable; and both facts are now on the record with the working shown.</p>
+</section>
+
+<script>
+// ============ GEMATRIA ENGINE ============
+const VALUES = {'א':1,'ב':2,'ג':3,'ד':4,'ה':5,'ו':6,'ז':7,'ח':8,'ט':9,'י':10,
+  'כ':20,'ל':30,'מ':40,'נ':50,'ס':60,'ע':70,'פ':80,'צ':90,
+  'ק':100,'ר':200,'ש':300,'ת':400,
+  'ך':20,'ם':40,'ן':50,'ף':80,'ץ':90};
+const KATAN = {'א':1,'ב':2,'ג':3,'ד':4,'ה':5,'ו':6,'ז':7,'ח':8,'ט':9,'י':1,
+  'כ':2,'ל':3,'מ':4,'נ':5,'ס':6,'ע':7,'פ':8,'צ':9,'ק':1,'ר':2,'ש':3,'ת':4,
+  'ך':2,'ם':4,'ן':5,'ף':8,'ץ':9};
+const SOFIT = {'כ':500,'מ':600,'נ':700,'פ':800,'צ':900,'ך':500,'ם':600,'ן':700,'ף':800,'ץ':900};
+const ATBASH = {'א':'ת','ת':'א','ב':'ש','ש':'ב','ג':'ר','ר':'ג','ד':'ק','ק':'ד',
+  'ה':'צ','צ':'ה','ו':'פ','פ':'ו','ז':'ע','ע':'ז','ח':'ס','ס':'ח',
+  'ט':'נ','נ':'ט','י':'מ','מ':'י','כ':'ל','ל':'כ',
+  'ך':'ל','ם':'י','ן':'ט','ף':'ו','ץ':'ה'};
+
+const DIGRAPHS = {'PH':'פ','SH':'ש','TH':'ת','CH':'כ'};
+const CONSONANTS = {'B':'ב','C':'ק','D':'ד','F':'פ','G':'ג','H':'ה','J':'י','K':'ק','L':'ל',
+  'M':'מ','N':'נ','P':'פ','Q':'ק','R':'ר','S':'ס','T':'ט','V':'ו','W':'ו','X':'קס','Y':'י','Z':'ז'};
+const VOWEL_LETTERS = {'A':'א','E':'ה','I':'י','O':'ו','U':'ו'};
+const VOWELS = new Set('AEIOU');
+
+function isHebrewChar(c) { return c in VALUES; }
+function isHebrewText(str) { return [...str].some(isHebrewChar); }
+
+function transliterate(word) {
+  word = word.toUpperCase();
+  let out = [], i = 0, n = word.length;
+  while (i < n) {
+    const two = word.substr(i, 2);
+    if (DIGRAPHS[two]) { out.push(DIGRAPHS[two]); i += 2; continue; }
+    const ch = word[i];
+    if (VOWELS.has(ch)) {
+      if (i === 0 || i === n - 1) out.push(VOWEL_LETTERS[ch]);
+      i++; continue;
+    }
+    if (CONSONANTS[ch]) { out.push(CONSONANTS[ch]); i++; continue; }
+    i++;
+  }
+  return out.join('');
+}
+
+function cleanHebrew(text) { return [...text].filter(isHebrewChar).join(''); }
+
+function digitSum(n) { return String(Math.abs(n)).split('').reduce((a,d)=>a+parseInt(d),0); }
+function rootMaster(n) {
+  n = Math.abs(n);
+  while (true) {
+    if (n === 11 || n === 22 || n === 33) return n;
+    if (n < 10) return n;
+    n = digitSum(n);
+  }
+}
+function gadolValue(heb) {
+  const letters = [...heb];
+  let v = 0;
+  letters.forEach((c, i) => {
+    v += (i === letters.length - 1 && SOFIT[c]) ? SOFIT[c] : VALUES[c];
+  });
+  return v;
+}
+function atbashValue(heb) {
+  return [...heb].reduce((sum, c) => sum + VALUES[ATBASH[c]], 0);
+}
+
+function computeAll(rawInput) {
+  let heb;
+  if (isHebrewText(rawInput)) {
+    heb = cleanHebrew(rawInput);
+  } else {
+    heb = transliterate(rawInput.replace(/[^A-Za-z ]/g, ' ').split(' ').join(''));
+  }
+  if (!heb) return null;
+  const h = [...heb].reduce((s,c)=>s+VALUES[c],0);
+  const k = [...heb].reduce((s,c)=>s+KATAN[c],0);
+  const g = gadolValue(heb);
+  const a = atbashValue(heb);
+  return {
+    heb,
+    hechrachi: { value: h, root: rootMaster(h) },
+    katan: { value: k, root: rootMaster(k) },
+    gadol: { value: g, root: rootMaster(g) },
+    atbash: { value: a, root: rootMaster(a) },
+  };
+}
+
+// ============ GREEK ISOPSEPHY ============
+// Full 27-symbol classical value table (including the three archaic letters
+// that complete the tens/hundreds tiers), the same table verified against
+// Part I's own names earlier in this investigation.
+const GREEK_VALUES = {'Α':1,'Β':2,'Γ':3,'Δ':4,'Ε':5,'Ϝ':6,'Ζ':7,'Η':8,'Θ':9,'Ι':10,
+  'Κ':20,'Λ':30,'Μ':40,'Ν':50,'Ξ':60,'Ο':70,'Π':80,'Ϙ':90,
+  'Ρ':100,'Σ':200,'Τ':300,'Υ':400,'Φ':500,'Χ':600,'Ψ':700,'Ω':800,'Ϡ':900};
+const GREEK_REDUCED = {'Α':1,'Β':2,'Γ':3,'Δ':4,'Ε':5,'Ϝ':6,'Ζ':7,'Η':8,'Θ':9,'Ι':1,
+  'Κ':2,'Λ':3,'Μ':4,'Ν':5,'Ξ':6,'Ο':7,'Π':8,'Ϙ':9,
+  'Ρ':1,'Σ':2,'Τ':3,'Υ':4,'Φ':5,'Χ':6,'Ψ':7,'Ω':8,'Ϡ':9};
+const GREEK_CONSONANTS = {'B':'Β','C':'Κ','D':'Δ','F':'Φ','G':'Γ','J':'Ζ','K':'Κ','L':'Λ',
+  'M':'Μ','N':'Ν','P':'Π','Q':'Κ','R':'Ρ','S':'Σ','T':'Τ','V':'Β','W':'Ο','X':'Ξ','Y':'Υ','Z':'Ζ'};
+const GREEK_VOWELS = {'A':'Α','E':'Ε','I':'Ι','O':'Ο','U':'Υ'};
+function transliterateGreek(word) {
+  word = word.toUpperCase(); const out = []; let i = 0; const n = word.length;
+  while (i < n) {
+    const ch = word[i];
+    if (ch === 'H') { i++; continue; } // no dedicated numeric consonant in the modern set - historically silent (rough breathing)
+    if (VOWELS.has(ch)) {
+      if (i === 0 || i === n - 1) out.push(GREEK_VOWELS[ch]);
+      i++; continue;
+    }
+    if (GREEK_CONSONANTS[ch]) { out.push(GREEK_CONSONANTS[ch]); i++; continue; }
+    i++;
+  }
+  return out.join('');
+}
+
+// ============ ARABIC ABJAD (Abjad Hisab) ============
+// Standard Abjad Kabir order and values - the traditional Islamic numerology
+// system (ilm al-huruf), structurally identical to Hebrew gematria, extending
+// one tier further (1000) for Arabic's four extra letters beyond Hebrew's 22.
+const ARABIC_VALUES = {'ا':1,'ب':2,'ج':3,'د':4,'ه':5,'و':6,'ز':7,'ح':8,'ط':9,'ي':10,
+  'ك':20,'ل':30,'م':40,'ن':50,'س':60,'ع':70,'ف':80,'ص':90,
+  'ق':100,'ر':200,'ش':300,'ت':400,'ث':500,'خ':600,'ذ':700,'ض':800,'ظ':900,'غ':1000};
+const ARABIC_REDUCED = {'ا':1,'ب':2,'ج':3,'د':4,'ه':5,'و':6,'ز':7,'ح':8,'ط':9,'ي':1,
+  'ك':2,'ل':3,'م':4,'ن':5,'س':6,'ع':7,'ف':8,'ص':9,
+  'ق':1,'ر':2,'ش':3,'ت':4,'ث':5,'خ':6,'ذ':7,'ض':8,'ظ':9,'غ':1};
+const ARABIC_DIGRAPHS = {'TH':'ث','KH':'خ','SH':'ش','DH':'ذ','GH':'غ'};
+const ARABIC_CONSONANTS = {'B':'ب','C':'ك','D':'د','F':'ف','G':'ج','H':'ه','J':'ج','K':'ك','L':'ل',
+  'M':'م','N':'ن','P':'ب','Q':'ق','R':'ر','S':'س','T':'ت','V':'و','W':'و','X':'كس','Y':'ي','Z':'ز'};
+const ARABIC_VOWELS = {'A':'ا','E':'ي','I':'ي','O':'و','U':'و'};
+function transliterateArabic(word) {
+  word = word.toUpperCase(); const out = []; let i = 0; const n = word.length;
+  while (i < n) {
+    const two = word.substr(i, 2);
+    if (ARABIC_DIGRAPHS[two]) { out.push(ARABIC_DIGRAPHS[two]); i += 2; continue; }
+    const ch = word[i];
+    if (VOWELS.has(ch)) {
+      if (i === 0 || i === n - 1) out.push(ARABIC_VOWELS[ch]);
+      i++; continue;
+    }
+    if (ARABIC_CONSONANTS[ch]) { out.push(ARABIC_CONSONANTS[ch]); i++; continue; }
+    i++;
+  }
+  return out.join('');
+}
+
+// ============ ENGLISH NUMEROLOGY ============
+// Two real, widely-practiced modern forms: plain Ordinal (A=1...Z=26), and
+// Pythagorean (wraps 1-9 repeating), the form most name-numerology practice
+// actually uses. No transliteration needed - direct pass-through.
+function englishOrdinalValue(word) {
+  return [...word.toUpperCase()].filter(c => c >= 'A' && c <= 'Z').reduce((s,c) => s + (c.charCodeAt(0) - 64), 0);
+}
+function englishPythagoreanValue(word) {
+  return [...word.toUpperCase()].filter(c => c >= 'A' && c <= 'Z').reduce((s,c) => s + (((c.charCodeAt(0) - 65) % 9) + 1), 0);
+}
+
+// ============ UNIFIED SYSTEM DISPATCHER ============
+function computeSystem(rawInput, system) {
+  if (system === 'hebrew') {
+    const r = computeAll(rawInput);
+    if (!r) return null;
+    return { script: r.heb, rtl: true, methods: [
+      ['Hechrachi', r.hechrachi], ['Katan', r.katan], ['Gadol', r.gadol], ['Atbash', r.atbash],
+    ]};
+  }
+  if (system === 'greek') {
+    const script = transliterateGreek(rawInput.replace(/[^A-Za-z]/g, ''));
+    if (!script) return null;
+    const std = [...script].reduce((s,c) => s + GREEK_VALUES[c], 0);
+    const red = [...script].reduce((s,c) => s + GREEK_REDUCED[c], 0);
+    return { script, rtl: false, methods: [
+      ['Standard', { value: std, root: rootMaster(std) }],
+      ['Reduced', { value: red, root: rootMaster(red) }],
+    ]};
+  }
+  if (system === 'arabic') {
+    const script = transliterateArabic(rawInput.replace(/[^A-Za-z]/g, ''));
+    if (!script) return null;
+    const std = [...script].reduce((s,c) => s + ARABIC_VALUES[c], 0);
+    const red = [...script].reduce((s,c) => s + ARABIC_REDUCED[c], 0);
+    return { script, rtl: true, methods: [
+      ['Kabir (Standard)', { value: std, root: rootMaster(std) }],
+      ['Saghir (Reduced)', { value: red, root: rootMaster(red) }],
+    ]};
+  }
+  if (system === 'english') {
+    const clean = rawInput.replace(/[^A-Za-z]/g, '');
+    if (!clean) return null;
+    const ord = englishOrdinalValue(clean);
+    const pyth = englishPythagoreanValue(clean);
+    return { script: clean.toUpperCase(), rtl: false, methods: [
+      ['Ordinal', { value: ord, root: rootMaster(ord) }],
+      ['Pythagorean', { value: pyth, root: rootMaster(pyth) }],
+    ]};
+  }
+  return null;
+}
+
+const SYSTEM_HINTS = {
+  hebrew: 'English input is transliterated using the same bias-free, mechanical algorithm used for every control test in this investigation. Hebrew input is used as-is. Typing the original six figures won\'t reproduce their documented root-11 convergence — that\'s Section 0.17\'s finding, not a bug here.',
+  greek: 'Isopsephy — the same system used in Section 0.16 to test whether Hebrew\'s tiered numeral structure specifically mattered. English is transliterated to the 24-letter modern Greek alphabet (archaic letters retained in the value table for accuracy, rarely triggered by English phonetics).',
+  arabic: 'Abjad Hisab, the traditional Islamic numerology system (ilm al-huruf) — structurally identical to Hebrew gematria, extending one tier further for Arabic\'s extra letters. Kabir is the standard value; Saghir reduces each letter to its single-digit tier, mirroring Hebrew\'s Hechrachi/Katan pair.',
+  english: 'No transliteration - direct English letter values. Ordinal is the plain A=1...Z=26 sum. Pythagorean wraps 1-9 repeating, the form most modern name-numerology actually uses.',
+};
+
+// ============ CALCULATOR UI ============
+let history = [];
+
+function runCalculator() {
+  const raw = document.getElementById('calcInput').value.trim();
+  if (!raw) return;
+  const system = document.getElementById('systemSelect').value;
+  const result = computeSystem(raw, system);
+  if (!result) return;
+
+  const translitEl = document.getElementById('translitDisplay');
+  translitEl.style.display = 'block';
+  translitEl.textContent = result.script;
+  translitEl.style.direction = result.rtl ? 'rtl' : 'ltr';
+
+  const methods = result.methods;
+  const roots = methods.map(m => m[1].root);
+  const rootCounts = {};
+  roots.forEach(r => rootCounts[r] = (rootCounts[r]||0)+1);
+  const maxCount = Math.max(...Object.values(rootCounts));
+  const bestRoot = Object.keys(rootCounts).find(r => rootCounts[r] === maxCount);
+  const methodTotal = methods.length;
+
+  const grid = document.getElementById('methodGrid');
+  grid.innerHTML = methods.map(([name, m]) => `
+    <div class="method-card ${m.root == bestRoot && maxCount >= 2 ? 'match' : ''}">
+      <div class="method-name">${name}</div>
+      <div class="method-value">${m.value}</div>
+      <div class="method-root">root ${m.root}</div>
+    </div>
+  `).join('');
+
+  const note = document.getElementById('convergenceNote');
+  note.style.display = 'block';
+  if (maxCount === methodTotal && methodTotal > 1) {
+    note.className = 'convergence-note hit';
+    note.textContent = `All ${methodTotal} methods land on root ${bestRoot}. Worth noting — but as this investigation repeatedly found, standard/reduced value pairs are frequently mechanically linked (the same relationship proven for Hebrew's Hechrachi/Katan), so this is rarely fully independent confirmation.`;
+  } else if (maxCount >= 2 && methodTotal > 2) {
+    note.className = 'convergence-note hit';
+    note.textContent = `${maxCount} of ${methodTotal} methods land on root ${bestRoot}. Worth noting, with the same mechanical-linkage caveat as above.`;
+  } else if (maxCount >= 2) {
+    note.className = 'convergence-note';
+    note.textContent = `Both methods share root ${bestRoot} — for a standard/reduced pair like this, that's the ordinary, expected outcome, not a rare one.`;
+  } else {
+    note.className = 'convergence-note';
+    note.textContent = `The methods land on different roots here — also entirely ordinary.`;
+  }
+
+  history.unshift({ word: raw, script: result.script, root: methods[0][1].root, system });
+  history = history.slice(0, 12);
+  renderHistory();
+
+  lastCalcWord = raw;
+  const seedBtn = document.getElementById('useAsSeedBtn');
+  seedBtn.style.display = 'inline-block';
+  seedBtn.textContent = `↑ Use "${raw}" as the sphere's resonance seed`;
+}
+let lastCalcWord = null;
+
+function renderHistory() {
+  const el = document.getElementById('wordHistory');
+  const sysLabel = { hebrew:'He', greek:'Gr', arabic:'Ar', english:'En' };
+  el.innerHTML = history.map(h =>
+    `<span class="history-chip" data-word="${h.word}">${h.word} <span class="root-badge">${sysLabel[h.system]||''} r${h.root}</span></span>`
+  ).join('');
+  el.querySelectorAll('.history-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.getElementById('calcInput').value = chip.dataset.word;
+      runCalculator();
+    });
+  });
+}
+
+document.getElementById('systemSelect').addEventListener('change', e => {
+  document.getElementById('calcHint').textContent = SYSTEM_HINTS[e.target.value];
+  if (lastCalcWord) runCalculator();
+});
+document.getElementById('calcBtn').addEventListener('click', runCalculator);
+document.getElementById('calcInput').addEventListener('keydown', e => { if (e.key === 'Enter') runCalculator(); });
+
+// ============ NAVIGATION ============
+document.querySelectorAll('.plaque').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.plaque').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.chapter).classList.add('active');
+    window.scrollTo({ top: document.getElementById('navBar').offsetTop - 10, behavior: 'smooth' });
+  });
+});
+
+// ============ HERO SPHERE — live signal engine with fractal zoom ============
+const canvas = document.getElementById('sphereCanvas');
+const ctx = canvas.getContext('2d');
+let W = canvas.width, H = canvas.height;
+let CX = W/2, CY = H/2, R = 145;
+let zoomScale = 1;
+const MAX_DEPTH = 2; // Singularity(0) -> Node(1) -> Sub-node(2), leaf level not further clickable
+const NODE_COUNTS = [40, 16, 8];
+
+// Resonance seed: a word/phrase's gematria value drives the whole system's base
+// frequency and every node's phase personality - "resonator value determines
+// initial conditions" made literal.
+let resonanceSeedValue = 1;
+let resonanceLabel = null;
+
+function seedFromWord(word) {
+  const result = computeAll(word);
+  return result ? result.hechrachi.value : 1;
+}
+
+// ============ ALTERNATIVE SEED SOURCES ============
+// Every source reduces to a numeric seed the same way the word-based one
+// does - a transparent, shown weighting, not a hidden random number.
+const MAJOR_ARCANA = ["The Fool","The Magician","The High Priestess","The Empress","The Emperor",
+  "The Hierophant","The Lovers","The Chariot","Strength","The Hermit","Wheel of Fortune","Justice",
+  "The Hanged Man","Death","Temperance","The Devil","The Tower","The Star","The Moon","The Sun",
+  "Judgement","The World"];
+const TAROT_SUITS = ["Wands","Cups","Swords","Pentacles"];
+const TAROT_RANKS = ["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Page","Knight","Queen","King"];
+const CARD_SUITS = ["Clubs","Diamonds","Hearts","Spades"];
+const CARD_RANKS = ["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"];
+
+function tarotMajorSeed(idx) {
+  const name = MAJOR_ARCANA[idx];
+  const ord = englishOrdinalValue(name);
+  const numWeight = (idx + 1) * 11;
+  return { value: ord + numWeight,
+    label: `Tarot: ${name}`,
+    weights: `<div class="weights-line">"${name}" (Major Arcana ${idx}) → name ordinal ${ord} + card-number weight (${idx}+1)×11 = ${numWeight} → seed ${ord + numWeight}</div>` };
+}
+function tarotMinorSeed(suitIdx, rankIdx) {
+  const suit = TAROT_SUITS[suitIdx], rank = TAROT_RANKS[rankIdx];
+  const name = `${rank} of ${suit}`;
+  const ord = englishOrdinalValue(name);
+  const posWeight = suitIdx * 14 + rankIdx + 1;
+  return { value: ord + posWeight,
+    label: `Tarot: ${name}`,
+    weights: `<div class="weights-line">"${name}" → name ordinal ${ord} + deck-position weight (suit×14+rank+1) = ${posWeight} → seed ${ord + posWeight}</div>` };
+}
+function playingCardSeed(suitIdx, rankIdx) {
+  const suit = CARD_SUITS[suitIdx], rank = CARD_RANKS[rankIdx];
+  const name = `${rank} of ${suit}`;
+  const ord = englishOrdinalValue(name);
+  const posWeight = suitIdx * 13 + rankIdx + 1;
+  return { value: ord + posWeight,
+    label: `Card: ${name}`,
+    weights: `<div class="weights-line">"${name}" → name ordinal ${ord} + deck-position weight (suit×13+rank+1) = ${posWeight} → seed ${ord + posWeight}</div>` };
+}
+function coinFlipSeed() {
+  const isHeads = Math.random() < 0.5;
+  const label = isHeads ? 'HEADS' : 'TAILS';
+  const val = englishOrdinalValue(label);
+  return { value: val,
+    label: `Coin: ${label}`,
+    weights: `<div class="weights-line">${label} → ordinal value of "${label}" (A=1...Z=26 sum) = ${val}</div>` };
+}
+function randomNumberSeed(min, max) {
+  const val = Math.floor(Math.random() * (max - min + 1)) + min;
+  return { value: val,
+    label: `Random: ${val}`,
+    weights: `<div class="weights-line">Random roll, range [${min}, ${max}] → ${val}</div>` };
+}
+function bitsToSeed(bitString) {
+  const clean = bitString.replace(/[^01]/g, '');
+  if (!clean) return null;
+  const val = parseInt(clean, 2);
+  const breakdown = clean.split('').map((b, i) => {
+    const place = clean.length - 1 - i;
+    return `${b}×${Math.pow(2, place)}`;
+  }).join(' + ');
+  return { value: val,
+    label: `Bits: ${clean}`,
+    weights: `<div class="weights-line">bits ${clean} → ${breakdown} = ${val}</div>` };
+}
+function rgbaToSeed(hexColor, alpha) {
+  const r = parseInt(hexColor.substr(1,2), 16);
+  const g = parseInt(hexColor.substr(3,2), 16);
+  const b = parseInt(hexColor.substr(5,2), 16);
+  const val = r*1 + g*2 + b*3 + alpha*4;
+  return { value: val,
+    label: `RGBA(${r},${g},${b},${alpha})`,
+    weights: `<div class="weights-line">R${r}×1 + G${g}×2 + B${b}×3 + A${alpha}×4 = ${val}</div>` };
+}
+function hexToSeed(hexString) {
+  const clean = hexString.replace(/[^0-9a-fA-F]/g, '');
+  if (!clean) return null;
+  const val = parseInt(clean, 16);
+  const breakdown = clean.split('').map((d, i) => {
+    const place = clean.length - 1 - i;
+    return `${d.toUpperCase()}×${Math.pow(16, place)}`;
+  }).join(' + ');
+  return { value: val,
+    label: `Hex: 0x${clean.toUpperCase()}`,
+    weights: `<div class="weights-line">hex ${clean.toUpperCase()} → ${breakdown} = ${val}</div>` };
+}
+
+function resizeCanvas(size) {
+  canvas.width = size; canvas.height = size;
+  W = size; H = size; CX = W/2; CY = H/2; R = size * 0.36;
+}
+
+let allLevels = [];
+let configuredNodeCount = 40;
+
+function makeLevel(depth, seedBase, label, nodeCountOverride, ownSeed) {
+  const count = nodeCountOverride || NODE_COUNTS[depth] || 16;
+  const sphereSeed = (ownSeed != null) ? ownSeed : resonanceSeedValue;
+  const effectiveBase = depth === 0 ? seedBase + sphereSeed * 3 : seedBase;
+  const level = {
+    nodes: [], depth, label, rotX: 0.28, rotY: 0.35, feedback: 0,
+    seedBase: effectiveBase, nodeCount: count,
+    resonanceSeed: sphereSeed,
+    seedLabel: null,
+    coupledFeedback: 0,
+    // Sphere-level properties the user can edit
+    props: {
+      label: label,
+      phaseBias: 0,
+      distortion: 1,
+      notes: '',
+    },
+  };
+  buildNodes(level);
+  allLevels.push(level);
+  return level;
+}
+function buildNodes(level) {
+  const count = level.nodeCount;
+  // Preserve per-node custom props when regenerating (match by id)
+  const prevById = {};
+  if (level.nodes && level.nodes.length) {
+    level.nodes.forEach(n => { prevById[n.id] = n; });
+  }
+  const nodes = [];
+  for (let i = 0; i < count; i++) {
+    const y = count > 1 ? 1 - (i / (count - 1)) * 2 : 0;
+    const radiusAtY = Math.sqrt(Math.max(0, 1 - y * y));
+    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+    const defaultSeed = (level.seedBase * 31 + i * 17 + 7) % 9973;
+    const prev = prevById[i];
+    const seed = (prev && prev.customSeed != null) ? prev.customSeed : defaultSeed;
+    nodes.push({
+      x: Math.cos(theta) * radiusAtY, y, z: Math.sin(theta) * radiusAtY,
+      seed,
+      defaultSeed,
+      customSeed: prev && prev.customSeed != null ? prev.customSeed : null,
+      id: i,
+      childLevel: prev ? prev.childLevel : null,
+      // Node-level editable properties
+      label: prev && prev.label ? prev.label : '',
+      phaseBias: prev && prev.phaseBias != null ? prev.phaseBias : 0,
+      distortion: prev && prev.distortion != null ? prev.distortion : 1,
+      notes: prev && prev.notes ? prev.notes : '',
+    });
+  }
+  level.nodes = nodes;
+}
+function regenerateNodes(level, newCount) {
+  level.nodeCount = newCount;
+  buildNodes(level);
+}
+
+// ---- Satellite spheres + exploration model ----
+// Network mode: main sphere + connected satellites visible around it.
+// Sphere mode: fully inside one sphere (main or satellite) — nodes large,
+// clickable, zoomable. Each sphere and each node carries editable properties.
+const MAX_SATELLITES = 6;
+let satellites = [];
+// selectedSphere: 'main' | satellite index (0..MAX-1) — edit target
+let selectedSphere = 'main';
+// exploreContext: 'network' (overview with sats) | 'sphere' (inside one root)
+let exploreContext = 'network';
+// When exploreContext === 'sphere', which top-level sphere is the view root
+// 'main' | satellite index
+let exploreRootId = 'main';
+// Selected node within currentLevel (for property panel)
+let selectedNode = null;
+// Hit-test cache for satellite centers (network mode only)
+let lastSatHits = []; // { idx, cx, cy, r }
+const COUPLING = 0.22;
+let lastClickTime = 0;
+let lastClickTarget = null;
+
+let networkMainLevel = null; // set when levelStack is first built
+
+function getMainLevel() {
+  // Stable reference to the network's primary sphere (Singularity).
+  if (networkMainLevel) return networkMainLevel;
+  if (typeof levelStack !== 'undefined' && levelStack.length) return levelStack[0];
+  return null;
+}
+
+function addSatellite(customSeed, customNodes) {
+  if (satellites.length >= MAX_SATELLITES) return;
+  const idx = satellites.length;
+  const ownSeed = (customSeed != null) ? customSeed : (resonanceSeedValue * 7 + (idx + 1) * 211);
+  const nodes = (customNodes != null) ? customNodes : configuredNodeCount;
+  const seedBase = ownSeed * 3 + (idx + 1) * 211;
+  const satLevel = makeLevel(0, seedBase, `Sphere ${idx + 2}`, nodes, ownSeed);
+  satLevel.seedLabel = customSeed != null ? `seed ${ownSeed}` : `derived ${ownSeed}`;
+  satLevel.props.label = satLevel.label;
+  const angle = (idx / MAX_SATELLITES) * Math.PI * 2 - Math.PI / 2;
+  const main = getMainLevel();
+  const anchorCount = main ? main.nodes.length : nodes;
+  satellites.push({
+    level: satLevel,
+    angle,
+    anchorNodeIdx: (idx * 7) % Math.max(1, anchorCount),
+  });
+  updateSatCount();
+  renderSpherePicker();
+  selectSphere(idx);
+  renderPropsPanel();
+}
+function clearSatellites() {
+  satellites.forEach(s => {
+    const i = allLevels.indexOf(s.level);
+    if (i >= 0) allLevels.splice(i, 1);
+  });
+  satellites = [];
+  selectedSphere = 'main';
+  selectedNode = null;
+  if (exploreContext === 'sphere' && exploreRootId !== 'main') {
+    exitToNetwork();
+  }
+  updateSatCount();
+  renderSpherePicker();
+  updateSelectedBanner();
+  renderPropsPanel();
+}
+function updateSatCount() {
+  const el = document.getElementById('satCount');
+  if (el) el.textContent = satellites.length;
+  const btn = document.getElementById('addSphereBtn');
+  if (btn) btn.disabled = satellites.length >= MAX_SATELLITES;
+}
+
+function getSelectedLevel() {
+  if (selectedSphere === 'main') return getMainLevel() || currentLevel();
+  const sat = satellites[selectedSphere];
+  return sat ? sat.level : (getMainLevel() || currentLevel());
+}
+
+function selectSphere(id) {
+  selectedSphere = id;
+  selectedNode = null;
+  const lvl = getSelectedLevel();
+  if (lvl) {
+    const input = document.getElementById('nodeCountInput');
+    if (input) input.value = lvl.nodeCount;
+  }
+  renderSpherePicker();
+  updateSelectedBanner();
+  updateExploreButtons();
+  renderPropsPanel();
+}
+
+function selectNode(node) {
+  selectedNode = node;
+  renderPropsPanel();
+}
+
+/** Enter a top-level sphere as a fully explorable view (nodes zoomable). */
+function enterSphere(id) {
+  const lvl = id === 'main' ? getMainLevel() : (satellites[id] && satellites[id].level);
+  if (!lvl) return;
+  exploreContext = 'sphere';
+  exploreRootId = id;
+  selectedSphere = id;
+  selectedNode = null;
+  levelStack = [lvl];
+  renderBreadcrumb();
+  updateZoomOutBtn();
+  updateExploreButtons();
+  renderSpherePicker();
+  updateSelectedBanner();
+  renderPropsPanel();
+}
+
+/** Return to network overview (main + connected satellites). */
+function exitToNetwork() {
+  exploreContext = 'network';
+  exploreRootId = 'main';
+  selectedNode = null;
+  // Restore main as the stack root (preserving its rotation/feedback)
+  const main = getMainLevel();
+  if (main) {
+    levelStack = [main];
+  } else {
+    levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount, resonanceSeedValue)];
+    networkMainLevel = levelStack[0];
+  }
+  selectedSphere = 'main';
+  renderBreadcrumb();
+  updateZoomOutBtn();
+  updateExploreButtons();
+  renderSpherePicker();
+  updateSelectedBanner();
+  renderPropsPanel();
+}
+
+function updateExploreButtons() {
+  const enterBtn = document.getElementById('enterSphereBtn');
+  const zoomBtn = document.getElementById('zoomOutBtn');
+  if (enterBtn) {
+    // Show "Enter" when a satellite is selected in network mode, or main while in network
+    const canEnter = exploreContext === 'network' && selectedSphere !== null;
+    enterBtn.style.display = canEnter ? 'inline-block' : 'none';
+    if (selectedSphere === 'main') enterBtn.textContent = '↘ Enter Singularity';
+    else enterBtn.textContent = '↘ Enter selected sphere';
+  }
+  if (zoomBtn) {
+    const show = levelStack.length > 1 || exploreContext === 'sphere';
+    zoomBtn.style.display = show ? 'inline-block' : 'none';
+    if (levelStack.length > 1) zoomBtn.textContent = '↑ Return to parent';
+    else if (exploreContext === 'sphere') zoomBtn.textContent = '↑ Back to network';
+  }
+}
+
+function renderSpherePicker() {
+  const el = document.getElementById('spherePicker');
+  if (!el) return;
+  const chips = [];
+  const main = getMainLevel();
+  const mainNodes = main ? main.nodes.length : configuredNodeCount;
+  const mainSeed = main ? main.resonanceSeed : resonanceSeedValue;
+  const mainLabel = main && main.props && main.props.label ? main.props.label : 'Singularity';
+  const mainActive = selectedSphere === 'main';
+  const mainExploring = exploreContext === 'sphere' && exploreRootId === 'main';
+  chips.push(
+    `<button type="button" class="sphere-chip ${mainActive || mainExploring ? 'active' : ''}" data-sphere="main" data-action="select">` +
+    `${mainLabel} <span class="chip-nodes">${mainNodes}n · s${mainSeed}</span>` +
+    (exploreContext === 'network' ? `<span class="chip-enter" data-action="enter" data-sphere="main">enter</span>` : '') +
+    `</button>`
+  );
+  satellites.forEach((sat, i) => {
+    const n = sat.level.nodes.length;
+    const s = sat.level.resonanceSeed;
+    const lbl = (sat.level.props && sat.level.props.label) || sat.level.label;
+    const active = selectedSphere === i || (exploreContext === 'sphere' && exploreRootId === i);
+    chips.push(
+      `<button type="button" class="sphere-chip ${active ? 'active' : ''}" data-sphere="${i}" data-action="select">` +
+      `${lbl} <span class="chip-nodes">${n}n · s${s}</span>` +
+      (exploreContext === 'network' ? `<span class="chip-enter" data-action="enter" data-sphere="${i}">enter</span>` : '') +
+      `</button>`
+    );
+  });
+  el.innerHTML = chips.join('');
+  el.querySelectorAll('.sphere-chip').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const action = e.target.dataset.action || btn.dataset.action || 'select';
+      const v = e.target.dataset.sphere != null ? e.target.dataset.sphere : btn.dataset.sphere;
+      const id = v === 'main' ? 'main' : parseInt(v, 10);
+      if (action === 'enter') {
+        enterSphere(id);
+      } else {
+        selectSphere(id);
+      }
+    });
+  });
+}
+
+function updateSelectedBanner() {
+  const el = document.getElementById('selectedSphereBanner');
+  if (!el) return;
+  const lvl = getSelectedLevel();
+  const name = (lvl && lvl.props && lvl.props.label) || (selectedSphere === 'main' ? 'Singularity' : (lvl ? lvl.label : '—'));
+  const seed = lvl ? lvl.resonanceSeed : resonanceSeedValue;
+  const nodes = lvl ? lvl.nodeCount : configuredNodeCount;
+  const label = lvl && lvl.seedLabel ? lvl.seedLabel : `value ${seed}`;
+  const mode = exploreContext === 'network'
+    ? 'Network view — double-click a sphere (or use enter) to explore its nodes.'
+    : `Inside <strong>${name}</strong> — click a node to select it, click again / use Explore to zoom in.`;
+  el.innerHTML = `Editing: <strong>${name}</strong> — seed ${label}, ${nodes} nodes. ${mode}`;
+}
+
+/** Apply a seed value only to the currently selected sphere (does not wipe others). */
+function applySeedToSelected(value, label, weightsHtml) {
+  const seedVal = Math.max(1, Math.round(value)) || 1;
+  const lvl = getSelectedLevel();
+  if (!lvl) return;
+  lvl.resonanceSeed = seedVal;
+  lvl.seedLabel = label;
+  lvl.seedBase = lvl.depth === 0 ? 1 + seedVal * 3 : lvl.seedBase;
+  buildNodes(lvl);
+  if (selectedSphere === 'main') {
+    resonanceSeedValue = seedVal;
+    resonanceLabel = label;
+    const disp = document.getElementById('seedCurrent');
+    if (disp) disp.innerHTML = `seed: <span class="sv">${label} → value ${seedVal}</span>`;
+    const weightsEl = document.getElementById('seedWeightsDisplay');
+    if (weightsEl) weightsEl.innerHTML = weightsHtml || '';
+  } else {
+    const weightsEl = document.getElementById('seedWeightsDisplay');
+    if (weightsEl) {
+      weightsEl.innerHTML = (weightsHtml || '') +
+        `<div class="weights-line" style="margin-top:6px;color:var(--gilt);">Applied to ${lvl.label} only (other spheres unchanged)</div>`;
+    }
+  }
+  renderSpherePicker();
+  updateSelectedBanner();
+  renderPropsPanel();
+}
+
+function updateSphereCoupling() {
+  const main = getMainLevel();
+  if (!main) return;
+  const peers = [{ level: main, id: 'main' }].concat(
+    satellites.map((s, i) => ({ level: s.level, id: i }))
+  );
+  const raw = peers.map(p => p.level.feedback);
+  peers.forEach((p, i) => {
+    let sum = 0, n = 0;
+    peers.forEach((q, j) => {
+      if (i === j) return;
+      sum += raw[j];
+      n++;
+    });
+    p.level.coupledFeedback = n ? (sum / n) : 0;
+  });
+}
+
+// ---- Property panel (sphere or node) ----
+function renderPropsPanel() {
+  const title = document.getElementById('propsTitle');
+  const body = document.getElementById('propsBody');
+  if (!title || !body) return;
+
+  if (selectedNode) {
+    const n = selectedNode;
+    title.textContent = `Node properties — #${n.id}`;
+    body.className = '';
+    body.innerHTML = `
+      <div class="props-grid">
+        <label>Label</label><input type="text" id="propNodeLabel" value="${escapeAttr(n.label || '')}" placeholder="optional name">
+        <label>Seed</label><input type="number" id="propNodeSeed" value="${n.seed}" min="1" step="1">
+        <label>Phase bias</label><input type="number" id="propNodePhase" value="${n.phaseBias || 0}" min="-3" max="3" step="0.05">
+        <label>Distortion</label><input type="number" id="propNodeDist" value="${n.distortion != null ? n.distortion : 1}" min="0.2" max="3" step="0.05">
+        <label>Notes</label><input type="text" id="propNodeNotes" value="${escapeAttr(n.notes || '')}" placeholder="free text">
+        <label>Default seed</label><span class="props-readonly">${n.defaultSeed != null ? n.defaultSeed : '—'}</span>
+        <label>Child sphere</label><span class="props-readonly">${n.childLevel ? n.childLevel.label + ' (' + n.childLevel.nodes.length + ' nodes)' : 'none yet'}</span>
+      </div>
+      <div class="props-actions">
+        <button type="button" class="primary" id="propNodeApply">Apply to node</button>
+        <button type="button" id="propNodeExplore" ${currentLevel().depth >= MAX_DEPTH ? 'disabled' : ''}>Explore node sphere</button>
+        <button type="button" id="propNodeReset">Reset seed to default</button>
+      </div>`;
+    document.getElementById('propNodeApply').onclick = () => {
+      const seed = parseInt(document.getElementById('propNodeSeed').value, 10);
+      n.label = document.getElementById('propNodeLabel').value.trim();
+      n.phaseBias = parseFloat(document.getElementById('propNodePhase').value) || 0;
+      n.distortion = parseFloat(document.getElementById('propNodeDist').value) || 1;
+      n.notes = document.getElementById('propNodeNotes').value.trim();
+      if (!isNaN(seed) && seed > 0) {
+        n.customSeed = seed;
+        n.seed = seed;
+        // If child already exists, re-seed it
+        if (n.childLevel) {
+          n.childLevel.resonanceSeed = seed;
+          n.childLevel.seedBase = seed;
+          buildNodes(n.childLevel);
+        }
+      }
+      renderPropsPanel();
+    };
+    document.getElementById('propNodeExplore').onclick = () => zoomIntoNode(n);
+    document.getElementById('propNodeReset').onclick = () => {
+      n.customSeed = null;
+      n.seed = n.defaultSeed != null ? n.defaultSeed : n.seed;
+      document.getElementById('propNodeSeed').value = n.seed;
+    };
+    return;
+  }
+
+  const lvl = getSelectedLevel();
+  if (!lvl) {
+    title.textContent = 'Properties';
+    body.className = 'props-empty';
+    body.innerHTML = 'Select a sphere or node to inspect and edit its properties.';
+    return;
+  }
+  const isMain = selectedSphere === 'main';
+  const name = (lvl.props && lvl.props.label) || lvl.label || (isMain ? 'Singularity' : 'Sphere');
+  title.textContent = `Sphere properties — ${name}`;
+  body.className = '';
+  body.innerHTML = `
+    <div class="props-grid">
+      <label>Label</label><input type="text" id="propSphLabel" value="${escapeAttr((lvl.props && lvl.props.label) || lvl.label || '')}">
+      <label>Resonance seed</label><input type="number" id="propSphSeed" value="${lvl.resonanceSeed}" min="1" step="1">
+      <label>Node count</label><input type="number" id="propSphNodes" value="${lvl.nodeCount}" min="4" max="90" step="1">
+      <label>Phase bias</label><input type="number" id="propSphPhase" value="${(lvl.props && lvl.props.phaseBias) || 0}" min="-3" max="3" step="0.05">
+      <label>Distortion</label><input type="number" id="propSphDist" value="${(lvl.props && lvl.props.distortion) != null ? lvl.props.distortion : 1}" min="0.2" max="3" step="0.05">
+      <label>Notes</label><input type="text" id="propSphNotes" value="${escapeAttr((lvl.props && lvl.props.notes) || '')}" placeholder="free text">
+      <label>Feedback</label><span class="props-readonly" id="propSphFb">${lvl.feedback >= 0 ? '+' : ''}${lvl.feedback.toFixed(3)}</span>
+      <label>Coupled in</label><span class="props-readonly">${lvl.coupledFeedback >= 0 ? '+' : ''}${(lvl.coupledFeedback || 0).toFixed(3)}</span>
+      <label>Depth</label><span class="props-readonly">${lvl.depth}</span>
+    </div>
+    <div class="props-actions">
+      <button type="button" class="primary" id="propSphApply">Apply to sphere</button>
+      ${exploreContext === 'network' ? `<button type="button" id="propSphEnter">Enter / explore</button>` : ''}
+      ${!isMain && exploreContext === 'network' ? `<button type="button" id="propSphRemove">Remove sphere</button>` : ''}
+    </div>`;
+  document.getElementById('propSphApply').onclick = () => {
+    const seed = parseInt(document.getElementById('propSphSeed').value, 10);
+    const nodes = parseInt(document.getElementById('propSphNodes').value, 10);
+    const label = document.getElementById('propSphLabel').value.trim() || lvl.label;
+    lvl.props = lvl.props || {};
+    lvl.props.label = label;
+    lvl.props.phaseBias = parseFloat(document.getElementById('propSphPhase').value) || 0;
+    lvl.props.distortion = parseFloat(document.getElementById('propSphDist').value) || 1;
+    lvl.props.notes = document.getElementById('propSphNotes').value.trim();
+    lvl.label = label;
+    if (!isNaN(seed) && seed > 0) {
+      lvl.resonanceSeed = seed;
+      lvl.seedLabel = `value ${seed}`;
+      lvl.seedBase = lvl.depth === 0 ? 1 + seed * 3 : lvl.seedBase;
+      if (isMain) {
+        resonanceSeedValue = seed;
+        const disp = document.getElementById('seedCurrent');
+        if (disp) disp.innerHTML = `seed: <span class="sv">${label} → value ${seed}</span>`;
+      }
+    }
+    if (!isNaN(nodes) && nodes >= 4 && nodes <= 90) {
+      regenerateNodes(lvl, nodes);
+      if (isMain) configuredNodeCount = nodes;
+      const input = document.getElementById('nodeCountInput');
+      if (input) input.value = nodes;
+    } else {
+      buildNodes(lvl);
+    }
+    renderSpherePicker();
+    updateSelectedBanner();
+    renderPropsPanel();
+  };
+  const enterBtn = document.getElementById('propSphEnter');
+  if (enterBtn) enterBtn.onclick = () => enterSphere(selectedSphere);
+  const removeBtn = document.getElementById('propSphRemove');
+  if (removeBtn) removeBtn.onclick = () => {
+    if (typeof selectedSphere !== 'number') return;
+    const sat = satellites[selectedSphere];
+    if (!sat) return;
+    const i = allLevels.indexOf(sat.level);
+    if (i >= 0) allLevels.splice(i, 1);
+    satellites.splice(selectedSphere, 1);
+    // re-label remaining
+    satellites.forEach((s, idx) => {
+      if (!s.level.props || s.level.props.label === s.level.label || /^Sphere \d+$/.test(s.level.label)) {
+        s.level.label = `Sphere ${idx + 2}`;
+        if (s.level.props) s.level.props.label = s.level.label;
+      }
+    });
+    selectedSphere = 'main';
+    updateSatCount();
+    renderSpherePicker();
+    updateSelectedBanner();
+    renderPropsPanel();
+  };
+}
+
+function escapeAttr(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
+function digitCounts(digits) {
+  const counts = {};
+  digits.forEach(d => counts[d] = (counts[d]||0)+1);
+  return counts;
+}
+function unityFromOutputs(outputArr) {
+  if (!outputArr.length) return { percent: 0, digit: null };
+  const digits = outputArr.map(outputToDigit);
+  const counts = digitCounts(digits);
+  const maxCount = Math.max(...Object.values(counts));
+  const modeDigit = Object.keys(counts).find(k => counts[k] === maxCount);
+  return { percent: (maxCount / outputArr.length) * 100, digit: modeDigit };
+}
+function computeGlobalUnity(t) {
+  const allDigits = [];
+  allLevels.forEach(lvl => {
+    lvl.nodes.forEach(node => {
+      const { output } = nodeSignal(node, t, lvl.depth, lvl.feedback, lvl.resonanceSeed, lvl.coupledFeedback, lvl.props);
+      allDigits.push(outputToDigit(output));
+    });
+  });
+  if (!allDigits.length) return { percent: 0, digit: null, total: 0 };
+  const counts = digitCounts(allDigits);
+  const maxCount = Math.max(...Object.values(counts));
+  const modeDigit = Object.keys(counts).find(k => counts[k] === maxCount);
+  return { percent: (maxCount / allDigits.length) * 100, digit: modeDigit, total: allDigits.length };
+}
+
+// ---- Digit convergence history: a growing tally of which digit has won the
+// global unity check, each time it's sampled - the live simulation's own
+// version of the "which root do things converge on" question this whole
+// investigation was built around.
+let digitHistory = new Array(10).fill(0);
+let digitBarsInit = false;
+
+function initDigitBars() {
+  const container = document.getElementById('digitBarsContainer');
+  container.innerHTML = '';
+  for (let d = 0; d <= 9; d++) {
+    const row = document.createElement('div');
+    row.className = 'digit-bar-row';
+    row.id = `digitRow${d}`;
+    row.style.transition = 'opacity 0.4s ease';
+    row.innerHTML = `<span class="digit-bar-label">${d}</span>
+      <div class="digit-bar-track"><div class="digit-bar-fill" id="digitBarFill${d}"></div></div>
+      <span class="digit-bar-count" id="digitBarCount${d}">0</span>
+      <span class="digit-bar-hz" id="digitHz${d}"></span>
+      <input type="range" class="digit-vol" id="digitVol${d}" min="0" max="100" value="70" title="Channel ${d} volume">
+      <input type="range" class="digit-pan" id="digitPan${d}" min="-100" max="100" value="${Math.round((d-4.5)/4.5*100)}" title="Channel ${d} pan">`;
+    container.appendChild(row);
+  }
+  digitBarsInit = true;
+  document.querySelectorAll('.digit-vol, .digit-pan').forEach(el => {
+    el.addEventListener('input', updateAudioChannelFromUI);
+  });
+}
+function renderDigitBars() {
+  if (!digitBarsInit) initDigitBars();
+  const maxVal = Math.max(1, ...digitHistory);
+  for (let d = 0; d <= 9; d++) {
+    const fill = document.getElementById(`digitBarFill${d}`);
+    const count = document.getElementById(`digitBarCount${d}`);
+    if (fill) fill.style.width = `${(digitHistory[d] / maxVal) * 100}%`;
+    if (count) count.textContent = digitHistory[d];
+  }
+  updateAllAudioGains();
+}
+
+// ============ ROLLING SEISMOGRAPH — each digit's frequency, buffered and
+// viewable through a zoomable, slideable window ============
+// Every recorded moment is kept (up to a cap), not just drawn and discarded -
+// so scroll wheel zooms the time axis and dragging pans through real history,
+// the way an actual seismograph's paper record would let you look back.
+const SEISMO_DEFAULT_COLORS = ['#c9a35c','#b04a58','#8a3341','#e9dfc5','#7a9e7e',
+                                '#5c8ac9','#c95c9a','#9e7a5c','#5cc9a3','#c9925c'];
+const SEISMO_MAX_BUFFER = 20000;
+let seismoChannels = [];
+for (let d = 0; d <= 9; d++) {
+  seismoChannels.push({ color: SEISMO_DEFAULT_COLORS[d], visible: true, thicknessScale: 1 });
+}
+let seismoBuffer = [];        // each entry: { y:[10 values], th:[10 values] }
+let seismoPxPerPoint = 3;     // zoom level - higher = more zoomed in (fewer points visible, more detail)
+let seismoViewOffset = 0;     // index into seismoBuffer of the leftmost visible point
+let seismoFollowLive = true;
+let seismoFrameSkip = 0;
+let seismoDragging = false;
+let seismoDragStartX = null;
+let seismoDragStartOffset = 0;
+
+function recordSeismoPoint() {
+  const laneCount = 10;
+  const maxHist = Math.max(1, ...digitHistory);
+  const y = new Array(10), th = new Array(10);
+  for (let d = 0; d <= 9; d++) {
+    const freq = freqForDigit(d);
+    const normalized = Math.max(0, Math.min(1, Math.log2(Math.max(freq, 1) / baseOctaveFreq) / 5));
+    y[d] = normalized; // stored normalized (0-1); converted to pixel Y at render time, per lane
+    const nRatio = digitHistory[d] / maxHist;
+    th[d] = Math.max(0.5, 0.4 + nRatio * 3.2);
+  }
+  seismoBuffer.push({ y, th });
+  if (seismoBuffer.length > SEISMO_MAX_BUFFER) seismoBuffer.shift();
+}
+
+function initSeismograph() {
+  seismoBuffer = [];
+  seismoViewOffset = 0;
+  seismoFollowLive = true;
+  renderSeismographView();
+}
+
+function renderSeismographView() {
+  const canvas = document.getElementById('seismographCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const laneH = H / 10;
+
+  ctx.fillStyle = '#16140f';
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = 'rgba(201,163,92,0.08)';
+  ctx.lineWidth = 1;
+  for (let d = 0; d <= 9; d++) {
+    const ly = laneH * d + laneH / 2;
+    ctx.beginPath(); ctx.moveTo(0, ly); ctx.lineTo(W, ly); ctx.stroke();
+  }
+
+  const visibleCount = Math.max(1, Math.ceil(W / seismoPxPerPoint));
+  let startIdx;
+  if (seismoFollowLive) {
+    startIdx = Math.max(0, seismoBuffer.length - visibleCount);
+    seismoViewOffset = startIdx;
+  } else {
+    startIdx = Math.max(0, Math.min(seismoViewOffset, Math.max(0, seismoBuffer.length - 1)));
+  }
+
+  for (let d = 0; d <= 9; d++) {
+    const ch = seismoChannels[d];
+    if (!ch.visible) continue;
+    const laneCenter = laneH * d + laneH / 2;
+    let prevX = null, prevY = null;
+    for (let i = 0; i < visibleCount; i++) {
+      const idx = startIdx + i;
+      if (idx >= seismoBuffer.length) break;
+      const pt = seismoBuffer[idx];
+      const x = i * seismoPxPerPoint;
+      const y = laneCenter - (pt.y[d] - 0.5) * (laneH * 0.75);
+      if (prevX !== null) {
+        ctx.strokeStyle = ch.color;
+        ctx.lineWidth = pt.th[d] * ch.thicknessScale;
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+      prevX = x; prevY = y;
+    }
+  }
+  updateSeismoPositionLabel(startIdx, visibleCount);
+}
+
+function updateSeismoPositionLabel(startIdx, visibleCount) {
+  const label = document.getElementById('seismoPositionLabel');
+  if (!label) return;
+  const total = seismoBuffer.length;
+  if (seismoFollowLive) {
+    label.innerHTML = `<span style="color:var(--oxblood-bright)">● LIVE</span> · ${total} points recorded · zoom ${seismoPxPerPoint.toFixed(1)}px/pt`;
+  } else {
+    const pointsBack = total - startIdx - visibleCount;
+    const secsBack = Math.max(0, Math.round(pointsBack / 15)); // ~15 recorded points/sec
+    label.innerHTML = `Viewing history: ~${secsBack}s before live · zoom ${seismoPxPerPoint.toFixed(1)}px/pt`;
+  }
+}
+
+function updateSeismograph() {
+  recordSeismoPoint();
+  renderSeismographView();
+}
+
+function initSeismoControls() {
+  const container = document.getElementById('seismoControls');
+  container.innerHTML = '';
+  for (let d = 0; d <= 9; d++) {
+    const row = document.createElement('div');
+    row.className = 'seismo-channel-row';
+    row.innerHTML = `<span class="seismo-digit-label" style="color:${seismoChannels[d].color}">${d}</span>
+      <input type="checkbox" id="seismoVis${d}" checked title="Show/hide channel ${d}">
+      <input type="color" id="seismoColor${d}" value="${seismoChannels[d].color}" title="Channel ${d} color">
+      <input type="range" id="seismoThick${d}" min="0.2" max="3" step="0.1" value="1" title="Channel ${d} thickness scale">`;
+    container.appendChild(row);
+  }
+  for (let d = 0; d <= 9; d++) {
+    document.getElementById(`seismoVis${d}`).addEventListener('change', e => { seismoChannels[d].visible = e.target.checked; });
+    document.getElementById(`seismoColor${d}`).addEventListener('input', e => {
+      seismoChannels[d].color = e.target.value;
+      document.querySelector(`#seismoControls .seismo-channel-row:nth-child(${d+1}) .seismo-digit-label`).style.color = e.target.value;
+    });
+    document.getElementById(`seismoThick${d}`).addEventListener('input', e => { seismoChannels[d].thicknessScale = parseFloat(e.target.value); });
+  }
+
+  const canvas = document.getElementById('seismographCanvas');
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.15 : 1/1.15;
+    seismoPxPerPoint = Math.max(0.3, Math.min(20, seismoPxPerPoint * factor));
+    renderSeismographView();
+  }, { passive: false });
+
+  canvas.addEventListener('mousedown', e => {
+    seismoDragging = true;
+    seismoDragStartX = e.clientX;
+    seismoDragStartOffset = seismoViewOffset;
+    seismoFollowLive = false;
+    canvas.style.cursor = 'grabbing';
+  });
+  window.addEventListener('mousemove', e => {
+    if (!seismoDragging) return;
+    const dx = e.clientX - seismoDragStartX;
+    const pointsDelta = Math.round(-dx / seismoPxPerPoint);
+    seismoViewOffset = Math.max(0, Math.min(seismoBuffer.length - 1, seismoDragStartOffset + pointsDelta));
+    renderSeismographView();
+  });
+  window.addEventListener('mouseup', () => { seismoDragging = false; canvas.style.cursor = 'grab'; });
+  canvas.style.cursor = 'grab';
+
+  document.getElementById('seismoZoomInBtn').addEventListener('click', () => {
+    seismoPxPerPoint = Math.min(20, seismoPxPerPoint * 1.3); renderSeismographView();
+  });
+  document.getElementById('seismoZoomOutBtn').addEventListener('click', () => {
+    seismoPxPerPoint = Math.max(0.3, seismoPxPerPoint / 1.3); renderSeismographView();
+  });
+  document.getElementById('seismoJumpLiveBtn').addEventListener('click', () => {
+    seismoFollowLive = true; renderSeismographView();
+  });
+}
+
+// ============ SOUND SYNTHESIS — the digit histogram as a live chord ============
+// One oscillator per digit (0-9). Each channel's VOLUME is driven by that
+// digit's share of the convergence history, as before. Now its PITCH is too:
+// each digit starts at its own position in a pentatonic scale, then climbs
+// further up that scale as its own histogram count grows - so a digit that
+// keeps winning doesn't just get louder, it audibly rises, note by note.
+let audioCtx = null;
+let audioChannels = [];
+let audioPlaying = false;
+let masterGainNode = null;
+
+const SCALES = {
+  'Major Pentatonic': [0, 2, 4, 7, 9],
+  'Minor Pentatonic': [0, 3, 5, 7, 10],
+  'Major (Ionian)': [0, 2, 4, 5, 7, 9, 11],
+  'Natural Minor (Aeolian)': [0, 2, 3, 5, 7, 8, 10],
+  'Harmonic Minor': [0, 2, 3, 5, 7, 8, 11],
+  'Phrygian': [0, 1, 3, 5, 7, 8, 10],
+  'Whole Tone': [0, 2, 4, 6, 8, 10],
+  'Chromatic': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+};
+let currentScale = SCALES['Major Pentatonic'];
+let baseOctaveFreq = 130.81; // C3 by default, user-selectable
+
+function rawFreqForDigit(d) {
+  const totalSteps = d + digitHistory[d]; // distinct starting position per digit, then climbs with its own count
+  const octave = Math.floor(totalSteps / currentScale.length);
+  const degree = totalSteps % currentScale.length;
+  const wrappedOctave = octave % 5; // wraps through 5 octaves instead of hard-capping - a hard cap
+                                     // makes independently-climbing digits pile up on the same ceiling
+                                     // frequency, which looks like convergence but isn't
+  const semitone = currentScale[degree] + wrappedOctave * 12;
+  return baseOctaveFreq * Math.pow(2, semitone / 12);
+}
+
+// "Interest" = how many channels are still actively winning, not yet gone stable.
+// When interest drops, the whole system's audible pitch sinks with it - up to
+// a full octave down when everything has gone quiet - layered on top of the
+// per-channel volume fade, not instead of it.
+let globalInterestMultiplier = 1;
+let interestDecayEnabled = true;
+function updateInterestMultiplier() {
+  const activeCount = [0,1,2,3,4,5,6,7,8,9].filter(d => digitStableCount[d] <= STABLE_THRESHOLD).length;
+  const interestLevel = activeCount / 10;
+  const target = interestDecayEnabled ? (0.5 + interestLevel * 0.5) : 1; // 1.0 at full interest, down to 0.5 at none - or held at 1 if disabled
+  globalInterestMultiplier += (target - globalInterestMultiplier) * 0.015;
+}
+function freqForDigit(d) {
+  return rawFreqForDigit(d) * globalInterestMultiplier;
+}
+
+// Self-adjusting resonator: when at least 8 of the 10 channels' audible
+// frequencies converge to within one semitone of each other, feed that
+// converged frequency back into the singularity's own seed - literally
+// what Section 0.1 describes. Doesn't require all 10 - a strong majority
+// counts, and the 1-2 outliers are excluded from the reseed value itself.
+const CONVERGENCE_MIN_AGREE = 8;
+let convergenceReseedArmed = true;
+let convergenceSizeCounts = new Array(11).fill(0); // indices 2-10 used
+
+function initConvergenceTable() {
+  const tbody = document.getElementById('convergenceTableBody');
+  tbody.innerHTML = '';
+  for (let n = 10; n >= 2; n--) {
+    const tr = document.createElement('tr');
+    if (n >= CONVERGENCE_MIN_AGREE) tr.className = 'reseed-tier';
+    tr.innerHTML = `<td>${n}/10</td><td id="convCount${n}">0</td>`;
+    tbody.appendChild(tr);
+  }
+}
+function renderConvergenceTable() {
+  for (let n = 2; n <= 10; n++) {
+    const cell = document.getElementById(`convCount${n}`);
+    if (cell) cell.textContent = convergenceSizeCounts[n];
+  }
+}
+
+function largestFrequencyCluster(freqs) {
+  const semitoneRatio = Math.pow(2, 1/12);
+  let best = [];
+  for (let i = 0; i < freqs.length; i++) {
+    const cluster = freqs.filter(f => Math.max(f, freqs[i]) / Math.min(f, freqs[i]) < semitoneRatio);
+    if (cluster.length > best.length) best = cluster;
+  }
+  return best;
+}
+function checkFrequencyConvergence() {
+  const freqs = [0,1,2,3,4,5,6,7,8,9].map(freqForDigit);
+  const cluster = largestFrequencyCluster(freqs);
+
+  if (cluster.length >= 2) {
+    convergenceSizeCounts[cluster.length]++;
+    renderConvergenceTable();
+  }
+
+  const converged = cluster.length >= CONVERGENCE_MIN_AGREE;
+  if (converged && convergenceReseedArmed) {
+    convergenceReseedArmed = false;
+    const avgFreq = cluster.reduce((a,b)=>a+b,0) / cluster.length;
+    triggerConvergenceReseed(avgFreq, cluster.length);
+  } else if (!converged) {
+    convergenceReseedArmed = true;
+  }
+}
+function triggerConvergenceReseed(freq, agreeCount) {
+  resonanceSeedValue = Math.max(1, Math.round(freq));
+  const root = levelStack[0];
+  if (root) {
+    root.resonanceSeed = resonanceSeedValue;
+    root.seedLabel = `(self-adjusted) ${agreeCount}/10 @ ${freq.toFixed(0)}Hz`;
+    root.seedBase = 1 + resonanceSeedValue * 3;
+    regenerateNodes(root, root.nodeCount);
+  }
+  const disp = document.getElementById('seedCurrent');
+  if (disp) disp.innerHTML = `seed: <span class="sv">(self-adjusted) ${agreeCount} of 10 digits converged at ${freq.toFixed(0)}Hz → new resonance value ${resonanceSeedValue}</span>`;
+  renderSpherePicker();
+  updateSelectedBanner();
+}
+
+document.getElementById('scaleSelect').addEventListener('change', e => {
+  currentScale = SCALES[e.target.value];
+  renderDigitBars();
+});
+document.getElementById('octaveSelect').addEventListener('change', e => {
+  baseOctaveFreq = parseFloat(e.target.value);
+  renderDigitBars();
+});
+document.getElementById('fadeToggleBtn').addEventListener('click', () => {
+  fadeEnabled = !fadeEnabled;
+  const btn = document.getElementById('fadeToggleBtn');
+  btn.textContent = `Fade inactive tones: ${fadeEnabled ? 'On' : 'Off'}`;
+  btn.classList.toggle('playing', fadeEnabled);
+  renderDigitBars();
+});
+document.getElementById('interestToggleBtn').addEventListener('click', () => {
+  interestDecayEnabled = !interestDecayEnabled;
+  const btn = document.getElementById('interestToggleBtn');
+  btn.textContent = `Pitch drops with interest: ${interestDecayEnabled ? 'On' : 'Off'}`;
+  btn.classList.toggle('playing', interestDecayEnabled);
+  if (!interestDecayEnabled) globalInterestMultiplier = 1; // snap back immediately rather than glide, when turned off
+  renderDigitBars();
+});
+
+function initAudioEngine() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGainNode = audioCtx.createGain();
+  masterGainNode.gain.value = 0;
+  masterGainNode.connect(audioCtx.destination);
+
+  for (let d = 0; d <= 9; d++) {
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = freqForDigit(d);
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0;
+    const panner = audioCtx.createStereoPanner();
+    const panInput = document.getElementById(`digitPan${d}`);
+    panner.pan.value = panInput ? parseInt(panInput.value) / 100 : (d - 4.5) / 4.5;
+    osc.connect(gain); gain.connect(panner); panner.connect(masterGainNode);
+    osc.start();
+    audioChannels.push({ osc, gain, panner });
+  }
+  updateAllAudioGains();
+}
+
+// A channel that stops climbing has stopped saying anything new - once its
+// frequency holds constant for a while, fade it toward silence (and dim it
+// visually), so the chord foregrounds active convergence, not old totals.
+let digitStableCount = new Array(10).fill(0);
+let digitLastFreq = new Array(10).fill(null);
+let fadeEnabled = true;
+const STABLE_THRESHOLD = 15; // ~1.5s of no change at the ~10updates/sec throttle, before fading starts
+const FADE_STEP = 0.07;
+
+function updateAllAudioGains() {
+  updateInterestMultiplier();
+  const maxVal = Math.max(1, ...digitHistory);
+  for (let d = 0; d <= 9; d++) {
+    const rawFreq = rawFreqForDigit(d); // stability tracked on the UNmultiplied position, so the
+                                         // interest-decay glide itself never registers as "activity"
+    if (digitLastFreq[d] !== null && Math.abs(rawFreq - digitLastFreq[d]) < 0.01) {
+      digitStableCount[d]++;
+    } else {
+      digitStableCount[d] = 0;
+    }
+    digitLastFreq[d] = rawFreq;
+
+    const freq = freqForDigit(d); // the actual audible pitch, including the interest-based drop
+
+    const rawFadeMult = digitStableCount[d] > STABLE_THRESHOLD
+      ? Math.max(0, 1 - (digitStableCount[d] - STABLE_THRESHOLD) * FADE_STEP)
+      : 1;
+    const fadeMult = fadeEnabled ? rawFadeMult : 1;
+
+    const row = document.getElementById(`digitRow${d}`);
+    if (row) row.style.opacity = (0.35 + 0.65 * fadeMult).toFixed(2);
+    const hzLabel = document.getElementById(`digitHz${d}`);
+    if (hzLabel) hzLabel.textContent = `${freq.toFixed(0)}Hz${fadeMult < 1 ? ' ·fading' : ''}`;
+
+    if (!audioCtx) continue;
+    const ch = audioChannels[d];
+    if (!ch) continue;
+    const volSlider = document.getElementById(`digitVol${d}`);
+    const userVol = volSlider ? parseInt(volSlider.value) / 100 : 0.7;
+    const histNorm = digitHistory[d] / maxVal;
+    ch.gain.gain.linearRampToValueAtTime(userVol * histNorm * fadeMult, audioCtx.currentTime + 0.25);
+    ch.osc.frequency.linearRampToValueAtTime(freq, audioCtx.currentTime + 0.35);
+  }
+  checkFrequencyConvergence();
+  checkSettledState();
+}
+
+// ============ FROZEN SAMPLE — generate a fixed waveform from the settled
+// histogram, loop it, and export it as a real WAV file. ============
+let isSettled = false;
+let sampleBuffer = null;   // { left: Float32Array, right: Float32Array, sampleRate }
+let sampleSourceNode = null;
+let sampleGainNode = null;
+let samplePlaying = false;
+
+function checkSettledState() {
+  const settled = [1,2,3,4,5,6,7,8,9].every(d => digitStableCount[d] > STABLE_THRESHOLD);
+  if (settled !== isSettled) {
+    isSettled = settled;
+    const statusEl = document.getElementById('settledStatus');
+    const genBtn = document.getElementById('generateSampleBtn');
+    if (isSettled) {
+      statusEl.textContent = '✓ Digits 1–9 have settled — ready to freeze a sample';
+      statusEl.style.color = 'var(--oxblood-bright)';
+      genBtn.disabled = false;
+    } else {
+      statusEl.textContent = 'Waiting for digits 1–9 to settle (digit 0 may keep moving)...';
+      statusEl.style.color = 'var(--ash)';
+      genBtn.disabled = true;
+    }
+  }
+}
+
+function currentChannelState(d) {
+  const maxVal = Math.max(1, ...digitHistory);
+  const freq = freqForDigit(d);
+  const volSlider = document.getElementById(`digitVol${d}`);
+  const userVol = volSlider ? parseInt(volSlider.value) / 100 : 0.7;
+  const histNorm = digitHistory[d] / maxVal;
+  const rawFadeMult = digitStableCount[d] > STABLE_THRESHOLD
+    ? Math.max(0, 1 - (digitStableCount[d] - STABLE_THRESHOLD) * FADE_STEP) : 1;
+  const fadeMult = fadeEnabled ? rawFadeMult : 1;
+  const panSlider = document.getElementById(`digitPan${d}`);
+  const pan = panSlider ? parseInt(panSlider.value) / 100 : 0;
+  return { freq, amp: userVol * histNorm * fadeMult, pan };
+}
+
+function generateHistogramSample() {
+  const sampleRate = 44100;
+  const duration = 3; // seconds - loopable snapshot of the settled chord
+  const totalSamples = Math.floor(sampleRate * duration);
+  const left = new Float32Array(totalSamples);
+  const right = new Float32Array(totalSamples);
+
+  const channels = [];
+  for (let d = 0; d <= 9; d++) channels.push(currentChannelState(d));
+
+  const fadeSamples = Math.floor(sampleRate * 0.02); // 20ms fade in/out - avoids a click at the loop seam
+  for (let i = 0; i < totalSamples; i++) {
+    const t = i / sampleRate;
+    let l = 0, r = 0;
+    channels.forEach(ch => {
+      if (ch.amp <= 0) return;
+      const v = ch.amp * Math.sin(2 * Math.PI * ch.freq * t);
+      const panRad = (ch.pan + 1) * 0.25 * Math.PI; // equal-power pan, -1..1 -> 0..pi/2
+      l += v * Math.cos(panRad);
+      r += v * Math.sin(panRad);
+    });
+    let env = 1;
+    if (i < fadeSamples) env = i / fadeSamples;
+    else if (i > totalSamples - fadeSamples) env = (totalSamples - i) / fadeSamples;
+    left[i] = l * env; right[i] = r * env;
+  }
+
+  let maxAbs = 0;
+  for (let i = 0; i < totalSamples; i++) maxAbs = Math.max(maxAbs, Math.abs(left[i]), Math.abs(right[i]));
+  if (maxAbs > 0.95) {
+    const scale = 0.95 / maxAbs;
+    for (let i = 0; i < totalSamples; i++) { left[i] *= scale; right[i] *= scale; }
+  }
+  return { left, right, sampleRate };
+}
+
+function playGeneratedSample() {
+  if (!sampleBuffer) return;
+  if (!audioCtx) initAudioEngine();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const buf = audioCtx.createBuffer(2, sampleBuffer.left.length, sampleBuffer.sampleRate);
+  buf.copyToChannel(sampleBuffer.left, 0);
+  buf.copyToChannel(sampleBuffer.right, 1);
+  sampleSourceNode = audioCtx.createBufferSource();
+  sampleSourceNode.buffer = buf;
+  sampleSourceNode.loop = true;
+  if (!sampleGainNode) {
+    sampleGainNode = audioCtx.createGain();
+    sampleGainNode.gain.value = 0.8;
+    sampleGainNode.connect(audioCtx.destination);
+  }
+  sampleSourceNode.connect(sampleGainNode);
+  sampleSourceNode.start();
+  samplePlaying = true;
+}
+function stopGeneratedSample() {
+  if (sampleSourceNode) { try { sampleSourceNode.stop(); } catch(e) {} sampleSourceNode.disconnect(); sampleSourceNode = null; }
+  samplePlaying = false;
+}
+
+function encodeWAV(leftChannel, rightChannel, sampleRate) {
+  const numSamples = leftChannel.length;
+  const blockAlign = 4; // 2 channels * 16-bit
+  const dataSize = numSamples * blockAlign;
+  const buffer = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(buffer);
+  function writeString(offset, str) { for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i)); }
+  writeString(0, 'RIFF'); view.setUint32(4, 36 + dataSize, true); writeString(8, 'WAVE');
+  writeString(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+  view.setUint16(22, 2, true); view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * blockAlign, true); view.setUint16(32, blockAlign, true);
+  view.setUint16(34, 16, true); writeString(36, 'data'); view.setUint32(40, dataSize, true);
+  let offset = 44;
+  for (let i = 0; i < numSamples; i++) {
+    const l = Math.max(-1, Math.min(1, leftChannel[i]));
+    const r = Math.max(-1, Math.min(1, rightChannel[i]));
+    view.setInt16(offset, l < 0 ? l * 0x8000 : l * 0x7FFF, true); offset += 2;
+    view.setInt16(offset, r < 0 ? r * 0x8000 : r * 0x7FFF, true); offset += 2;
+  }
+  return buffer;
+}
+
+document.getElementById('generateSampleBtn').addEventListener('click', () => {
+  if (samplePlaying) stopGeneratedSample();
+  sampleBuffer = generateHistogramSample();
+  document.getElementById('playSampleBtn').disabled = false;
+  document.getElementById('downloadSampleBtn').disabled = false;
+  document.getElementById('playSampleBtn').textContent = '▶ Play looped sample';
+  document.getElementById('playSampleBtn').classList.remove('playing');
+  const secs = (sampleBuffer.left.length / sampleBuffer.sampleRate).toFixed(1);
+  document.getElementById('sampleInfo').textContent = `Frozen: ${secs}s, ${sampleBuffer.sampleRate}Hz stereo, from digits ${digitHistory.join(',')}`;
+});
+document.getElementById('playSampleBtn').addEventListener('click', () => {
+  const btn = document.getElementById('playSampleBtn');
+  if (samplePlaying) {
+    stopGeneratedSample();
+    btn.textContent = '▶ Play looped sample';
+    btn.classList.remove('playing');
+  } else {
+    playGeneratedSample();
+    btn.textContent = '■ Stop sample';
+    btn.classList.add('playing');
+  }
+});
+document.getElementById('downloadSampleBtn').addEventListener('click', () => {
+  if (!sampleBuffer) return;
+  const wavData = encodeWAV(sampleBuffer.left, sampleBuffer.right, sampleBuffer.sampleRate);
+  const blob = new Blob([wavData], { type: 'audio/wav' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `resonance-sample-${(resonanceLabel || 'singularity').replace(/[^a-z0-9]/gi,'-')}.wav`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+function updateAudioChannelFromUI(e) {
+  if (!audioCtx) return;
+  const id = e.target.id;
+  const d = parseInt(id.replace(/[^\d]/g, ''));
+  const ch = audioChannels[d];
+  if (!ch) return;
+  if (id.startsWith('digitVol')) {
+    const maxVal = Math.max(1, ...digitHistory);
+    const histNorm = digitHistory[d] / maxVal;
+    const rawFadeMult = digitStableCount[d] > STABLE_THRESHOLD
+      ? Math.max(0, 1 - (digitStableCount[d] - STABLE_THRESHOLD) * FADE_STEP)
+      : 1;
+    const fadeMult = fadeEnabled ? rawFadeMult : 1;
+    ch.gain.gain.linearRampToValueAtTime((parseInt(e.target.value) / 100) * histNorm * fadeMult, audioCtx.currentTime + 0.1);
+  } else if (id.startsWith('digitPan')) {
+    ch.panner.pan.linearRampToValueAtTime(parseInt(e.target.value) / 100, audioCtx.currentTime + 0.05);
+  }
+}
+
+document.getElementById('audioToggleBtn').addEventListener('click', () => {
+  if (!audioCtx) initAudioEngine();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  audioPlaying = !audioPlaying;
+  const btn = document.getElementById('audioToggleBtn');
+  const masterVol = parseInt(document.getElementById('masterVolSlider').value) / 100;
+  if (audioPlaying) {
+    masterGainNode.gain.linearRampToValueAtTime(masterVol, audioCtx.currentTime + 0.6);
+    btn.textContent = '■ Stop the chord';
+    btn.classList.add('playing');
+  } else {
+    masterGainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.4);
+    btn.textContent = '▶ Play the chord';
+    btn.classList.remove('playing');
+  }
+});
+document.getElementById('masterVolSlider').addEventListener('input', e => {
+  if (!audioCtx || !audioPlaying) return;
+  masterGainNode.gain.linearRampToValueAtTime(parseInt(e.target.value) / 100, audioCtx.currentTime + 0.1);
+});
+
+function applySeedFromValue(value, label, weightsHtml) {
+  // Full system reset — clears connected spheres and starts a new Singularity.
+  // Prefer applySeedToSelected when editing one sphere in place.
+  resonanceSeedValue = Math.max(1, Math.round(value)) || 1;
+  resonanceLabel = label;
+  allLevels = [];
+  satellites = [];
+  selectedSphere = 'main';
+  updateSatCount();
+  digitHistory = new Array(10).fill(0);
+  digitStableCount = new Array(10).fill(0);
+  digitLastFreq = new Array(10).fill(null);
+  if (typeof samplePlaying !== 'undefined' && samplePlaying) stopGeneratedSample();
+  sampleBuffer = null;
+  isSettled = false;
+  document.getElementById('generateSampleBtn').disabled = true;
+  document.getElementById('playSampleBtn').disabled = true;
+  document.getElementById('downloadSampleBtn').disabled = true;
+  document.getElementById('playSampleBtn').textContent = '▶ Play looped sample';
+  document.getElementById('playSampleBtn').classList.remove('playing');
+  document.getElementById('sampleInfo').textContent = '';
+  document.getElementById('settledStatus').textContent = 'Waiting for digits 1–9 to settle (digit 0 may keep moving)...';
+  document.getElementById('settledStatus').style.color = 'var(--ash)';
+  convergenceSizeCounts = new Array(11).fill(0);
+  convergenceReseedArmed = true;
+  renderConvergenceTable();
+  initSeismograph();
+  sessionStartTime = performance.now();
+  pausedTimeAtSessionStart = pausedTime;
+  updateSessionTimer();
+  renderDigitBars();
+  levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount, resonanceSeedValue)];
+  levelStack[0].seedLabel = label;
+  levelStack[0].props.label = 'Singularity';
+  networkMainLevel = levelStack[0];
+  exploreContext = 'network';
+  exploreRootId = 'main';
+  selectedNode = null;
+  renderBreadcrumb();
+  updateZoomOutBtn();
+  renderSpherePicker();
+  updateSelectedBanner();
+  renderPropsPanel();
+  const disp = document.getElementById('seedCurrent');
+  disp.innerHTML = `seed: <span class="sv">${label} → value ${resonanceSeedValue}</span>`;
+  const weightsEl = document.getElementById('seedWeightsDisplay');
+  if (weightsEl) weightsEl.innerHTML = weightsHtml || '';
+}
+
+function setResonanceSeed(word) {
+  const val = seedFromWord(word) || 1;
+  const heb = computeAll(word);
+  const weightsHtml = `<div class="weights-line">Word "${word}" → Hebrew ${heb ? heb.heb : ''} → Hechrachi value ${val}</div>`;
+  applySeedToSelected(val, `"${word}"`, weightsHtml);
+}
+
+let levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount, 1)];
+levelStack[0].seedLabel = 'default';
+levelStack[0].props.label = 'Singularity';
+networkMainLevel = levelStack[0];
+let currentLevel = () => levelStack[levelStack.length - 1];
+
+let dragging = false, lastMouse = null, mouseDownPos = null;
+let autoRotate = true;
+let pulsePhase = 0, pulseActive = false;
+let feedbackPulses = []; // {progress, fromNode}
+let lastFeedbackEvent = 0;
+let hoveredNode = null;
+let lastProjected = [];
+let transitionAlpha = 1, transitioning = false, transitionDir = 1;
+
+function rotatePoint(p, rx, ry) {
+  let { x, y, z } = p;
+  let cosY = Math.cos(ry), sinY = Math.sin(ry);
+  let x1 = x * cosY - z * sinY;
+  let z1 = x * sinY + z * cosY;
+  let cosX = Math.cos(rx), sinX = Math.sin(rx);
+  let y1 = y * cosX - z1 * sinX;
+  let z2 = y * sinX + z1 * cosX;
+  return { x: x1, y: y1, z: z2 };
+}
+
+function nodeSignal(node, t, depth, feedback, sphereSeed, coupledFeedback, levelProps) {
+  const angle = Math.atan2(node.y, node.x);
+  const nodePhase = (node.phaseBias != null) ? node.phaseBias : 0;
+  const sphPhase = (levelProps && levelProps.phaseBias) || 0;
+  const phaseOffset = angle * 1.3 + (node.seed % 97) * 0.0647 + nodePhase + sphPhase;
+  const seed = (sphereSeed != null) ? sphereSeed : resonanceSeedValue;
+  const seedFreqMod = 1 + (seed % 37) * 0.006;
+  const coupled = (coupledFeedback != null) ? coupledFeedback : 0;
+  const effectiveFb = feedback * (1 - COUPLING) + coupled * COUPLING;
+  const baseFreq = (0.4 + depth * 0.12) * (1 + effectiveFb * 0.18) * seedFreqMod;
+  const input = Math.sin(t * baseFreq + phaseOffset);
+  const nodeDist = (node.distortion != null) ? node.distortion : 1;
+  const sphDist = (levelProps && levelProps.distortion != null) ? levelProps.distortion : 1;
+  const distortion = (1 + 0.35 * Math.sin(t * 0.22 + node.seed * 0.13)) * nodeDist * sphDist;
+  const output = Math.max(-1.4, Math.min(1.4, input * distortion));
+  return { input, output };
+}
+function outputToDigit(output) {
+  const clamped = Math.max(-1, Math.min(1, output));
+  return Math.round((clamped + 1) / 2 * 9);
+}
+
+function drawSphere(t) {
+  // Cross-sphere coupling always runs so network peers keep influencing each other
+  updateSphereCoupling();
+
+  const level = currentLevel();
+  ctx.clearRect(0, 0, W, H);
+  lastSatHits = [];
+
+  const outputs = [];
+  const effectiveR = R * zoomScale;
+  const showNetwork = exploreContext === 'network' && levelStack.length === 1;
+  const isSelectedRoot = selectedSphere === exploreRootId || (showNetwork && selectedSphere === 'main' && level === getMainLevel());
+  const projected = level.nodes.map(p => {
+    const rp = rotatePoint(p, level.rotX, level.rotY);
+    const scale = 1 / (2 - rp.z);
+    const { input, output } = nodeSignal(p, t, level.depth, level.feedback, level.resonanceSeed, level.coupledFeedback, level.props);
+    outputs.push(output);
+    return {
+      x: CX + rp.x * effectiveR * scale, y: CY + rp.y * effectiveR * scale,
+      z: rp.z, scale, node: p, input, output,
+    };
+  });
+  lastProjected = projected;
+
+  const avgOut = outputs.reduce((a,b)=>a+b,0) / outputs.length;
+  level.feedback += (avgOut - level.feedback) * 0.015;
+
+  ctx.globalAlpha = transitionAlpha;
+
+  // Selection ring when this view's sphere is the edit target
+  if ((showNetwork && selectedSphere === 'main') || (exploreContext === 'sphere' && levelStack.length === 1 && selectedNode == null)) {
+    ctx.beginPath();
+    ctx.arc(CX, CY, effectiveR + 14, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(79,184,212,0.55)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // spokes: signal traveling outward, brightness = that node's current |output|
+  projected.forEach(p => {
+    const depthShade = (p.z + 1) / 2;
+    const intensity = Math.min(1, Math.abs(p.output)) * (0.15 + depthShade * 0.35);
+    ctx.strokeStyle = p.output >= 0 ? `rgba(201,163,92,${intensity})` : `rgba(176,74,88,${intensity})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(CX, CY);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+  });
+
+  // web of near-neighbor connective lines
+  ctx.strokeStyle = 'rgba(201,163,92,0.07)';
+  for (let i = 0; i < projected.length; i++) {
+    for (let j = i+1; j < projected.length; j++) {
+      const dx = projected[i].x - projected[j].x, dy = projected[i].y - projected[j].y;
+      if (Math.sqrt(dx*dx+dy*dy) < 60) {
+        ctx.beginPath(); ctx.moveTo(projected[i].x, projected[i].y); ctx.lineTo(projected[j].x, projected[j].y); ctx.stroke();
+      }
+    }
+  }
+
+  // feedback return-pulses traveling from nodes back to center
+  feedbackPulses.forEach(fp => {
+    const p = fp.fromNode;
+    const px = CX + (p.x - CX) * (1 - fp.progress);
+    const py = CY + (p.y - CY) * (1 - fp.progress);
+    ctx.beginPath();
+    ctx.arc(px, py, 2.2, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(176,74,88,${1 - fp.progress})`;
+    ctx.fill();
+  });
+
+  // nodes, back-to-front, each showing a live digit label
+  const sorted = [...projected].sort((a,b) => a.z - b.z);
+  sorted.forEach(p => {
+    const depth = (p.z + 1) / 2;
+    const mag = Math.min(1, Math.abs(p.output));
+    const baseR = 3 + depth * 3.4 + mag * 3;
+    const isHovered = hoveredNode === p.node;
+    const isSel = selectedNode === p.node;
+    const alpha = 0.4 + depth * 0.6;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, baseR + (isHovered || isSel ? 2.5 : 0), 0, Math.PI*2);
+    ctx.fillStyle = p.output >= 0 ? `rgba(233,223,197,${alpha})` : `rgba(176,74,88,${alpha})`;
+    ctx.fill();
+    if (isSel) {
+      ctx.strokeStyle = 'rgba(79,184,212,0.9)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    if (depth > 0.55 || isHovered || isSel) {
+      ctx.shadowColor = isSel ? 'rgba(79,184,212,0.9)' : (isHovered ? 'rgba(201,163,92,0.9)' : 'rgba(201,163,92,0.5)');
+      ctx.shadowBlur = isHovered || isSel ? 10 : 6;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    if (depth > 0.3 || isHovered || isSel) {
+      ctx.font = `${isHovered || isSel ? 11 : 9}px 'JetBrains Mono', monospace`;
+      ctx.fillStyle = isSel ? 'rgba(79,184,212,0.95)' : (isHovered ? 'rgba(233,223,197,0.95)' : `rgba(233,223,197,${0.3+depth*0.5})`);
+      ctx.textAlign = 'center';
+      const tag = p.node.label ? p.node.label.slice(0, 8) : String(outputToDigit(p.output));
+      ctx.fillText(tag, p.x, p.y - baseR - 5);
+    }
+  });
+
+  // central singularity — glow color/intensity driven by this level's feedback
+  const fb = level.feedback;
+  const glowColor = fb >= 0 ? [201,163,92] : [176,74,88];
+  const glowSize = 20 + Math.abs(fb) * 10 + (pulseActive ? pulsePhase*4 : 0);
+  const grad = ctx.createRadialGradient(CX, CY, 0, CX, CY, glowSize);
+  grad.addColorStop(0, `rgba(${glowColor[0]},${glowColor[1]},${glowColor[2]},0.95)`);
+  grad.addColorStop(1, `rgba(${glowColor[0]},${glowColor[1]},${glowColor[2]},0)`);
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.arc(CX, CY, glowSize*0.75, 0, Math.PI*2); ctx.fill();
+
+  // Connected satellites only in network overview (not while inside a sphere)
+  if (exploreContext === 'network' && levelStack.length === 1) {
+    satellites.forEach((sat, idx) => renderSatellite(sat, t, idx));
+  } else if (exploreContext === 'sphere') {
+    // Still advance satellite signal loops so coupling stays live while exploring
+    satellites.forEach(sat => {
+      const lvl = sat.level;
+      if (!dragging && autoRotate) lvl.rotY += 0.0021;
+      const outs = [];
+      lvl.nodes.forEach(node => {
+        const { output } = nodeSignal(node, t, lvl.depth, lvl.feedback, lvl.resonanceSeed, lvl.coupledFeedback, lvl.props);
+        outs.push(output);
+      });
+      if (outs.length) {
+        const avg = outs.reduce((a,b)=>a+b,0) / outs.length;
+        lvl.feedback += (avg - lvl.feedback) * 0.015;
+      }
+    });
+    // And keep main advancing if we're inside a satellite
+    if (exploreRootId !== 'main' && getMainLevel()) {
+      const main = getMainLevel();
+      const outs = [];
+      main.nodes.forEach(node => {
+        const { output } = nodeSignal(node, t, main.depth, main.feedback, main.resonanceSeed, main.coupledFeedback, main.props);
+        outs.push(output);
+      });
+      if (outs.length) {
+        const avg = outs.reduce((a,b)=>a+b,0) / outs.length;
+        main.feedback += (avg - main.feedback) * 0.015;
+      }
+    }
+  }
+
+  ctx.globalAlpha = 1;
+
+  // readout panel
+  const unity = unityFromOutputs(outputs);
+  const readout = document.getElementById('sphereReadout');
+  const coupledStr = (level.coupledFeedback != null && satellites.length)
+    ? `<br>coupled: <span class="feedback-val">${level.coupledFeedback>=0?'+':''}${level.coupledFeedback.toFixed(3)}</span>`
+    : '';
+  const seedStr = level.resonanceSeed != null ? ` · seed ${level.resonanceSeed}` : '';
+  const viewLbl = exploreContext === 'network' ? 'network' : ((level.props && level.props.label) || level.label);
+  readout.innerHTML = `${viewLbl} · depth ${level.depth} · ${level.nodes.length} nodes${seedStr}<br>unity: <span class="unity-val">${unity.percent.toFixed(0)}%</span> on digit ${unity.digit}<br>feedback: <span class="feedback-val">${fb>=0?'+':''}${fb.toFixed(3)}</span>${coupledStr}`;
+}
+
+function renderSatellite(sat, t, idx) {
+  const satR = R * 0.42 * zoomScale;
+  const orbitDist = R * zoomScale * 1.55 + 44;
+  const satCX = CX + Math.cos(sat.angle) * orbitDist;
+  const satCY = CY + Math.sin(sat.angle) * orbitDist;
+  const lvl = sat.level;
+  const isSelected = selectedSphere === idx;
+  if (!dragging && autoRotate) lvl.rotY += 0.0021;
+
+  // Hit-test target for click-to-select
+  lastSatHits.push({ idx, cx: satCX, cy: satCY, r: satR + 16 });
+
+  // connector: from the nearest main-sphere node to this satellite's center
+  // brighter / thicker when either end is selected (shows the coupling path)
+  const anchor = lastProjected.length
+    ? lastProjected[sat.anchorNodeIdx % lastProjected.length]
+    : null;
+  if (anchor) {
+    const coupleAlpha = 0.18 + Math.min(0.45, Math.abs(lvl.coupledFeedback || 0) * 0.5);
+    ctx.strokeStyle = isSelected || selectedSphere === 'main'
+      ? `rgba(79,184,212,${0.35 + coupleAlpha})`
+      : `rgba(201,163,92,${coupleAlpha})`;
+    ctx.lineWidth = isSelected ? 2 : 1;
+    ctx.beginPath(); ctx.moveTo(anchor.x, anchor.y); ctx.lineTo(satCX, satCY); ctx.stroke();
+    // pulse of coupling energy along the connector
+    const pulseT = (t * 0.4 + idx * 0.7) % 1;
+    const px = anchor.x + (satCX - anchor.x) * pulseT;
+    const py = anchor.y + (satCY - anchor.y) * pulseT;
+    ctx.beginPath();
+    ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(79,184,212,${0.55 * (1 - Math.abs(pulseT - 0.5) * 2)})`;
+    ctx.fill();
+  }
+
+  const satOutputs = [];
+  const proj = lvl.nodes.map(p => {
+    const rp = rotatePoint(p, lvl.rotX, lvl.rotY);
+    const scale = 1 / (2.2 - rp.z);
+    const { output } = nodeSignal(p, t, lvl.depth, lvl.feedback, lvl.resonanceSeed, lvl.coupledFeedback, lvl.props);
+    satOutputs.push(output);
+    return { x: satCX + rp.x * satR * scale, y: satCY + rp.y * satR * scale, z: rp.z, output };
+  });
+  const avgOut = satOutputs.reduce((a,b)=>a+b,0) / satOutputs.length;
+  lvl.feedback += (avgOut - lvl.feedback) * 0.015;
+
+  // Selection ring
+  if (isSelected) {
+    ctx.beginPath();
+    ctx.arc(satCX, satCY, satR + 10, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(79,184,212,0.65)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  ctx.strokeStyle = 'rgba(201,163,92,0.06)';
+  for (let i = 0; i < proj.length; i++) {
+    for (let j = i+1; j < proj.length; j++) {
+      const dx = proj[i].x-proj[j].x, dy = proj[i].y-proj[j].y;
+      if (Math.sqrt(dx*dx+dy*dy) < 32) { ctx.beginPath(); ctx.moveTo(proj[i].x,proj[i].y); ctx.lineTo(proj[j].x,proj[j].y); ctx.stroke(); }
+    }
+  }
+  [...proj].sort((a,b)=>a.z-b.z).forEach(p => {
+    const d = (p.z+1)/2;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 1.6 + d*2, 0, Math.PI*2);
+    ctx.fillStyle = p.output >= 0 ? `rgba(233,223,197,${0.35+d*0.5})` : `rgba(176,74,88,${0.35+d*0.5})`;
+    ctx.fill();
+  });
+  const satFb = lvl.feedback;
+  const satGlowColor = isSelected ? [79,184,212] : (satFb >= 0 ? [201,163,92] : [176,74,88]);
+  const grad = ctx.createRadialGradient(satCX, satCY, 0, satCX, satCY, isSelected ? 12 : 9);
+  grad.addColorStop(0, `rgba(${satGlowColor[0]},${satGlowColor[1]},${satGlowColor[2]},0.9)`);
+  grad.addColorStop(1, `rgba(${satGlowColor[0]},${satGlowColor[1]},${satGlowColor[2]},0)`);
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.arc(satCX, satCY, isSelected ? 10 : 8, 0, Math.PI*2); ctx.fill();
+
+  ctx.font = `${isSelected ? 10 : 9}px 'JetBrains Mono', monospace`;
+  ctx.fillStyle = isSelected ? 'rgba(79,184,212,0.95)' : 'rgba(138,131,114,0.85)';
+  ctx.textAlign = 'center';
+  ctx.fillText(lvl.label, satCX, satCY + satR + 12);
+  ctx.font = `8px 'JetBrains Mono', monospace`;
+  ctx.fillStyle = isSelected ? 'rgba(79,184,212,0.75)' : 'rgba(138,131,114,0.6)';
+  ctx.fillText(`${lvl.nodes.length}n · s${lvl.resonanceSeed}`, satCX, satCY + satR + 22);
+}
+
+function spawnFeedbackEvent() {
+  const level = currentLevel();
+  if (!lastProjected.length) return;
+  feedbackPulses = lastProjected.map(p => ({ progress: 0, fromNode: { x: p.x, y: p.y } }));
+}
+
+// Tab visibility: requestAnimationFrame throttles to near-zero in background
+// tabs. Rather than let that be an invisible side effect, track paused time
+// explicitly so the simulation's own clock doesn't jump when you return -
+// and say plainly on screen that it's paused, not broken.
+let pausedTime = 0;
+let hiddenSince = null;
+document.addEventListener('visibilitychange', () => {
+  const badge = document.getElementById('visibilityBadge');
+  if (document.hidden) {
+    hiddenSince = performance.now();
+    if (badge) badge.textContent = '(paused — tab in background)';
+  } else {
+    if (hiddenSince !== null) { pausedTime += performance.now() - hiddenSince; hiddenSince = null; }
+    if (badge) badge.textContent = '';
+  }
+});
+
+let frameCount = 0;
+
+// Session timer - how long the current seed has been running, excluding any
+// time the tab spent hidden (reuses the same pause tracking as the sphere clock).
+let sessionStartTime = performance.now();
+let pausedTimeAtSessionStart = 0;
+function formatElapsed(ms) {
+  const totalSec = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(totalSec / 3600);
+  const m = Math.floor((totalSec % 3600) / 60);
+  const s = totalSec % 60;
+  const mm = String(m).padStart(2, '0'), ss = String(s).padStart(2, '0');
+  return h > 0 ? `${h}h ${mm}:${ss}` : `${mm}:${ss}`;
+}
+function updateSessionTimer() {
+  const elapsed = performance.now() - sessionStartTime - (pausedTime - pausedTimeAtSessionStart);
+  const text = `Running for ${formatElapsed(elapsed)}`;
+  const t1 = document.getElementById('digitBarsTimer');
+  const t2 = document.getElementById('convergenceTimer');
+  if (t1) t1.textContent = text;
+  if (t2) t2.textContent = text;
+}
+
+// Delta multiplier: scales simulated time itself, not just how often things
+// are checked - oscillation phase, digit progression, stability, feedback,
+// and the seismograph all advance together, uniformly, at this rate.
+let deltaMultiplier = 1;
+let simTime = 0;
+let lastFrameTime = performance.now();
+let simUpdateAccumulator = 0;   // drives the ~10/sec digit-tally & unity checks
+let seismoUpdateAccumulator = 0; // drives the ~30/sec seismograph recording
+const MAX_FRAME_DELTA = 0.1; // clamp so a hidden-tab resume doesn't cause one giant leap
+
+function animate() {
+  const now = performance.now();
+  const realDelta = document.hidden ? 0 : Math.min(MAX_FRAME_DELTA, (now - lastFrameTime) / 1000);
+  lastFrameTime = now;
+  const scaledDelta = realDelta * deltaMultiplier;
+  simTime += scaledDelta;
+  const t = simTime;
+
+  const level = currentLevel();
+  if (autoRotate && !dragging && !transitioning) level.rotY += 0.0032 * Math.max(1, Math.sqrt(deltaMultiplier));
+
+  if (pulseActive) {
+    pulsePhase += 0.045;
+    if (pulsePhase > 2.4) { pulsePhase = 0; pulseActive = false; }
+  }
+
+  if (t - lastFeedbackEvent > 4.5) { spawnFeedbackEvent(); lastFeedbackEvent = t; }
+  feedbackPulses = feedbackPulses.filter(fp => fp.progress < 1);
+  feedbackPulses.forEach(fp => fp.progress += 0.02);
+
+  if (transitioning) {
+    transitionAlpha += transitionDir * 0.07;
+    if (transitionDir > 0 && transitionAlpha >= 1) { transitionAlpha = 1; transitioning = false; }
+    if (transitionDir < 0 && transitionAlpha <= 0) {
+      transitionAlpha = 0; transitionDir = 1; transitioning = true; // will fade back in next frame after swap already happened
+    }
+  }
+
+  drawSphere(t);
+
+  // Seismograph recording - target ~30/sec of SIMULATED time, so it speeds up with everything else
+  seismoUpdateAccumulator += scaledDelta * 30;
+  while (seismoUpdateAccumulator >= 1) {
+    seismoUpdateAccumulator -= 1;
+    updateSeismograph();
+  }
+
+  // Global unity, digit tally, stability - target ~10/sec of SIMULATED time
+  simUpdateAccumulator += scaledDelta * 10;
+  while (simUpdateAccumulator >= 1) {
+    simUpdateAccumulator -= 1;
+    const g = computeGlobalUnity(t);
+    const valEl = document.getElementById('globalUnityVal');
+    const detailEl = document.getElementById('globalUnityDetail');
+    valEl.textContent = g.total ? `${g.percent.toFixed(0)}%` : '—';
+    valEl.style.color = g.percent >= 50 ? 'var(--oxblood-bright)' : 'var(--gilt)';
+    detailEl.textContent = g.total ? `on digit ${g.digit} · ${g.total} nodes across ${allLevels.length} sphere${allLevels.length===1?'':'s'}` : 'no spheres generated yet';
+    if (g.total && g.digit !== null) {
+      digitHistory[parseInt(g.digit)]++;
+      renderDigitBars();
+    }
+  }
+
+  // Session timer stays on REAL wall-clock time regardless of sim speed -
+  // it's meant to answer "how long has this actually taken," on purpose.
+  frameCount++;
+  if (frameCount % 60 === 0) updateSessionTimer();
+
+  requestAnimationFrame(animate);
+}
+
+function renderBreadcrumb() {
+  const el = document.getElementById('breadcrumb');
+  if (!el) return;
+  const parts = [];
+  // Network root crumb
+  parts.push(`<span class="crumb ${exploreContext === 'network' && levelStack.length === 1 ? 'current' : ''}" data-nav="network">Network</span>`);
+  if (exploreContext === 'sphere') {
+    const rootLvl = levelStack[0];
+    const rootName = (rootLvl && rootLvl.props && rootLvl.props.label) || (rootLvl && rootLvl.label) || (exploreRootId === 'main' ? 'Singularity' : `Sphere`);
+    parts.push(`<span class="sep">→</span>`);
+    parts.push(`<span class="crumb ${levelStack.length === 1 ? 'current' : ''}" data-nav="root">${rootName}</span>`);
+    for (let i = 1; i < levelStack.length; i++) {
+      const lvl = levelStack[i];
+      const name = (lvl.props && lvl.props.label) || lvl.label;
+      const isLast = i === levelStack.length - 1;
+      parts.push(`<span class="sep">→</span>`);
+      parts.push(`<span class="crumb ${isLast ? 'current' : ''}" data-idx="${i}">${name}</span>`);
+    }
+  } else if (levelStack.length > 1) {
+    // Zoomed into a node while still conceptually on network/main
+    for (let i = 0; i < levelStack.length; i++) {
+      const lvl = levelStack[i];
+      const name = (lvl.props && lvl.props.label) || lvl.label;
+      const isLast = i === levelStack.length - 1;
+      parts.push(`<span class="sep">→</span>`);
+      parts.push(`<span class="crumb ${isLast ? 'current' : ''}" data-idx="${i}">${name}</span>`);
+    }
+  }
+  el.innerHTML = parts.join('');
+  el.querySelectorAll('.crumb').forEach(c => {
+    c.addEventListener('click', () => {
+      if (c.dataset.nav === 'network') {
+        exitToNetwork();
+        return;
+      }
+      if (c.dataset.nav === 'root') {
+        levelStack = [levelStack[0]];
+        selectedNode = null;
+        renderBreadcrumb();
+        updateZoomOutBtn();
+        updateExploreButtons();
+        renderPropsPanel();
+        return;
+      }
+      const idx = parseInt(c.dataset.idx, 10);
+      if (!isNaN(idx) && idx < levelStack.length - 1) {
+        levelStack = levelStack.slice(0, idx + 1);
+        selectedNode = null;
+        renderBreadcrumb();
+        updateZoomOutBtn();
+        updateExploreButtons();
+        renderPropsPanel();
+      }
+    });
+  });
+}
+function updateZoomOutBtn() {
+  updateExploreButtons();
+}
+
+function zoomIntoNode(node) {
+  if (currentLevel().depth >= MAX_DEPTH) return;
+  // If still in network overview looking at main, entering a node keeps networkMainLevel
+  transitioning = true; transitionDir = -1;
+  setTimeout(() => {
+    if (!node.childLevel) {
+      const label = node.label || `Node ${node.id}`;
+      node.childLevel = makeLevel(currentLevel().depth + 1, node.seed, label, null, node.seed);
+      node.childLevel.props.label = label;
+      node.childLevel.seedLabel = `node ${node.id} seed ${node.seed}`;
+    }
+    levelStack.push(node.childLevel);
+    selectedNode = null;
+    // Once zoomed into a node from network, treat as sphere exploration of main
+    if (exploreContext === 'network') {
+      exploreContext = 'sphere';
+      exploreRootId = 'main';
+    }
+    renderBreadcrumb();
+    updateZoomOutBtn();
+    updateExploreButtons();
+    renderPropsPanel();
+    transitionAlpha = 0; transitionDir = 1; transitioning = true;
+  }, 260);
+}
+
+function hitTestNode(mx, my) {
+  let closest = null, closestDist = 14;
+  lastProjected.forEach(p => {
+    const d = Math.sqrt((p.x-mx)**2 + (p.y-my)**2);
+    if (d < closestDist) { closestDist = d; closest = p.node; }
+  });
+  return closest;
+}
+
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  zoomScale += (e.deltaY < 0 ? 1 : -1) * 0.08;
+  zoomScale = Math.max(0.4, Math.min(3.2, zoomScale));
+}, { passive: false });
+
+canvas.addEventListener('mousedown', e => {
+  const rect = canvas.getBoundingClientRect();
+  mouseDownPos = { x: e.clientX, y: e.clientY };
+  dragging = true; autoRotate = false;
+  lastMouse = { x: e.clientX, y: e.clientY };
+});
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (W/rect.width), my = (e.clientY - rect.top) * (H/rect.height);
+  if (dragging) {
+    const dx = e.clientX - lastMouse.x, dy = e.clientY - lastMouse.y;
+    currentLevel().rotY += dx * 0.008;
+    currentLevel().rotX += dy * 0.008;
+    lastMouse = { x: e.clientX, y: e.clientY };
+  } else {
+    const hit = hitTestNode(mx, my);
+    hoveredNode = hit;
+    const tooltip = document.getElementById('nodeTooltip');
+    if (hit) {
+      const proj = lastProjected.find(p => p.node === hit);
+      const name = hit.label || `node ${hit.id}`;
+      const canExplore = currentLevel().depth < MAX_DEPTH;
+      tooltip.innerHTML = `${name} — seed ${hit.seed} · out <span class="tt-root">${proj.output.toFixed(2)}</span> → digit ${outputToDigit(proj.output)}${canExplore ? ' · click select · again to explore' : ''}`;
+      tooltip.style.left = proj.x + 'px';
+      tooltip.style.top = proj.y + 'px';
+      tooltip.classList.add('show');
+      canvas.style.cursor = 'pointer';
+    } else {
+      tooltip.classList.remove('show');
+      canvas.style.cursor = 'grab';
+    }
+  }
+});
+function hitTestSatellite(mx, my) {
+  let best = null, bestDist = Infinity;
+  lastSatHits.forEach(h => {
+    const d = Math.hypot(mx - h.cx, my - h.cy);
+    if (d < h.r && d < bestDist) { bestDist = d; best = h.idx; }
+  });
+  return best;
+}
+
+function handleCanvasClick(mx, my) {
+  const now = performance.now();
+  const isDouble = (now - lastClickTime < 350);
+
+  // Network overview: satellites selectable / double-click to enter
+  if (exploreContext === 'network' && levelStack.length === 1) {
+    const satHit = hitTestSatellite(mx, my);
+    if (satHit !== null) {
+      if (isDouble && lastClickTarget === 'sat:' + satHit) {
+        enterSphere(satHit);
+      } else {
+        selectSphere(satHit);
+      }
+      lastClickTime = now;
+      lastClickTarget = 'sat:' + satHit;
+      return;
+    }
+    const distCenter = Math.hypot(mx - CX, my - CY);
+    if (distCenter < R * zoomScale * 0.28) {
+      if (isDouble && lastClickTarget === 'main-center') {
+        enterSphere('main');
+      } else {
+        selectSphere('main');
+      }
+      lastClickTime = now;
+      lastClickTarget = 'main-center';
+      return;
+    }
+  }
+
+  // Node hit — select on first click, explore on second click of same node
+  const hit = hitTestNode(mx, my);
+  if (hit) {
+    if (isDouble && lastClickTarget === 'node:' + hit.id && selectedNode === hit) {
+      zoomIntoNode(hit);
+    } else if (selectedNode === hit && currentLevel().depth < MAX_DEPTH) {
+      // second click (not necessarily double-speed) explores
+      zoomIntoNode(hit);
+    } else {
+      selectNode(hit);
+    }
+    lastClickTime = now;
+    lastClickTarget = 'node:' + hit.id;
+    return;
+  }
+
+  // Empty space clears node selection
+  if (selectedNode) {
+    selectedNode = null;
+    renderPropsPanel();
+  }
+  lastClickTime = now;
+  lastClickTarget = 'empty';
+}
+
+canvas.addEventListener('mouseup', e => {
+  dragging = false;
+  if (mouseDownPos) {
+    const moved = Math.hypot(e.clientX - mouseDownPos.x, e.clientY - mouseDownPos.y);
+    if (moved < 5) {
+      const rect = canvas.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) * (W/rect.width), my = (e.clientY - rect.top) * (H/rect.height);
+      handleCanvasClick(mx, my);
+    }
+  }
+  mouseDownPos = null;
+});
+window.addEventListener('mouseup', () => { dragging = false; });
+
+canvas.addEventListener('touchstart', e => {
+  dragging = true; autoRotate = false;
+  const t = e.touches[0]; lastMouse = { x: t.clientX, y: t.clientY };
+  mouseDownPos = { x: t.clientX, y: t.clientY };
+}, {passive:true});
+canvas.addEventListener('touchmove', e => {
+  if (!dragging) return;
+  const t = e.touches[0];
+  const dx = t.clientX - lastMouse.x, dy = t.clientY - lastMouse.y;
+  currentLevel().rotY += dx * 0.008;
+  currentLevel().rotX += dy * 0.008;
+  lastMouse = { x: t.clientX, y: t.clientY };
+}, {passive:true});
+canvas.addEventListener('touchend', e => {
+  dragging = false;
+  if (mouseDownPos && e.changedTouches[0]) {
+    const t = e.changedTouches[0];
+    const moved = Math.hypot(t.clientX - mouseDownPos.x, t.clientY - mouseDownPos.y);
+    if (moved < 8) {
+      const rect = canvas.getBoundingClientRect();
+      const mx = (t.clientX - rect.left) * (W/rect.width), my = (t.clientY - rect.top) * (H/rect.height);
+      handleCanvasClick(mx, my);
+    }
+  }
+});
+
+document.getElementById('pulseBtn').addEventListener('click', () => { pulseActive = true; pulsePhase = 0; });
+document.getElementById('enterSphereBtn').addEventListener('click', () => {
+  enterSphere(selectedSphere);
+});
+document.getElementById('zoomOutBtn').addEventListener('click', () => {
+  if (levelStack.length > 1) {
+    transitioning = true; transitionDir = -1;
+    setTimeout(() => {
+      levelStack.pop();
+      selectedNode = null;
+      renderBreadcrumb();
+      updateZoomOutBtn();
+      updateExploreButtons();
+      renderPropsPanel();
+      transitionAlpha = 0; transitionDir = 1; transitioning = true;
+    }, 260);
+  } else if (exploreContext === 'sphere') {
+    transitioning = true; transitionDir = -1;
+    setTimeout(() => {
+      exitToNetwork();
+      transitionAlpha = 0; transitionDir = 1; transitioning = true;
+    }, 260);
+  }
+});
+
+// ---- Resonance seed controls ----
+document.getElementById('setSeedBtn').addEventListener('click', () => {
+  const w = document.getElementById('seedInput').value.trim();
+  if (w) setResonanceSeed(w);
+});
+document.getElementById('seedInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('setSeedBtn').click();
+});
+document.getElementById('useAsSeedBtn').addEventListener('click', () => {
+  if (!lastCalcWord) return;
+  setResonanceSeed(lastCalcWord);
+  document.getElementById('seedInput').value = lastCalcWord;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ---- Seed source tabs ----
+document.querySelectorAll('.seed-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.seed-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.seed-body').forEach(b => b.style.display = 'none');
+    tab.classList.add('active');
+    document.getElementById(`seedBody-${tab.dataset.source}`).style.display = 'flex';
+  });
+});
+
+// ---- Tarot ----
+const tarotMajorSelect = document.getElementById('tarotMajorSelect');
+MAJOR_ARCANA.forEach((name, i) => {
+  const opt = document.createElement('option'); opt.value = i; opt.textContent = `${i} — ${name}`;
+  tarotMajorSelect.appendChild(opt);
+});
+const tarotSuitSelect = document.getElementById('tarotSuitSelect');
+TAROT_SUITS.forEach((s, i) => { const o = document.createElement('option'); o.value = i; o.textContent = s; tarotSuitSelect.appendChild(o); });
+const tarotRankSelect = document.getElementById('tarotRankSelect');
+TAROT_RANKS.forEach((r, i) => { const o = document.createElement('option'); o.value = i; o.textContent = r; tarotRankSelect.appendChild(o); });
+document.getElementById('tarotArcanaType').addEventListener('change', e => {
+  const isMajor = e.target.value === 'major';
+  tarotMajorSelect.style.display = isMajor ? 'inline-block' : 'none';
+  tarotSuitSelect.style.display = isMajor ? 'none' : 'inline-block';
+  tarotRankSelect.style.display = isMajor ? 'none' : 'inline-block';
+});
+function currentTarotSeed() {
+  return document.getElementById('tarotArcanaType').value === 'major'
+    ? tarotMajorSeed(parseInt(tarotMajorSelect.value))
+    : tarotMinorSeed(parseInt(tarotSuitSelect.value), parseInt(tarotRankSelect.value));
+}
+document.getElementById('tarotSetBtn').addEventListener('click', () => {
+  const r = currentTarotSeed();
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+document.getElementById('tarotRandomBtn').addEventListener('click', () => {
+  const isMajor = Math.random() < 0.5;
+  document.getElementById('tarotArcanaType').value = isMajor ? 'major' : 'minor';
+  document.getElementById('tarotArcanaType').dispatchEvent(new Event('change'));
+  let r;
+  if (isMajor) {
+    const idx = Math.floor(Math.random() * MAJOR_ARCANA.length);
+    tarotMajorSelect.value = idx;
+    r = tarotMajorSeed(idx);
+  } else {
+    const s = Math.floor(Math.random() * TAROT_SUITS.length), rk = Math.floor(Math.random() * TAROT_RANKS.length);
+    tarotSuitSelect.value = s; tarotRankSelect.value = rk;
+    r = tarotMinorSeed(s, rk);
+  }
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+
+// ---- Playing cards ----
+const cardSuitSelect = document.getElementById('cardSuitSelect');
+CARD_SUITS.forEach((s, i) => { const o = document.createElement('option'); o.value = i; o.textContent = s; cardSuitSelect.appendChild(o); });
+const cardRankSelect = document.getElementById('cardRankSelect');
+CARD_RANKS.forEach((r, i) => { const o = document.createElement('option'); o.value = i; o.textContent = r; cardRankSelect.appendChild(o); });
+document.getElementById('cardSetBtn').addEventListener('click', () => {
+  const r = playingCardSeed(parseInt(cardSuitSelect.value), parseInt(cardRankSelect.value));
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+document.getElementById('cardRandomBtn').addEventListener('click', () => {
+  const s = Math.floor(Math.random() * CARD_SUITS.length), rk = Math.floor(Math.random() * CARD_RANKS.length);
+  cardSuitSelect.value = s; cardRankSelect.value = rk;
+  const r = playingCardSeed(s, rk);
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+
+// ---- Coin ----
+document.getElementById('coinFlipBtn').addEventListener('click', () => {
+  const r = coinFlipSeed();
+  document.getElementById('coinResultLabel').textContent = r.label.replace('Coin: ', '');
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+
+// ---- Random number ----
+document.getElementById('randomRollBtn').addEventListener('click', () => {
+  const min = parseInt(document.getElementById('randMinInput').value) || 1;
+  const max = parseInt(document.getElementById('randMaxInput').value) || 999;
+  const r = randomNumberSeed(Math.min(min,max), Math.max(min,max));
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+
+// ---- Bits ----
+document.getElementById('bitsSetBtn').addEventListener('click', () => {
+  const r = bitsToSeed(document.getElementById('bitsInput').value);
+  if (r) applySeedToSelected(r.value, r.label, r.weights);
+});
+document.getElementById('bitsRandomBtn').addEventListener('click', () => {
+  const bits = Array.from({length:8}, () => Math.random() < 0.5 ? '0' : '1').join('');
+  document.getElementById('bitsInput').value = bits;
+  const r = bitsToSeed(bits);
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+
+// ---- RGBA ----
+document.getElementById('rgbaSetBtn').addEventListener('click', () => {
+  const hex = document.getElementById('rgbaColorInput').value;
+  const alpha = parseInt(document.getElementById('rgbaAlphaInput').value);
+  const r = rgbaToSeed(hex, alpha);
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+document.getElementById('rgbaRandomBtn').addEventListener('click', () => {
+  const hex = '#' + Array.from({length:3}, () => Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join('');
+  const alpha = Math.floor(Math.random()*256);
+  document.getElementById('rgbaColorInput').value = hex;
+  document.getElementById('rgbaAlphaInput').value = alpha;
+  const r = rgbaToSeed(hex, alpha);
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+
+// ---- Hex ----
+document.getElementById('hexSetBtn').addEventListener('click', () => {
+  const r = hexToSeed(document.getElementById('hexInput').value);
+  if (r) applySeedToSelected(r.value, r.label, r.weights);
+});
+document.getElementById('hexRandomBtn').addEventListener('click', () => {
+  const hex = Array.from({length:6}, () => Math.floor(Math.random()*16).toString(16)).join('');
+  document.getElementById('hexInput').value = hex;
+  const r = hexToSeed(hex);
+  applySeedToSelected(r.value, r.label, r.weights);
+});
+
+// ---- Node count & multi-sphere controls ----
+const nodeCountInput = document.getElementById('nodeCountInput');
+document.getElementById('applyNodeCountBtn').addEventListener('click', () => {
+  const n = Math.max(4, Math.min(90, parseInt(nodeCountInput.value) || 40));
+  nodeCountInput.value = n;
+  const lvl = getSelectedLevel();
+  if (lvl) {
+    regenerateNodes(lvl, n);
+    if (selectedSphere === 'main') configuredNodeCount = n;
+  }
+  renderSpherePicker();
+  updateSelectedBanner();
+});
+document.getElementById('addSphereBtn').addEventListener('click', () => {
+  addSatellite();
+});
+document.getElementById('clearSpheresBtn').addEventListener('click', () => {
+  clearSatellites();
+});
+updateSatCount();
+renderSpherePicker();
+updateSelectedBanner();
+renderPropsPanel();
+updateExploreButtons();
+document.getElementById('deltaMultiplierSlider').addEventListener('input', e => {
+  deltaMultiplier = parseFloat(e.target.value);
+  document.getElementById('deltaMultiplierVal').textContent = `${deltaMultiplier}×`;
+});
+
+// ---- Fullscreen (entire stage, including HUD) ----
+const simStage = document.getElementById('simStage');
+const fsBtn = document.getElementById('fullscreenBtn');
+function fitCanvasToStage() {
+  if (!simStage) return;
+  const rect = simStage.getBoundingClientRect();
+  const size = Math.floor(Math.min(rect.width, rect.height));
+  if (size > 40) resizeCanvas(size);
+}
+fsBtn.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    (simStage.requestFullscreen || simStage.webkitRequestFullscreen)?.call(simStage);
+  } else {
+    (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+  }
+});
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+function handleFullscreenChange() {
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  fsBtn.textContent = isFs ? '⤢' : '⛶';
+  requestAnimationFrame(fitCanvasToStage);
+}
+window.addEventListener('resize', () => requestAnimationFrame(fitCanvasToStage));
+
+// ---- HUD panel toggles ----
+function setHudPanel(id, open) {
+  const panel = document.querySelector(`[data-hud-panel="${id}"]`);
+  const btn = document.querySelector(`.hud-dock-btn[data-hud="${id}"]`);
+  if (!panel) return;
+  // Signal/seismo can stack with side panels; side panels are exclusive with each other
+  const sideIds = ['inspect', 'seed', 'struct', 'signal'];
+  if (open && sideIds.includes(id)) {
+    sideIds.forEach(other => {
+      if (other === id) return;
+      const p = document.querySelector(`[data-hud-panel="${other}"]`);
+      const b = document.querySelector(`.hud-dock-btn[data-hud="${other}"]`);
+      if (p) p.classList.remove('open');
+      if (b) b.classList.remove('active');
+    });
+  }
+  panel.classList.toggle('open', open);
+  if (btn) btn.classList.toggle('active', open);
+}
+document.querySelectorAll('.hud-dock-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.hud;
+    const panel = document.querySelector(`[data-hud-panel="${id}"]`);
+    const willOpen = panel && !panel.classList.contains('open');
+    setHudPanel(id, willOpen);
+  });
+});
+document.querySelectorAll('[data-hud-close]').forEach(btn => {
+  btn.addEventListener('click', () => setHudPanel(btn.dataset.hudClose, false));
+});
+// Stop wheel/pointer on HUD panels from rotating the sphere underneath
+document.querySelectorAll('.hud-panel, .hud-dock, .hud-top').forEach(el => {
+  el.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
+  el.addEventListener('mousedown', e => e.stopPropagation());
+  el.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+});
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  autoRotate = false;
+}
+
+fitCanvasToStage();
+renderBreadcrumb();
+updateZoomOutBtn();
+updateExploreButtons();
+renderPropsPanel();
+initDigitBars();
+initConvergenceTable();
+initSeismograph();
+initSeismoControls();
+animate();
+</script>
+</body>
+</html>
