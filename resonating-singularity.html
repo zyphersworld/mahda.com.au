@@ -226,6 +226,55 @@
   }
   .correction-note strong { color: var(--oxblood-bright); }
 
+  /* ---------- INTUITION LOG ---------- */
+  .log-panel {
+    background: var(--iron-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 22px;
+    margin: 0 0 24px;
+  }
+  .log-form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: flex-start; }
+  .log-form-row label { font-family: var(--mono); font-size: 11px; color: var(--ash); display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 180px; }
+  .log-form-row input[type=text], .log-form-row textarea, .log-form-row input[type=datetime-local] {
+    background: var(--iron); border: 1px solid var(--border-strong); border-radius: 3px;
+    color: var(--parchment); font-family: var(--body); font-size: 14px; padding: 9px 11px;
+  }
+  .log-form-row textarea { min-height: 60px; resize: vertical; font-family: var(--body); }
+  .log-form-row input[type=range] { accent-color: var(--gilt); }
+  .log-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--gilt); color: var(--iron); border: none; border-radius: 3px;
+    padding: 10px 18px; cursor: pointer; font-weight: 600;
+  }
+  .log-btn:hover { background: var(--gilt-dim); }
+  .log-btn.ghost { background: transparent; border: 1px solid var(--border-strong); color: var(--parchment-dim); font-weight: 400; }
+  .log-btn.ghost:hover { border-color: var(--gilt); color: var(--gilt); }
+
+  .retro-readout {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 10px;
+    margin: 14px 0; padding: 14px; background: var(--iron); border: 1px solid var(--border); border-radius: 4px;
+  }
+  .retro-item { text-align: center; }
+  .retro-item .ri-label { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ash); }
+  .retro-item .ri-value { font-family: var(--mono); font-size: 17px; color: var(--gilt); margin-top: 3px; }
+
+  .align-row { display: flex; gap: 8px; align-items: center; margin: 10px 0; }
+  .align-row button { font-family: var(--mono); font-size: 11px; padding: 6px 12px; border-radius: 3px; cursor: pointer; border: 1px solid var(--border-strong); background: transparent; color: var(--parchment-dim); }
+  .align-row button.picked-yes.active { background: var(--confirm); border-color: var(--confirm); color: var(--iron); }
+  .align-row button.picked-no.active { background: var(--oxblood); border-color: var(--oxblood); color: var(--parchment); }
+  .align-row button.picked-unclear.active { background: var(--ash); border-color: var(--ash); color: var(--iron); }
+
+  .log-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+  .log-table th { text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ash); padding: 6px 8px; border-bottom: 1px solid var(--border-strong); }
+  .log-table td { padding: 8px; border-bottom: 1px solid var(--border); color: var(--parchment-dim); vertical-align: top; }
+  .log-table td.decision-cell { color: var(--parchment); max-width: 280px; }
+  .log-table tr.align-yes td.status-cell { color: var(--confirm); }
+  .log-table tr.align-no td.status-cell { color: var(--oxblood-bright); }
+  .log-table .del-entry { background: none; border: none; color: var(--ash); cursor: pointer; font-family: var(--mono); font-size: 11px; }
+  .log-table .del-entry:hover { color: var(--oxblood-bright); }
+  .log-empty { color: var(--ash); font-family: var(--mono); font-size: 13px; text-align: center; padding: 20px; }
+
   /* ---------- HERO ---------- */
   .hero {
     position: relative;
@@ -262,6 +311,83 @@
     max-width: 92vw;
     margin: 0 auto 14px;
   }
+
+  .sim-cockpit:fullscreen, .sim-cockpit:-webkit-full-screen {
+    width: 100vw; height: 100vh;
+    background: var(--iron);
+  }
+  .sim-cockpit:fullscreen .sim-center, .sim-cockpit:-webkit-full-screen .sim-center {
+    height: 100vh; justify-content: center;
+  }
+  .sim-cockpit:fullscreen .sim-dock-body, .sim-cockpit:-webkit-full-screen .sim-dock-body {
+    max-height: calc(100vh - 50px);
+  }
+
+  /* ---------- 2D HUD OVERLAY ---------- */
+  .hud-toggle-btn {
+    position: absolute; top: 8px; right: 8px; z-index: 6;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(22,20,15,0.6); border: 1px solid var(--border-strong);
+    color: var(--gilt); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .hud-toggle-btn:hover { background: rgba(79,184,212,0.25); }
+  .sphere-hud {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 5;
+    padding: 30px 14px 10px;
+    background: linear-gradient(to top, rgba(13,17,23,0.92) 40%, transparent 100%);
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .sphere-hud * { pointer-events: auto; }
+  .sphere-hud.hidden { opacity: 0; pointer-events: none; }
+  .sphere-hud .hud-caption {
+    font-family: var(--mono); font-size: 10.5px; line-height: 1.5; color: var(--parchment-dim);
+    margin: 0 0 8px; max-width: 340px; margin-left: auto; margin-right: auto;
+  }
+  .sphere-hud .hud-controls { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+  .hud-btn {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+    background: rgba(22,20,15,0.75); border: 1px solid var(--border-strong);
+    color: var(--gilt); border-radius: 3px; padding: 6px 11px; cursor: pointer;
+  }
+  .hud-btn:hover { background: var(--gilt); color: var(--iron); }
+  .hud-btn.ghost { color: var(--parchment-dim); }
+
+  .hud-subnav { display: flex; gap: 4px; justify-content: center; margin-bottom: 8px; }
+  .hud-subtab {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em;
+    background: rgba(22,20,15,0.6); border: 1px solid var(--border);
+    color: var(--ash); border-radius: 3px 3px 0 0; padding: 4px 10px; cursor: pointer;
+  }
+  .hud-subtab:hover { color: var(--parchment-dim); }
+  .hud-subtab.active { background: rgba(79,184,212,0.18); border-color: var(--gilt); color: var(--gilt); }
+  .hud-panel { display: none; }
+  .hud-panel.active { display: block; }
+  .hud-panel.dense { max-height: 68vh; overflow-y: auto; overflow-x: hidden; padding: 4px 2px; }
+  .hud-panel.dense .audio-suite, .hud-panel.dense .seismograph-panel {
+    max-width: 100%; background: none; border: none; padding: 4px 0;
+  }
+  .hud-note { font-family: var(--mono); font-size: 9.5px; color: var(--ash); margin: 6px 0 0; line-height: 1.4; }
+  .hud-input {
+    font-family: var(--body); font-size: 13px; background: rgba(22,20,15,0.8);
+    border: 1px solid var(--border-strong); border-radius: 3px; color: var(--parchment);
+    padding: 6px 9px; width: 150px;
+  }
+  .hud-mini-table { width: 100%; max-width: 260px; margin: 0 auto; border-collapse: collapse; font-family: var(--mono); font-size: 10.5px; }
+  .hud-mini-table td { padding: 2px 8px; color: var(--parchment-dim); border-bottom: 1px solid rgba(120,150,175,0.12); }
+  .hud-mini-table td:last-child { text-align: right; color: var(--parchment); }
+  .hud-mini-table tr.reseed-tier td { color: var(--oxblood-bright); }
+
+  .audio-toggle-btn {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em;
+    background: transparent; border: 1px solid var(--border); color: var(--ash);
+    border-radius: 3px; padding: 4px 9px; cursor: pointer; float: right;
+  }
+  .audio-toggle-btn:hover { border-color: var(--gilt); color: var(--gilt); }
+  .audio-caption-block.hidden { display: none; }
 
   .seed-source-panel {
     max-width: 560px;
@@ -540,426 +666,49 @@
   }
   .seed-current {
     font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ash);
-    text-align: center;
-    margin: 0 0 6px;
-  }
-  .seed-current .sv { color: var(--gilt); }
-
-  .sphere-picker {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 0 0 10px;
-  }
-  .sphere-chip {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    background: var(--iron-2);
-    border: 1px solid var(--border);
-    color: var(--ash);
-    border-radius: 14px;
-    padding: 5px 12px;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s, background 0.15s;
-  }
-  .sphere-chip:hover { border-color: var(--border-strong); color: var(--parchment-dim); }
-  .sphere-chip.active {
-    background: rgba(79,184,212,0.12);
-    border-color: var(--gilt);
-    color: var(--gilt);
+    font-size: 13px;
     font-weight: 600;
-  }
-  .sphere-chip .chip-nodes {
-    color: var(--parchment-dim);
-    font-weight: 400;
-    margin-left: 4px;
-  }
-  .selected-sphere-banner {
-    font-family: var(--mono);
-    font-size: 11.5px;
     color: var(--parchment-dim);
     text-align: center;
     margin: 0 0 8px;
+    letter-spacing: 0.02em;
   }
-  .selected-sphere-banner strong { color: var(--gilt); }
-
-  /* ---- Simulation stage + HUD overlays ---- */
-  .sim-hint {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--ash);
-    text-align: center;
-    margin: 0 0 14px;
-    line-height: 1.5;
-  }
-  .hero.sim-hero {
-    padding: 8px 0 32px;
-    text-align: center;
-  }
-  .sim-stage {
-    position: relative;
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    height: min(78vh, 720px);
-    min-height: 520px;
-    background: var(--iron);
-    border: 1px solid var(--border-strong);
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.35);
-  }
-  .sim-stage .sphere-wrap {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-      radial-gradient(ellipse at center, rgba(79,184,212,0.04) 0%, transparent 55%),
-      var(--iron);
-  }
-  .sim-stage #sphereCanvas {
-    width: min(100%, 100%);
-    height: min(100%, 100%);
-    max-width: 100%;
-    max-height: 100%;
-  }
-  .sim-stage:fullscreen,
-  .sim-stage:-webkit-full-screen {
-    max-width: none;
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
-  }
-
-  /* HUD chrome */
-  .hud-top {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    z-index: 20;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 10px 12px 8px;
-    background: linear-gradient(180deg, rgba(13,17,23,0.92) 0%, rgba(13,17,23,0.55) 70%, transparent 100%);
-    pointer-events: none;
-  }
-  .hud-top > * { pointer-events: auto; }
-  .hud-status {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .hud-status .global-unity { margin: 0; gap: 8px; }
-  .hud-status .seed-current { margin: 0; text-align: left; font-size: 10.5px; }
-  .hud-nav-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .hud-nav-row .breadcrumb { margin: 0; justify-content: flex-start; min-height: 18px; }
-  .hud-view-btns {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .hud-view-btns .rotate-btn {
-    padding: 6px 10px;
-    font-size: 10px;
-    background: rgba(22,27,34,0.85);
-    backdrop-filter: blur(6px);
-  }
-  .hud-sphere-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: center;
-  }
-  .hud-sphere-row .sphere-picker { margin: 0; justify-content: flex-start; }
-  .hud-sphere-row .selected-sphere-banner {
-    margin: 0;
-    font-size: 10.5px;
-    text-align: left;
-    opacity: 0.9;
-  }
-
-  .hud-dock {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    z-index: 25;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .hud-dock-btn {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    writing-mode: horizontal-tb;
-    background: rgba(22,27,34,0.88);
-    border: 1px solid var(--border-strong);
-    color: var(--parchment-dim);
-    border-radius: 4px;
-    padding: 8px 10px;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    min-width: 72px;
-    text-align: center;
-    transition: border-color 0.15s, color 0.15s, background 0.15s;
-  }
-  .hud-dock-btn:hover { color: var(--gilt); border-color: var(--gilt-dim); }
-  .hud-dock-btn.active {
-    color: var(--iron);
-    background: var(--gilt);
-    border-color: var(--gilt);
-    font-weight: 600;
-  }
-
-  .hud-panel {
-    position: absolute;
-    z-index: 24;
-    width: min(340px, calc(100% - 100px));
-    max-height: min(62%, calc(100% - 120px));
-    display: none;
-    flex-direction: column;
-    background: rgba(13,17,23,0.92);
-    border: 1px solid var(--border-strong);
-    border-radius: 6px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
-    overflow: hidden;
-  }
-  .hud-panel.open { display: flex; }
-  .hud-panel.right { right: 92px; top: 50%; transform: translateY(-50%); }
-  .hud-panel.bottom {
-    left: 12px; right: 12px; bottom: 12px;
-    width: auto;
-    max-width: none;
-    max-height: 42%;
-    transform: none;
-  }
-  .hud-panel-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-  }
-  .hud-panel-head h4 {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gilt);
-    font-weight: 600;
-  }
-  .hud-panel-close {
-    font-family: var(--mono);
-    font-size: 14px;
-    line-height: 1;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--ash);
-    border-radius: 3px;
-    width: 26px; height: 26px;
-    cursor: pointer;
-  }
-  .hud-panel-close:hover { color: var(--parchment); border-color: var(--border-strong); }
-  .hud-panel-body {
-    padding: 12px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    text-align: left;
-  }
-  .hud-panel-body .sim-hint {
-    text-align: left;
-    margin: 0 0 10px;
-    font-size: 11px;
-  }
-  .hud-panel .props-panel,
-  .hud-panel .seed-source-panel,
-  .hud-panel .audio-suite,
-  .hud-panel .seismograph-panel {
-    max-width: none;
-    margin: 0;
-    background: transparent;
-    border: none;
-    padding: 0;
-  }
-  .hud-panel .props-panel h4 { display: none; }
-  .hud-panel .audio-suite-columns {
-    flex-direction: column;
-    gap: 12px;
-  }
-  .hud-panel .audio-col-main,
-  .hud-panel .audio-col-side { min-width: 0; }
-  .hud-panel .seismograph-panel #seismographCanvas {
-    width: 100%;
-    height: auto;
-    max-height: 160px;
-  }
-  .sim-config-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .sim-config-grid .config-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    padding: 8px 10px;
-    background: rgba(22,27,34,0.7);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-  }
-  .sim-config-grid .config-group .group-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ash);
-    width: 100%;
-    margin-bottom: 2px;
-  }
-  .hud-readout-slot .sphere-readout {
-    position: static;
-    display: inline-block;
-    background: rgba(13,17,23,0.75);
-  }
-  @media (max-width: 640px) {
-    .hud-dock { right: 6px; }
-    .hud-dock-btn { min-width: 56px; padding: 6px 7px; font-size: 9px; }
-    .hud-panel.right { right: 70px; width: min(300px, calc(100% - 80px)); }
-    .sim-stage { min-height: 460px; height: min(70vh, 640px); }
-  }
-
-  .props-panel {
-    max-width: 560px;
-    margin: 0 auto 14px;
-    background: rgba(233,223,197,0.03);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 14px 16px;
-  }
-  .props-panel h4 {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gilt-dim);
-    margin: 0 0 10px;
-  }
-  .props-grid {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 8px 12px;
-    align-items: center;
-    font-family: var(--mono);
-    font-size: 12px;
-  }
-  .props-grid label { color: var(--ash); text-align: right; }
-  .props-grid input[type=text],
-  .props-grid input[type=number] {
-    background: var(--iron-2);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    color: var(--parchment);
-    font-family: var(--mono);
-    font-size: 12px;
-    padding: 6px 8px;
-    width: 100%;
-  }
-  .props-grid input:focus { border-color: var(--gilt); outline: none; }
-  .props-grid .props-readonly {
-    color: var(--parchment-dim);
-  }
-  .props-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-  }
-  .props-actions button {
-    font-family: var(--display);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    background: var(--iron-2);
-    border: 1px solid var(--border-strong);
-    color: var(--gilt);
-    border-radius: 3px;
-    padding: 7px 12px;
-    cursor: pointer;
-  }
-  .props-actions button:hover { background: var(--gilt); color: var(--iron); }
-  .props-actions button.primary {
-    background: var(--gilt);
-    color: var(--iron);
-    border-color: var(--gilt);
-  }
-  .props-actions button.primary:hover { background: var(--parchment); }
-  .props-empty {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ash);
-    text-align: center;
-    padding: 6px 0;
-  }
-  .sphere-chip .chip-enter {
-    margin-left: 6px;
-    font-size: 10px;
-    color: var(--gilt);
-    border-left: 1px solid var(--border);
-    padding-left: 6px;
-  }
+  .seed-current .sv { color: var(--gilt); font-weight: 700; }
 
   .global-unity {
     display: flex;
     justify-content: center;
-    align-items: baseline;
-    gap: 10px;
-    margin: 0 0 8px;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 12px;
     font-family: var(--display);
   }
   .global-unity .gu-label {
-    font-size: 11px;
-    letter-spacing: 0.14em;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ash);
+    color: var(--iron);
+    background: var(--signal);
+    padding: 5px 14px 5px 20px;
+    border-radius: 16px 4px 4px 16px;
   }
   .global-unity .gu-val {
     font-family: var(--mono);
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 34px;
+    font-weight: 800;
     color: var(--oxblood-bright);
-    text-shadow: 0 0 16px rgba(176,74,88,0.4);
+    text-shadow: 0 0 20px rgba(229,103,92,0.5);
     transition: color 0.4s;
+    letter-spacing: -0.02em;
   }
   .global-unity .gu-detail {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--ash);
   }
-  .sphere-readout .unity-val { color: var(--oxblood-bright); font-weight: 600; }
+  .sphere-readout .unity-val { color: var(--oxblood-bright); font-weight: 800; font-size: 14px; }
   .breadcrumb {
     display: flex;
     justify-content: center;
@@ -967,9 +716,10 @@
     gap: 6px;
     flex-wrap: wrap;
     min-height: 22px;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--ash);
   }
   .breadcrumb .crumb {
@@ -983,38 +733,134 @@
 
   .sphere-readout {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 10px;
+    left: 10px;
     font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ash);
-    line-height: 1.6;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--parchment-dim);
+    line-height: 1.75;
     pointer-events: none;
     text-align: left;
-    background: rgba(22,20,15,0.55);
-    padding: 6px 9px;
-    border-radius: 3px;
-    border: 1px solid var(--border);
+    background: rgba(13,17,23,0.75);
+    padding: 9px 14px;
+    border-radius: 3px 14px 3px 3px;
+    border-left: 3px solid var(--signal);
+    letter-spacing: 0.01em;
   }
-  .sphere-readout .feedback-val { color: var(--gilt); font-weight: 600; }
+  .sphere-readout .feedback-val { color: var(--gilt); font-weight: 800; font-size: 14px; }
   .node-tooltip {
     position: absolute;
     pointer-events: none;
     font-family: var(--mono);
-    font-size: 11px;
-    background: rgba(22,20,15,0.95);
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(13,17,23,0.97);
     border: 1px solid var(--border-strong);
+    border-top: 3px solid var(--signal);
     color: var(--parchment);
-    padding: 6px 10px;
-    border-radius: 3px;
-    transform: translate(-50%, -130%);
+    padding: 8px 12px;
+    border-radius: 2px 10px 10px 10px;
+    transform: translate(-50%, -100%);
     white-space: nowrap;
     opacity: 0;
     transition: opacity 0.15s;
     z-index: 5;
   }
   .node-tooltip.show { opacity: 1; }
-  .node-tooltip .tt-root { color: var(--oxblood-bright); font-weight: 600; }
+  .node-tooltip .tt-root { color: var(--oxblood-bright); font-weight: 800; }
+  .node-tooltip canvas { display: block; margin-top: 6px; border-radius: 3px; background: rgba(0,0,0,0.3); }
+  #sphereFractalCanvas { display: block; width: 100%; height: auto; border-radius: 4px; background: var(--iron); border: 1px solid var(--border); margin: 8px 0; }
+
+  /* ---------- COCKPIT LAYOUT — full-width breakout with docked sidebars ---------- */
+  .sim-cockpit {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    display: flex;
+    align-items: stretch;
+    background: var(--iron);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    min-height: 720px;
+  }
+  .sim-dock {
+    width: 380px;
+    flex-shrink: 0;
+    background: var(--iron-2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width 0.25s ease, min-width 0.25s ease;
+    position: relative;
+  }
+  .sim-dock.left { border-right: 3px solid var(--signal); }
+  .sim-dock.right { border-left: 3px solid var(--signal); }
+  .sim-dock.collapsed { width: 40px; min-width: 40px; }
+  .sim-dock-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .sim-dock-title {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--signal);
+    white-space: nowrap;
+  }
+  .sim-dock-collapse-btn {
+    background: none; border: 1px solid var(--border-strong); color: var(--parchment-dim);
+    border-radius: 3px; width: 22px; height: 22px; cursor: pointer; font-size: 12px;
+    flex-shrink: 0;
+  }
+  .sim-dock-collapse-btn:hover { border-color: var(--signal); color: var(--signal); }
+  .sim-dock-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 4px; }
+  .sim-dock.collapsed .sim-dock-body, .sim-dock.collapsed .sim-dock-title { display: none; }
+  .sim-dock.collapsed .sim-dock-header { justify-content: center; padding: 10px 4px; }
+
+  .sim-center {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 28px 20px;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 980px) {
+    .sim-cockpit { flex-direction: column; min-height: 0; }
+    .sim-dock { width: 100% !important; min-width: 0 !important; max-height: 320px; }
+    .sim-dock.left { border-right: none; border-bottom: 3px solid var(--signal); }
+    .sim-dock.right { border-left: none; border-top: 3px solid var(--signal); }
+  }
+
+  .dock-subnav { display: flex; flex-wrap: wrap; gap: 3px; padding: 4px 4px 8px; }
+  .dock-subtab {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em;
+    background: rgba(217,164,65,0.06); border: 1px solid var(--border);
+    color: var(--ash); border-radius: 3px; padding: 5px 9px; cursor: pointer;
+  }
+  .dock-subtab:hover { color: var(--parchment-dim); }
+  .dock-subtab.active { background: var(--signal); border-color: var(--signal); color: var(--iron); }
+  .dock-panel { display: none; padding: 6px; }
+  .dock-panel.active { display: block; }
+
+  .sim-cockpit .sphere-wrap { margin: 0 auto; }
+  .sim-cockpit .seed-source-panel,
+  .sim-cockpit .config-row,
+  .sim-cockpit .audio-suite,
+  .sim-cockpit .seismograph-panel {
+    max-width: 100%; background: none; border: none; padding: 4px 0; margin: 0;
+  }
+  .sim-cockpit .audio-suite-columns { flex-direction: column; }
 
   #settledStatus {
     font-family: var(--mono);
@@ -1397,19 +1243,27 @@
 <body>
 
 <div class="hero" style="max-width:880px;margin:0 auto;padding:48px 24px 26px;text-align:left;">
-  <p class="eyebrow">Investigation report · compiled August 2026</p>
+  <p class="eyebrow">A project about intuition, tested honestly</p>
   <h1>The Resonating Singularity</h1>
-  <p class="subtitle">a metaphysical model, and the numerical claim that was tested to destruction</p>
+  <p class="subtitle">what happens when a personal model meets rigorous testing — and the tool that came out of it</p>
   <div class="abstract">
-    <strong>Abstract.</strong> A personally-derived cosmological model (nested spheres of observing nodes,
-    rotation as distortion, no privileged scale) was assembled independently of any existing tradition,
-    then checked against physics and against several religious and philosophical systems. Separately, a
-    numerical claim arising alongside it — that four mythological names independently converge on the same
-    Hebrew gematria digital root — was subjected to twenty-seven rounds of adversarial testing.
-    <strong>The model's structural parallels held. The numerical claim did not.</strong> This report presents
-    both outcomes, the full elimination sequence, the corrections made along the way, and the live instruments
-    used to reach them.
+    <strong>In plain terms.</strong> This started as a personal idea about how everything connects — call it a
+    small, homemade theory of the universe. Alongside it came a specific, striking claim: that four names, run
+    through an old numbering system called gematria, all landed on the same number. That felt significant. So it
+    got tested — properly, adversarially, over and over — to find out whether it actually meant something or
+    just looked like it did. <strong>The tidy numerical "coincidence" turned out to be explainable</strong> —
+    traced to one specific, ordinary choice made along the way, not to anything mystical. The broader model held
+    up fine on its own; the number just wasn't proof of anything.
   </div>
+  <div class="abstract" style="border-left-color:var(--confirm);background:rgba(63,185,80,0.05);">
+    <strong>Why this might matter to you.</strong> If you're here because you're curious whether your own
+    intuition is worth trusting — not whether astrology or numerology is "real," but whether <em>your</em> gut
+    calls line up with anything, tracked honestly over time — that's exactly what this project turned into.
+    <a href="#" id="jumpToTracker" style="color:var(--gilt);font-weight:600;">Skip straight to the tracking tool →</a>
+    The sections below are the research trail that got here, kept in full for anyone who wants to see the actual
+    work rather than take the conclusion on faith.
+  </div>
+
 </div>
 <nav class="plaques" id="navBar">
   <a class="plaque active" data-chapter="findings">01 · Findings</a>
@@ -1418,12 +1272,19 @@
   <a class="plaque" data-chapter="simulation">04 · Simulation</a>
   <a class="plaque" data-chapter="philosophy">05 · The Model</a>
   <a class="plaque" data-chapter="discussion">06 · Discussion</a>
+  <a class="plaque" data-chapter="tracker">07 · Intuition Log</a>
 </nav>
 <section class="chapter active" id="findings">
   <span class="eyebrow">Section 01</span>
   <h2>Findings</h2>
   <p class="lede">The headline claim was that four names — Hecate, Kali Ma, Loki, Bucephalus — independently
   land on Hebrew gematria digital root 11. The claim is now fully explained.</p>
+
+  <p style="font-size:15px;color:var(--parchment-dim);background:var(--iron-2);border-radius:4px;padding:14px 18px;margin:0 0 22px;">
+  <strong style="color:var(--parchment);">In one sentence:</strong> the "coincidence" wasn't a coincidence at all
+  once it was measured properly — it came down to one ordinary spelling decision, made without realizing how much
+  it was doing. The tables below show the actual math. No background in statistics is needed to follow the logic:
+  each table is just counting how often something happens out of everything that could have happened.</p>
 
   <div class="result-banner">
     <span class="rb-tag">Resolved</span>
@@ -1571,10 +1432,11 @@
 </section>
 <section class="chapter" id="simulation">
   <span class="eyebrow">Section 04</span>
-  <h2>Model Simulation</h2>
-  <p class="lede">The model's own mechanism, built literally and instrumented: a resonating source, observer
-  nodes that distort what they receive, a feedback loop, and fractal recursion. Run at scale, it produces
-  no emergent convergence — a null result, reported as such.</p>
+  <h2>Try the Model Yourself</h2>
+  <p class="lede">This is a working, playable version of the idea at the center of the whole project — a
+  central source, surrounded by "nodes" that each receive and distort its signal, feeding back into the
+  center and into each other. It's genuinely interesting to watch and listen to. It's also been tested
+  hard (below) for hidden number patterns, and none were found — so treat it as an honest toy, not an oracle.</p>
 
   <div class="verdict-grid">
     <div class="verdict-card"><div class="vc-label">Seed-type battery</div><div class="vc-value">1.61M samples</div><div class="vc-note">8 input types (word, tarot, card, coin, random, bits, RGBA, hex). All statistically identical.</div></div>
@@ -1582,91 +1444,58 @@
     <div class="verdict-card"><div class="vc-label">Convergence at scale</div><div class="vc-value">≤ 6 of 8</div><div class="vc-note">Deterministic coprime systems cluster <em>less</em> than true randomness, not more.</div></div>
   </div>
 
-  <p class="sim-hint">
-    Live stage · drag to rotate · scroll to zoom · HUD panels on the right collapse/expand over the sim
+  <p style="font-size:14.5px;color:var(--parchment-dim);margin-bottom:22px;">
+    <strong style="color:var(--parchment);">How to use it:</strong> drag the sphere to rotate it, scroll to zoom,
+    and click any node to see it's a smaller sphere in its own right. Type a word below and set it as the
+    "seed" to give the sphere something personal to resonate around. Everything else on this page is optional —
+    open it only if you're curious what's under the hood.
   </p>
 
-<div class="hero sim-hero">
-  <div class="sim-stage" id="simStage">
+<div class="sim-cockpit" id="simCockpit">
 
-    <!-- 3D viewport fills the stage -->
-    <div class="sphere-wrap" id="sphereWrap">
-      <canvas id="sphereCanvas" width="640" height="640"></canvas>
-      <div class="sphere-readout" id="sphereReadout"></div>
-      <div class="node-tooltip" id="nodeTooltip"></div>
+  <div class="sim-dock left" id="leftDock">
+    <div class="sim-dock-header">
+      <span class="sim-dock-title">Control</span>
+      <button class="sim-dock-collapse-btn" id="leftDockCollapseBtn" title="Collapse panel">◀</button>
     </div>
-
-    <!-- Top HUD: status + navigation -->
-    <div class="hud-top">
-      <div class="hud-status">
-        <div class="global-unity">
-          <span class="gu-label">Unity</span>
-          <span class="gu-val" id="globalUnityVal">—</span>
-          <span class="gu-detail" id="globalUnityDetail"></span>
-          <span class="gu-detail" id="visibilityBadge" style="color:var(--oxblood-bright);"></span>
-        </div>
-        <div class="seed-current" id="seedCurrent">seed: <span class="sv">unset</span></div>
+    <div class="sim-dock-body">
+      <div class="dock-subnav">
+        <button class="dock-subtab active" data-dockpanel="info">Info</button>
+        <button class="dock-subtab" data-dockpanel="seed">Seed</button>
+        <button class="dock-subtab" data-dockpanel="advanced">Advanced</button>
+        <button class="dock-subtab" data-dockpanel="trees">Trees</button>
       </div>
-      <div class="hud-nav-row">
-        <div class="breadcrumb" id="breadcrumb"></div>
-        <div class="hud-view-btns">
-          <button class="rotate-btn" id="pulseBtn">Pulse</button>
-          <button class="rotate-btn ghost" id="enterSphereBtn" style="display:none;">↘ Enter</button>
-          <button class="rotate-btn ghost" id="zoomOutBtn" style="display:none;">↑ Back</button>
-          <button class="rotate-btn ghost" id="fullscreenBtn">⛶</button>
+
+      <div class="dock-panel active" id="dockPanel-info">
+        <p class="hud-caption">Each node processes the singularity's signal in real time — its own rotation, its own distortion — and its output feeds back to the center. Click any node to discover it is a sphere too. Scroll to zoom the view.</p>
+        <p class="hud-caption" style="margin-top:-6px;color:var(--ash);">Color = which digit a node currently agrees with — matching colors are nodes in agreement. A bright flash means a node just fired.</p>
+        <div class="hud-controls">
+          <button class="hud-btn" id="pulseBtn">⚡ Pulse the resonance</button>
+          <button class="hud-btn ghost" id="zoomOutBtn" style="display:none;">↑ Return to parent sphere</button>
+          <button class="hud-btn ghost" id="fullscreenBtn">⛶ Fullscreen</button>
         </div>
       </div>
-      <div class="hud-sphere-row">
-        <div class="sphere-picker" id="spherePicker"></div>
-        <div class="selected-sphere-banner" id="selectedSphereBanner">Select a sphere or node · open Inspector to edit</div>
-      </div>
-    </div>
 
-    <!-- Dock: panel toggles -->
-    <div class="hud-dock" id="hudDock">
-      <button type="button" class="hud-dock-btn" data-hud="inspect">Inspect</button>
-      <button type="button" class="hud-dock-btn" data-hud="seed">Seed</button>
-      <button type="button" class="hud-dock-btn" data-hud="struct">Struct</button>
-      <button type="button" class="hud-dock-btn" data-hud="signal">Signal</button>
-      <button type="button" class="hud-dock-btn" data-hud="seismo">Seismo</button>
-    </div>
-
-    <!-- Panel: Inspector -->
-    <div class="hud-panel right" id="hud-inspect" data-hud-panel="inspect">
-      <div class="hud-panel-head">
-        <h4 id="propsTitle">Inspector</h4>
-        <button type="button" class="hud-panel-close" data-hud-close="inspect" aria-label="Close">×</button>
-      </div>
-      <div class="hud-panel-body">
-        <div class="props-panel" id="propsPanel">
-          <div id="propsBody" class="props-empty">Select a sphere or node to inspect and edit properties.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Panel: Resonance seed -->
-    <div class="hud-panel right" id="hud-seed" data-hud-panel="seed">
-      <div class="hud-panel-head">
-        <h4>Resonance seed</h4>
-        <button type="button" class="hud-panel-close" data-hud-close="seed" aria-label="Close">×</button>
-      </div>
-      <div class="hud-panel-body">
-        <p class="sim-hint">Applies to the <em>selected</em> sphere only.</p>
+      <div class="dock-panel" id="dockPanel-seed">
+        <p class="hud-note" id="hudSeedTarget">Setting seed for: <strong style="color:var(--gilt);">Singularity</strong></p>
         <div class="seed-source-panel">
+          <p style="font-size:12px;color:var(--ash);margin:0 0 10px;">Give the sphere a "seed" — anything with a value — and it'll resonate differently around it.</p>
           <div class="seed-tabs" id="seedTabs">
             <button class="seed-tab active" data-source="word">Word</button>
             <button class="seed-tab" data-source="tarot">Tarot</button>
-            <button class="seed-tab" data-source="cards">Card</button>
+            <button class="seed-tab" data-source="cards">Playing Card</button>
             <button class="seed-tab" data-source="coin">Coin</button>
-            <button class="seed-tab" data-source="random">Rand</button>
+            <button class="seed-tab" data-source="random">Random №</button>
             <button class="seed-tab" data-source="bits">Bits</button>
             <button class="seed-tab" data-source="rgba">RGBA</button>
             <button class="seed-tab" data-source="hex">Hex</button>
           </div>
+
           <div class="seed-body" id="seedBody-word">
-            <input type="text" id="seedInput" placeholder="word or phrase..." autocomplete="off">
-            <button id="setSeedBtn">Set seed</button>
+            <input type="text" id="seedInput" placeholder="word or phrase as resonance seed..." autocomplete="off">
+            <button id="setSeedBtn">Set as seed</button>
           </div>
+
           <div class="seed-body" id="seedBody-tarot" style="display:none;">
             <select id="tarotArcanaType">
               <option value="major">Major Arcana</option>
@@ -1675,116 +1504,162 @@
             <select id="tarotMajorSelect"></select>
             <select id="tarotSuitSelect" style="display:none;"></select>
             <select id="tarotRankSelect" style="display:none;"></select>
-            <button id="tarotRandomBtn">Draw</button>
-            <button id="tarotSetBtn">Set seed</button>
+            <button id="tarotRandomBtn">🎴 Draw random</button>
+            <button id="tarotSetBtn">Set as seed</button>
           </div>
+
           <div class="seed-body" id="seedBody-cards" style="display:none;">
             <select id="cardSuitSelect"></select>
             <select id="cardRankSelect"></select>
-            <button id="cardRandomBtn">Draw</button>
-            <button id="cardSetBtn">Set seed</button>
+            <button id="cardRandomBtn">🂠 Draw random</button>
+            <button id="cardSetBtn">Set as seed</button>
           </div>
+
           <div class="seed-body" id="seedBody-coin" style="display:none;">
-            <button id="coinFlipBtn">Flip coin</button>
+            <button id="coinFlipBtn">🪙 Flip coin</button>
             <span id="coinResultLabel" class="seed-inline-result"></span>
           </div>
+
           <div class="seed-body" id="seedBody-random" style="display:none;">
             <label>Min <input type="number" id="randMinInput" value="1" style="width:70px;"></label>
             <label>Max <input type="number" id="randMaxInput" value="999" style="width:70px;"></label>
-            <button id="randomRollBtn">Roll</button>
+            <button id="randomRollBtn">🎲 Roll</button>
           </div>
+
           <div class="seed-body" id="seedBody-bits" style="display:none;">
             <input type="text" id="bitsInput" placeholder="10110101" maxlength="24">
-            <button id="bitsRandomBtn">Random 8-bit</button>
-            <button id="bitsSetBtn">Set seed</button>
+            <button id="bitsRandomBtn">Randomize (8 bits)</button>
+            <button id="bitsSetBtn">Set as seed</button>
           </div>
+
           <div class="seed-body" id="seedBody-rgba" style="display:none;">
             <input type="color" id="rgbaColorInput" value="#c9a35c">
-            <label>α <input type="range" id="rgbaAlphaInput" min="0" max="255" value="255" style="width:70px;"></label>
-            <button id="rgbaRandomBtn">Random</button>
-            <button id="rgbaSetBtn">Set seed</button>
+            <label>Alpha <input type="range" id="rgbaAlphaInput" min="0" max="255" value="255" style="width:70px;"></label>
+            <button id="rgbaRandomBtn">Randomize</button>
+            <button id="rgbaSetBtn">Set as seed</button>
           </div>
+
           <div class="seed-body" id="seedBody-hex" style="display:none;">
             <input type="text" id="hexInput" placeholder="1A2B3C" maxlength="12">
-            <button id="hexRandomBtn">Random</button>
-            <button id="hexSetBtn">Set seed</button>
+            <button id="hexRandomBtn">Randomize</button>
+            <button id="hexSetBtn">Set as seed</button>
           </div>
+
           <div class="seed-weights-display" id="seedWeightsDisplay"></div>
         </div>
       </div>
-    </div>
 
-    <!-- Panel: Structure -->
-    <div class="hud-panel right" id="hud-struct" data-hud-panel="struct">
-      <div class="hud-panel-head">
-        <h4>Structure &amp; tempo</h4>
-        <button type="button" class="hud-panel-close" data-hud-close="struct" aria-label="Close">×</button>
-      </div>
-      <div class="hud-panel-body">
-        <div class="sim-config-grid">
-          <div class="config-group">
-            <span class="group-label">Nodes</span>
-            <label><input type="number" id="nodeCountInput" min="4" max="90" value="40" style="width:60px;"></label>
-            <button id="applyNodeCountBtn">Apply</button>
-          </div>
-          <div class="config-group">
-            <span class="group-label">Network</span>
-            <button id="addSphereBtn">+ Sphere</button>
-            <span>(<span class="sat-count" id="satCount">0</span>/6)</span>
-            <button id="clearSpheresBtn">Clear</button>
-          </div>
-          <div class="config-group">
-            <span class="group-label">Speed</span>
-            <label style="flex:1;display:flex;align-items:center;gap:8px;">
-              <input type="range" id="deltaMultiplierSlider" min="1" max="30" step="1" value="1" style="flex:1;">
-              <span id="deltaMultiplierVal" class="sat-count">1×</span>
-            </label>
-          </div>
+      <div class="dock-panel" id="dockPanel-advanced">
+        <p class="hud-note" style="margin-bottom:10px;">Node count, connecting more spheres, simulation speed, and how strongly connected spheres influence each other.</p>
+        <div class="config-row">
+          <label>Nodes per sphere: <input type="number" id="nodeCountInput" min="4" max="90" value="40"></label>
+          <button id="applyNodeCountBtn">Apply to current sphere</button>
         </div>
+        <div class="config-row">
+          <button id="addSphereBtn">+ Add connected sphere</button>
+          <span>(<span class="sat-count" id="satCount">0</span>/6 connected)</span>
+          <button id="clearSpheresBtn">Clear connected spheres</button>
+        </div>
+        <div class="config-row">
+          <label>Speed <input type="range" id="deltaMultiplierSlider" min="1" max="30" step="1" value="1"> <span id="deltaMultiplierVal" class="sat-count">1×</span></label>
+        </div>
+        <div class="config-row">
+          <label>Coupling <input type="range" id="couplingSlider" min="0" max="100" step="5" value="40"> <span id="couplingVal" class="sat-count">40%</span></label>
+        </div>
+        <p class="hero-caption" id="configuringLabel" style="margin:6px 0 0;">Configuring: <strong style="color:var(--gilt);">Singularity</strong> — click any connected sphere to select it, or click the main sphere to return here.</p>
+      </div>
+
+      <div class="dock-panel" id="dockPanel-trees">
+        <p class="hud-caption" style="text-align:left;">Every node grows a fractal tree continuously — it never pauses. What you see is a live sample of whatever incomplete shape that tree has grown into right now. Depth fades by a constant ratio, so the sample stays bounded no matter how long a node has been growing — no clamp is doing that work, it's a real convergent series.</p>
+        <div class="retro-readout" id="hudTreeStats" style="margin:10px 0;">
+          <div class="retro-item"><div class="ri-label">Avg tree depth</div><div class="ri-value" id="hudAvgDepth">0.0</div></div>
+          <div class="retro-item"><div class="ri-label">Sourced nodes</div><div class="ri-value" id="hudSourcedCount">0</div></div>
+        </div>
+        <p class="hud-note" style="margin-bottom:6px;">The sphere's fractal — every node's tree, averaged level by level, live. Bar height/direction is the average signed contribution at that depth; brightness shows what fraction of nodes have grown deep enough to have that level active at all.</p>
+        <canvas id="sphereFractalCanvas" width="330" height="130"></canvas>
+        <p class="hud-note">Hover any node on the sphere to see that one node's own tree in isolation, for comparison. A node whose own tree has grown meaningfully deeper than the sphere's average permanently "outweighs its root" — it becomes its own local source, marked with a pale ring on the sphere. It never un-crosses.</p>
       </div>
     </div>
+  </div>
 
-    <!-- Panel: Signal -->
-    <div class="hud-panel right" id="hud-signal" data-hud-panel="signal">
-      <div class="hud-panel-head">
-        <h4>Signal &amp; audio</h4>
-        <button type="button" class="hud-panel-close" data-hud-close="signal" aria-label="Close">×</button>
+  <div class="sim-center">
+    <div class="global-unity">
+      <span class="gu-label">Global Unity</span>
+      <span class="gu-val" id="globalUnityVal">—</span>
+      <span class="gu-detail" id="globalUnityDetail"></span>
+      <span class="gu-detail" id="visibilityBadge" style="color:var(--oxblood-bright);"></span>
+    </div>
+    <div class="seed-current" id="seedCurrent">seed: <span class="sv">unset — Singularity resonating at its default frequency</span></div>
+    <div class="breadcrumb" id="breadcrumb"></div>
+    <div class="sphere-wrap" id="sphereWrap">
+      <canvas id="sphereCanvas" width="520" height="520"></canvas>
+      <div class="sphere-readout" id="sphereReadout"></div>
+      <div class="node-tooltip" id="nodeTooltip"><span id="tooltipText"></span><canvas id="tooltipFractalCanvas" width="130" height="46"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sim-dock right" id="rightDock">
+    <div class="sim-dock-header">
+      <button class="sim-dock-collapse-btn" id="rightDockCollapseBtn" title="Collapse panel">▶</button>
+      <span class="sim-dock-title">Monitor</span>
+    </div>
+    <div class="sim-dock-body">
+      <div class="dock-subnav">
+        <button class="dock-subtab active" data-dockpanel="convergence">Convergence</button>
+        <button class="dock-subtab" data-dockpanel="audio">Audio</button>
+        <button class="dock-subtab" data-dockpanel="graph">Graph</button>
       </div>
-      <div class="hud-panel-body">
+
+      <div class="dock-panel active" id="dockPanel-convergence">
+        <table class="hud-mini-table"><tbody id="hudConvergenceBody"></tbody></table>
+        <p class="hud-note">How many of the 10 digits have agreed at once, tallied live. Full history in the Audio tab.</p>
+      </div>
+
+      <div class="dock-panel" id="dockPanel-audio">
         <div class="audio-suite">
+          <button class="audio-toggle-btn" id="audioCaptionToggle">👁 Hide description</button>
+          <p class="digit-bars-title">Digit convergence history — which digit the global system agrees on, over time</p>
+          <p class="audio-caption-block" id="audioCaptionBlock" style="font-size:14px;color:var(--parchment-dim);margin:0 0 14px;">The sphere makes sound, too — each digit gets its own note, and the notes shift as the sphere runs.</p>
           <div class="audio-controls">
-            <button id="audioToggleBtn">▶ Chord</button>
+            <button id="audioToggleBtn">▶ Play the chord</button>
             <label>Master <input type="range" id="masterVolSlider" min="0" max="100" value="60"></label>
-            <label>Scale
-              <select id="scaleSelect">
-                <option value="Major Pentatonic">Maj Pent</option>
-                <option value="Minor Pentatonic">Min Pent</option>
-                <option value="Major (Ionian)">Major</option>
-                <option value="Natural Minor (Aeolian)">Nat Minor</option>
-                <option value="Harmonic Minor">Harm Minor</option>
-                <option value="Phrygian">Phrygian</option>
-                <option value="Whole Tone">Whole Tone</option>
-                <option value="Chromatic">Chromatic</option>
-              </select>
-            </label>
-            <label>Oct
-              <select id="octaveSelect">
-                <option value="65.41">C2</option>
-                <option value="130.81" selected>C3</option>
-                <option value="261.63">C4</option>
-                <option value="523.25">C5</option>
-              </select>
-            </label>
-            <button id="fadeToggleBtn" class="playing">Fade: On</button>
-            <button id="interestToggleBtn" class="playing">Interest: On</button>
           </div>
+          <details style="margin-bottom:14px;">
+            <summary style="cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--gilt-dim);padding:4px 0;">🎵 Advanced sound settings — musical scale, register, fading and pitch behavior</summary>
+            <div class="audio-controls" style="margin-top:8px;">
+              <label>Scale
+                <select id="scaleSelect">
+                  <option value="Major Pentatonic">Major Pentatonic</option>
+                  <option value="Minor Pentatonic">Minor Pentatonic</option>
+                  <option value="Major (Ionian)">Major (Ionian)</option>
+                  <option value="Natural Minor (Aeolian)">Natural Minor (Aeolian)</option>
+                  <option value="Harmonic Minor">Harmonic Minor</option>
+                  <option value="Phrygian">Phrygian</option>
+                  <option value="Whole Tone">Whole Tone</option>
+                  <option value="Chromatic">Chromatic</option>
+                  <option value="Diatonic Major (10th span)">Diatonic Major — 10 notes</option>
+                  <option value="Diatonic Minor (10th span)">Diatonic Minor — 10 notes</option>
+                </select>
+              </label>
+              <label>Octave
+                <select id="octaveSelect">
+                  <option value="65.41">C2 — low</option>
+                  <option value="130.81" selected>C3 — mid-low</option>
+                  <option value="261.63">C4 — mid</option>
+                  <option value="523.25">C5 — high</option>
+                </select>
+              </label>
+              <button id="fadeToggleBtn" class="playing">Fade inactive tones: On</button>
+              <button id="interestToggleBtn" class="playing">Pitch drops with interest: On</button>
+            </div>
+          </details>
           <div class="audio-suite-columns">
             <div class="audio-col-main">
-              <p class="section-label">Digit history</p>
+              <p style="font-size:12.5px;color:var(--ash);margin:0 0 8px;">Each row below is one digit (0–9). The bar shows how often it "wins" over time; the sliders (optional) let you mute or re-balance individual notes.</p>
               <div class="digit-bar-header">
                 <span class="h-track"></span>
                 <span class="h-count">n</span>
-                <span class="h-hz">Hz</span>
+                <span class="h-hz">pitch</span>
                 <span class="h-vol">vol</span>
                 <span class="h-pan">pan</span>
               </div>
@@ -1793,19 +1668,21 @@
             </div>
             <div class="audio-col-side">
               <div class="side-section">
-                <p class="section-label">Frozen sample</p>
+                <p class="section-label">Frozen Sample</p>
+                <p style="font-size:12.5px;color:var(--ash);margin:-4px 0 8px;">Once the sphere settles into a stable pattern, you can capture the current chord as a real looping sound file.</p>
                 <p id="settledStatus">Waiting for digits 1–9 to settle...</p>
                 <div class="sample-controls">
-                  <button id="generateSampleBtn" disabled>Freeze</button>
-                  <button id="playSampleBtn" disabled>▶ Loop</button>
-                  <button id="downloadSampleBtn" disabled>⬇ WAV</button>
+                  <button id="generateSampleBtn" disabled>Freeze &amp; generate sample</button>
+                  <button id="playSampleBtn" disabled>▶ Play looped sample</button>
+                  <button id="downloadSampleBtn" disabled>⬇ Download WAV</button>
                 </div>
                 <p class="sample-info" id="sampleInfo"></p>
               </div>
               <div class="side-section">
-                <p class="section-label">Agreement</p>
+                <p class="section-label">Convergence Level History</p>
+                <p style="font-size:12.5px;color:var(--ash);margin:-4px 0 8px;">A running tally of how many digits agree at once — this is what the null-result testing above (1.61M samples) was measuring.</p>
                 <table class="convergence-table">
-                  <thead><tr><th>Level</th><th>n</th></tr></thead>
+                  <thead><tr><th>Agreement</th><th>Times</th></tr></thead>
                   <tbody id="convergenceTableBody"></tbody>
                 </table>
                 <p class="session-timer" id="convergenceTimer">Running for 00:00</p>
@@ -1814,30 +1691,24 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Panel: Seismograph (bottom drawer) -->
-    <div class="hud-panel bottom" id="hud-seismo" data-hud-panel="seismo">
-      <div class="hud-panel-head">
-        <h4>Seismograph</h4>
-        <button type="button" class="hud-panel-close" data-hud-close="seismo" aria-label="Close">×</button>
-      </div>
-      <div class="hud-panel-body">
-        <p class="sim-hint">Drag to scrub · scroll to zoom time</p>
+      <div class="dock-panel" id="dockPanel-graph">
         <div class="seismograph-panel">
-          <canvas id="seismographCanvas" width="900" height="220"></canvas>
+          <p class="digit-bars-title">Rolling Seismograph — each digit's frequency, one channel per digit</p>
+          <p class="hero-caption" style="margin-bottom:8px;">Drag to slide through recorded history · scroll to zoom the time axis</p>
+          <canvas id="seismographCanvas" width="900" height="280"></canvas>
           <div class="seismo-toolbar">
-            <button id="seismoZoomOutBtn" title="Zoom out">−</button>
-            <button id="seismoZoomInBtn" title="Zoom in">+</button>
-            <button id="seismoJumpLiveBtn" title="Jump to live">⏵ Live</button>
+            <button id="seismoZoomOutBtn" title="Zoom out">− Zoom out</button>
+            <button id="seismoZoomInBtn" title="Zoom in">+ Zoom in</button>
+            <button id="seismoJumpLiveBtn" title="Return to the live edge">⏵ Jump to live</button>
             <span class="seismo-position-label" id="seismoPositionLabel"></span>
           </div>
           <div class="seismo-controls" id="seismoControls"></div>
         </div>
       </div>
     </div>
-
   </div>
+
 </div>
 
 </section>
@@ -1912,6 +1783,77 @@
   good result, and arguably a rarer one, because it requires the person holding the claim to keep building tests
   capable of destroying it. That is what happened here. The model was never contingent on the arithmetic; the
   arithmetic turned out to be explicable; and both facts are now on the record with the working shown.</p>
+
+  <h3>What the null result opens up</h3>
+  <p>Ruling out an external signal in the symbolic systems themselves doesn't close the subject — it clears the
+  ground for a different, narrower question: not whether gematria or astrology carries independent power, but
+  whether <em>one person's own intuition</em>, tracked honestly, happens to correlate with these systems at a rate
+  above chance. That's a question about a person, not about a numeral system, and this report's own method —
+  fix the decision before the analysis touches it — is exactly what makes it askable without contaminating the
+  answer. Section 07 documents that next phase and instruments it directly.</p>
+</section>
+
+<section class="chapter" id="tracker">
+  <span class="eyebrow">Section 07</span>
+  <h2>Intuition Log</h2>
+  <p class="lede">A working instrument for the next research question: not whether symbolic systems carry power,
+  but whether personal intuition correlates with them. The protocol only works if the order is respected.</p>
+
+  <div class="abstract">
+    <strong>Protocol.</strong> Log a real decision at the moment you make it, before running any retrospective
+    analysis. Only after it's logged does the tool compute the date's numerology, sun sign, and approximate
+    moon phase for that moment. Mark alignment — yes, no, or unclear — whenever feels honest, even much later.
+    The analysis is not permitted to touch the decision; it can only be checked against it afterward. This is the
+    same pre-registration discipline that made the original gematria test meaningful in Section 01, now pointed
+    at a person instead of at four names.
+  </div>
+
+  <div class="log-panel">
+    <div class="log-form-row">
+      <label>What did you decide?
+        <textarea id="logDecisionInput" placeholder="A short, honest description of the decision..."></textarea>
+      </label>
+    </div>
+    <div class="log-form-row">
+      <label>When (defaults to now)
+        <input type="datetime-local" id="logDateInput">
+      </label>
+      <label>Confidence in the decision (1–10)
+        <input type="range" id="logConfidenceInput" min="1" max="10" value="7">
+        <span id="logConfidenceVal" style="font-family:var(--mono);font-size:12px;color:var(--gilt);">7</span>
+      </label>
+    </div>
+    <button class="log-btn" id="logSubmitBtn">Log this decision</button>
+
+    <div id="retroReadoutWrap" style="display:none;">
+      <p style="font-family:var(--mono);font-size:11px;color:var(--ash);margin:16px 0 0;letter-spacing:0.06em;text-transform:uppercase;">Retrospective reading — computed after logging, never before</p>
+      <div class="retro-readout" id="retroReadout"></div>
+      <div class="align-row">
+        <span style="font-family:var(--mono);font-size:12px;color:var(--parchment-dim);">Alignment with intuition:</span>
+        <button class="picked-yes" data-pick="yes">Aligned</button>
+        <button class="picked-no" data-pick="no">Did not align</button>
+        <button class="picked-unclear" data-pick="unclear">Unclear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="log-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+      <p style="font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:0.06em;text-transform:uppercase;margin:0;">Log — <span id="logCountLabel">0 entries</span></p>
+      <div style="display:flex;gap:8px;">
+        <button class="log-btn ghost" id="exportLogBtn">⬇ Export JSON</button>
+        <button class="log-btn ghost" id="importLogBtn">⬆ Import JSON</button>
+        <input type="file" id="importLogFile" accept="application/json" style="display:none;">
+      </div>
+    </div>
+    <div id="logStatsRow" class="retro-readout" style="display:none;"></div>
+    <div id="logTableWrap"><p class="log-empty">No entries yet — this log lives only in this browser tab unless exported.</p></div>
+  </div>
+
+  <p style="font-size:13.5px;color:var(--ash);font-family:var(--mono);">
+    Data note: everything here stays local to your browser session. Nothing is transmitted anywhere. Export
+    regularly if you want continuity across sessions — this page does not use persistent browser storage, by design.
+  </p>
 </section>
 
 <script>
@@ -2198,21 +2140,28 @@ document.getElementById('calcBtn').addEventListener('click', runCalculator);
 document.getElementById('calcInput').addEventListener('keydown', e => { if (e.key === 'Enter') runCalculator(); });
 
 // ============ NAVIGATION ============
+function switchToChapter(id) {
+  document.querySelectorAll('.plaque').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+  const btn = document.querySelector(`.plaque[data-chapter="${id}"]`);
+  if (btn) btn.classList.add('active');
+  const chapter = document.getElementById(id);
+  if (chapter) chapter.classList.add('active');
+  window.scrollTo({ top: document.getElementById('navBar').offsetTop - 10, behavior: 'smooth' });
+}
 document.querySelectorAll('.plaque').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.plaque').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.chapter).classList.add('active');
-    window.scrollTo({ top: document.getElementById('navBar').offsetTop - 10, behavior: 'smooth' });
-  });
+  btn.addEventListener('click', () => switchToChapter(btn.dataset.chapter));
+});
+document.getElementById('jumpToTracker').addEventListener('click', e => {
+  e.preventDefault();
+  switchToChapter('tracker');
 });
 
 // ============ HERO SPHERE — live signal engine with fractal zoom ============
 const canvas = document.getElementById('sphereCanvas');
 const ctx = canvas.getContext('2d');
 let W = canvas.width, H = canvas.height;
-let CX = W/2, CY = H/2, R = 145;
+let CX = W/2, CY = H/2, R = W * 0.36; // scales with canvas size - same ratio resizeCanvas() uses for fullscreen
 let zoomScale = 1;
 const MAX_DEPTH = 2; // Singularity(0) -> Node(1) -> Sub-node(2), leaf level not further clickable
 const NODE_COUNTS = [40, 16, 8];
@@ -2322,55 +2271,32 @@ function resizeCanvas(size) {
 let allLevels = [];
 let configuredNodeCount = 40;
 
-function makeLevel(depth, seedBase, label, nodeCountOverride, ownSeed) {
+function makeLevel(depth, seedBase, label, nodeCountOverride) {
   const count = nodeCountOverride || NODE_COUNTS[depth] || 16;
-  const sphereSeed = (ownSeed != null) ? ownSeed : resonanceSeedValue;
-  const effectiveBase = depth === 0 ? seedBase + sphereSeed * 3 : seedBase;
-  const level = {
-    nodes: [], depth, label, rotX: 0.28, rotY: 0.35, feedback: 0,
-    seedBase: effectiveBase, nodeCount: count,
-    resonanceSeed: sphereSeed,
-    seedLabel: null,
-    coupledFeedback: 0,
-    // Sphere-level properties the user can edit
-    props: {
-      label: label,
-      phaseBias: 0,
-      distortion: 1,
-      notes: '',
-    },
-  };
+  const effectiveBase = depth === 0 ? seedBase + resonanceSeedValue * 3 : seedBase;
+  const level = { nodes: [], depth, label, rotX: 0.28, rotY: 0.35, feedback: 0, seedBase: effectiveBase, nodeCount: count };
   buildNodes(level);
   allLevels.push(level);
   return level;
 }
 function buildNodes(level) {
   const count = level.nodeCount;
-  // Preserve per-node custom props when regenerating (match by id)
-  const prevById = {};
-  if (level.nodes && level.nodes.length) {
-    level.nodes.forEach(n => { prevById[n.id] = n; });
-  }
   const nodes = [];
   for (let i = 0; i < count; i++) {
     const y = count > 1 ? 1 - (i / (count - 1)) * 2 : 0;
-    const radiusAtY = Math.sqrt(Math.max(0, 1 - y * y));
+    const radiusAtY = Math.sqrt(Math.max(0, 1 - y*y));
     const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-    const defaultSeed = (level.seedBase * 31 + i * 17 + 7) % 9973;
-    const prev = prevById[i];
-    const seed = (prev && prev.customSeed != null) ? prev.customSeed : defaultSeed;
+    const seed = (level.seedBase * 31 + i * 17 + 7) % 9973;
     nodes.push({
       x: Math.cos(theta) * radiusAtY, y, z: Math.sin(theta) * radiusAtY,
-      seed,
-      defaultSeed,
-      customSeed: prev && prev.customSeed != null ? prev.customSeed : null,
-      id: i,
-      childLevel: prev ? prev.childLevel : null,
-      // Node-level editable properties
-      label: prev && prev.label ? prev.label : '',
-      phaseBias: prev && prev.phaseBias != null ? prev.phaseBias : 0,
-      distortion: prev && prev.distortion != null ? prev.distortion : 1,
-      notes: prev && prev.notes ? prev.notes : '',
+      seed, id: i, childLevel: null,
+      // Weighted Quantum Fractal Tree state: each node grows a tree
+      // continuously at its own rate (varies by seed, so crossover happens
+      // to some nodes and not others) and, once its accumulated depth
+      // outweighs the sphere's average, permanently becomes marked as
+      // having "sourced" - it can't un-cross, matching the philosophy.
+      growthRate: 0.12 + (seed % 60) / 480, // ~0.12 to ~0.245 per simulated second
+      hasSourced: false,
     });
   }
   level.nodes = nodes;
@@ -2380,57 +2306,28 @@ function regenerateNodes(level, newCount) {
   buildNodes(level);
 }
 
-// ---- Satellite spheres + exploration model ----
-// Network mode: main sphere + connected satellites visible around it.
-// Sphere mode: fully inside one sphere (main or satellite) — nodes large,
-// clickable, zoomable. Each sphere and each node carries editable properties.
+// ---- Satellite spheres: additional, visibly-connected spheres attached to
+// the main sphere, each running its own live signal loop, all pooling into
+// the same global unity - the structure genuinely widening, not just deepening.
+// Both the main sphere and every satellite are independently selectable and
+// configurable (own seed, own node count), and mutually influence each
+// other's feedback whenever coupling strength is above zero.
 const MAX_SATELLITES = 6;
 let satellites = [];
-// selectedSphere: 'main' | satellite index (0..MAX-1) — edit target
-let selectedSphere = 'main';
-// exploreContext: 'network' (overview with sats) | 'sphere' (inside one root)
-let exploreContext = 'network';
-// When exploreContext === 'sphere', which top-level sphere is the view root
-// 'main' | satellite index
-let exploreRootId = 'main';
-// Selected node within currentLevel (for property panel)
-let selectedNode = null;
-// Hit-test cache for satellite centers (network mode only)
-let lastSatHits = []; // { idx, cx, cy, r }
-const COUPLING = 0.22;
-let lastClickTime = 0;
-let lastClickTarget = null;
+let couplingStrength = 0.4;
+let selectedSphereRef = null; // null = main singularity selected; otherwise a satellite object
+let lastSatelliteHitboxes = [];
 
-let networkMainLevel = null; // set when levelStack is first built
-
-function getMainLevel() {
-  // Stable reference to the network's primary sphere (Singularity).
-  if (networkMainLevel) return networkMainLevel;
-  if (typeof levelStack !== 'undefined' && levelStack.length) return levelStack[0];
-  return null;
-}
-
-function addSatellite(customSeed, customNodes) {
+function addSatellite() {
   if (satellites.length >= MAX_SATELLITES) return;
   const idx = satellites.length;
-  const ownSeed = (customSeed != null) ? customSeed : (resonanceSeedValue * 7 + (idx + 1) * 211);
-  const nodes = (customNodes != null) ? customNodes : configuredNodeCount;
-  const seedBase = ownSeed * 3 + (idx + 1) * 211;
-  const satLevel = makeLevel(0, seedBase, `Sphere ${idx + 2}`, nodes, ownSeed);
-  satLevel.seedLabel = customSeed != null ? `seed ${ownSeed}` : `derived ${ownSeed}`;
-  satLevel.props.label = satLevel.label;
-  const angle = (idx / MAX_SATELLITES) * Math.PI * 2 - Math.PI / 2;
-  const main = getMainLevel();
-  const anchorCount = main ? main.nodes.length : nodes;
-  satellites.push({
-    level: satLevel,
-    angle,
-    anchorNodeIdx: (idx * 7) % Math.max(1, anchorCount),
-  });
+  const seedBase = resonanceSeedValue * 7 + (idx + 1) * 211;
+  const satLevel = makeLevel(0, seedBase, `Sphere ${idx + 2}`, configuredNodeCount);
+  const angle = (idx / MAX_SATELLITES) * Math.PI * 2 - Math.PI/2;
+  const sat = { level: satLevel, angle, anchorNodeIdx: (idx * 7) % currentLevel().nodes.length };
+  satellites.push(sat);
   updateSatCount();
-  renderSpherePicker();
-  selectSphere(idx);
-  renderPropsPanel();
+  selectSphere(sat); // newly added sphere becomes selected, ready to configure immediately
 }
 function clearSatellites() {
   satellites.forEach(s => {
@@ -2438,347 +2335,40 @@ function clearSatellites() {
     if (i >= 0) allLevels.splice(i, 1);
   });
   satellites = [];
-  selectedSphere = 'main';
-  selectedNode = null;
-  if (exploreContext === 'sphere' && exploreRootId !== 'main') {
-    exitToNetwork();
-  }
   updateSatCount();
-  renderSpherePicker();
-  updateSelectedBanner();
-  renderPropsPanel();
+  selectSphere(null);
 }
 function updateSatCount() {
-  const el = document.getElementById('satCount');
-  if (el) el.textContent = satellites.length;
-  const btn = document.getElementById('addSphereBtn');
-  if (btn) btn.disabled = satellites.length >= MAX_SATELLITES;
+  document.getElementById('satCount').textContent = satellites.length;
+  document.getElementById('addSphereBtn').disabled = satellites.length >= MAX_SATELLITES;
 }
 
-function getSelectedLevel() {
-  if (selectedSphere === 'main') return getMainLevel() || currentLevel();
-  const sat = satellites[selectedSphere];
-  return sat ? sat.level : (getMainLevel() || currentLevel());
+function selectSphere(satOrNull) {
+  selectedSphereRef = satOrNull;
+  const label = document.getElementById('configuringLabel');
+  const name = satOrNull ? satOrNull.level.label : 'Singularity';
+  label.innerHTML = `Configuring: <strong style="color:var(--gilt);">${name}</strong> — click any connected sphere to select it, or click the main sphere to return here.`;
+  const hudLabel = document.getElementById('hudSeedTarget');
+  if (hudLabel) hudLabel.innerHTML = `Setting seed for: <strong style="color:var(--gilt);">${name}</strong>`;
+  // reflect the selected sphere's own node count in the input, for clarity
+  const target = satOrNull ? satOrNull.level : currentLevel();
+  document.getElementById('nodeCountInput').value = target.nodeCount;
 }
 
-function selectSphere(id) {
-  selectedSphere = id;
-  selectedNode = null;
-  const lvl = getSelectedLevel();
-  if (lvl) {
-    const input = document.getElementById('nodeCountInput');
-    if (input) input.value = lvl.nodeCount;
-  }
-  renderSpherePicker();
-  updateSelectedBanner();
-  updateExploreButtons();
-  renderPropsPanel();
-}
-
-function selectNode(node) {
-  selectedNode = node;
-  renderPropsPanel();
-}
-
-/** Enter a top-level sphere as a fully explorable view (nodes zoomable). */
-function enterSphere(id) {
-  const lvl = id === 'main' ? getMainLevel() : (satellites[id] && satellites[id].level);
-  if (!lvl) return;
-  exploreContext = 'sphere';
-  exploreRootId = id;
-  selectedSphere = id;
-  selectedNode = null;
-  levelStack = [lvl];
-  renderBreadcrumb();
-  updateZoomOutBtn();
-  updateExploreButtons();
-  renderSpherePicker();
-  updateSelectedBanner();
-  renderPropsPanel();
-}
-
-/** Return to network overview (main + connected satellites). */
-function exitToNetwork() {
-  exploreContext = 'network';
-  exploreRootId = 'main';
-  selectedNode = null;
-  // Restore main as the stack root (preserving its rotation/feedback)
-  const main = getMainLevel();
-  if (main) {
-    levelStack = [main];
-  } else {
-    levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount, resonanceSeedValue)];
-    networkMainLevel = levelStack[0];
-  }
-  selectedSphere = 'main';
-  renderBreadcrumb();
-  updateZoomOutBtn();
-  updateExploreButtons();
-  renderSpherePicker();
-  updateSelectedBanner();
-  renderPropsPanel();
-}
-
-function updateExploreButtons() {
-  const enterBtn = document.getElementById('enterSphereBtn');
-  const zoomBtn = document.getElementById('zoomOutBtn');
-  if (enterBtn) {
-    // Show "Enter" when a satellite is selected in network mode, or main while in network
-    const canEnter = exploreContext === 'network' && selectedSphere !== null;
-    enterBtn.style.display = canEnter ? 'inline-block' : 'none';
-    if (selectedSphere === 'main') enterBtn.textContent = '↘ Enter Singularity';
-    else enterBtn.textContent = '↘ Enter selected sphere';
-  }
-  if (zoomBtn) {
-    const show = levelStack.length > 1 || exploreContext === 'sphere';
-    zoomBtn.style.display = show ? 'inline-block' : 'none';
-    if (levelStack.length > 1) zoomBtn.textContent = '↑ Return to parent';
-    else if (exploreContext === 'sphere') zoomBtn.textContent = '↑ Back to network';
-  }
-}
-
-function renderSpherePicker() {
-  const el = document.getElementById('spherePicker');
-  if (!el) return;
-  const chips = [];
-  const main = getMainLevel();
-  const mainNodes = main ? main.nodes.length : configuredNodeCount;
-  const mainSeed = main ? main.resonanceSeed : resonanceSeedValue;
-  const mainLabel = main && main.props && main.props.label ? main.props.label : 'Singularity';
-  const mainActive = selectedSphere === 'main';
-  const mainExploring = exploreContext === 'sphere' && exploreRootId === 'main';
-  chips.push(
-    `<button type="button" class="sphere-chip ${mainActive || mainExploring ? 'active' : ''}" data-sphere="main" data-action="select">` +
-    `${mainLabel} <span class="chip-nodes">${mainNodes}n · s${mainSeed}</span>` +
-    (exploreContext === 'network' ? `<span class="chip-enter" data-action="enter" data-sphere="main">enter</span>` : '') +
-    `</button>`
-  );
-  satellites.forEach((sat, i) => {
-    const n = sat.level.nodes.length;
-    const s = sat.level.resonanceSeed;
-    const lbl = (sat.level.props && sat.level.props.label) || sat.level.label;
-    const active = selectedSphere === i || (exploreContext === 'sphere' && exploreRootId === i);
-    chips.push(
-      `<button type="button" class="sphere-chip ${active ? 'active' : ''}" data-sphere="${i}" data-action="select">` +
-      `${lbl} <span class="chip-nodes">${n}n · s${s}</span>` +
-      (exploreContext === 'network' ? `<span class="chip-enter" data-action="enter" data-sphere="${i}">enter</span>` : '') +
-      `</button>`
-    );
-  });
-  el.innerHTML = chips.join('');
-  el.querySelectorAll('.sphere-chip').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const action = e.target.dataset.action || btn.dataset.action || 'select';
-      const v = e.target.dataset.sphere != null ? e.target.dataset.sphere : btn.dataset.sphere;
-      const id = v === 'main' ? 'main' : parseInt(v, 10);
-      if (action === 'enter') {
-        enterSphere(id);
-      } else {
-        selectSphere(id);
-      }
-    });
-  });
-}
-
-function updateSelectedBanner() {
-  const el = document.getElementById('selectedSphereBanner');
-  if (!el) return;
-  const lvl = getSelectedLevel();
-  const name = (lvl && lvl.props && lvl.props.label) || (selectedSphere === 'main' ? 'Singularity' : (lvl ? lvl.label : '—'));
-  const seed = lvl ? lvl.resonanceSeed : resonanceSeedValue;
-  const nodes = lvl ? lvl.nodeCount : configuredNodeCount;
-  const label = lvl && lvl.seedLabel ? lvl.seedLabel : `value ${seed}`;
-  const mode = exploreContext === 'network'
-    ? 'Network view — double-click a sphere (or use enter) to explore its nodes.'
-    : `Inside <strong>${name}</strong> — click a node to select it, click again / use Explore to zoom in.`;
-  el.innerHTML = `Editing: <strong>${name}</strong> — seed ${label}, ${nodes} nodes. ${mode}`;
-}
-
-/** Apply a seed value only to the currently selected sphere (does not wipe others). */
-function applySeedToSelected(value, label, weightsHtml) {
-  const seedVal = Math.max(1, Math.round(value)) || 1;
-  const lvl = getSelectedLevel();
-  if (!lvl) return;
-  lvl.resonanceSeed = seedVal;
-  lvl.seedLabel = label;
-  lvl.seedBase = lvl.depth === 0 ? 1 + seedVal * 3 : lvl.seedBase;
-  buildNodes(lvl);
-  if (selectedSphere === 'main') {
-    resonanceSeedValue = seedVal;
-    resonanceLabel = label;
-    const disp = document.getElementById('seedCurrent');
-    if (disp) disp.innerHTML = `seed: <span class="sv">${label} → value ${seedVal}</span>`;
-    const weightsEl = document.getElementById('seedWeightsDisplay');
-    if (weightsEl) weightsEl.innerHTML = weightsHtml || '';
-  } else {
-    const weightsEl = document.getElementById('seedWeightsDisplay');
-    if (weightsEl) {
-      weightsEl.innerHTML = (weightsHtml || '') +
-        `<div class="weights-line" style="margin-top:6px;color:var(--gilt);">Applied to ${lvl.label} only (other spheres unchanged)</div>`;
-    }
-  }
-  renderSpherePicker();
-  updateSelectedBanner();
-  renderPropsPanel();
-}
-
-function updateSphereCoupling() {
-  const main = getMainLevel();
-  if (!main) return;
-  const peers = [{ level: main, id: 'main' }].concat(
-    satellites.map((s, i) => ({ level: s.level, id: i }))
-  );
-  const raw = peers.map(p => p.level.feedback);
-  peers.forEach((p, i) => {
-    let sum = 0, n = 0;
-    peers.forEach((q, j) => {
-      if (i === j) return;
-      sum += raw[j];
-      n++;
-    });
-    p.level.coupledFeedback = n ? (sum / n) : 0;
-  });
-}
-
-// ---- Property panel (sphere or node) ----
-function renderPropsPanel() {
-  const title = document.getElementById('propsTitle');
-  const body = document.getElementById('propsBody');
-  if (!title || !body) return;
-
-  if (selectedNode) {
-    const n = selectedNode;
-    title.textContent = `Node properties — #${n.id}`;
-    body.className = '';
-    body.innerHTML = `
-      <div class="props-grid">
-        <label>Label</label><input type="text" id="propNodeLabel" value="${escapeAttr(n.label || '')}" placeholder="optional name">
-        <label>Seed</label><input type="number" id="propNodeSeed" value="${n.seed}" min="1" step="1">
-        <label>Phase bias</label><input type="number" id="propNodePhase" value="${n.phaseBias || 0}" min="-3" max="3" step="0.05">
-        <label>Distortion</label><input type="number" id="propNodeDist" value="${n.distortion != null ? n.distortion : 1}" min="0.2" max="3" step="0.05">
-        <label>Notes</label><input type="text" id="propNodeNotes" value="${escapeAttr(n.notes || '')}" placeholder="free text">
-        <label>Default seed</label><span class="props-readonly">${n.defaultSeed != null ? n.defaultSeed : '—'}</span>
-        <label>Child sphere</label><span class="props-readonly">${n.childLevel ? n.childLevel.label + ' (' + n.childLevel.nodes.length + ' nodes)' : 'none yet'}</span>
-      </div>
-      <div class="props-actions">
-        <button type="button" class="primary" id="propNodeApply">Apply to node</button>
-        <button type="button" id="propNodeExplore" ${currentLevel().depth >= MAX_DEPTH ? 'disabled' : ''}>Explore node sphere</button>
-        <button type="button" id="propNodeReset">Reset seed to default</button>
-      </div>`;
-    document.getElementById('propNodeApply').onclick = () => {
-      const seed = parseInt(document.getElementById('propNodeSeed').value, 10);
-      n.label = document.getElementById('propNodeLabel').value.trim();
-      n.phaseBias = parseFloat(document.getElementById('propNodePhase').value) || 0;
-      n.distortion = parseFloat(document.getElementById('propNodeDist').value) || 1;
-      n.notes = document.getElementById('propNodeNotes').value.trim();
-      if (!isNaN(seed) && seed > 0) {
-        n.customSeed = seed;
-        n.seed = seed;
-        // If child already exists, re-seed it
-        if (n.childLevel) {
-          n.childLevel.resonanceSeed = seed;
-          n.childLevel.seedBase = seed;
-          buildNodes(n.childLevel);
-        }
-      }
-      renderPropsPanel();
-    };
-    document.getElementById('propNodeExplore').onclick = () => zoomIntoNode(n);
-    document.getElementById('propNodeReset').onclick = () => {
-      n.customSeed = null;
-      n.seed = n.defaultSeed != null ? n.defaultSeed : n.seed;
-      document.getElementById('propNodeSeed').value = n.seed;
-    };
+function reseedSelectedSphere(value, label, weightsHtml) {
+  if (!selectedSphereRef) {
+    applySeedFromValue(value, label, weightsHtml); // main sphere: full system reset, as before
     return;
   }
-
-  const lvl = getSelectedLevel();
-  if (!lvl) {
-    title.textContent = 'Properties';
-    body.className = 'props-empty';
-    body.innerHTML = 'Select a sphere or node to inspect and edit its properties.';
-    return;
-  }
-  const isMain = selectedSphere === 'main';
-  const name = (lvl.props && lvl.props.label) || lvl.label || (isMain ? 'Singularity' : 'Sphere');
-  title.textContent = `Sphere properties — ${name}`;
-  body.className = '';
-  body.innerHTML = `
-    <div class="props-grid">
-      <label>Label</label><input type="text" id="propSphLabel" value="${escapeAttr((lvl.props && lvl.props.label) || lvl.label || '')}">
-      <label>Resonance seed</label><input type="number" id="propSphSeed" value="${lvl.resonanceSeed}" min="1" step="1">
-      <label>Node count</label><input type="number" id="propSphNodes" value="${lvl.nodeCount}" min="4" max="90" step="1">
-      <label>Phase bias</label><input type="number" id="propSphPhase" value="${(lvl.props && lvl.props.phaseBias) || 0}" min="-3" max="3" step="0.05">
-      <label>Distortion</label><input type="number" id="propSphDist" value="${(lvl.props && lvl.props.distortion) != null ? lvl.props.distortion : 1}" min="0.2" max="3" step="0.05">
-      <label>Notes</label><input type="text" id="propSphNotes" value="${escapeAttr((lvl.props && lvl.props.notes) || '')}" placeholder="free text">
-      <label>Feedback</label><span class="props-readonly" id="propSphFb">${lvl.feedback >= 0 ? '+' : ''}${lvl.feedback.toFixed(3)}</span>
-      <label>Coupled in</label><span class="props-readonly">${lvl.coupledFeedback >= 0 ? '+' : ''}${(lvl.coupledFeedback || 0).toFixed(3)}</span>
-      <label>Depth</label><span class="props-readonly">${lvl.depth}</span>
-    </div>
-    <div class="props-actions">
-      <button type="button" class="primary" id="propSphApply">Apply to sphere</button>
-      ${exploreContext === 'network' ? `<button type="button" id="propSphEnter">Enter / explore</button>` : ''}
-      ${!isMain && exploreContext === 'network' ? `<button type="button" id="propSphRemove">Remove sphere</button>` : ''}
-    </div>`;
-  document.getElementById('propSphApply').onclick = () => {
-    const seed = parseInt(document.getElementById('propSphSeed').value, 10);
-    const nodes = parseInt(document.getElementById('propSphNodes').value, 10);
-    const label = document.getElementById('propSphLabel').value.trim() || lvl.label;
-    lvl.props = lvl.props || {};
-    lvl.props.label = label;
-    lvl.props.phaseBias = parseFloat(document.getElementById('propSphPhase').value) || 0;
-    lvl.props.distortion = parseFloat(document.getElementById('propSphDist').value) || 1;
-    lvl.props.notes = document.getElementById('propSphNotes').value.trim();
-    lvl.label = label;
-    if (!isNaN(seed) && seed > 0) {
-      lvl.resonanceSeed = seed;
-      lvl.seedLabel = `value ${seed}`;
-      lvl.seedBase = lvl.depth === 0 ? 1 + seed * 3 : lvl.seedBase;
-      if (isMain) {
-        resonanceSeedValue = seed;
-        const disp = document.getElementById('seedCurrent');
-        if (disp) disp.innerHTML = `seed: <span class="sv">${label} → value ${seed}</span>`;
-      }
-    }
-    if (!isNaN(nodes) && nodes >= 4 && nodes <= 90) {
-      regenerateNodes(lvl, nodes);
-      if (isMain) configuredNodeCount = nodes;
-      const input = document.getElementById('nodeCountInput');
-      if (input) input.value = nodes;
-    } else {
-      buildNodes(lvl);
-    }
-    renderSpherePicker();
-    updateSelectedBanner();
-    renderPropsPanel();
-  };
-  const enterBtn = document.getElementById('propSphEnter');
-  if (enterBtn) enterBtn.onclick = () => enterSphere(selectedSphere);
-  const removeBtn = document.getElementById('propSphRemove');
-  if (removeBtn) removeBtn.onclick = () => {
-    if (typeof selectedSphere !== 'number') return;
-    const sat = satellites[selectedSphere];
-    if (!sat) return;
-    const i = allLevels.indexOf(sat.level);
-    if (i >= 0) allLevels.splice(i, 1);
-    satellites.splice(selectedSphere, 1);
-    // re-label remaining
-    satellites.forEach((s, idx) => {
-      if (!s.level.props || s.level.props.label === s.level.label || /^Sphere \d+$/.test(s.level.label)) {
-        s.level.label = `Sphere ${idx + 2}`;
-        if (s.level.props) s.level.props.label = s.level.label;
-      }
-    });
-    selectedSphere = 'main';
-    updateSatCount();
-    renderSpherePicker();
-    updateSelectedBanner();
-    renderPropsPanel();
-  };
-}
-
-function escapeAttr(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  const lvl = selectedSphereRef.level;
+  lvl.seedBase = Math.max(1, Math.round(value)) || 1;
+  regenerateNodes(lvl, lvl.nodeCount);
+  lvl.label = label;
+  lvl.feedback = 0;
+  const disp = document.getElementById('seedCurrent');
+  disp.innerHTML = `seed (<strong>${label}</strong> on <strong style="color:var(--gilt);">${lvl.label}</strong>): <span class="sv">value ${lvl.seedBase}</span> — main singularity unaffected`;
+  const weightsEl = document.getElementById('seedWeightsDisplay');
+  if (weightsEl) weightsEl.innerHTML = weightsHtml || '';
 }
 
 function digitCounts(digits) {
@@ -2798,7 +2388,7 @@ function computeGlobalUnity(t) {
   const allDigits = [];
   allLevels.forEach(lvl => {
     lvl.nodes.forEach(node => {
-      const { output } = nodeSignal(node, t, lvl.depth, lvl.feedback, lvl.resonanceSeed, lvl.coupledFeedback, lvl.props);
+      const { output } = nodeSignal(node, t, lvl.depth, lvl.feedback);
       allDigits.push(outputToDigit(output));
     });
   });
@@ -3036,6 +2626,14 @@ const SCALES = {
   'Phrygian': [0, 1, 3, 5, 7, 8, 10],
   'Whole Tone': [0, 2, 4, 6, 8, 10],
   'Chromatic': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  // A plain diatonic scale is 7 notes (do-re-mi-fa-sol-la-ti). Extended up to
+  // a 10th - a real named interval, octave + a third - it becomes exactly 10
+  // ascending notes: the 7 scale degrees, plus degrees 1-2-3 repeated an
+  // octave up. That's a genuine 10-note scale, and it maps onto the 10
+  // digits with zero pitch-class overlap - unlike the 5-note pentatonic
+  // scales above, where digit d and digit d+5 currently share a pitch class.
+  'Diatonic Major (10th span)': [0, 2, 4, 5, 7, 9, 11, 12, 14, 16],
+  'Diatonic Minor (10th span)': [0, 2, 3, 5, 7, 8, 10, 12, 14, 15],
 };
 let currentScale = SCALES['Major Pentatonic'];
 let baseOctaveFreq = 130.81; // C3 by default, user-selectable
@@ -3044,10 +2642,20 @@ function rawFreqForDigit(d) {
   const totalSteps = d + digitHistory[d]; // distinct starting position per digit, then climbs with its own count
   const octave = Math.floor(totalSteps / currentScale.length);
   const degree = totalSteps % currentScale.length;
-  const wrappedOctave = octave % 5; // wraps through 5 octaves instead of hard-capping - a hard cap
-                                     // makes independently-climbing digits pile up on the same ceiling
-                                     // frequency, which looks like convergence but isn't
-  const semitone = currentScale[degree] + wrappedOctave * 12;
+  const wrappedOctave = octave % 2; // wraps through 2 octaves, not 5 - keeps the ceiling-artifact-avoiding
+                                     // wrap (rather than a hard clamp) while no longer letting the range
+                                     // swing absurdly wide regardless of scale length
+
+  // Clamp how much of that octave-jump actually applies, using digit position
+  // and live "interest" as the ratio. A digit that already starts high in the
+  // scale gets proportionally less extra climbing room (digitRatio), and a
+  // quiet, low-interest system pulls every digit back toward its own anchor
+  // pitch rather than letting it swing its full range (globalInterestMultiplier,
+  // already 0.5-1.0). Together they keep the whole ensemble contained no
+  // matter which register you start in - C2 stays recognizably low register.
+  const digitRatio = 1 - (d / (currentScale.length - 1)) * 0.5; // digit 0 -> 1.0, highest digit -> 0.5
+  const clampRatio = digitRatio * globalInterestMultiplier;
+  const semitone = currentScale[degree] + wrappedOctave * 12 * clampRatio;
   return baseOctaveFreq * Math.pow(2, semitone / 12);
 }
 
@@ -3079,17 +2687,27 @@ let convergenceSizeCounts = new Array(11).fill(0); // indices 2-10 used
 function initConvergenceTable() {
   const tbody = document.getElementById('convergenceTableBody');
   tbody.innerHTML = '';
+  const hudBody = document.getElementById('hudConvergenceBody');
+  if (hudBody) hudBody.innerHTML = '';
   for (let n = 10; n >= 2; n--) {
     const tr = document.createElement('tr');
     if (n >= CONVERGENCE_MIN_AGREE) tr.className = 'reseed-tier';
     tr.innerHTML = `<td>${n}/10</td><td id="convCount${n}">0</td>`;
     tbody.appendChild(tr);
+    if (hudBody) {
+      const tr2 = tr.cloneNode(false);
+      if (n >= CONVERGENCE_MIN_AGREE) tr2.className = 'reseed-tier';
+      tr2.innerHTML = `<td>${n}/10</td><td id="hudConvCount${n}">0</td>`;
+      hudBody.appendChild(tr2);
+    }
   }
 }
 function renderConvergenceTable() {
   for (let n = 2; n <= 10; n++) {
     const cell = document.getElementById(`convCount${n}`);
     if (cell) cell.textContent = convergenceSizeCounts[n];
+    const hudCell = document.getElementById(`hudConvCount${n}`);
+    if (hudCell) hudCell.textContent = convergenceSizeCounts[n];
   }
 }
 
@@ -3123,16 +2741,10 @@ function checkFrequencyConvergence() {
 function triggerConvergenceReseed(freq, agreeCount) {
   resonanceSeedValue = Math.max(1, Math.round(freq));
   const root = levelStack[0];
-  if (root) {
-    root.resonanceSeed = resonanceSeedValue;
-    root.seedLabel = `(self-adjusted) ${agreeCount}/10 @ ${freq.toFixed(0)}Hz`;
-    root.seedBase = 1 + resonanceSeedValue * 3;
-    regenerateNodes(root, root.nodeCount);
-  }
+  root.seedBase = 1 + resonanceSeedValue * 3;
+  regenerateNodes(root, root.nodeCount);
   const disp = document.getElementById('seedCurrent');
   if (disp) disp.innerHTML = `seed: <span class="sv">(self-adjusted) ${agreeCount} of 10 digits converged at ${freq.toFixed(0)}Hz → new resonance value ${resonanceSeedValue}</span>`;
-  renderSpherePicker();
-  updateSelectedBanner();
 }
 
 document.getElementById('scaleSelect').addEventListener('change', e => {
@@ -3428,13 +3040,10 @@ document.getElementById('masterVolSlider').addEventListener('input', e => {
 });
 
 function applySeedFromValue(value, label, weightsHtml) {
-  // Full system reset — clears connected spheres and starts a new Singularity.
-  // Prefer applySeedToSelected when editing one sphere in place.
   resonanceSeedValue = Math.max(1, Math.round(value)) || 1;
   resonanceLabel = label;
   allLevels = [];
   satellites = [];
-  selectedSphere = 'main';
   updateSatCount();
   digitHistory = new Array(10).fill(0);
   digitStableCount = new Array(10).fill(0);
@@ -3458,18 +3067,9 @@ function applySeedFromValue(value, label, weightsHtml) {
   pausedTimeAtSessionStart = pausedTime;
   updateSessionTimer();
   renderDigitBars();
-  levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount, resonanceSeedValue)];
-  levelStack[0].seedLabel = label;
-  levelStack[0].props.label = 'Singularity';
-  networkMainLevel = levelStack[0];
-  exploreContext = 'network';
-  exploreRootId = 'main';
-  selectedNode = null;
+  levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount)];
   renderBreadcrumb();
   updateZoomOutBtn();
-  renderSpherePicker();
-  updateSelectedBanner();
-  renderPropsPanel();
   const disp = document.getElementById('seedCurrent');
   disp.innerHTML = `seed: <span class="sv">${label} → value ${resonanceSeedValue}</span>`;
   const weightsEl = document.getElementById('seedWeightsDisplay');
@@ -3480,13 +3080,10 @@ function setResonanceSeed(word) {
   const val = seedFromWord(word) || 1;
   const heb = computeAll(word);
   const weightsHtml = `<div class="weights-line">Word "${word}" → Hebrew ${heb ? heb.heb : ''} → Hechrachi value ${val}</div>`;
-  applySeedToSelected(val, `"${word}"`, weightsHtml);
+  applySeedFromValue(val, `"${word}"`, weightsHtml);
 }
 
-let levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount, 1)];
-levelStack[0].seedLabel = 'default';
-levelStack[0].props.label = 'Singularity';
-networkMainLevel = levelStack[0];
+let levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount)];
 let currentLevel = () => levelStack[levelStack.length - 1];
 
 let dragging = false, lastMouse = null, mouseDownPos = null;
@@ -3509,20 +3106,121 @@ function rotatePoint(p, rx, ry) {
   return { x: x1, y: y1, z: z2 };
 }
 
-function nodeSignal(node, t, depth, feedback, sphereSeed, coupledFeedback, levelProps) {
+// ============ WEIGHTED QUANTUM FRACTAL TREES ============
+// Each node grows a fractal tree continuously - it never pauses, never
+// finishes. What nodeSignal computes is a SAMPLE: whatever incomplete shape
+// the tree has grown into at this instant, collapsed to one value. Depth
+// fades by a CONSTANT RATIO (geometric, not 1/depth) - this is what makes
+// the sum bounded automatically, by construction, with no clamp or cap
+// doing the real work. A young tree (low depth) contributes a quiet,
+// simple-sounding sample; a deep one is richer, but never unbounded -
+// exactly the axiom the philosophy extension resolves to.
+const TREE_DECAY_RATIO = 0.62;
+const TREE_BRANCH_FREQ_MULT = 1.7;
+const TREE_MAX_LEVELS = 14; // 0.62^14 ≈ 0.0006 - levels beyond this are already negligible
+const TREE_CONVERGED_WEIGHT = 1 / (1 - TREE_DECAY_RATIO); // the geometric series' own limit, ≈2.63
+
+function fractalTreeSample(node, t, baseFreq, phaseOffset) {
+  const depth = t * node.growthRate; // continuous, unbounded growth - never reset, never paused
+  const maxLevel = Math.min(TREE_MAX_LEVELS, Math.floor(depth));
+  let sum = 0;
+  for (let d = 0; d <= maxLevel; d++) {
+    const w = Math.pow(TREE_DECAY_RATIO, d);
+    const freq = baseFreq * Math.pow(TREE_BRANCH_FREQ_MULT, d);
+    const levelPhase = (node.seed * 0.017 * (d + 1)) % (2 * Math.PI);
+    sum += w * Math.sin(freq * t + phaseOffset + levelPhase);
+  }
+  return sum / TREE_CONVERGED_WEIGHT;
+}
+
+// Live, per-frame mini-visualization of a single node's fractal tree, drawn
+// into the hover tooltip's persistent canvas. Bars actually oscillate each
+// frame (not a static snapshot) - active levels show their current signed
+// contribution; levels the tree hasn't grown into yet sit dim and flat.
+function drawNodeFractalMini(node, t) {
+  const canvas = document.getElementById('tooltipFractalCanvas');
+  if (!canvas) return;
+  const c2 = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height, midY = h / 2;
+  c2.clearRect(0, 0, w, h);
+  c2.strokeStyle = 'rgba(120,150,175,0.25)';
+  c2.beginPath(); c2.moveTo(0, midY); c2.lineTo(w, midY); c2.stroke();
+
+  const depth = t * node.growthRate;
+  const maxLevel = Math.min(TREE_MAX_LEVELS, Math.floor(depth));
+  const barW = w / (TREE_MAX_LEVELS + 1);
+  const repFreq = 0.5; // representative base frequency for this display only
+
+  for (let d = 0; d <= TREE_MAX_LEVELS; d++) {
+    const weight = Math.pow(TREE_DECAY_RATIO, d);
+    const active = d <= maxLevel;
+    const maxBarH = weight * (h / 2 - 3);
+    let barH = maxBarH, goesUp = true;
+    if (active) {
+      const freq = repFreq * Math.pow(TREE_BRANCH_FREQ_MULT, d);
+      const levelPhase = (node.seed * 0.017 * (d + 1)) % (2 * Math.PI);
+      const val = Math.sin(freq * t + levelPhase);
+      barH = Math.abs(val) * maxBarH;
+      goesUp = val >= 0;
+    }
+    const x = d * barW;
+    c2.fillStyle = active ? `rgba(217,164,65,${0.45 + weight * 0.5})` : 'rgba(120,150,175,0.14)';
+    c2.fillRect(x + 1, goesUp ? midY - barH : midY, barW - 2, barH);
+  }
+}
+
+// The sphere's fractal: the same per-level structure as drawNodeFractalMini,
+// but averaged across every node currently in the sphere rather than shown
+// for one. Bar direction/height = the average signed contribution of every
+// node that has grown deep enough for that level to exist; brightness scales
+// with what FRACTION of the sphere has reached that depth - a young sphere
+// looks sparse and dim at higher levels, an old one looks fully lit.
+function drawSphereFractalChart(level, t) {
+  const canvas = document.getElementById('sphereFractalCanvas');
+  if (!canvas || !level || !level.nodes.length) return;
+  const c2 = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height, midY = h / 2;
+  c2.clearRect(0, 0, w, h);
+  c2.strokeStyle = 'rgba(120,150,175,0.25)';
+  c2.beginPath(); c2.moveTo(0, midY); c2.lineTo(w, midY); c2.stroke();
+
+  const barW = w / (TREE_MAX_LEVELS + 1);
+  const repFreq = 0.5;
+  const n = level.nodes.length;
+
+  for (let d = 0; d <= TREE_MAX_LEVELS; d++) {
+    const weight = Math.pow(TREE_DECAY_RATIO, d);
+    let sumVal = 0, activeCount = 0;
+    for (const node of level.nodes) {
+      const depth = t * node.growthRate;
+      if (d <= Math.floor(depth)) {
+        const freq = repFreq * Math.pow(TREE_BRANCH_FREQ_MULT, d);
+        const levelPhase = (node.seed * 0.017 * (d + 1)) % (2 * Math.PI);
+        sumVal += Math.sin(freq * t + levelPhase);
+        activeCount++;
+      }
+    }
+    const activeFrac = activeCount / n;
+    const avgVal = activeCount > 0 ? sumVal / activeCount : 0;
+    const maxBarH = weight * (h / 2 - 4);
+    const barH = Math.abs(avgVal) * maxBarH;
+    const goesUp = avgVal >= 0;
+    const x = d * barW;
+    c2.fillStyle = `rgba(217,164,65,${0.12 + activeFrac * 0.75})`;
+    c2.fillRect(x + 1, goesUp ? midY - barH : midY, barW - 2, Math.max(1, barH));
+    // thin baseline tick showing activation fraction, independent of the live value
+    c2.fillStyle = 'rgba(79,184,212,0.5)';
+    c2.fillRect(x + 1, h - 3, (barW - 2) * activeFrac, 2);
+  }
+}
+
+function nodeSignal(node, t, depth, feedback) {
   const angle = Math.atan2(node.y, node.x);
-  const nodePhase = (node.phaseBias != null) ? node.phaseBias : 0;
-  const sphPhase = (levelProps && levelProps.phaseBias) || 0;
-  const phaseOffset = angle * 1.3 + (node.seed % 97) * 0.0647 + nodePhase + sphPhase;
-  const seed = (sphereSeed != null) ? sphereSeed : resonanceSeedValue;
-  const seedFreqMod = 1 + (seed % 37) * 0.006;
-  const coupled = (coupledFeedback != null) ? coupledFeedback : 0;
-  const effectiveFb = feedback * (1 - COUPLING) + coupled * COUPLING;
-  const baseFreq = (0.4 + depth * 0.12) * (1 + effectiveFb * 0.18) * seedFreqMod;
-  const input = Math.sin(t * baseFreq + phaseOffset);
-  const nodeDist = (node.distortion != null) ? node.distortion : 1;
-  const sphDist = (levelProps && levelProps.distortion != null) ? levelProps.distortion : 1;
-  const distortion = (1 + 0.35 * Math.sin(t * 0.22 + node.seed * 0.13)) * nodeDist * sphDist;
+  const phaseOffset = angle * 1.3 + (node.seed % 97) * 0.0647;
+  const seedFreqMod = 1 + (resonanceSeedValue % 37) * 0.006;
+  const baseFreq = (0.4 + depth * 0.12) * (1 + feedback * 0.18) * seedFreqMod;
+  const input = fractalTreeSample(node, t, baseFreq, phaseOffset);
+  const distortion = 1 + 0.35 * Math.sin(t * 0.22 + node.seed * 0.13);
   const output = Math.max(-1.4, Math.min(1.4, input * distortion));
   return { input, output };
 }
@@ -3531,51 +3229,80 @@ function outputToDigit(output) {
   return Math.round((clamped + 1) / 2 * 9);
 }
 
-function drawSphere(t) {
-  // Cross-sphere coupling always runs so network peers keep influencing each other
-  updateSphereCoupling();
+function hexToRgb(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return [(n>>16)&255, (n>>8)&255, n&255];
+}
+const FIRE_THRESHOLD = 0.72;
+let firingPulses = []; // per-node "neuron fired" pulses traveling toward the center
 
+function drawSphere(t) {
   const level = currentLevel();
   ctx.clearRect(0, 0, W, H);
-  lastSatHits = [];
+
+  // Mutual coupling: at the root level, the main sphere's effective feedback
+  // is nudged by the average feedback of every connected satellite - the
+  // structure genuinely listening outward, not just broadcasting to it.
+  const isRoot = levelStack.length === 1;
+  const satAvgFeedback = (isRoot && satellites.length)
+    ? satellites.reduce((s, sat) => s + sat.level.feedback, 0) / satellites.length
+    : 0;
+  const effectiveFeedback = level.feedback + (isRoot ? couplingStrength * satAvgFeedback : 0);
 
   const outputs = [];
   const effectiveR = R * zoomScale;
-  const showNetwork = exploreContext === 'network' && levelStack.length === 1;
-  const isSelectedRoot = selectedSphere === exploreRootId || (showNetwork && selectedSphere === 'main' && level === getMainLevel());
   const projected = level.nodes.map(p => {
     const rp = rotatePoint(p, level.rotX, level.rotY);
     const scale = 1 / (2 - rp.z);
-    const { input, output } = nodeSignal(p, t, level.depth, level.feedback, level.resonanceSeed, level.coupledFeedback, level.props);
+    const { input, output } = nodeSignal(p, t, level.depth, effectiveFeedback);
     outputs.push(output);
+    const digit = outputToDigit(output);
+
+    // Firing-neuron detection: a node "fires" when it crosses the threshold
+    // coming from below - a discrete event, not continuous modulation.
+    const prev = p.prevOutput === undefined ? 0 : p.prevOutput;
+    if (Math.abs(output) > FIRE_THRESHOLD && Math.abs(prev) <= FIRE_THRESHOLD) {
+      const rp2 = rotatePoint(p, level.rotX, level.rotY);
+      const sc2 = 1 / (2 - rp2.z);
+      firingPulses.push({
+        x: CX + rp2.x * effectiveR * sc2, y: CY + rp2.y * effectiveR * sc2,
+        progress: 0, color: SEISMO_DEFAULT_COLORS[digit],
+      });
+    }
+    p.prevOutput = output;
+
     return {
       x: CX + rp.x * effectiveR * scale, y: CY + rp.y * effectiveR * scale,
-      z: rp.z, scale, node: p, input, output,
+      z: rp.z, scale, node: p, input, output, digit,
     };
   });
   lastProjected = projected;
 
+  // Crossover: a node "outweighs its root" when its own tree has grown
+  // meaningfully deeper than the sphere's current average. Once true, it
+  // stays true - hasSourced only ever gets set, never cleared, matching the
+  // philosophy's claim that a node can't un-become a source.
+  const treeDepths = level.nodes.map(n => t * n.growthRate);
+  const avgTreeDepth = treeDepths.reduce((a,b)=>a+b,0) / treeDepths.length;
+  level.nodes.forEach((n, i) => {
+    if (treeDepths[i] > avgTreeDepth * 1.6) n.hasSourced = true;
+  });
+  level.avgTreeDepth = avgTreeDepth;
+  level.sourcedCount = level.nodes.filter(n => n.hasSourced).length;
+
+  // smooth feedback toward current average output (this level's aggregate "return signal")
   const avgOut = outputs.reduce((a,b)=>a+b,0) / outputs.length;
   level.feedback += (avgOut - level.feedback) * 0.015;
 
   ctx.globalAlpha = transitionAlpha;
 
-  // Selection ring when this view's sphere is the edit target
-  if ((showNetwork && selectedSphere === 'main') || (exploreContext === 'sphere' && levelStack.length === 1 && selectedNode == null)) {
-    ctx.beginPath();
-    ctx.arc(CX, CY, effectiveR + 14, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(79,184,212,0.55)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([5, 4]);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  // spokes: signal traveling outward, brightness = that node's current |output|
+  // spokes: signal traveling outward, colored by each node's current digit -
+  // agreement is now directly visible as color, not just inferred from stats
   projected.forEach(p => {
     const depthShade = (p.z + 1) / 2;
     const intensity = Math.min(1, Math.abs(p.output)) * (0.15 + depthShade * 0.35);
-    ctx.strokeStyle = p.output >= 0 ? `rgba(201,163,92,${intensity})` : `rgba(176,74,88,${intensity})`;
+    const [r,g,b] = hexToRgb(SEISMO_DEFAULT_COLORS[p.digit]);
+    ctx.strokeStyle = `rgba(${r},${g},${b},${intensity})`;
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(CX, CY);
@@ -3594,7 +3321,7 @@ function drawSphere(t) {
     }
   }
 
-  // feedback return-pulses traveling from nodes back to center
+  // feedback return-pulses traveling from nodes back to center (periodic, whole-sphere event)
   feedbackPulses.forEach(fp => {
     const p = fp.fromNode;
     const px = CX + (p.x - CX) * (1 - fp.progress);
@@ -3605,41 +3332,72 @@ function drawSphere(t) {
     ctx.fill();
   });
 
-  // nodes, back-to-front, each showing a live digit label
+  // firing-neuron pulses: individual nodes crossing threshold, each a bright
+  // traveling dot with a fading trail, colored by that node's digit - the
+  // "like firing neurons" animation, discrete rather than a smooth glow.
+  firingPulses.forEach(fp => {
+    const px = fp.x + (CX - fp.x) * fp.progress;
+    const py = fp.y + (CY - fp.y) * fp.progress;
+    const [r,g,b] = hexToRgb(fp.color);
+    const fade = 1 - fp.progress;
+    // trail
+    const trailX = fp.x + (CX - fp.x) * Math.max(0, fp.progress - 0.15);
+    const trailY = fp.y + (CY - fp.y) * Math.max(0, fp.progress - 0.15);
+    ctx.strokeStyle = `rgba(${r},${g},${b},${fade*0.5})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(trailX, trailY); ctx.lineTo(px, py); ctx.stroke();
+    // head
+    ctx.beginPath();
+    ctx.arc(px, py, 3, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(1,fade*1.4)})`;
+    ctx.shadowColor = `rgba(${r},${g},${b},0.9)`;
+    ctx.shadowBlur = 8;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  });
+  firingPulses = firingPulses.filter(fp => fp.progress < 1);
+  firingPulses.forEach(fp => fp.progress += 0.055);
+
+  // nodes, back-to-front, colored by current digit (agreement) - same-colored
+  // nodes are literally in agreement, visible directly rather than inferred
   const sorted = [...projected].sort((a,b) => a.z - b.z);
   sorted.forEach(p => {
     const depth = (p.z + 1) / 2;
     const mag = Math.min(1, Math.abs(p.output));
     const baseR = 3 + depth * 3.4 + mag * 3;
     const isHovered = hoveredNode === p.node;
-    const isSel = selectedNode === p.node;
-    const alpha = 0.4 + depth * 0.6;
+    const alpha = 0.45 + depth * 0.55;
+    const [r,g,b] = hexToRgb(SEISMO_DEFAULT_COLORS[p.digit]);
     ctx.beginPath();
-    ctx.arc(p.x, p.y, baseR + (isHovered || isSel ? 2.5 : 0), 0, Math.PI*2);
-    ctx.fillStyle = p.output >= 0 ? `rgba(233,223,197,${alpha})` : `rgba(176,74,88,${alpha})`;
+    ctx.arc(p.x, p.y, baseR + (isHovered ? 2.5 : 0), 0, Math.PI*2);
+    ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
     ctx.fill();
-    if (isSel) {
-      ctx.strokeStyle = 'rgba(79,184,212,0.9)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    }
-    if (depth > 0.55 || isHovered || isSel) {
-      ctx.shadowColor = isSel ? 'rgba(79,184,212,0.9)' : (isHovered ? 'rgba(201,163,92,0.9)' : 'rgba(201,163,92,0.5)');
-      ctx.shadowBlur = isHovered || isSel ? 10 : 6;
+    if (depth > 0.55 || isHovered || mag > FIRE_THRESHOLD) {
+      ctx.shadowColor = isHovered ? 'rgba(79,184,212,0.9)' : `rgba(${r},${g},${b},0.6)`;
+      ctx.shadowBlur = isHovered ? 10 : (mag > FIRE_THRESHOLD ? 9 : 6);
       ctx.fill();
       ctx.shadowBlur = 0;
     }
-    if (depth > 0.3 || isHovered || isSel) {
-      ctx.font = `${isHovered || isSel ? 11 : 9}px 'JetBrains Mono', monospace`;
-      ctx.fillStyle = isSel ? 'rgba(79,184,212,0.95)' : (isHovered ? 'rgba(233,223,197,0.95)' : `rgba(233,223,197,${0.3+depth*0.5})`);
+    // sourced marker: a node whose own tree has outweighed the sphere's
+    // average gets a permanent ring - it has become its own local source
+    if (p.node.hasSourced) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, baseR + 3, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(233,223,197,${0.5 + depth*0.4})`;
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+    }
+    // live digit label — the node's current output, mapped to a single digit
+    if (depth > 0.3 || isHovered) {
+      ctx.font = `${isHovered ? 11 : 9}px 'JetBrains Mono', monospace`;
+      ctx.fillStyle = isHovered ? 'rgba(233,223,197,0.95)' : `rgba(233,223,197,${0.3+depth*0.5})`;
       ctx.textAlign = 'center';
-      const tag = p.node.label ? p.node.label.slice(0, 8) : String(outputToDigit(p.output));
-      ctx.fillText(tag, p.x, p.y - baseR - 5);
+      ctx.fillText(p.digit, p.x, p.y - baseR - 5);
     }
   });
 
-  // central singularity — glow color/intensity driven by this level's feedback
-  const fb = level.feedback;
+  // central singularity — glow color/intensity driven by COUPLED effective feedback
+  const fb = effectiveFeedback;
   const glowColor = fb >= 0 ? [201,163,92] : [176,74,88];
   const glowSize = 20 + Math.abs(fb) * 10 + (pulseActive ? pulsePhase*4 : 0);
   const grad = ctx.createRadialGradient(CX, CY, 0, CX, CY, glowSize);
@@ -3648,37 +3406,19 @@ function drawSphere(t) {
   ctx.fillStyle = grad;
   ctx.beginPath(); ctx.arc(CX, CY, glowSize*0.75, 0, Math.PI*2); ctx.fill();
 
-  // Connected satellites only in network overview (not while inside a sphere)
-  if (exploreContext === 'network' && levelStack.length === 1) {
-    satellites.forEach((sat, idx) => renderSatellite(sat, t, idx));
-  } else if (exploreContext === 'sphere') {
-    // Still advance satellite signal loops so coupling stays live while exploring
-    satellites.forEach(sat => {
-      const lvl = sat.level;
-      if (!dragging && autoRotate) lvl.rotY += 0.0021;
-      const outs = [];
-      lvl.nodes.forEach(node => {
-        const { output } = nodeSignal(node, t, lvl.depth, lvl.feedback, lvl.resonanceSeed, lvl.coupledFeedback, lvl.props);
-        outs.push(output);
-      });
-      if (outs.length) {
-        const avg = outs.reduce((a,b)=>a+b,0) / outs.length;
-        lvl.feedback += (avg - lvl.feedback) * 0.015;
-      }
-    });
-    // And keep main advancing if we're inside a satellite
-    if (exploreRootId !== 'main' && getMainLevel()) {
-      const main = getMainLevel();
-      const outs = [];
-      main.nodes.forEach(node => {
-        const { output } = nodeSignal(node, t, main.depth, main.feedback, main.resonanceSeed, main.coupledFeedback, main.props);
-        outs.push(output);
-      });
-      if (outs.length) {
-        const avg = outs.reduce((a,b)=>a+b,0) / outs.length;
-        main.feedback += (avg - main.feedback) * 0.015;
-      }
-    }
+  // selection ring — shown when the main sphere itself is the configured target
+  if (isRoot && !selectedSphereRef) {
+    ctx.strokeStyle = 'rgba(79,184,212,0.55)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(CX, CY, glowSize*0.75 + 8, 0, Math.PI*2); ctx.stroke();
+  }
+
+  // Satellite spheres — additional, visibly-connected spheres attached to the
+  // root, each running its own live signal + feedback loop. Only shown at the
+  // root level, since they're siblings of the main sphere, not fractal children.
+  if (levelStack.length === 1) {
+    lastSatelliteHitboxes = [];
+    satellites.forEach(sat => renderSatellite(sat, t, level.feedback));
   }
 
   ctx.globalAlpha = 1;
@@ -3686,69 +3426,59 @@ function drawSphere(t) {
   // readout panel
   const unity = unityFromOutputs(outputs);
   const readout = document.getElementById('sphereReadout');
-  const coupledStr = (level.coupledFeedback != null && satellites.length)
-    ? `<br>coupled: <span class="feedback-val">${level.coupledFeedback>=0?'+':''}${level.coupledFeedback.toFixed(3)}</span>`
-    : '';
-  const seedStr = level.resonanceSeed != null ? ` · seed ${level.resonanceSeed}` : '';
-  const viewLbl = exploreContext === 'network' ? 'network' : ((level.props && level.props.label) || level.label);
-  readout.innerHTML = `${viewLbl} · depth ${level.depth} · ${level.nodes.length} nodes${seedStr}<br>unity: <span class="unity-val">${unity.percent.toFixed(0)}%</span> on digit ${unity.digit}<br>feedback: <span class="feedback-val">${fb>=0?'+':''}${fb.toFixed(3)}</span>${coupledStr}`;
+  const coupleNote = (isRoot && satellites.length) ? ` (own ${level.feedback.toFixed(3)} + coupled)` : '';
+  readout.innerHTML = `depth ${level.depth} · ${level.nodes.length} nodes<br>unity: <span class="unity-val">${unity.percent.toFixed(0)}%</span> on digit ${unity.digit}<br>feedback: <span class="feedback-val">${fb>=0?'+':''}${fb.toFixed(3)}</span>${coupleNote}`;
+
+  const avgDepthEl = document.getElementById('hudAvgDepth');
+  const sourcedEl = document.getElementById('hudSourcedCount');
+  if (avgDepthEl) avgDepthEl.textContent = level.avgTreeDepth.toFixed(1);
+  if (sourcedEl) sourcedEl.textContent = `${level.sourcedCount} / ${level.nodes.length}`;
+
+  if (hoveredNode) drawNodeFractalMini(hoveredNode, t);
+  drawSphereFractalChart(level, t);
 }
 
-function renderSatellite(sat, t, idx) {
-  const satR = R * 0.42 * zoomScale;
+function renderSatellite(sat, t, mainFeedback) {
+  if (sat.zoomScale === undefined) sat.zoomScale = 1;
+  const satR = R * 0.42 * zoomScale * sat.zoomScale;
   const orbitDist = R * zoomScale * 1.55 + 44;
   const satCX = CX + Math.cos(sat.angle) * orbitDist;
   const satCY = CY + Math.sin(sat.angle) * orbitDist;
+  sat.satR = satR; sat.satCX = satCX; sat.satCY = satCY;
   const lvl = sat.level;
-  const isSelected = selectedSphere === idx;
   if (!dragging && autoRotate) lvl.rotY += 0.0021;
-
-  // Hit-test target for click-to-select
-  lastSatHits.push({ idx, cx: satCX, cy: satCY, r: satR + 16 });
+  lastSatelliteHitboxes.push({ sat, cx: satCX, cy: satCY, r: satR + 16 });
 
   // connector: from the nearest main-sphere node to this satellite's center
-  // brighter / thicker when either end is selected (shows the coupling path)
-  const anchor = lastProjected.length
-    ? lastProjected[sat.anchorNodeIdx % lastProjected.length]
-    : null;
+  const anchor = lastProjected[sat.anchorNodeIdx % lastProjected.length];
   if (anchor) {
-    const coupleAlpha = 0.18 + Math.min(0.45, Math.abs(lvl.coupledFeedback || 0) * 0.5);
-    ctx.strokeStyle = isSelected || selectedSphere === 'main'
-      ? `rgba(79,184,212,${0.35 + coupleAlpha})`
-      : `rgba(201,163,92,${coupleAlpha})`;
-    ctx.lineWidth = isSelected ? 2 : 1;
+    ctx.strokeStyle = 'rgba(201,163,92,0.22)';
+    ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(anchor.x, anchor.y); ctx.lineTo(satCX, satCY); ctx.stroke();
-    // pulse of coupling energy along the connector
-    const pulseT = (t * 0.4 + idx * 0.7) % 1;
-    const px = anchor.x + (satCX - anchor.x) * pulseT;
-    const py = anchor.y + (satCY - anchor.y) * pulseT;
-    ctx.beginPath();
-    ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(79,184,212,${0.55 * (1 - Math.abs(pulseT - 0.5) * 2)})`;
-    ctx.fill();
   }
+
+  // reciprocal coupling: this satellite's effective feedback is nudged by the
+  // MAIN sphere's feedback, same coupling strength, the other direction of the
+  // same relationship used for the main sphere above - genuinely mutual.
+  const effectiveFeedback = lvl.feedback + couplingStrength * mainFeedback;
 
   const satOutputs = [];
   const proj = lvl.nodes.map(p => {
     const rp = rotatePoint(p, lvl.rotX, lvl.rotY);
     const scale = 1 / (2.2 - rp.z);
-    const { output } = nodeSignal(p, t, lvl.depth, lvl.feedback, lvl.resonanceSeed, lvl.coupledFeedback, lvl.props);
+    const { output } = nodeSignal(p, t, lvl.depth, effectiveFeedback);
     satOutputs.push(output);
-    return { x: satCX + rp.x * satR * scale, y: satCY + rp.y * satR * scale, z: rp.z, output };
+    return { x: satCX + rp.x * satR * scale, y: satCY + rp.y * satR * scale, z: rp.z, output, digit: outputToDigit(output), node: p };
   });
+  sat.lastProjected = proj; // used for hit-testing individual nodes within this satellite
   const avgOut = satOutputs.reduce((a,b)=>a+b,0) / satOutputs.length;
   lvl.feedback += (avgOut - lvl.feedback) * 0.015;
 
-  // Selection ring
-  if (isSelected) {
-    ctx.beginPath();
-    ctx.arc(satCX, satCY, satR + 10, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(79,184,212,0.65)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([4, 3]);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
+  const satTreeDepths = lvl.nodes.map(n => t * n.growthRate);
+  const satAvgDepth = satTreeDepths.reduce((a,b)=>a+b,0) / satTreeDepths.length;
+  lvl.nodes.forEach((n, i) => { if (satTreeDepths[i] > satAvgDepth * 1.6) n.hasSourced = true; });
+  lvl.avgTreeDepth = satAvgDepth;
+  lvl.sourcedCount = lvl.nodes.filter(n => n.hasSourced).length;
 
   ctx.strokeStyle = 'rgba(201,163,92,0.06)';
   for (let i = 0; i < proj.length; i++) {
@@ -3757,28 +3487,40 @@ function renderSatellite(sat, t, idx) {
       if (Math.sqrt(dx*dx+dy*dy) < 32) { ctx.beginPath(); ctx.moveTo(proj[i].x,proj[i].y); ctx.lineTo(proj[j].x,proj[j].y); ctx.stroke(); }
     }
   }
-  [...proj].sort((a,b)=>a.z-b.z).forEach(p => {
+  [...proj].sort((a,b)=>a.z-b.z).forEach((p, idx) => {
     const d = (p.z+1)/2;
+    const [r,g,b] = hexToRgb(SEISMO_DEFAULT_COLORS[p.digit]);
     ctx.beginPath();
     ctx.arc(p.x, p.y, 1.6 + d*2, 0, Math.PI*2);
-    ctx.fillStyle = p.output >= 0 ? `rgba(233,223,197,${0.35+d*0.5})` : `rgba(176,74,88,${0.35+d*0.5})`;
+    ctx.fillStyle = `rgba(${r},${g},${b},${0.4+d*0.5})`;
     ctx.fill();
+    if (p.node && p.node.hasSourced) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 1.6 + d*2 + 2, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(233,223,197,${0.4+d*0.4})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
   });
-  const satFb = lvl.feedback;
-  const satGlowColor = isSelected ? [79,184,212] : (satFb >= 0 ? [201,163,92] : [176,74,88]);
-  const grad = ctx.createRadialGradient(satCX, satCY, 0, satCX, satCY, isSelected ? 12 : 9);
-  grad.addColorStop(0, `rgba(${satGlowColor[0]},${satGlowColor[1]},${satGlowColor[2]},0.9)`);
+  const satFb = effectiveFeedback;
+  const satGlowColor = satFb >= 0 ? [201,163,92] : [176,74,88];
+  const glowR = 8 + Math.abs(satFb) * 4;
+  const grad = ctx.createRadialGradient(satCX, satCY, 0, satCX, satCY, glowR);
+  grad.addColorStop(0, `rgba(${satGlowColor[0]},${satGlowColor[1]},${satGlowColor[2]},0.85)`);
   grad.addColorStop(1, `rgba(${satGlowColor[0]},${satGlowColor[1]},${satGlowColor[2]},0)`);
   ctx.fillStyle = grad;
-  ctx.beginPath(); ctx.arc(satCX, satCY, isSelected ? 10 : 8, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(satCX, satCY, glowR, 0, Math.PI*2); ctx.fill();
 
-  ctx.font = `${isSelected ? 10 : 9}px 'JetBrains Mono', monospace`;
-  ctx.fillStyle = isSelected ? 'rgba(79,184,212,0.95)' : 'rgba(138,131,114,0.85)';
+  if (selectedSphereRef === sat) {
+    ctx.strokeStyle = 'rgba(79,184,212,0.65)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(satCX, satCY, satR + 10, 0, Math.PI*2); ctx.stroke();
+  }
+
+  ctx.font = `9px 'JetBrains Mono', monospace`;
+  ctx.fillStyle = 'rgba(138,131,114,0.85)';
   ctx.textAlign = 'center';
   ctx.fillText(lvl.label, satCX, satCY + satR + 12);
-  ctx.font = `8px 'JetBrains Mono', monospace`;
-  ctx.fillStyle = isSelected ? 'rgba(79,184,212,0.75)' : 'rgba(138,131,114,0.6)';
-  ctx.fillText(`${lvl.nodes.length}n · s${lvl.resonanceSeed}`, satCX, satCY + satR + 22);
 }
 
 function spawnFeedbackEvent() {
@@ -3900,86 +3642,51 @@ function animate() {
 
 function renderBreadcrumb() {
   const el = document.getElementById('breadcrumb');
-  if (!el) return;
-  const parts = [];
-  // Network root crumb
-  parts.push(`<span class="crumb ${exploreContext === 'network' && levelStack.length === 1 ? 'current' : ''}" data-nav="network">Network</span>`);
-  if (exploreContext === 'sphere') {
-    const rootLvl = levelStack[0];
-    const rootName = (rootLvl && rootLvl.props && rootLvl.props.label) || (rootLvl && rootLvl.label) || (exploreRootId === 'main' ? 'Singularity' : `Sphere`);
-    parts.push(`<span class="sep">→</span>`);
-    parts.push(`<span class="crumb ${levelStack.length === 1 ? 'current' : ''}" data-nav="root">${rootName}</span>`);
-    for (let i = 1; i < levelStack.length; i++) {
-      const lvl = levelStack[i];
-      const name = (lvl.props && lvl.props.label) || lvl.label;
-      const isLast = i === levelStack.length - 1;
-      parts.push(`<span class="sep">→</span>`);
-      parts.push(`<span class="crumb ${isLast ? 'current' : ''}" data-idx="${i}">${name}</span>`);
-    }
-  } else if (levelStack.length > 1) {
-    // Zoomed into a node while still conceptually on network/main
-    for (let i = 0; i < levelStack.length; i++) {
-      const lvl = levelStack[i];
-      const name = (lvl.props && lvl.props.label) || lvl.label;
-      const isLast = i === levelStack.length - 1;
-      parts.push(`<span class="sep">→</span>`);
-      parts.push(`<span class="crumb ${isLast ? 'current' : ''}" data-idx="${i}">${name}</span>`);
-    }
-  }
-  el.innerHTML = parts.join('');
+  el.innerHTML = levelStack.map((lvl, i) => {
+    const isLast = i === levelStack.length - 1;
+    return (i>0 ? `<span class="sep">→</span>` : '') +
+      `<span class="crumb ${isLast?'current':''}" data-idx="${i}">${lvl.label}</span>`;
+  }).join('');
   el.querySelectorAll('.crumb').forEach(c => {
     c.addEventListener('click', () => {
-      if (c.dataset.nav === 'network') {
-        exitToNetwork();
-        return;
-      }
-      if (c.dataset.nav === 'root') {
-        levelStack = [levelStack[0]];
-        selectedNode = null;
-        renderBreadcrumb();
-        updateZoomOutBtn();
-        updateExploreButtons();
-        renderPropsPanel();
-        return;
-      }
-      const idx = parseInt(c.dataset.idx, 10);
-      if (!isNaN(idx) && idx < levelStack.length - 1) {
+      const idx = parseInt(c.dataset.idx);
+      if (idx < levelStack.length - 1) {
         levelStack = levelStack.slice(0, idx + 1);
-        selectedNode = null;
         renderBreadcrumb();
         updateZoomOutBtn();
-        updateExploreButtons();
-        renderPropsPanel();
       }
     });
   });
 }
 function updateZoomOutBtn() {
-  updateExploreButtons();
+  document.getElementById('zoomOutBtn').style.display = levelStack.length > 1 ? 'inline-block' : 'none';
 }
 
 function zoomIntoNode(node) {
   if (currentLevel().depth >= MAX_DEPTH) return;
-  // If still in network overview looking at main, entering a node keeps networkMainLevel
   transitioning = true; transitionDir = -1;
   setTimeout(() => {
     if (!node.childLevel) {
-      const label = node.label || `Node ${node.id}`;
-      node.childLevel = makeLevel(currentLevel().depth + 1, node.seed, label, null, node.seed);
-      node.childLevel.props.label = label;
-      node.childLevel.seedLabel = `node ${node.id} seed ${node.seed}`;
+      node.childLevel = makeLevel(currentLevel().depth + 1, node.seed, `Node ${node.seed % 1000}`);
     }
     levelStack.push(node.childLevel);
-    selectedNode = null;
-    // Once zoomed into a node from network, treat as sphere exploration of main
-    if (exploreContext === 'network') {
-      exploreContext = 'sphere';
-      exploreRootId = 'main';
-    }
     renderBreadcrumb();
     updateZoomOutBtn();
-    updateExploreButtons();
-    renderPropsPanel();
+    transitionAlpha = 0; transitionDir = 1; transitioning = true;
+  }, 260);
+}
+
+// Entering a connected sphere reuses the exact same navigation stack as
+// descending into a node - the satellite's own level becomes "current," its
+// own nodes become clickable to descend further, and the breadcrumb reads
+// straight through: Singularity -> Sphere 2 -> Node 483 -> ... A connected
+// sphere is now as explorable as the main one, not just selectable.
+function enterSatellite(sat) {
+  transitioning = true; transitionDir = -1;
+  setTimeout(() => {
+    levelStack.push(sat.level);
+    renderBreadcrumb();
+    updateZoomOutBtn();
     transitionAlpha = 0; transitionDir = 1; transitioning = true;
   }, 260);
 }
@@ -3992,110 +3699,78 @@ function hitTestNode(mx, my) {
   });
   return closest;
 }
+function hitTestSatelliteNode(mx, my) {
+  for (const sat of satellites) {
+    if (!sat.lastProjected) continue;
+    for (const p of sat.lastProjected) {
+      if (Math.hypot(p.x - mx, p.y - my) < 9) return { sat, node: p.node };
+    }
+  }
+  return null;
+}
+function hitTestSatellite(mx, my) {
+  for (const box of lastSatelliteHitboxes) {
+    if (Math.hypot(mx - box.cx, my - box.cy) < box.r) return box.sat;
+  }
+  return null;
+}
+function hitTestMainSphere(mx, my) {
+  return Math.hypot(mx - CX, my - CY) < R * zoomScale * 0.85;
+}
+
+let dragTarget = null; // null = main/current sphere; or a satellite object being dragged independently
 
 canvas.addEventListener('wheel', e => {
   e.preventDefault();
-  zoomScale += (e.deltaY < 0 ? 1 : -1) * 0.08;
-  zoomScale = Math.max(0.4, Math.min(3.2, zoomScale));
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (W/rect.width), my = (e.clientY - rect.top) * (H/rect.height);
+  const delta = (e.deltaY < 0 ? 1 : -1) * 0.08;
+  const satUnderCursor = (levelStack.length === 1) ? hitTestSatellite(mx, my) : null;
+  if (satUnderCursor) {
+    satUnderCursor.zoomScale = Math.max(0.4, Math.min(3, satUnderCursor.zoomScale + delta));
+  } else {
+    zoomScale = Math.max(0.4, Math.min(3.2, zoomScale + delta));
+  }
 }, { passive: false });
 
 canvas.addEventListener('mousedown', e => {
   const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (W/rect.width), my = (e.clientY - rect.top) * (H/rect.height);
   mouseDownPos = { x: e.clientX, y: e.clientY };
   dragging = true; autoRotate = false;
   lastMouse = { x: e.clientX, y: e.clientY };
+  // Grab whichever sphere the press actually landed on - a satellite rotates
+  // independently if you grab it directly, rather than every drag always
+  // rotating the main sphere regardless of where the cursor is.
+  dragTarget = (levelStack.length === 1) ? hitTestSatellite(mx, my) : null;
 });
 canvas.addEventListener('mousemove', e => {
   const rect = canvas.getBoundingClientRect();
   const mx = (e.clientX - rect.left) * (W/rect.width), my = (e.clientY - rect.top) * (H/rect.height);
   if (dragging) {
     const dx = e.clientX - lastMouse.x, dy = e.clientY - lastMouse.y;
-    currentLevel().rotY += dx * 0.008;
-    currentLevel().rotX += dy * 0.008;
+    const targetLevel = dragTarget ? dragTarget.level : currentLevel();
+    targetLevel.rotY += dx * 0.008;
+    targetLevel.rotX += dy * 0.008;
     lastMouse = { x: e.clientX, y: e.clientY };
   } else {
     const hit = hitTestNode(mx, my);
     hoveredNode = hit;
     const tooltip = document.getElementById('nodeTooltip');
+    const tooltipText = document.getElementById('tooltipText');
     if (hit) {
       const proj = lastProjected.find(p => p.node === hit);
-      const name = hit.label || `node ${hit.id}`;
-      const canExplore = currentLevel().depth < MAX_DEPTH;
-      tooltip.innerHTML = `${name} — seed ${hit.seed} · out <span class="tt-root">${proj.output.toFixed(2)}</span> → digit ${outputToDigit(proj.output)}${canExplore ? ' · click select · again to explore' : ''}`;
+      tooltipText.innerHTML = `node ${hit.seed % 1000} — output <span class="tt-root">${proj.output.toFixed(2)}</span> → digit ${outputToDigit(proj.output)}${currentLevel().depth < MAX_DEPTH ? ' · click to zoom in' : ''}<br><span style="color:var(--ash);font-weight:600;">fractal tree, live:</span>`;
       tooltip.style.left = proj.x + 'px';
       tooltip.style.top = proj.y + 'px';
       tooltip.classList.add('show');
-      canvas.style.cursor = 'pointer';
+      canvas.style.cursor = currentLevel().depth < MAX_DEPTH ? 'pointer' : 'default';
     } else {
       tooltip.classList.remove('show');
       canvas.style.cursor = 'grab';
     }
   }
 });
-function hitTestSatellite(mx, my) {
-  let best = null, bestDist = Infinity;
-  lastSatHits.forEach(h => {
-    const d = Math.hypot(mx - h.cx, my - h.cy);
-    if (d < h.r && d < bestDist) { bestDist = d; best = h.idx; }
-  });
-  return best;
-}
-
-function handleCanvasClick(mx, my) {
-  const now = performance.now();
-  const isDouble = (now - lastClickTime < 350);
-
-  // Network overview: satellites selectable / double-click to enter
-  if (exploreContext === 'network' && levelStack.length === 1) {
-    const satHit = hitTestSatellite(mx, my);
-    if (satHit !== null) {
-      if (isDouble && lastClickTarget === 'sat:' + satHit) {
-        enterSphere(satHit);
-      } else {
-        selectSphere(satHit);
-      }
-      lastClickTime = now;
-      lastClickTarget = 'sat:' + satHit;
-      return;
-    }
-    const distCenter = Math.hypot(mx - CX, my - CY);
-    if (distCenter < R * zoomScale * 0.28) {
-      if (isDouble && lastClickTarget === 'main-center') {
-        enterSphere('main');
-      } else {
-        selectSphere('main');
-      }
-      lastClickTime = now;
-      lastClickTarget = 'main-center';
-      return;
-    }
-  }
-
-  // Node hit — select on first click, explore on second click of same node
-  const hit = hitTestNode(mx, my);
-  if (hit) {
-    if (isDouble && lastClickTarget === 'node:' + hit.id && selectedNode === hit) {
-      zoomIntoNode(hit);
-    } else if (selectedNode === hit && currentLevel().depth < MAX_DEPTH) {
-      // second click (not necessarily double-speed) explores
-      zoomIntoNode(hit);
-    } else {
-      selectNode(hit);
-    }
-    lastClickTime = now;
-    lastClickTarget = 'node:' + hit.id;
-    return;
-  }
-
-  // Empty space clears node selection
-  if (selectedNode) {
-    selectedNode = null;
-    renderPropsPanel();
-  }
-  lastClickTime = now;
-  lastClickTarget = 'empty';
-}
-
 canvas.addEventListener('mouseup', e => {
   dragging = false;
   if (mouseDownPos) {
@@ -4103,24 +3778,42 @@ canvas.addEventListener('mouseup', e => {
     if (moved < 5) {
       const rect = canvas.getBoundingClientRect();
       const mx = (e.clientX - rect.left) * (W/rect.width), my = (e.clientY - rect.top) * (H/rect.height);
-      handleCanvasClick(mx, my);
+      const hit = hitTestNode(mx, my);
+      if (hit) {
+        zoomIntoNode(hit);
+      } else {
+        const satNodeHit = (levelStack.length === 1) ? hitTestSatelliteNode(mx, my) : null;
+        if (satNodeHit) {
+          enterSatellite(satNodeHit.sat);
+        } else {
+          const satHit = hitTestSatellite(mx, my);
+          if (satHit) selectSphere(satHit);
+          else if (hitTestMainSphere(mx, my)) selectSphere(null);
+        }
+      }
     }
   }
   mouseDownPos = null;
+  dragTarget = null;
 });
-window.addEventListener('mouseup', () => { dragging = false; });
+window.addEventListener('mouseup', () => { dragging = false; dragTarget = null; });
 
 canvas.addEventListener('touchstart', e => {
+  const rect = canvas.getBoundingClientRect();
+  const t = e.touches[0];
+  const mx = (t.clientX - rect.left) * (W/rect.width), my = (t.clientY - rect.top) * (H/rect.height);
   dragging = true; autoRotate = false;
-  const t = e.touches[0]; lastMouse = { x: t.clientX, y: t.clientY };
+  lastMouse = { x: t.clientX, y: t.clientY };
   mouseDownPos = { x: t.clientX, y: t.clientY };
+  dragTarget = (levelStack.length === 1) ? hitTestSatellite(mx, my) : null;
 }, {passive:true});
 canvas.addEventListener('touchmove', e => {
   if (!dragging) return;
   const t = e.touches[0];
   const dx = t.clientX - lastMouse.x, dy = t.clientY - lastMouse.y;
-  currentLevel().rotY += dx * 0.008;
-  currentLevel().rotX += dy * 0.008;
+  const targetLevel = dragTarget ? dragTarget.level : currentLevel();
+  targetLevel.rotY += dx * 0.008;
+  targetLevel.rotX += dy * 0.008;
   lastMouse = { x: t.clientX, y: t.clientY };
 }, {passive:true});
 canvas.addEventListener('touchend', e => {
@@ -4131,31 +3824,32 @@ canvas.addEventListener('touchend', e => {
     if (moved < 8) {
       const rect = canvas.getBoundingClientRect();
       const mx = (t.clientX - rect.left) * (W/rect.width), my = (t.clientY - rect.top) * (H/rect.height);
-      handleCanvasClick(mx, my);
+      const hit = hitTestNode(mx, my);
+      if (hit) {
+        zoomIntoNode(hit);
+      } else {
+        const satNodeHit = (levelStack.length === 1) ? hitTestSatelliteNode(mx, my) : null;
+        if (satNodeHit) {
+          enterSatellite(satNodeHit.sat);
+        } else {
+          const satHit = hitTestSatellite(mx, my);
+          if (satHit) selectSphere(satHit);
+          else if (hitTestMainSphere(mx, my)) selectSphere(null);
+        }
+      }
     }
   }
+  dragTarget = null;
 });
 
 document.getElementById('pulseBtn').addEventListener('click', () => { pulseActive = true; pulsePhase = 0; });
-document.getElementById('enterSphereBtn').addEventListener('click', () => {
-  enterSphere(selectedSphere);
-});
 document.getElementById('zoomOutBtn').addEventListener('click', () => {
   if (levelStack.length > 1) {
     transitioning = true; transitionDir = -1;
     setTimeout(() => {
       levelStack.pop();
-      selectedNode = null;
       renderBreadcrumb();
       updateZoomOutBtn();
-      updateExploreButtons();
-      renderPropsPanel();
-      transitionAlpha = 0; transitionDir = 1; transitioning = true;
-    }, 260);
-  } else if (exploreContext === 'sphere') {
-    transitioning = true; transitionDir = -1;
-    setTimeout(() => {
-      exitToNetwork();
       transitionAlpha = 0; transitionDir = 1; transitioning = true;
     }, 260);
   }
@@ -4164,13 +3858,21 @@ document.getElementById('zoomOutBtn').addEventListener('click', () => {
 // ---- Resonance seed controls ----
 document.getElementById('setSeedBtn').addEventListener('click', () => {
   const w = document.getElementById('seedInput').value.trim();
-  if (w) setResonanceSeed(w);
+  if (!w) return;
+  if (selectedSphereRef) {
+    const val = seedFromWord(w) || 1;
+    const heb = computeAll(w);
+    reseedSelectedSphere(val, `"${w}"`, `<div class="weights-line">Word "${w}" → Hebrew ${heb?heb.heb:''} → Hechrachi value ${val}</div>`);
+  } else {
+    setResonanceSeed(w);
+  }
 });
 document.getElementById('seedInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('setSeedBtn').click();
 });
 document.getElementById('useAsSeedBtn').addEventListener('click', () => {
   if (!lastCalcWord) return;
+  selectSphere(null); // this action is explicitly "set the whole system's seed" - always targets main
   setResonanceSeed(lastCalcWord);
   document.getElementById('seedInput').value = lastCalcWord;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4209,7 +3911,7 @@ function currentTarotSeed() {
 }
 document.getElementById('tarotSetBtn').addEventListener('click', () => {
   const r = currentTarotSeed();
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 document.getElementById('tarotRandomBtn').addEventListener('click', () => {
   const isMajor = Math.random() < 0.5;
@@ -4225,7 +3927,7 @@ document.getElementById('tarotRandomBtn').addEventListener('click', () => {
     tarotSuitSelect.value = s; tarotRankSelect.value = rk;
     r = tarotMinorSeed(s, rk);
   }
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 
 // ---- Playing cards ----
@@ -4235,20 +3937,20 @@ const cardRankSelect = document.getElementById('cardRankSelect');
 CARD_RANKS.forEach((r, i) => { const o = document.createElement('option'); o.value = i; o.textContent = r; cardRankSelect.appendChild(o); });
 document.getElementById('cardSetBtn').addEventListener('click', () => {
   const r = playingCardSeed(parseInt(cardSuitSelect.value), parseInt(cardRankSelect.value));
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 document.getElementById('cardRandomBtn').addEventListener('click', () => {
   const s = Math.floor(Math.random() * CARD_SUITS.length), rk = Math.floor(Math.random() * CARD_RANKS.length);
   cardSuitSelect.value = s; cardRankSelect.value = rk;
   const r = playingCardSeed(s, rk);
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 
 // ---- Coin ----
 document.getElementById('coinFlipBtn').addEventListener('click', () => {
   const r = coinFlipSeed();
   document.getElementById('coinResultLabel').textContent = r.label.replace('Coin: ', '');
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 
 // ---- Random number ----
@@ -4256,19 +3958,19 @@ document.getElementById('randomRollBtn').addEventListener('click', () => {
   const min = parseInt(document.getElementById('randMinInput').value) || 1;
   const max = parseInt(document.getElementById('randMaxInput').value) || 999;
   const r = randomNumberSeed(Math.min(min,max), Math.max(min,max));
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 
 // ---- Bits ----
 document.getElementById('bitsSetBtn').addEventListener('click', () => {
   const r = bitsToSeed(document.getElementById('bitsInput').value);
-  if (r) applySeedToSelected(r.value, r.label, r.weights);
+  if (r) reseedSelectedSphere(r.value, r.label, r.weights);
 });
 document.getElementById('bitsRandomBtn').addEventListener('click', () => {
   const bits = Array.from({length:8}, () => Math.random() < 0.5 ? '0' : '1').join('');
   document.getElementById('bitsInput').value = bits;
   const r = bitsToSeed(bits);
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 
 // ---- RGBA ----
@@ -4276,7 +3978,7 @@ document.getElementById('rgbaSetBtn').addEventListener('click', () => {
   const hex = document.getElementById('rgbaColorInput').value;
   const alpha = parseInt(document.getElementById('rgbaAlphaInput').value);
   const r = rgbaToSeed(hex, alpha);
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 document.getElementById('rgbaRandomBtn').addEventListener('click', () => {
   const hex = '#' + Array.from({length:3}, () => Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join('');
@@ -4284,19 +3986,19 @@ document.getElementById('rgbaRandomBtn').addEventListener('click', () => {
   document.getElementById('rgbaColorInput').value = hex;
   document.getElementById('rgbaAlphaInput').value = alpha;
   const r = rgbaToSeed(hex, alpha);
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 
 // ---- Hex ----
 document.getElementById('hexSetBtn').addEventListener('click', () => {
   const r = hexToSeed(document.getElementById('hexInput').value);
-  if (r) applySeedToSelected(r.value, r.label, r.weights);
+  if (r) reseedSelectedSphere(r.value, r.label, r.weights);
 });
 document.getElementById('hexRandomBtn').addEventListener('click', () => {
   const hex = Array.from({length:6}, () => Math.floor(Math.random()*16).toString(16)).join('');
   document.getElementById('hexInput').value = hex;
   const r = hexToSeed(hex);
-  applySeedToSelected(r.value, r.label, r.weights);
+  reseedSelectedSphere(r.value, r.label, r.weights);
 });
 
 // ---- Node count & multi-sphere controls ----
@@ -4304,13 +4006,9 @@ const nodeCountInput = document.getElementById('nodeCountInput');
 document.getElementById('applyNodeCountBtn').addEventListener('click', () => {
   const n = Math.max(4, Math.min(90, parseInt(nodeCountInput.value) || 40));
   nodeCountInput.value = n;
-  const lvl = getSelectedLevel();
-  if (lvl) {
-    regenerateNodes(lvl, n);
-    if (selectedSphere === 'main') configuredNodeCount = n;
-  }
-  renderSpherePicker();
-  updateSelectedBanner();
+  const target = selectedSphereRef ? selectedSphereRef.level : currentLevel();
+  if (!selectedSphereRef) configuredNodeCount = n; // only the main sphere's count becomes the new default for future spheres
+  regenerateNodes(target, n);
 });
 document.getElementById('addSphereBtn').addEventListener('click', () => {
   addSatellite();
@@ -4319,90 +4017,276 @@ document.getElementById('clearSpheresBtn').addEventListener('click', () => {
   clearSatellites();
 });
 updateSatCount();
-renderSpherePicker();
-updateSelectedBanner();
-renderPropsPanel();
-updateExploreButtons();
 document.getElementById('deltaMultiplierSlider').addEventListener('input', e => {
   deltaMultiplier = parseFloat(e.target.value);
   document.getElementById('deltaMultiplierVal').textContent = `${deltaMultiplier}×`;
 });
+document.getElementById('couplingSlider').addEventListener('input', e => {
+  couplingStrength = parseInt(e.target.value) / 100;
+  document.getElementById('couplingVal').textContent = `${e.target.value}%`;
+});
 
-// ---- Fullscreen (entire stage, including HUD) ----
-const simStage = document.getElementById('simStage');
-const fsBtn = document.getElementById('fullscreenBtn');
-function fitCanvasToStage() {
-  if (!simStage) return;
-  const rect = simStage.getBoundingClientRect();
-  const size = Math.floor(Math.min(rect.width, rect.height));
-  if (size > 40) resizeCanvas(size);
+// ---- Dock collapse toggles ----
+document.getElementById('leftDockCollapseBtn').addEventListener('click', () => {
+  const dock = document.getElementById('leftDock');
+  const collapsed = dock.classList.toggle('collapsed');
+  document.getElementById('leftDockCollapseBtn').textContent = collapsed ? '▶' : '◀';
+  resizeIfFullscreen();
+});
+document.getElementById('rightDockCollapseBtn').addEventListener('click', () => {
+  const dock = document.getElementById('rightDock');
+  const collapsed = dock.classList.toggle('collapsed');
+  document.getElementById('rightDockCollapseBtn').textContent = collapsed ? '◀' : '▶';
+  resizeIfFullscreen();
+});
+function resizeIfFullscreen() {
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  if (isFs) setTimeout(() => resizeCanvas(fullscreenCanvasSize()), 260); // wait out the dock's own CSS transition
 }
+document.getElementById('audioCaptionToggle').addEventListener('click', () => {
+  const block = document.getElementById('audioCaptionBlock');
+  const btn = document.getElementById('audioCaptionToggle');
+  const hidden = block.classList.toggle('hidden');
+  btn.textContent = hidden ? '👁 Show description' : '👁 Hide description';
+});
+
+// ---- Dock sub-navigation — each dock (left/right) is its own independent
+// tab group, scoped to that dock only, so selecting a tab on one side never
+// affects the other. ----
+document.querySelectorAll('.dock-subtab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const dock = tab.closest('.sim-dock');
+    dock.querySelectorAll('.dock-subtab').forEach(t => t.classList.remove('active'));
+    dock.querySelectorAll('.dock-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(`dockPanel-${tab.dataset.dockpanel}`).classList.add('active');
+  });
+});
+
+// ---- Fullscreen ----
+const sphereWrap = document.getElementById('sphereWrap');
+const simCockpit = document.getElementById('simCockpit');
+const fsBtn = document.getElementById('fullscreenBtn');
 fsBtn.addEventListener('click', () => {
   if (!document.fullscreenElement) {
-    (simStage.requestFullscreen || simStage.webkitRequestFullscreen)?.call(simStage);
+    (simCockpit.requestFullscreen || simCockpit.webkitRequestFullscreen)?.call(simCockpit);
   } else {
     (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
   }
 });
 document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+function dockWidth(dockId) {
+  const dock = document.getElementById(dockId);
+  return dock.classList.contains('collapsed') ? 40 : dock.getBoundingClientRect().width;
+}
+function fullscreenCanvasSize() {
+  const usedWidth = dockWidth('leftDock') + dockWidth('rightDock') + 60;
+  const availableW = window.innerWidth - usedWidth;
+  const availableH = window.innerHeight - 40;
+  return Math.max(240, Math.min(availableW, availableH));
+}
 function handleFullscreenChange() {
   const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
-  fsBtn.textContent = isFs ? '⤢' : '⛶';
-  requestAnimationFrame(fitCanvasToStage);
+  fsBtn.textContent = isFs ? '⤢ Exit fullscreen' : '⛶ Fullscreen';
+  resizeCanvas(isFs ? fullscreenCanvasSize() : 520);
 }
-window.addEventListener('resize', () => requestAnimationFrame(fitCanvasToStage));
-
-// ---- HUD panel toggles ----
-function setHudPanel(id, open) {
-  const panel = document.querySelector(`[data-hud-panel="${id}"]`);
-  const btn = document.querySelector(`.hud-dock-btn[data-hud="${id}"]`);
-  if (!panel) return;
-  // Signal/seismo can stack with side panels; side panels are exclusive with each other
-  const sideIds = ['inspect', 'seed', 'struct', 'signal'];
-  if (open && sideIds.includes(id)) {
-    sideIds.forEach(other => {
-      if (other === id) return;
-      const p = document.querySelector(`[data-hud-panel="${other}"]`);
-      const b = document.querySelector(`.hud-dock-btn[data-hud="${other}"]`);
-      if (p) p.classList.remove('open');
-      if (b) b.classList.remove('active');
-    });
-  }
-  panel.classList.toggle('open', open);
-  if (btn) btn.classList.toggle('active', open);
-}
-document.querySelectorAll('.hud-dock-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const id = btn.dataset.hud;
-    const panel = document.querySelector(`[data-hud-panel="${id}"]`);
-    const willOpen = panel && !panel.classList.contains('open');
-    setHudPanel(id, willOpen);
-  });
-});
-document.querySelectorAll('[data-hud-close]').forEach(btn => {
-  btn.addEventListener('click', () => setHudPanel(btn.dataset.hudClose, false));
-});
-// Stop wheel/pointer on HUD panels from rotating the sphere underneath
-document.querySelectorAll('.hud-panel, .hud-dock, .hud-top').forEach(el => {
-  el.addEventListener('wheel', e => e.stopPropagation(), { passive: true });
-  el.addEventListener('mousedown', e => e.stopPropagation());
-  el.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+window.addEventListener('resize', () => {
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  if (isFs) resizeCanvas(fullscreenCanvasSize());
 });
 
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   autoRotate = false;
 }
 
-fitCanvasToStage();
 renderBreadcrumb();
 updateZoomOutBtn();
-updateExploreButtons();
-renderPropsPanel();
 initDigitBars();
 initConvergenceTable();
 initSeismograph();
 initSeismoControls();
+
+// ============ INTUITION LOG ============
+// Retrospective-only analysis, by design: the decision text and timestamp are
+// captured first and immutably; the numerology/zodiac/moon-phase reading is
+// computed only after submission and never feeds back into the decision.
+let logEntries = [];
+let pendingEntryId = null;
+
+function digitalRoot(n) {
+  while (n >= 10) n = String(n).split('').reduce((s,c) => s + Number(c), 0);
+  return n;
+}
+function dateNumerology(d) {
+  const m = d.getMonth()+1, day = d.getDate(), y = d.getFullYear();
+  const digits = `${m}${day}${y}`.split('').reduce((s,c) => s + Number(c), 0);
+  return digitalRoot(digits);
+}
+function sunSignFor(d) {
+  const m = d.getMonth()+1, day = d.getDate();
+  const cuts = [[1,20,'Capricorn','Aquarius'],[2,19,'Aquarius','Pisces'],[3,20,'Pisces','Aries'],
+    [4,20,'Aries','Taurus'],[5,21,'Taurus','Gemini'],[6,21,'Gemini','Cancer'],
+    [7,22,'Cancer','Leo'],[8,23,'Leo','Virgo'],[9,23,'Virgo','Libra'],
+    [10,23,'Libra','Scorpio'],[11,22,'Scorpio','Sagittarius'],[12,21,'Sagittarius','Capricorn']];
+  const [cm, cd, before, after] = cuts[m-1];
+  return day < cd ? before : after;
+}
+function moonPhaseFor(d) {
+  const synodic = 29.530588853;
+  const knownNewMoon = Date.UTC(2000,0,6,18,14,0);
+  const days = (d.getTime() - knownNewMoon) / 86400000;
+  const phase = ((days % synodic) + synodic) % synodic;
+  const frac = phase / synodic;
+  const illum = Math.round((1 - Math.cos(frac*2*Math.PI))/2*100);
+  const names = ['New Moon','Waxing Crescent','First Quarter','Waxing Gibbous','Full Moon','Waning Gibbous','Last Quarter','Waning Crescent'];
+  const idx = Math.round(frac*8) % 8;
+  return { name: names[idx], illum };
+}
+
+function initLogDefaults() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  document.getElementById('logDateInput').value = now.toISOString().slice(0,16);
+}
+document.getElementById('logConfidenceInput').addEventListener('input', e => {
+  document.getElementById('logConfidenceVal').textContent = e.target.value;
+});
+
+document.getElementById('logSubmitBtn').addEventListener('click', () => {
+  const decision = document.getElementById('logDecisionInput').value.trim();
+  if (!decision) return;
+  const dateVal = document.getElementById('logDateInput').value;
+  const d = dateVal ? new Date(dateVal) : new Date();
+  const confidence = parseInt(document.getElementById('logConfidenceInput').value);
+
+  const numRoot = dateNumerology(d);
+  const sign = sunSignFor(d);
+  const moon = moonPhaseFor(d);
+
+  const entry = {
+    id: Date.now(),
+    decision, confidence,
+    timestamp: d.toISOString(),
+    numerology: numRoot, sunSign: sign, moonPhase: moon.name, moonIllum: moon.illum,
+    alignment: null,
+  };
+  logEntries.unshift(entry);
+  pendingEntryId = entry.id;
+
+  document.getElementById('retroReadoutWrap').style.display = 'block';
+  document.getElementById('retroReadout').innerHTML = `
+    <div class="retro-item"><div class="ri-label">Date reduces to</div><div class="ri-value">${numRoot}</div></div>
+    <div class="retro-item"><div class="ri-label">Sun sign</div><div class="ri-value">${sign}</div></div>
+    <div class="retro-item"><div class="ri-label">Moon phase</div><div class="ri-value">${moon.name}</div></div>
+    <div class="retro-item"><div class="ri-label">Illumination</div><div class="ri-value">${moon.illum}%</div></div>
+  `;
+  document.querySelectorAll('.align-row button').forEach(b => b.classList.remove('active'));
+
+  document.getElementById('logDecisionInput').value = '';
+  initLogDefaults();
+  renderLog();
+});
+
+document.querySelectorAll('.align-row button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (pendingEntryId === null) return;
+    const entry = logEntries.find(e => e.id === pendingEntryId);
+    if (!entry) return;
+    entry.alignment = btn.dataset.pick;
+    document.querySelectorAll('.align-row button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLog();
+  });
+});
+
+function renderLog() {
+  const wrap = document.getElementById('logTableWrap');
+  const countLabel = document.getElementById('logCountLabel');
+  countLabel.textContent = `${logEntries.length} ${logEntries.length === 1 ? 'entry' : 'entries'}`;
+
+  if (!logEntries.length) {
+    wrap.innerHTML = '<p class="log-empty">No entries yet — this log lives only in this browser tab unless exported.</p>';
+    document.getElementById('logStatsRow').style.display = 'none';
+    return;
+  }
+
+  const marked = logEntries.filter(e => e.alignment && e.alignment !== 'unclear');
+  const yes = marked.filter(e => e.alignment === 'yes').length;
+  const statsRow = document.getElementById('logStatsRow');
+  if (marked.length) {
+    statsRow.style.display = 'grid';
+    statsRow.innerHTML = `
+      <div class="retro-item"><div class="ri-label">Marked entries</div><div class="ri-value">${marked.length}</div></div>
+      <div class="retro-item"><div class="ri-label">Aligned</div><div class="ri-value">${yes}</div></div>
+      <div class="retro-item"><div class="ri-label">Did not align</div><div class="ri-value">${marked.length-yes}</div></div>
+      <div class="retro-item"><div class="ri-label">Alignment rate</div><div class="ri-value">${(yes/marked.length*100).toFixed(0)}%</div></div>
+    `;
+  } else {
+    statsRow.style.display = 'none';
+  }
+
+  const rows = logEntries.map(e => {
+    const dt = new Date(e.timestamp);
+    const dateStr = dt.toLocaleDateString() + ' ' + dt.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    const rowClass = e.alignment === 'yes' ? 'align-yes' : e.alignment === 'no' ? 'align-no' : '';
+    const statusText = e.alignment === 'yes' ? 'Aligned' : e.alignment === 'no' ? 'Did not align' : e.alignment === 'unclear' ? 'Unclear' : '—';
+    return `<tr class="${rowClass}">
+      <td class="decision-cell">${e.decision.replace(/</g,'&lt;')}</td>
+      <td>${dateStr}</td>
+      <td>${e.confidence}/10</td>
+      <td>${e.numerology}</td>
+      <td>${e.sunSign}</td>
+      <td>${e.moonPhase} (${e.moonIllum}%)</td>
+      <td class="status-cell">${statusText}</td>
+      <td><button class="del-entry" data-id="${e.id}">✕</button></td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `<table class="log-table">
+    <thead><tr><th>Decision</th><th>When</th><th>Confidence</th><th>Root</th><th>Sun sign</th><th>Moon</th><th>Alignment</th><th></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+  wrap.querySelectorAll('.del-entry').forEach(btn => {
+    btn.addEventListener('click', () => {
+      logEntries = logEntries.filter(e => e.id !== Number(btn.dataset.id));
+      renderLog();
+    });
+  });
+}
+
+document.getElementById('exportLogBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(logEntries, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `intuition-log-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+document.getElementById('importLogBtn').addEventListener('click', () => {
+  document.getElementById('importLogFile').click();
+});
+document.getElementById('importLogFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = evt => {
+    try {
+      const imported = JSON.parse(evt.target.result);
+      if (Array.isArray(imported)) {
+        const existingIds = new Set(logEntries.map(e => e.id));
+        imported.forEach(e => { if (!existingIds.has(e.id)) logEntries.push(e); });
+        logEntries.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+        renderLog();
+      }
+    } catch (err) { /* silently ignore malformed files */ }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+initLogDefaults();
+
 animate();
 </script>
 </body>
