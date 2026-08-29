@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Schism Explorer — Branching Traditions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+  :root {
+    --iron: #12151a;
+    --iron-2: #181c22;
+    --border: #2a2f38;
+    --border-strong: #3c4250;
+    --parchment: #e9dfc5;
+    --parchment-dim: #cfc7ad;
+    --ash: #7d8494;
+    --signal: #d9a441;
+    --gilt: #c9a35c;
+    --gilt-dim: #8a7a52;
+    --oxblood-bright: #e5675c;
+    --lens-blue: #4fb8d4;
+    --serif: 'IBM Plex Serif', serif;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--iron); color: var(--parchment);
+    font-family: var(--sans); min-height: 100vh;
+  }
+  header {
+    padding: 28px 24px 18px; text-align: center; border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-family: var(--serif); font-size: 28px; font-weight: 600; margin: 0 0 6px;
+    color: var(--parchment);
+  }
+  header p {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ash); max-width: 640px;
+    margin: 0 auto; line-height: 1.6;
+  }
+  .boundary-note {
+    max-width: 720px; margin: 14px auto 0; padding: 10px 16px;
+    background: rgba(217,164,65,0.07); border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--signal); border-radius: 3px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--parchment-dim); line-height: 1.6;
+    text-align: left;
+  }
+  .boundary-note strong { color: var(--signal); }
+
+  .toolbar {
+    display: flex; justify-content: center; align-items: center; gap: 16px;
+    padding: 14px 24px; flex-wrap: wrap; border-bottom: 1px solid var(--border);
+  }
+  .toolbar label {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600; color: var(--parchment-dim);
+    display: flex; align-items: center; gap: 6px;
+  }
+  select {
+    background: var(--iron-2); color: var(--parchment); border: 1px solid var(--border-strong);
+    border-radius: 3px; padding: 5px 9px; font-family: var(--mono); font-size: 11.5px;
+  }
+  .lens-toggle {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 700; color: var(--lens-blue);
+    background: rgba(79,184,212,0.08); border: 1px solid rgba(79,184,212,0.3);
+    padding: 6px 12px; border-radius: 3px; user-select: none;
+  }
+  .lens-toggle input { accent-color: var(--lens-blue); }
+  .lens-toggle.active { background: rgba(79,184,212,0.18); }
+
+  .workspace { display: flex; min-height: 640px; }
+  .tree-area {
+    flex: 1; overflow: hidden; padding: 0; position: relative; cursor: grab; user-select: none;
+    transition: flex 0.25s ease;
+  }
+  .tree-area.dragging { cursor: grabbing; }
+  .tree-area svg { transform-origin: 0 0; will-change: transform; }
+  .zoom-controls {
+    position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 4px; z-index: 5;
+  }
+  .zoom-btn {
+    width: 28px; height: 28px; border-radius: 3px; background: var(--iron-2); border: 1px solid var(--border-strong);
+    color: var(--parchment-dim); font-family: var(--mono); font-size: 14px; cursor: pointer; line-height: 1;
+  }
+  .zoom-btn:hover { border-color: var(--signal); color: var(--signal); }
+  .zoom-level-label {
+    position: absolute; bottom: 10px; right: 12px; font-family: var(--mono); font-size: 10px; color: var(--ash);
+    background: rgba(18,21,26,0.8); padding: 3px 7px; border-radius: 3px; z-index: 5; pointer-events: none;
+  }
+  .node-cause-snippet {
+    font-family: var(--sans); font-size: 8.5px; fill: var(--parchment-dim); pointer-events: none;
+  }
+  .detail-area {
+    flex: 0; width: 0; min-width: 0; border-left: none; padding: 0; overflow: hidden;
+    background: var(--iron-2); position: relative; transition: flex 0.25s ease, width 0.25s ease, min-width 0.25s ease, padding 0.25s ease;
+    white-space: nowrap;
+  }
+  .detail-area.open {
+    flex: 1; width: auto; min-width: 320px; max-width: 420px; border-left: 1px solid var(--border);
+    padding: 20px; overflow-y: auto; white-space: normal;
+  }
+  .detail-close-btn {
+    position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; border-radius: 3px;
+    background: var(--iron); border: 1px solid var(--border-strong); color: var(--parchment-dim);
+    font-size: 11px; cursor: pointer; z-index: 4;
+  }
+  .detail-close-btn:hover { border-color: var(--oxblood-bright); color: var(--oxblood-bright); }
+  @media (max-width: 900px) {
+    .workspace { flex-direction: column; }
+    .detail-area.open { max-width: none; border-left: none; border-top: 1px solid var(--border); }
+  }
+
+  svg { display: block; margin: 0 auto; overflow: visible; }
+  .branch-line { fill: none; stroke: var(--border-strong); stroke-width: 1.6; }
+  .node-circle {
+    cursor: pointer; stroke-width: 2; transition: r 0.15s;
+  }
+  .node-circle:hover { stroke: var(--signal); }
+  .node-circle.selected { stroke: var(--signal); stroke-width: 3; }
+  .node-label {
+    font-family: var(--mono); font-size: 11px; fill: var(--parchment-dim); pointer-events: none;
+    font-weight: 600;
+  }
+  .node-date {
+    font-family: var(--mono); font-size: 8.5px; fill: var(--ash); pointer-events: none;
+  }
+  .lens-annotation {
+    font-family: var(--mono); font-size: 8px; fill: var(--lens-blue); pointer-events: none;
+    font-style: italic;
+  }
+
+  .detail-empty {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ash); text-align: center;
+    margin-top: 60px; line-height: 1.7;
+  }
+  .detail-name {
+    font-family: var(--serif); font-size: 21px; font-weight: 600; color: var(--parchment);
+    margin: 0 0 4px;
+  }
+  .detail-date {
+    font-family: var(--mono); font-size: 12px; color: var(--signal); font-weight: 700;
+    margin: 0 0 16px;
+  }
+  .detail-section { margin-bottom: 16px; }
+  .detail-section h3 {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ash); margin: 0 0 6px; font-weight: 700;
+  }
+  .detail-section p {
+    font-family: var(--sans); font-size: 13.5px; line-height: 1.6; color: var(--parchment-dim);
+    margin: 0;
+  }
+  .detail-section .source {
+    font-family: var(--mono); font-size: 10px; color: var(--ash); margin-top: 4px; display: block;
+  }
+  .lens-box {
+    background: rgba(79,184,212,0.07); border: 1px solid rgba(79,184,212,0.25);
+    border-left: 3px solid var(--lens-blue); border-radius: 3px; padding: 10px 12px;
+    margin-top: 4px;
+  }
+  .lens-box p { color: var(--parchment); font-style: italic; }
+  .lens-box .lens-tag {
+    font-family: var(--mono); font-size: 9px; font-weight: 800; color: var(--lens-blue);
+    letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 4px;
+  }
+  .seed-link {
+    display: inline-block; margin-top: 8px; font-family: var(--mono); font-size: 10.5px;
+    font-weight: 700; color: var(--iron); background: var(--lens-blue);
+    padding: 6px 11px; border-radius: 3px; text-decoration: none; font-style: normal;
+  }
+  .seed-link:hover { background: #6cc9e0; }
+  /* ---------- Tarot-style flippable node card ---------- */
+  .mc-scene { width: 100%; height: 100%; perspective: 500px; }
+  .mc-inner {
+    position: relative; width: 100%; height: 100%; cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.15s;
+    transform-style: preserve-3d;
+  }
+  .mc-inner.flipped { transform: rotateY(180deg); }
+  .mini-card {
+    position: absolute; inset: 0; box-sizing: border-box; backface-visibility: hidden;
+    border-radius: 6px; border: 1.5px solid var(--border-strong);
+    background: linear-gradient(160deg, var(--iron-2) 0%, var(--iron) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 6px 4px; overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: var(--sans);
+  }
+  .mc-inner:hover .mini-card { border-color: var(--gilt); }
+  .mini-card.root { border-color: var(--signal); }
+  .mc-inner.flipped .mini-card { border-color: var(--signal); box-shadow: 0 0 0 2px rgba(217,164,65,0.35), 0 4px 14px rgba(0,0,0,0.4); }
+  .mini-card .mc-icon { font-size: 20px; color: var(--signal); line-height: 1; margin-bottom: 3px; }
+  .mini-card .mc-name { font-size: 9px; font-weight: 700; color: var(--parchment); line-height: 1.2; }
+  .mini-card .mc-date { font-family: var(--mono); font-size: 7px; color: var(--gilt-dim); margin-top: 2px; }
+  .mini-card .mc-snippet { font-size: 6.5px; color: var(--ash); line-height: 1.25; margin-top: 3px; }
+  .mini-card.tier0 { padding: 2px; }
+  .mc-back { transform: rotateY(180deg); justify-content: space-between; padding: 8px 6px; }
+  .mc-back .mc-back-name { font-size: 8px; font-weight: 700; color: var(--signal); line-height: 1.15; }
+  .mc-back .mc-back-snippet { font-size: 7px; color: var(--parchment-dim); line-height: 1.3; flex: 1; margin: 4px 0; overflow: hidden; }
+  .mc-explore-btn {
+    font-family: var(--mono); font-size: 6.5px; font-weight: 700; letter-spacing: 0.03em;
+    background: var(--signal); color: var(--iron); border: none; border-radius: 3px;
+    padding: 3px 5px; cursor: pointer; width: 100%;
+  }
+  .mc-explore-btn:hover { background: #e8bc63; }
+  .mini-card.tier0 .mc-icon { font-size: 16px; margin-bottom: 0; }
+
+  .tarot-card-scene {
+    width: 100%; max-width: 300px; height: 440px; margin: 4px auto 18px;
+    perspective: 1400px;
+  }
+  .tarot-card {
+    position: relative; width: 100%; height: 100%; cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .tarot-card.flipped { transform: rotateY(180deg); }
+  .tarot-face {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border-radius: 10px; border: 2px solid var(--gilt-dim);
+    background: linear-gradient(160deg, var(--iron-2) 0%, var(--iron) 100%);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .tarot-face::before {
+    content: ''; position: absolute; inset: 8px; border: 1px solid var(--gilt-dim);
+    border-radius: 6px; pointer-events: none; opacity: 0.5;
+  }
+  .tarot-corner {
+    position: absolute; width: 16px; height: 16px; border: 1px solid var(--signal); opacity: 0.7;
+  }
+  .tarot-corner.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+  .tarot-corner.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+  .tarot-corner.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+  .tarot-corner.br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+  .tarot-front { align-items: center; justify-content: space-between; padding: 26px 18px; text-align: center; }
+  .tarot-kicker {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gilt-dim); margin-top: 4px;
+  }
+  .tarot-icon {
+    font-size: 56px; color: var(--signal); text-shadow: 0 0 18px rgba(217,164,65,0.4);
+    margin: 18px 0;
+  }
+  .tarot-name { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--parchment); line-height: 1.25; }
+  .tarot-date { font-family: var(--mono); font-size: 11px; color: var(--gilt); margin-top: 6px; }
+  .tarot-flip-hint {
+    font-family: var(--mono); font-size: 9px; color: var(--ash); letter-spacing: 0.05em;
+    margin-top: auto; padding-top: 10px;
+  }
+
+  .tarot-back { transform: rotateY(180deg); padding: 16px 16px 14px; }
+  .tarot-back-header {
+    font-family: var(--serif); font-size: 14px; font-weight: 600; color: var(--signal);
+    text-align: center; padding-bottom: 8px; border-bottom: 1px solid var(--border-strong);
+    margin-bottom: 8px; flex-shrink: 0;
+  }
+  .tarot-back-scroll { flex: 1; overflow-y: auto; padding-right: 4px; }
+  .tarot-back-scroll h4 {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ash); margin: 10px 0 4px;
+  }
+  .tarot-back-scroll h4:first-child { margin-top: 0; }
+  .tarot-back-scroll p { font-family: var(--sans); font-size: 12px; line-height: 1.55; color: var(--parchment-dim); margin: 0; }
+  .tarot-back-scroll .tarot-source { font-family: var(--mono); font-size: 9.5px; color: var(--ash); display: block; margin-top: 4px; }
+  .tarot-back-scroll .tarot-lens { background: rgba(79,184,212,0.08); border-left: 2px solid var(--lens-blue); padding: 7px 9px; margin-top: 4px; border-radius: 2px; }
+  .tarot-back-scroll .tarot-lens p { color: var(--parchment); font-style: italic; }
+  .tarot-back-scroll .seed-link { display: inline-block; margin-top: 6px; }
+  .tarot-flip-back-hint {
+    font-family: var(--mono); font-size: 8.5px; color: var(--ash); text-align: center;
+    padding-top: 6px; flex-shrink: 0;
+  }
+
+  .breadcrumb-path {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ash); margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .breadcrumb-path .crumb { color: var(--gilt-dim); }
+  .breadcrumb-path .crumb.last { color: var(--parchment); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Schism Explorer</h1>
+  <p>A branching-tree tool for exploring how real religious and mystic traditions have split, historically — each node sourced to actual events and documented causes, not invented for this tool.</p>
+  <div class="boundary-note">
+    <strong>What this tool is, and isn't:</strong> the tree shape and dates are real history. The optional "Structural Lens" below offers descriptive language from a separate philosophical model — about branching, inheritance, and shared origin in general — as a way of narrating what a tree diagram already shows. It never labels any tradition as more "authentic," "derivative," or "correct" than another, and it doesn't algorithmically sort real denominations into roles. That kind of judgment isn't something a tool should hand down about traditions people actually hold as their faith.
+  </div>
+</header>
+
+<div class="toolbar">
+  <label>Tradition:
+    <select id="traditionSelect">
+      <option value="christianity">Christianity</option>
+      <option value="judaism">Judaism</option>
+      <option value="islam">Islam (with Sufism)</option>
+      <option value="buddhism">Buddhism (early schools)</option>
+      <option value="hinduism">Hinduism (Vedanta schools)</option>
+      <option value="jainism">Jainism</option>
+      <option value="westernEsotericism">Western Esotericism → Chaos Magic</option>
+      <option value="theosophy">Theosophy → Anthroposophy</option>
+      <option value="satanism">Satanism (LaVeyan → Temple of Set)</option>
+      <option value="babism">Bábism → Baháʼí Faith</option>
+      <option value="wicca">Wicca &amp; Modern Paganism</option>
+    </select>
+  </label>
+  <div class="lens-toggle" id="lensToggle">
+    <input type="checkbox" id="lensCheckbox">
+    <span>◆ Structural Lens (descriptive only)</span>
+  </div>
+</div>
+<p style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--ash);margin:0 0 8px;">Lens seed links open resonating-singularity.html — keep both files in the same folder for the link to resolve.</p>
+
+<div class="workspace">
+  <div class="tree-area" id="treeArea">
+    <div id="svgContainer"></div>
+    <div class="zoom-controls">
+      <button class="zoom-btn" id="zoomInBtn" title="Zoom in">+</button>
+      <button class="zoom-btn" id="zoomOutBtn" title="Zoom out">−</button>
+      <button class="zoom-btn" id="zoomResetBtn" title="Reset view">⌂</button>
+    </div>
+    <div class="zoom-level-label" id="zoomLevelLabel">100%</div>
+  </div>
+  <div class="detail-area" id="detailArea">
+    <button class="detail-close-btn" id="detailCloseBtn" title="Close">✕</button>
+    <div id="detailContent">
+      <p class="detail-empty">Click a card to flip it for a quick preview.<br>Use "Explore further" on the back for full documented history.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA — every "cause" field is a real, sourced historical claim.
+// "lens" fields are separate, clearly-marked, generic structural
+// commentary — never a judgment about which branch is more authentic.
+// ============================================================
+
+const TREES = {
+
+christianity: {
+  id: 'early-christianity', name: 'Early Christianity', date: '~30–451 CE',
+  cause: 'The apostolic movement following Jesus of Nazareth, spreading through the Roman Mediterranean and defining its core doctrines across the first four ecumenical councils (Nicaea 325, Constantinople 381, Ephesus 431, Chalcedon 451).',
+  source: 'Standard historical consensus; see any general history of early Christianity.',
+  lens: 'The one point in this tree with no branch feeding into it from elsewhere shown here — everything below traces back to this single root.',
+  children: [
+    {
+      id: 'oriental-orthodox', name: 'Oriental Orthodoxy', date: '451 CE',
+      cause: 'Rejected the Council of Chalcedon\'s formula on the nature of Christ (miaphysite vs. dyophysite Christology). Includes the Coptic, Armenian, Syriac, and Ethiopian churches.',
+      source: 'Council of Chalcedon, 451 CE; standard Christological historiography.',
+      lens: 'A branch that split earliest of all shown here, and has carried a continuous, distinct liturgical tradition — Coptic and Armenian rites — for over 1,500 years since.',
+      children: []
+    },
+    {
+      id: 'chalcedonian', name: 'Chalcedonian Christianity', date: '451–1054 CE',
+      cause: 'Accepted the Council of Chalcedon\'s Christological formula; the majority Roman and Byzantine church going forward.',
+      source: 'Council of Chalcedon, 451 CE.',
+      lens: 'Everything in this tree from here down descends from one still-unified trunk before its own major split six centuries later.',
+      children: [
+        {
+          id: 'catholic', name: 'Roman Catholic Church', date: '1054 CE (Great Schism)',
+          cause: 'Split from Eastern Orthodoxy over papal authority (Rome claimed jurisdiction over all patriarchs; the East held Rome\'s primacy was honorary only) and the Filioque clause added to the Nicene Creed (whether the Holy Spirit proceeds from the Father alone, or "and the Son"). Mutual excommunications exchanged in 1054; the breach became permanent after the sack of Constantinople in 1204.',
+          source: 'Runciman, "The Eastern Schism" (1955); multiple concurrent historical accounts.',
+          lens: 'Retains the Filioque and papal primacy the Eastern church rejected — a difference in the very inheritance both branches claim from the same pre-1054 root.',
+          children: [
+            {
+              id: 'lutheran', name: 'Lutheranism', date: '1517 CE',
+              cause: 'Martin Luther\'s Ninety-five Theses (Oct. 31, 1517) protested the sale of indulgences and argued salvation comes through faith alone (sola fide) and scripture alone (sola scriptura), not through the Church\'s mediation. Excommunicated in 1521.',
+              source: 'Luther, "Ninety-five Theses" (1517); Diet of Worms records (1521).',
+              lens: 'Kept much of the older liturgical structure while rejecting the authority that had governed it — inheritance and departure at once.',
+              children: []
+            },
+            {
+              id: 'reformed', name: 'Reformed / Calvinist tradition', date: '~1536 CE',
+              cause: 'John Calvin\'s "Institutes of the Christian Religion" (1536) systematized a distinct theology emphasizing God\'s sovereignty and predestination, organizationally distinct from Lutheranism from early on.',
+              source: 'Calvin, "Institutes of the Christian Religion" (1536, expanded 1559).',
+              lens: '',
+              children: []
+            },
+            {
+              id: 'anabaptist', name: 'Anabaptist (Radical Reformation)', date: '1525, Zurich',
+              cause: 'A group around Conrad Grebel broke from Ulrich Zwingli\'s own reform movement over infant baptism, arguing baptism should only follow a personal, adult confession of faith ("believer\'s baptism") — radical enough that both Catholic and mainstream Protestant authorities persecuted the movement.',
+              source: 'Standard Radical Reformation historiography.',
+              lens: 'A split from a split — this branch broke from Zwingli\'s reform movement, which had itself already broken from Rome, showing the same fracturing pattern recurring one generation deeper.',
+              children: [
+                {
+                  id: 'baptist', name: 'Baptist tradition', date: 'early 17th century, England/Netherlands',
+                  cause: 'English separatists including John Smyth, influenced by Anabaptist theology encountered in exile in Amsterdam, formed congregations built on adult believer\'s baptism and congregational (rather than hierarchical) church governance.',
+                  source: 'Standard Baptist historiography.',
+                  lens: '',
+                  children: [
+                    {
+                      id: 'saddleback', name: 'Saddleback Church (post-SBC)', date: '2023',
+                      cause: 'Founded by Rick Warren in 1980 as a Southern Baptist Convention church, growing into one of the largest churches in the country. In 2023, following Warren\'s retirement and the appointment of a married couple, Andy and Stacie Wood, as co-pastors, the SBC\'s executive committee expelled Saddleback along with several other churches specifically over the installation of women as senior or lead pastors — a practice the SBC\'s statement of faith excludes.',
+                      source: 'Multiple 2023 news reports (Yahoo News/wire coverage citing Nashville Tennessean and New York Times reporting).',
+                      lens: 'One of the very few splits in this entire tool driven by a single, specific, named policy dispute (women in the senior pastorate) rather than a broader doctrinal system — narrow in cause, but decisive in consequence.',
+                      children: []
+                    },
+                    {
+                      id: 'pentecostal', name: 'Pentecostalism (Azusa Street Revival)', date: '1906, Los Angeles',
+                      cause: 'The Azusa Street Revival, led by William J. Seymour — a Black Holiness preacher trained by Charles Parham — emphasized direct, ecstatic experience of the Holy Spirit, including speaking in tongues (glossolalia) as "initial evidence" of Spirit baptism, as normative Christian practice rather than a historical relic. The revival was explicitly, deliberately interracial from its start.',
+                      source: 'AG.org official history; standard Pentecostal historiography.',
+                      lens: 'The furthest descendant from the original root shown anywhere in this Christianity tree, and every branch below it splits again, often more than once — Pentecostalism has fractured more, faster, than any other lineage in this whole tool.',
+                      children: [
+                        {
+                          id: 'cogic', name: 'Church of God in Christ (COGIC)', date: '1897 founded, 1907 reorganized as Pentecostal',
+                          cause: 'Founded by Charles Harrison Mason, a Black Holiness preacher expelled from his Baptist church over his sanctification teaching. After experiencing Spirit baptism at Azusa Street in 1906, Mason reorganized COGIC as a Holiness-Pentecostal body in 1907. Because COGIC held the only Pentecostal state charter in the country at the time, it ordained both Black and white ministers through 1914 — Mason personally ordained hundreds of white Pentecostal preachers.',
+                          source: 'Tennessee Encyclopedia ("Church of God in Christ," "Charles Harrison Mason"); Wikipedia.',
+                          lens: 'For seven years, this single branch was the only legal channel through which the entire, later-fractured Pentecostal movement in America could be ordained at all — nearly everything else in this subtree owes its earliest legal existence to it.',
+                          children: [
+                            {
+                              id: 'coc-holiness', name: 'Church of Christ (Holiness) U.S.A.', date: '1907',
+                              cause: 'C.P. Jones, a close early collaborator of Mason\'s, rejected the new Pentecostal teaching on speaking in tongues and led a group that split away, retaining the older Holiness theology without the Pentecostal distinctive.',
+                              source: 'Wikipedia, "Church of God in Christ."',
+                              lens: 'The one branch in this whole subtree that split by refusing the very thing (tongues) that defines everything around it as "Pentecostal" at all.',
+                              children: []
+                            },
+                            {
+                              id: 'aog', name: 'Assemblies of God (AOG)', date: '1914, Hot Springs, Arkansas',
+                              cause: 'Approximately 300 white ministers — many of them licensed through COGIC out of legal necessity — met at Hot Springs, Arkansas and formed a separate, white-led organization. Multiple independent sources describe this explicitly as a split along racial lines, accelerated by Jim Crow-era social pressure; remarkably, Mason himself traveled to Hot Springs and preached a blessing over the new organization\'s founding meeting.',
+                              source: 'FamilySearch; Tennessee Encyclopedia; NCpedia; BlackPast.org — consistent across multiple independent sources.',
+                              lens: 'One of the most direct cases in this entire tool of a split driven by social and racial pressure rather than doctrinal disagreement — the two bodies\' actual beliefs were, at the moment of separation, nearly identical.',
+                              children: [
+                                {
+                                  id: 'oneness', name: 'Oneness Pentecostalism ("Jesus Only")', date: '1916',
+                                  cause: 'Beginning in 1913 with R.E. McAlister, a minority of ministers rejected Trinitarian doctrine, teaching instead that God is one person manifesting as Father, Son, and Holy Spirit, and that baptism should be performed "in the name of Jesus" only. In October 1916, AOG\'s General Council decisively rejected this view and adopted a formal Trinitarian statement of faith, forcing 156 ministers — over a quarter of those present — to withdraw.',
+                                  source: 'Christianity Today ("Dividing Over Oneness"); Wikipedia, "Pentecostal Assemblies of the World"; NAMB.',
+                                  lens: 'A doctrinal fork this sharp — not a matter of degree, a direct contradiction (one God-person vs. three) — appears elsewhere in this tool only in the Filioque dispute and the LaVeyan/Temple of Set split.',
+                                  children: [
+                                    {
+                                      id: 'paw', name: 'Pentecostal Assemblies of the World (PAW)', date: '1917–1919',
+                                      cause: 'Formed by the withdrawing Oneness ministers at Eureka Springs, Arkansas, led by Garfield Thomas Haywood — formerly the leading African-American pastor within AOG itself. PAW\'s early leadership was interracial, at a time when Pentecostal organizations elsewhere were separating along racial lines.',
+                                      source: 'Wikipedia, "Pentecostal Assemblies of the World."',
+                                      lens: 'A striking counter-current to the AOG/COGIC split shown above it in this tree — the same period that fractured Pentecostalism along racial lines here produced its opposite.',
+                                      children: [
+                                        {
+                                          id: 'upci', name: 'United Pentecostal Church International (UPCI)', date: '1945, St. Louis',
+                                          cause: 'Formed by the merger of two of the many Oneness Pentecostal bodies that had proliferated after 1916 — the Pentecostal Church, Inc. and the Pentecostal Assemblies of Jesus Christ. Today the largest Oneness Pentecostal denomination.',
+                                          source: 'LearnReligions; Wikipedia, "United Pentecostal Church International."',
+                                          lens: '',
+                                          children: []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  id: 'charismatic', name: 'Charismatic Movement', date: '1960s onward',
+                                  cause: 'Beginning prominently with Episcopal priest Dennis Bennett\'s 1960 announcement of his own Spirit baptism, Pentecostal-style practice — tongues, healing, prophecy — spread directly into mainline Protestant and Catholic congregations. Unlike earlier Pentecostal splits, participants generally did not leave their existing denominations to form new ones.',
+                                  source: 'Standard Charismatic Renewal historiography.',
+                                  lens: 'The one branch in this entire Pentecostal subtree that spread without splitting — practice crossed denominational boundaries while institutional membership stayed exactly where it was.',
+                                  children: [
+                                    {
+                                      id: 'charismatic-baptist', name: 'Charismatic Baptists', date: '1960s–70s onward',
+                                      cause: 'Individual Baptist congregations and networks that adopted charismatic practice (tongues, prophecy, healing) while remaining institutionally and doctrinally Baptist on baptism and church governance — a movement within Baptist life rather than a single denomination with one founding date.',
+                                      source: 'General Charismatic Renewal historiography as applied within Baptist life; no single founding event, unlike most other nodes in this tool.',
+                                      lens: 'Structurally different from every other node in this tree: there is no single split date here because nothing formally split — this is a current running through existing congregations, not a new branch growing beside them.',
+                                      children: []
+                                    },
+                                    {
+                                      id: 'grace-message', name: '"The Grace Message" (Malcolm Smith)', date: '1960s–70s onward',
+                                      cause: 'Malcolm Smith, an English-born pastor active in the U.S. charismatic renewal from the 1960s onward, taught that the center of the gospel is God\'s unconditional covenant love rather than performance-based obedience — foundational to what later teachers (Joseph Prince and others) expanded into "Hyper-Grace" theology, emphasizing grace and eternal security.',
+                                      source: 'Malcolm Smith ministry biography (Harrison House, Global Grace Seminary); Wikipedia, "Hyper-Grace theology."',
+                                      lens: 'Not a formal institutional split at all — a teaching emphasis that spread the same way the Charismatic Movement itself did, across denominational lines rather than by forming a new one.',
+                                      children: []
+                                    },
+                                    {
+                                      id: 'word-of-faith', name: 'Word of Faith Movement', date: '1960s onward',
+                                      cause: 'Traced by scholars to independent evangelist E.W. Kenyon (1867–1948), whose ideas on faith and "positive confession" were substantially expanded by Kenneth Hagin, who founded Kenneth Hagin Ministries in 1963 and RHEMA Bible Training College in 1974, teaching that believers can obtain health and financial prosperity through faith and spoken confession. Kenneth Copeland, who studied directly under Hagin, founded Kenneth Copeland Ministries in 1973 and remains among the movement\'s most prominent teachers; Jesse Duplantis is a closely associated contemporary of Copeland\'s within the same teaching lineage.',
+                                      source: 'Wikipedia, "Word of Faith" and "Kenneth E. Hagin"; Encyclopedia.com.',
+                                      lens: 'The clearest teacher-to-teacher lineage in this whole subtree — Kenyon to Hagin to Copeland is a direct chain of personal mentorship, not an institutional schism with a cause and a date.',
+                                      children: []
+                                    },
+                                    {
+                                      id: 'calvary-chapel', name: 'Calvary Chapel (Jesus Movement)', date: '1965, Costa Mesa, California',
+                                      cause: 'Chuck Smith opened his small congregation to the 1960s hippie counterculture, sparking explosive growth during the "Jesus Movement." Distinct from full Charismatic practice: Smith was notably cautious about tongues and prioritized Bible teaching, even as his own staff (evangelist Lonnie Frisbee prominently among them) pushed the congregation toward more overtly charismatic expression.',
+                                      source: 'World Religions and Spirituality Project ("Calvary Chapel"); Encyclopedia of Cults, Sects, and New Religious Movements.',
+                                      lens: 'Sits oddly in this Charismatic subtree by its own founder\'s design — Smith deliberately held back from full charismatic practice, which is precisely what caused the branch below it to break away.',
+                                      children: [
+                                        {
+                                          id: 'vineyard', name: 'Association of Vineyard Churches', date: '1982',
+                                          cause: 'John Wimber, pastoring a fast-growing Calvary Chapel in Yorba Linda, increasingly emphasized "signs and wonders" — healing, prophecy, direct charismatic experience. Calvary Chapel leadership found this unwelcome; by mutual agreement, Wimber\'s church left Calvary Chapel and joined Kenn Gulliksen\'s existing, smaller "Vineyard" fellowship, which Wimber then led into major growth.',
+                                          source: 'Vineyard USA official history; Wikipedia, "Association of Vineyard Churches"; multiple concurrent sources.',
+                                          lens: 'A split between two branches that remain, by most accounts, on genuinely amicable terms — rare in this tool, where most divergence carries lasting institutional hostility.',
+                                          children: []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      id: 'cfan', name: 'Christ for all Nations (CfaN)', date: '1974, Lesotho',
+                                      cause: 'Founded by German missionary Reinhard Bonnke and his wife Anni while serving in Lesotho, growing into one of the largest evangelistic organizations in Africa — Bonnke\'s open-air crusades reportedly drew individual audiences over 1.6 million people, with the ministry claiming tens of millions of documented conversions.',
+                                      source: 'Wikipedia, "Christ for all Nations"; BBC obituary; CfaN official biography.',
+                                      lens: 'Not a split from anything — a missionary and evangelistic ministry that grew directly out of the charismatic emphasis on large-scale, public, expectant evangelism rather than out of any institutional disagreement.',
+                                      children: []
+                                    }
+                                  ]
+                                },
+                                {
+                                  id: 'swaggart', name: 'Jimmy Swaggart Ministries', date: '1988',
+                                  cause: 'Jimmy Swaggart, ordained by AOG in 1961 and one of the most-watched televangelists of the 1980s, was defrocked in April 1988 after publicly confessing to soliciting prostitutes — a scandal that surfaced after Swaggart exposed a fellow AOG minister for adultery, prompting that minister to retaliate with evidence of Swaggart\'s own conduct. Swaggart continued ministry independently rather than seeking readmission.',
+                                  source: 'Britannica; 64 Parishes; Washington Post (contemporary 1988 reporting).',
+                                  lens: 'Unlike every doctrinal split in this subtree, nothing about belief changed here at all — the break was disciplinary, over conduct, and the ministry that resulted teaches essentially what AOG already taught.',
+                                  children: []
+                                },
+                                {
+                                  id: 'hillsong', name: 'Hillsong Church', date: '1983 founded; 1999–2001 formal merger and renaming',
+                                  cause: 'Grew from the Sydney Christian Life Centre, an AOG Australia congregation, under Frank Houston. In 1999, senior pastoral staff merged Sydney CLC with Hills Christian Life Centre, led by Frank\'s son Brian Houston, becoming Hillsong Church by 2001. Frank Houston\'s ministry career ended in 1999 after church leaders learned of his sexual abuse of children, documented later by Australia\'s Royal Commission into Institutional Responses to Child Sexual Abuse; Brian Houston resigned from Hillsong in 2022 amid allegations he had concealed his father\'s conduct for years.',
+                                  source: 'Wikipedia, "Frank Houston"; Australian Royal Commission into Institutional Responses to Child Sexual Abuse (2015 report).',
+                                  lens: 'The most serious institutional failure documented anywhere in this tool — included because it is a real, publicly investigated part of this church\'s founding history, not to dwell on it further than the historical record requires.',
+                                  children: []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          id: 'cog-cleveland', name: 'Church of God (Cleveland, Tennessee)', date: '1886 founded, 1907 named, 1908 Pentecostal',
+                          cause: 'A separate root from Azusa Street, predating it: founded 1886 in Appalachia by Baptist minister Richard Spurling as the Christian Union, deliberately rejecting fixed creeds. Renamed Church of God in 1907; A.J. Tomlinson, elected general overseer in 1909, brought the young movement into explicit Pentecostal practice after his own 1908 Spirit baptism.',
+                          source: 'Britannica, "Church of God"; Tennessee Encyclopedia; Wikipedia, "Church of God (Charleston, Tennessee)."',
+                          lens: 'Unlike everything else in this subtree, this branch didn\'t descend from Azusa Street at all — it arrived at the same practice independently, twenty years earlier, from a different root entirely.',
+                          children: [
+                            {
+                              id: 'cogop', name: 'Church of God of Prophecy', date: '1923',
+                              cause: 'A.J. Tomlinson was impeached over lax financial bookkeeping (not doctrine or immorality) and removed as general overseer. Congregations loyal to Tomlinson formed a rival body, court-ordered in 1952 to add "of Prophecy" to its name since it still considered itself the original Church of God.',
+                              source: 'Tennessee Encyclopedia, "Church of God of Prophecy"; ReligionFacts.',
+                              lens: 'Both bodies claim the exact same history up to 1923 and still dispute, in effect, which one is the "real" continuation of a single shared root — an ownership dispute over identity itself, not over belief.',
+                              children: [
+                                {
+                                  id: 'cog-huntsville', name: 'Church of God (Huntsville, Alabama)', date: '1944',
+                                  cause: 'A further split from the Church of God of Prophecy.',
+                                  source: 'Wikipedia, "Church of God of Prophecy" (Separations).',
+                                  lens: '',
+                                  children: []
+                                },
+                                {
+                                  id: 'cog-jerusalem-acres', name: 'Church of God (Jerusalem Acres)', date: '1957',
+                                  cause: 'A further split from the Church of God of Prophecy.',
+                                  source: 'Wikipedia, "Church of God of Prophecy" (Separations).',
+                                  lens: '',
+                                  children: []
+                                },
+                                {
+                                  id: 'cog-charleston', name: 'Church of God (Charleston, Tennessee)', date: '1993',
+                                  cause: 'The most recent split shown in this entire tool — a further division from the Church of God of Prophecy over the process by which a new general overseer was selected, which one faction held had departed from historic "theocratic government."',
+                                  source: 'Wikipedia, "Church of God of Prophecy" and "Church of God (Charleston, Tennessee)."',
+                                  lens: 'The newest branch anywhere in this whole tool — a single, unbroken chain of splits over church governance running from 1886 all the way to 1993, four generations deep.',
+                                  children: []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          id: 'crc-churches', name: 'CRC Churches International (Christian Revival Crusade)', date: '1944–45, Australia/New Zealand',
+                          cause: 'Founded by Leo Harris with Thomas Foster, a Finished Work Pentecostal denomination built independently in Australia and New Zealand rather than through the American Azusa Street lineage directly — reflecting Pentecostalism\'s near-simultaneous, sometimes independent emergence in multiple countries.',
+                          source: 'Wikipedia, "CRC Churches International."',
+                          lens: 'A reminder that this whole subtree, however deep, is still only the American branch of a movement that took root independently on other continents around the same time.',
+                          children: []
+                        },
+                        {
+                          id: 'apostolic-church-christ', name: 'Apostolic Church of Christ (Pentecostal)', date: '1969, Winston-Salem, North Carolina',
+                          cause: 'Founded by Johnnie Draft and Wallace Snow, both formerly of the Church of God (Apostolic), an earlier Oneness Pentecostal body. The two organizations differ mainly in polity — this one centralized church property and authority under an executive board rather than individual congregations.',
+                          source: 'Wikipedia, "Apostolic Church of Christ (Pentecostal)."',
+                          lens: 'A split where the stated cause is entirely structural — how authority and property are held — with no claimed doctrinal disagreement at all, unusual for how explicit that\'s stated to be.',
+                          children: []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: 'anglican', name: 'Church of England (Anglican)', date: '1534 CE',
+              cause: 'King Henry VIII broke from Rome after Pope Clement VII refused to annul his marriage to Catherine of Aragon. The Act of Supremacy (1534) made the English monarch head of the church.',
+              source: 'Act of Supremacy, 1534; standard Tudor historiography.',
+              lens: 'A split driven initially by a political and dynastic dispute rather than doctrine — the theological distinctions were substantially worked out afterward, not before.',
+              children: [
+                {
+                  id: 'methodist', name: 'Methodism', date: '18th century',
+                  cause: 'John Wesley\'s revival movement within the Church of England, emphasizing personal holiness and methodical spiritual discipline, formally separated after his death (1791).',
+                  source: 'Standard Wesleyan historiography.',
+                  lens: '',
+                  children: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'orthodox', name: 'Eastern Orthodox Church', date: '1054 CE (Great Schism)',
+          cause: 'Split from Rome over the same 1054 dispute: rejected papal universal jurisdiction (holding the Pope\'s primacy to be one of honor, not authority) and rejected the Filioque addition to the Nicene Creed as an unauthorized alteration.',
+          source: 'Patriarch Michael Cerularius\'s 1054 council records; Runciman (1955).',
+          lens: 'Retains the original, unamended Nicene Creed wording both branches once shared before 1054.',
+          children: []
+        }
+      ]
+    }
+  ]
+},
+
+buddhism: {
+  id: 'early-sangha', name: 'Early Buddhist Sangha', date: '~5th century BCE – 3rd century BCE',
+  cause: 'The community founded around the teachings of Siddhartha Gautama; the First Council (Rajgir) compiled his teachings shortly after his death.',
+  source: 'Pali Canon accounts; standard early Buddhist historiography.',
+  lens: 'The single root every branch below eventually traces back to, regardless of how differently each later interpreted the same original teaching.',
+  children: [
+    {
+      id: 'theravada', name: 'Theravāda', date: '~3rd century BCE',
+      cause: 'Emerged from the Sthavira ("Elders") faction after the Second Council\'s disputes over monastic discipline (vinaya); emphasizes the Pali Canon and the historical Buddha\'s recorded teaching as the primary path.',
+      source: 'Standard Buddhist Councils historiography (Second Council, Vaishali).',
+      lens: '',
+      children: []
+    },
+    {
+      id: 'mahayana', name: 'Mahāyāna', date: '~1st century BCE – 1st century CE',
+      cause: 'Developed additional scriptures (sutras) and doctrines — notably the bodhisattva ideal of delaying one\'s own liberation to help all beings — not accepted as authoritative by Theravāda.',
+      source: 'Standard Mahāyāna historiography; the dating and origins remain debated among historians.',
+      lens: 'Added new texts to the shared original teaching rather than rejecting it — an expansion at the root more than a rejection of it.',
+      children: []
+    }
+  ]
+},
+
+islam: {
+  id: 'early-ummah', name: 'Early Muslim Community (Ummah)', date: '7th century CE',
+  cause: 'The community founded around the Prophet Muhammad\'s teachings in Mecca and Medina.',
+  source: 'Standard early Islamic historiography.',
+  lens: 'The shared root both branches below still recite the same core scripture from.',
+  children: [
+    {
+      id: 'sunni', name: 'Sunni Islam', date: '632 CE onward',
+      cause: 'Held that Muhammad\'s successor (caliph) should be chosen by the community\'s consensus; accepted the elected caliphs (Abu Bakr, Umar, Uthman, Ali) as legitimate.',
+      source: 'Standard early Islamic succession historiography.',
+      lens: '',
+      children: [
+        {
+          id: 'sufism', name: 'Sufism', date: '~8th century CE onward',
+          cause: 'An intensification of ascetic and mystical practice within Sunni Islam, emphasizing direct, experiential closeness to God (often through dhikr and organized into orders/tariqas) rather than a doctrinal break from mainstream Sunni belief.',
+          source: 'Standard early Islamic mysticism historiography; dating and origins debated among historians.',
+          lens: 'Not a schism in the same sense as the others here — an intensification growing within its root rather than a departure from it.',
+          children: []
+        }
+      ]
+    },
+    {
+      id: 'shia', name: 'Shia Islam', date: '632 CE onward',
+      cause: 'Held that leadership should have passed by divine right to Muhammad\'s cousin and son-in-law, Ali ibn Abi Talib, and his direct descendants — a dispute crystallized further after the death of Ali\'s son Husayn at Karbala (680 CE).',
+      source: 'Battle of Karbala, 680 CE; standard early Shia historiography.',
+      lens: '',
+      children: []
+    }
+  ]
+},
+
+judaism: {
+  id: 'rabbinic-judaism', name: 'Rabbinic Judaism', date: '~1st century CE – 19th century',
+  cause: 'The Torah- and Talmud-centered tradition that remained a largely unified religious community for roughly 1,500 years, until Jewish emancipation in 19th-century Europe brought new pressures to define Judaism\'s relationship to modernity.',
+  source: 'Standard Jewish historiography (Theconversation.com / My Jewish Learning overviews).',
+  lens: 'The one root here that stayed essentially undivided for the longest span of any tradition in this tool — nearly two thousand years before its first major modern branching.',
+  children: [
+    {
+      id: 'hasidism', name: 'Hasidic Judaism', date: 'mid-18th century',
+      cause: 'A spiritual and mystical revival movement founded by the Baal Shem Tov in Western Ukraine, emphasizing joy, devotion, and direct mystical connection to God, organized around dynastic spiritual leaders (rebbes).',
+      source: 'Standard Hasidic historiography; TheCollector.com overview.',
+      lens: 'Emerged a full century before the Reform/Orthodox split below it — an earlier, separate act of branching from the same long-unified root.',
+      children: [
+        {
+          id: 'jewish-renewal', name: 'Jewish Renewal', date: '20th century',
+          cause: 'Founded by Rabbi Zalman Schachter-Shalomi, a Lubavitch-trained rabbi, combining Hasidic mystical and ecstatic practice with gender egalitarianism, environmentalism, and insights from Eastern religions and psychology.',
+          source: 'Standard Jewish Renewal historiography (ThisIsBarMitzvah.com).',
+          lens: 'Carries Hasidic mysticism\'s inheritance forward while adding entirely new commitments its root never held — addition alongside inheritance, not replacement of it.',
+          children: []
+        }
+      ]
+    },
+    {
+      id: 'reform-judaism', name: 'Reform Judaism', date: 'early 19th century, Germany',
+      cause: 'The first modern Jewish denomination to organize, holding that Torah and oral law are divinely inspired but humanly constructed, and should be adapted to contemporary ethical understanding rather than followed as fixed law.',
+      source: 'The Conversation (Theconversation.com), "Jewish denominations: A brief guide for the perplexed."',
+      lens: '',
+      children: [
+        {
+          id: 'orthodox-judaism', name: 'Orthodox Judaism (as a distinct stream)', date: '19th century',
+          cause: 'Organized explicitly in reaction to Reform Judaism, rallying to defend strict observance of Jewish law and custom as unchangeable divine revelation rather than something to be adapted to the era.',
+          source: 'The Conversation; My Jewish Learning.',
+          lens: 'A defining case in this whole tool: a tradition whose very organization as a distinct, self-aware "stream" was a direct reaction against the branch listed just above it.',
+          children: []
+        },
+        {
+          id: 'conservative-judaism', name: 'Conservative Judaism', date: 'mid-19th century (Europe); institutionalized mid-20th century, US',
+          cause: 'Founded on Zecharias Frankel\'s "positive-historical school," positioning itself as a middle path — treating Jewish law as binding and evolving through its own historical development, in response to what its founders saw as Reform\'s excesses.',
+          source: 'Wikipedia, "Conservative Judaism and Zionism"; Myss.com overview.',
+          lens: '',
+          children: []
+        }
+      ]
+    }
+  ]
+},
+
+westernEsotericism: {
+  id: 'golden-dawn', name: 'Hermetic Order of the Golden Dawn', date: '1888–1903',
+  cause: 'Founded in London by William Wynn Westcott, Samuel Liddell MacGregor Mathers, and William Robert Woodman, integrating Rosicrucianism, Kabbalah, Hermeticism, and ceremonial magic into a structured initiatory system. Collapsed amid internal conflict after roughly 15 years.',
+  source: 'Britannica, "The Hermetic Order of the Golden Dawn"; Wikipedia.',
+  lens: 'The single most influential root in this tree — nearly everything else here either split from it directly or was built in explicit reaction against it.',
+  children: [
+    {
+      id: 'alpha-et-omega', name: 'Alpha et Omega', date: '1900–1903 (formal split)',
+      cause: 'After a revolt of London Adepts against leader Samuel MacGregor Mathers in 1900 over his conduct and growing closeness to Aleister Crowley, those who remained loyal to Mathers formed the Alpha et Omega, one of four daughter organizations the Golden Dawn fragmented into.',
+      source: 'Wikipedia, "Alpha et Omega"; Occult World.',
+      lens: '',
+      children: []
+    },
+    {
+      id: 'stella-matutina', name: 'Stella Matutina', date: '1903–1905',
+      cause: 'Formed by Dr. Robert Felkin and others from the London faction that broke with Mathers, continuing to transmit the Golden Dawn\'s original teaching material — it was Stella Matutina\'s version of the rituals, not the original order\'s, that occultist Israel Regardie later published in the 1930s.',
+      source: 'Wikipedia, "Stella Matutina"; Britannica.',
+      lens: 'Ironically became the version of the "original" teaching that survived into public record — what most people now know as Golden Dawn ritual is really this branch\'s inheritance of it.',
+      children: []
+    },
+    {
+      id: 'aa', name: 'A∴A∴ (founded by Aleister Crowley)', date: '1907',
+      cause: 'Founded by Aleister Crowley and George Cecil Jones after Crowley\'s break with Mathers, described in Crowley\'s own writing as a "reformed perpetuation" of the Golden Dawn system rather than an unrelated new invention.',
+      source: 'Thelemapedia; standard Thelemic historiography.',
+      lens: '',
+      children: [
+        {
+          id: 'thelema', name: 'Thelema', date: '1904 onward',
+          cause: 'The religious and philosophical system Crowley founded around "The Book of the Law" (received, he claimed, in Cairo in 1904), centered on the principle "Do what thou wilt shall be the whole of the Law" and the discovery of one\'s "True Will."',
+          source: 'Standard Thelemic historiography.',
+          lens: '',
+          children: []
+        }
+      ]
+    },
+    {
+      id: 'chaos-magic', name: 'Chaos Magic', date: '1976–1978',
+      cause: 'Founded by Peter J. Carroll and Ray Sherwin, who explicitly rejected the fixed hierarchies, rituals, and belief-systems of Golden Dawn-descended orders in favor of radical pragmatism — the idea that "belief is a tool" and any symbol system can be used and discarded based on what produces results. Drew on Austin Osman Spare\'s earlier sigil work and on Crowley\'s Thelema, while deliberately breaking from both traditions\' fixed cosmologies. Founding texts: Carroll\'s "Liber Null" and Sherwin\'s "The Book of Results," both 1978; their order, the Illuminates of Thanateros (IOT), later split further in the early-1990s "Ice Magick Wars," producing splinter groups including the Reformed IOT.',
+      source: 'Wikipedia, "Illuminates of Thanateros"; Grokipedia, "Chaos magic"; multiple independent historical overviews (Juniper Divination, Chaos Magick Forge).',
+      lens: 'The most explicit rejection in this entire tool — its founders built an approach specifically defined by refusing the kind of fixed inheritance every other branch here retains from its root. Even Chaos Magic\'s own order later split again, in 1990s internal conflict, into further branches — the same shape recurring inside the branch that tried hardest to escape it.',
+      children: []
+    }
+  ]
+},
+
+wicca: {
+  id: 'new-forest', name: 'New Forest Coven (claimed origin)', date: 'claimed 1930s England',
+  cause: 'A coven Gerald Gardner claimed initiated him in 1939 in the New Forest area of England — the origin most Wiccan traditions trace their initiatory lineage back to, though its historical existence is debated by scholars.',
+  source: 'Wikipedia, "Gardnerian Wicca"; historical existence contested among Wiccan-studies scholars.',
+  lens: 'The one root in this whole tool whose own historical reality is itself disputed — everything below is real, documented modern history; this starting point is a claim its own tradition has never been able to verify.',
+  children: [
+    {
+      id: 'gardnerian', name: 'Gardnerian Wicca', date: '1954',
+      cause: 'Gerald Gardner\'s Bricket Wood coven, the tradition from which most subsequent forms of Wicca claim descent, formalized and made public through Gardner\'s writing.',
+      source: 'Wikipedia, "Gardnerian Wicca."',
+      lens: '',
+      children: [
+        {
+          id: 'alexandrian', name: 'Alexandrian Wicca', date: '1960s',
+          cause: 'Founded by Alex and Maxine Sanders, who trained and were initiated in Gardnerian Wicca before adding independently-studied elements of ceremonial magic and Hermetic Qabalah. Initially met with contempt by Gardnerians; the two branches reconciled by the late 1980s.',
+          source: 'Wikipedia, "Alexandrian Wicca"; New World Encyclopedia, "Wicca."',
+          lens: 'A split that later un-split, in a sense — both branches now recognize each other as legitimate, unlike most other divergences in this tool.',
+          children: []
+        },
+        {
+          id: 'dianic', name: 'Dianic Wicca', date: '1971',
+          cause: 'A specifically feminist branch that discarded Gardnerian-style hierarchy and gender-paired ritual structure, centering the Goddess and, in many covens, restricting membership to women.',
+          source: 'New World Encyclopedia, "Wicca"; Wicca Wiki.',
+          lens: 'The clearest case in this tree of a branch defining itself by what it deliberately declined to carry forward from its root, rather than by what it kept.',
+          children: []
+        }
+      ]
+    }
+  ]
+},
+
+hinduism: {
+  id: 'vedanta-root', name: 'Vedanta (interpretive tradition)', date: '~800 CE onward, on much older Upanishadic texts',
+  cause: 'Not a single founded religion but a tradition of philosophical commentary on the Upanishads, asking how the individual soul (atman) relates to ultimate reality (Brahman) — different answers to that one question produced the distinct schools below.',
+  source: 'Standard Vedanta historiography (Wisdomlib, Hinduwebsite overviews).',
+  lens: 'Unlike every other root in this tool, this one isn\'t a founding event — it\'s a shared question. Every branch below is a different, real answer to the same question, not a departure from an original answer.',
+  children: [
+    {
+      id: 'advaita', name: 'Advaita Vedanta', date: '~800 CE, Adi Shankara',
+      cause: 'Nondualism: the individual soul and Brahman are ultimately, completely identical. The perceived world of multiplicity is māyā — appearance, not final reality — the way a rope glimpsed in dim light might be mistaken for a snake.',
+      source: 'Multiple concurrent sources (LinkedIn/Srivastava overview; Hinduwebsite); founder and dating consistent across sources.',
+      lens: '',
+      children: []
+    },
+    {
+      id: 'vishishtadvaita', name: 'Vishishtadvaita', date: '~1100 CE, Ramanuja',
+      cause: 'Qualified nondualism: Brahman is real and one, but Brahman possesses attributes, including the individual souls and matter as Brahman\'s own body. Liberation comes through bhakti — loving devotion to God as Vishnu — not through dissolving distinction entirely.',
+      source: 'Wikipedia, "Dvaita Vedanta"; Hinduwebsite; multiple concurrent sources.',
+      lens: 'Explicitly positions itself as qualifying, not rejecting, the nondualism of the branch beside it — a disagreement about degree, argued in the same shared vocabulary.',
+      children: []
+    },
+    {
+      id: 'dvaita', name: 'Dvaita Vedanta', date: '~13th century CE, Madhvacharya',
+      cause: 'Also called Tattvavada ("the realist doctrine"). Full dualism: God, the individual soul, and matter are three genuinely distinct, eternally separate realities — the sharpest possible disagreement with Advaita\'s claim that soul and Brahman are ultimately one.',
+      source: 'Wikipedia, "Dvaita Vedanta."',
+      lens: '',
+      children: []
+    },
+    {
+      id: 'gaudiya-vaishnavism', name: 'Gaudiya Vaishnavism', date: '15th–16th century CE, Chaitanya Mahaprabhu',
+      cause: 'Teaches achintya bheda abheda — "inconceivable, simultaneous difference and non-difference" between the soul and Brahman — explicitly drawing on both Dvaita and Vishishtadvaita while rejecting Advaita\'s claim of final identity.',
+      source: 'Hinduwebsite, "Vedanta — Six Major Schools."',
+      lens: 'The only branch in this tree built explicitly from two other branches at once rather than from the root alone — inheritance braided rather than single-line.',
+      children: []
+    }
+  ]
+},
+
+jainism: {
+  id: 'early-jain-sangha', name: 'Early Jain Community', date: 'following Mahavira, ~5th century BCE',
+  cause: 'The ascetic community founded around the teachings of Mahavira, the tradition\'s 24th and final Tirthankara.',
+  source: 'Standard Jain historiography.',
+  lens: '',
+  children: [
+    {
+      id: 'digambara', name: 'Digambara ("sky-clad")', date: '~1st century CE (schism traditionally dated 79–82 CE)',
+      cause: 'A severe 12-year famine in Magadha forced monks led by Bhadrabahu to migrate south. When they returned, they found the monks who had stayed behind had relaxed the original rule of monastic nudity, permitting white clothing, and had compiled scripture at a council the returning monks rejected. The returning group declared themselves the true, unchanged followers of Mahavira and maintained the original practice of owning nothing, including clothing.',
+      source: 'Philosophy Institute overview; PWOnlyIAS; consistent across multiple concurrent sources.',
+      lens: 'A split caused by one group physically leaving during hardship and finding, on return, that what they\'d left had already changed — distance itself became the mechanism of divergence.',
+      children: []
+    },
+    {
+      id: 'svetambara', name: 'Svetambara ("white-clad")', date: '~1st century CE',
+      cause: 'The monks who remained in Magadha through the famine, under Acharya Sthulabhadra, adopted white clothing and continued the scriptural council\'s compiled texts — practices the returning Digambara group rejected as departures from Mahavira\'s original teaching.',
+      source: 'Philosophy Institute; Unacademy overview.',
+      lens: 'Today roughly four-fifths of all Jains belong to this branch — the group that adapted its practice under changed circumstances ended up the larger of the two, not the group that held the original line unchanged.',
+      children: []
+    }
+  ]
+},
+
+theosophy: {
+  id: 'theosophical-society', name: 'Theosophical Society', date: '1875, New York',
+  cause: 'Founded by Helena Petrovna Blavatsky, Henry Steel Olcott, and William Quan Judge, synthesizing Western esotericism with Hindu and Buddhist concepts (reincarnation, karma, hidden spiritual "masters") into a single teaching, headquartered from 1882 in Adyar, India.',
+  source: 'PhilArchive (Paull, "Rudolf Steiner: From Theosophy to Anthroposophy"); Wikipedia.',
+  lens: '',
+  children: [
+    {
+      id: 'anthroposophy', name: 'Anthroposophy', date: '1912–1913',
+      cause: 'Rudolf Steiner, head of the Society\'s German section since 1902, grew increasingly opposed to international president Annie Besant\'s promotion of the young Jiddu Krishnamurti as a coming "World Teacher," and to what Steiner saw as the Society\'s one-sided emphasis on Eastern spiritual traditions over the West\'s own repressed esoteric heritage. He founded the Anthroposophical Society in Cologne on 28 December 1912; most of the German membership followed him. The Theosophical Society formally expelled Steiner on 7 March 1913.',
+      source: 'PhilArchive (Paull); Wikipedia, "Rudolf Steiner and the Theosophical Society"; World Religions and Spirituality Project.',
+      lens: 'One of the most precisely dated splits in this whole tool — the expulsion (7 March 1913) came nearly three months after the rival organization it was reacting to already existed, the institutional break formalizing a departure that had, in practice, already happened.',
+      children: []
+    }
+  ]
+},
+
+satanism: {
+  id: 'church-of-satan', name: 'Church of Satan', date: '1966, San Francisco',
+  cause: 'Founded by Anton LaVey on Walpurgisnacht (30 April) 1966. LaVeyan Satanism is explicitly non-theistic: Satan is used as a symbol of carnality, individualism, and "man\'s inherent nature," not worshipped as a literal being. Draws on Nietzsche, Ayn Rand, and Crowley\'s ceremonial terminology. Codified in LaVey\'s "The Satanic Bible" (1969).',
+  source: 'Wikipedia, "Church of Satan" and "LaVeyan Satanism"; History.com.',
+  lens: '',
+  children: [
+    {
+      id: 'temple-of-set', name: 'Temple of Set', date: '1975, San Francisco',
+      cause: 'Michael Aquino, a high-ranking Church of Satan member, grew dissatisfied with LaVey\'s dissolution of the regional "grotto" structure and what Aquino saw as increasing showmanship over substance. After resigning, Aquino performed a ritual on the summer solstice of 1975 that he says revealed Set — an ancient Egyptian deity — as Satan\'s true name and identity, in a text he called "The Book of Coming Forth by Night." Unlike LaVeyan Satanism, the Temple of Set is explicitly theistic.',
+      source: 'Wikipedia, "Temple of Set" and "Michael A. Aquino"; Encyclopedia.com; Occult World.',
+      lens: 'The clearest doctrinal inversion in this entire tool: the root branch\'s defining feature (no literal deity) is precisely what the split branch rejected and reversed — not a matter of degree, a direct negation of the one thing that most defined its root.',
+      children: []
+    }
+  ]
+},
+
+babism: {
+  id: 'babism', name: 'Bábism', date: '1844, Persia',
+  cause: 'Founded by Siyyid Ali-Muhammad Shirazi, known as "the Báb" ("the Gate"), who broke from Twelver Shia Islam by declaring himself a new independent Manifestation of God and prophesying the imminent coming of a still-greater messenger, "He Whom God shall make manifest." Violently suppressed; the Báb was executed in 1850, and an estimated 20,000 followers were massacred in 1852.',
+  source: 'Wikipedia, "Bábism"; bethinking.org; Pluralism Project.',
+  lens: '',
+  children: [
+    {
+      id: 'bahai', name: 'Baháʼí Faith', date: '1863',
+      cause: 'Mírzá Ḥusayn-ʻAlí Núrí, an early Bábí known as Baháʼu\'lláh ("Glory of God"), publicly declared in Baghdad\'s Garden of Ridván that he was the messenger the Báb had foretold. The great majority of Bábís accepted this claim and became Baháʼís; the faith teaches the essential unity of all world religions.',
+      source: 'Wikipedia, "Baháʼí–Azali split" and "Baháʼu\'lláh"; Britannica.',
+      lens: '',
+      children: []
+    },
+    {
+      id: 'azali', name: 'Azali Bábism', date: '1863',
+      cause: 'A minority of Bábís rejected Baháʼu\'lláh\'s claim and instead remained loyal to Subh-i-Azal (Mirza Yahya), Baháʼu\'lláh\'s own half-brother and the Báb\'s originally chosen successor. By the early 20th century, Azalis numbered at most a few hundred against roughly half a million to a million Baháʼís.',
+      source: 'Wikipedia, "Baháʼí–Azali split" and "Bábism."',
+      lens: 'The branch that kept the original, formally-designated successor ended up almost erased, while the branch built on a new, later claim became one of the world\'s independent religions — succession by appointment lost decisively to succession by revelation.',
+      children: []
+    }
+  ]
+}
+
+};
+
+// ============================================================
+// LAYOUT + RENDER
+// ============================================================
+let currentTree = TREES.christianity;
+let selectedNode = null;
+let lensOn = false;
+
+const X_SPACING = 130, Y_SPACING = 175, CARD_W = 104, CARD_H = 128, OFFSET_X = 70, OFFSET_Y = 74;
+
+// Structural Lens, made mathematically real rather than just descriptive
+// text: when the lens is on, vertical position stops being linear-in-depth
+// and becomes a genuinely decaying series - the same shape as the
+// simulator's own depth-fading, adapted from signal composition to spatial
+// position. Each additional generation gets less NEW visual separation than
+// the one before it, decaying toward (never below) a floor sized to the
+// card itself - decay-to-zero was tried first and rejected after directly
+// testing it against real tree data: it let deep parent/child cards
+// literally overlap past depth 3. This floor-guaranteed version was found
+// by testing candidate parameters against every tree's actual node data
+// until zero collisions resulted, not by tuning numbers until they looked
+// plausible on paper.
+const LENS_MIN_GAP = 155, LENS_DECAY_RATIO = 0.55;
+function weightedDepthY(depth) {
+  let y = 0;
+  for (let i = 0; i < depth; i++) y += LENS_MIN_GAP + (Y_SPACING - LENS_MIN_GAP) * Math.pow(LENS_DECAY_RATIO, i);
+  return y;
+}
+// "Each node is a distinct sphere": a lightweight, deterministic hash of the
+// node's own real name (not its sibling-slot index) gives it a small,
+// genuinely identity-derived horizontal offset - not the simulator's actual
+// gematria engine (duplicating that whole engine here isn't warranted for a
+// purely visual nudge), but the same idea of a node's own identity, not just
+// its position in a list, shaping where it sits. Magnitude kept modest and
+// verified collision-free against every tree, not just guessed at.
+function nameHashJitter(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 9973;
+  return ((h / 9973) - 0.5) * 10; // roughly -5 to +5px
+}
+
+// Pan/zoom state - applied as a CSS transform on the SVG itself, so the SVG's
+// own coordinate system stays exactly the tree's real geometric layout ("world
+// space") the whole time. Panning and continuous zoom never touch this layout
+// or force a re-render; only crossing a detail-tier threshold does.
+let panX = 0, panY = 0, zoomLevel = 1;
+let isDragging = false, dragStartX = 0, dragStartY = 0, panStartX = 0, panStartY = 0;
+let lastDetailTier = null;
+
+// Which mini-cards are currently showing their back face - a plain Set of
+// node ids rather than a per-node property, so it survives renderTree()
+// re-renders (zoom-tier changes, lens toggling) without being wiped out by
+// the innerHTML rebuild that regenerates every card fresh each time.
+let flippedNodeIds = new Set();
+let sidePanelOpen = false;
+
+function detailTierFor(zoom) {
+  if (zoom < 0.6) return 0;   // dot only - full-tree overview
+  if (zoom < 1.3) return 1;   // name + date - default
+  return 2;                   // name + date + cause snippet, dynamically revealed on zoom-in
+}
+
+function flattenWithPositions(root) {
+  // simple, robust tiered layout: assign depth via BFS, x-position via
+  // in-order traversal so siblings never overlap
+  const nodes = [];
+  const links = [];
+  let xCounter = 0;
+  function visit(node, depth, parent) {
+    if (node.children && node.children.length) {
+      node.children.forEach(c => visit(c, depth + 1, node));
+    }
+    let x;
+    if (!node.children || node.children.length === 0) {
+      x = xCounter++;
+    } else {
+      const childXs = node.children.map(c => c._x);
+      x = childXs.reduce((a,b)=>a+b,0) / childXs.length;
+    }
+    node._x = x; node._depth = depth;
+    nodes.push(node);
+    if (parent) links.push({ from: parent, to: node });
+  }
+  visit(root, 0, null);
+  return { nodes, links };
+}
+
+function wrapTextLines(text, maxCharsPerLine, maxLines) {
+  const words = text.split(' ');
+  const lines = [];
+  let current = '';
+  for (const w of words) {
+    if ((current + ' ' + w).trim().length > maxCharsPerLine) {
+      lines.push(current.trim());
+      current = w;
+      if (lines.length === maxLines) return lines;
+    } else {
+      current = (current + ' ' + w).trim();
+    }
+  }
+  if (current && lines.length < maxLines) lines.push(current);
+  if (lines.length === maxLines) lines[maxLines-1] = lines[maxLines-1].replace(/.{0,3}$/, '…');
+  return lines;
+}
+
+function nodeCenter(n) {
+  const y = lensOn ? weightedDepthY(n._depth) + OFFSET_Y : n._depth * Y_SPACING + OFFSET_Y;
+  const jitter = lensOn ? nameHashJitter(n.name) : 0;
+  const x = n._x * X_SPACING + OFFSET_X + jitter;
+  return { x, y };
+}
+
+function renderTree() {
+  const { nodes, links } = flattenWithPositions(currentTree);
+  const maxX = Math.max(...nodes.map(n => n._x));
+  const maxY = Math.max(...nodes.map(n => n._depth));
+  const linearHeight = (maxY + 1) * Y_SPACING + OFFSET_Y + 40;
+  const weightedHeight = weightedDepthY(maxY) + OFFSET_Y + CARD_H + 40;
+  const width = (maxX + 1) * X_SPACING + OFFSET_X + 60; // +20 extra margin for jitter reach
+  const height = lensOn ? weightedHeight : linearHeight;
+  const tier = detailTierFor(zoomLevel);
+  lastDetailTier = tier;
+  const traditionKey = document.getElementById('traditionSelect').value;
+  const icon = TRADITION_ICONS[traditionKey] || '◆';
+
+  let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`;
+
+  // Links connect card edges, not point-centers - bottom-center of the
+  // parent card to top-center of the child card, so the tree reads as an
+  // actual spread of connected cards rather than dots with cards floating
+  // near them.
+  links.forEach(({from, to}) => {
+    const c1 = nodeCenter(from), c2 = nodeCenter(to);
+    const x1 = c1.x, y1 = c1.y + CARD_H/2;
+    const x2 = c2.x, y2 = c2.y - CARD_H/2;
+    const midY = (y1 + y2) / 2;
+    svg += `<path class="branch-line" d="M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}"/>`;
+  });
+
+  nodes.forEach(n => {
+    const { x: cx, y: cy } = nodeCenter(n);
+    const isFlipped = flippedNodeIds.has(n.id);
+    const isRoot = n._depth === 0;
+    const fx = cx - CARD_W/2, fy = cy - CARD_H/2;
+
+    // Semantic zoom, expressed as front-face content richness: tier 0 shows
+    // only the icon (compact, for full-tree overview), tier 1 adds the name
+    // (the default view), tier 2 - genuine zoom-in - adds the date too.
+    let front = `<div class="mc-icon">${icon}</div>`;
+    if (tier >= 1) front += `<div class="mc-name">${n.name}</div>`;
+    if (tier >= 2) front += `<div class="mc-date">${n.date}</div>`;
+
+    const backSnippet = n.cause ? wrapText(n.cause, 70) : '';
+
+    svg += `<foreignObject x="${fx}" y="${fy}" width="${CARD_W}" height="${CARD_H}">
+      <div xmlns="http://www.w3.org/1999/xhtml" class="mc-scene">
+        <div class="mc-inner ${isFlipped?'flipped':''}" data-id="${n.id}">
+          <div class="mini-card ${isRoot?'root':''} ${tier===0?'tier0':''}">
+            ${front}
+          </div>
+          <div class="mini-card mc-back">
+            <div class="mc-back-name">${n.name}</div>
+            <div class="mc-back-snippet">${backSnippet}</div>
+            <button class="mc-explore-btn" data-id="${n.id}">Explore further →</button>
+          </div>
+        </div>
+      </div>
+    </foreignObject>`;
+  });
+
+  svg += '</svg>';
+  document.getElementById('svgContainer').innerHTML = svg;
+  applyTransform();
+
+  document.querySelectorAll('.mc-inner').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('.mc-explore-btn')) return; // handled separately below
+      const id = el.dataset.id;
+      // Direct class toggle, not a full renderTree() re-render - keeps the
+      // CSS flip transition smooth instead of snapping to its end state.
+      if (flippedNodeIds.has(id)) flippedNodeIds.delete(id); else flippedNodeIds.add(id);
+      el.classList.toggle('flipped');
+      if (sidePanelOpen) closeSidePanel(); // resuming tree exploration dismisses the panel
+    });
+    el.addEventListener('dblclick', (e) => {
+      e.stopPropagation();
+      const id = el.dataset.id;
+      const node = findNodeById(currentTree, id);
+      if (sidePanelOpen) closeSidePanel();
+      zoomToNode(node);
+    });
+  });
+
+  document.querySelectorAll('.mc-explore-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      const node = findNodeById(currentTree, id);
+      openSidePanel(node);
+    });
+  });
+}
+
+function applyTransform() {
+  const svg = document.querySelector('#svgContainer svg');
+  if (svg) svg.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+  document.getElementById('zoomLevelLabel').textContent = Math.round(zoomLevel * 100) + '%';
+}
+
+function maybeRerenderForDetailTier() {
+  if (detailTierFor(zoomLevel) !== lastDetailTier) renderTree();
+}
+
+// Centers the view on a node using its real, already-computed geometric
+// position (n._x, n._depth via X_SPACING/Y_SPACING) - the pan/zoom system
+// treats the tree's actual layout as authoritative, not just a static image
+// to scroll around blindly.
+function zoomToNode(node) {
+  const treeArea = document.getElementById('treeArea');
+  const rect = treeArea.getBoundingClientRect();
+  const targetZoom = 1.6;
+  const { x: nodeWorldX, y: nodeWorldY } = nodeCenter(node);
+  zoomLevel = targetZoom;
+  panX = rect.width / 2 - nodeWorldX * zoomLevel;
+  panY = rect.height / 2 - nodeWorldY * zoomLevel;
+  maybeRerenderForDetailTier();
+  applyTransform();
+}
+
+function resetView() {
+  panX = 40; panY = 40; zoomLevel = 1;
+  maybeRerenderForDetailTier();
+  applyTransform();
+}
+
+// ---- Drag to pan ----
+const treeAreaEl = document.getElementById('treeArea');
+treeAreaEl.addEventListener('mousedown', e => {
+  if (e.target.closest('.zoom-controls')) return;
+  isDragging = true;
+  dragStartX = e.clientX; dragStartY = e.clientY;
+  panStartX = panX; panStartY = panY;
+  treeAreaEl.classList.add('dragging');
+});
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  panX = panStartX + (e.clientX - dragStartX);
+  panY = panStartY + (e.clientY - dragStartY);
+  applyTransform();
+});
+window.addEventListener('mouseup', () => {
+  if (isDragging) { isDragging = false; treeAreaEl.classList.remove('dragging'); }
+});
+
+// ---- Scroll to zoom, toward the cursor position ----
+treeAreaEl.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect = treeAreaEl.getBoundingClientRect();
+  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  const worldX = (mx - panX) / zoomLevel, worldY = (my - panY) / zoomLevel;
+  const factor = e.deltaY < 0 ? 1.12 : 1/1.12;
+  zoomLevel = Math.max(0.25, Math.min(3.5, zoomLevel * factor));
+  panX = mx - worldX * zoomLevel;
+  panY = my - worldY * zoomLevel;
+  applyTransform();
+  maybeRerenderForDetailTier();
+}, { passive: false });
+
+document.getElementById('zoomInBtn').addEventListener('click', () => {
+  const rect = treeAreaEl.getBoundingClientRect();
+  const mx = rect.width/2, my = rect.height/2;
+  const worldX = (mx - panX) / zoomLevel, worldY = (my - panY) / zoomLevel;
+  zoomLevel = Math.min(3.5, zoomLevel * 1.25);
+  panX = mx - worldX * zoomLevel; panY = my - worldY * zoomLevel;
+  applyTransform(); maybeRerenderForDetailTier();
+});
+document.getElementById('zoomOutBtn').addEventListener('click', () => {
+  const rect = treeAreaEl.getBoundingClientRect();
+  const mx = rect.width/2, my = rect.height/2;
+  const worldX = (mx - panX) / zoomLevel, worldY = (my - panY) / zoomLevel;
+  zoomLevel = Math.max(0.25, zoomLevel / 1.25);
+  panX = mx - worldX * zoomLevel; panY = my - worldY * zoomLevel;
+  applyTransform(); maybeRerenderForDetailTier();
+});
+document.getElementById('zoomResetBtn').addEventListener('click', resetView);
+document.getElementById('detailCloseBtn').addEventListener('click', closeSidePanel);
+
+function wrapText(text, maxChars) {
+  // lens annotations are short by design; just truncate gracefully if needed
+  return text.length > maxChars ? text.slice(0, maxChars) + '…' : text;
+}
+
+function findNodeById(root, id) {
+  if (root.id === id) return root;
+  if (root.children) {
+    for (const c of root.children) {
+      const found = findNodeById(c, id);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function findPath(root, id, path = []) {
+  const newPath = [...path, root];
+  if (root.id === id) return newPath;
+  if (root.children) {
+    for (const c of root.children) {
+      const found = findPath(c, id, newPath);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function openSidePanel(node) {
+  selectedNode = node;
+  cardFlipped = false;
+  sidePanelOpen = true;
+  document.getElementById('detailArea').classList.add('open');
+  renderDetail(node);
+}
+
+function closeSidePanel() {
+  sidePanelOpen = false;
+  document.getElementById('detailArea').classList.remove('open');
+}
+
+const TRADITION_ICONS = {
+  christianity: '✝', judaism: '✡', islam: '☪', buddhism: '☸', hinduism: 'ॐ',
+  jainism: '◇', westernEsotericism: '✦', theosophy: '◈', satanism: '△',
+  babism: '✧', wicca: '☾'
+};
+let cardFlipped = false;
+
+function renderDetail(node) {
+  const path = findPath(currentTree, node.id) || [node];
+  const breadcrumb = path.map((n, i) =>
+    `<span class="crumb ${i===path.length-1?'last':''}">${n.name}</span>`
+  ).join(' → ');
+
+  const traditionKey = document.getElementById('traditionSelect').value;
+  const icon = TRADITION_ICONS[traditionKey] || '◆';
+  const rankLabel = node._depth === 0 ? 'ROOT TRADITION' : `BRANCH · GENERATION ${node._depth}`;
+
+  let backContent = `<h4>Documented Cause</h4><p>${node.cause}</p><span class="tarot-source">Source: ${node.source}</span>`;
+  if (node.children && node.children.length) {
+    backContent += `<h4>Branched Into</h4><p>${node.children.map(c=>c.name).join(', ')}</p>`;
+  }
+  if (lensOn) {
+    const seedUrl = `resonating-singularity.html?seed=${encodeURIComponent(node.name)}`;
+    const commentary = node.lens ? `<p>${node.lens}</p>` : `<p style="opacity:0.6;">No structural commentary written for this node yet — the seed link works regardless.</p>`;
+    backContent += `<h4>Structural Lens — descriptive, not a ranking</h4><div class="tarot-lens">${commentary}<a class="seed-link" href="${seedUrl}" target="_blank">⚡ Recreate "${node.name}" as a seed in the Singularity Simulator</a></div>`;
+  }
+
+  const html = `
+    <div class="breadcrumb-path">${breadcrumb}</div>
+    <div class="tarot-card-scene">
+      <div class="tarot-card" id="tarotCard">
+        <div class="tarot-face tarot-front">
+          <div class="tarot-corner tl"></div><div class="tarot-corner tr"></div>
+          <div class="tarot-corner bl"></div><div class="tarot-corner br"></div>
+          <div class="tarot-kicker">${rankLabel}</div>
+          <div class="tarot-icon">${icon}</div>
+          <div>
+            <div class="tarot-name">${node.name}</div>
+            <div class="tarot-date">${node.date}</div>
+          </div>
+          <div class="tarot-flip-hint">↻ tap to reveal documented history</div>
+        </div>
+        <div class="tarot-face tarot-back">
+          <div class="tarot-back-header">${node.name}</div>
+          <div class="tarot-back-scroll">${backContent}</div>
+          <div class="tarot-flip-back-hint">↻ tap to flip back</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('detailContent').innerHTML = html;
+  const cardEl = document.getElementById('tarotCard');
+  if (cardFlipped) cardEl.classList.add('flipped');
+  cardEl.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return; // don't flip when clicking the seed link
+    cardFlipped = !cardFlipped;
+    cardEl.classList.toggle('flipped', cardFlipped);
+  });
+}
+
+document.getElementById('traditionSelect').addEventListener('change', e => {
+  currentTree = TREES[e.target.value];
+  selectedNode = null;
+  flippedNodeIds.clear();
+  panX = 40; panY = 40; zoomLevel = 1;
+  closeSidePanel();
+  renderTree();
+});
+
+document.getElementById('lensCheckbox').addEventListener('change', e => {
+  lensOn = e.target.checked;
+  document.getElementById('lensToggle').classList.toggle('active', lensOn);
+  renderTree();
+  if (selectedNode && sidePanelOpen) renderDetail(selectedNode);
+});
+
+panX = 40; panY = 40;
+renderTree();
+</script>
+
+</body>
+</html>

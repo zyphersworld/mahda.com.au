@@ -381,6 +381,34 @@
   .hud-mini-table td:last-child { text-align: right; color: var(--parchment); }
   .hud-mini-table tr.reseed-tier td { color: var(--oxblood-bright); }
 
+  .pg-control { margin-bottom: 14px; }
+  .pg-control label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 700; color: var(--parchment-dim);
+  }
+  .pg-control .pg-val { color: var(--signal); font-weight: 800; }
+  .pg-control input[type=range] { width: 100%; accent-color: var(--signal); margin: 4px 0; }
+  .pg-control .pg-desc { font-family: var(--mono); font-size: 10px; color: var(--ash); line-height: 1.4; margin: 2px 0 0; }
+
+  .layers-panel { border-top: 1px solid var(--border); padding-top: 10px; margin-top: 8px; }
+  .layers-list { max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
+  .layer-row {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--iron-2); border: 1px solid var(--border); border-radius: 3px;
+    padding: 6px 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .layer-row:hover { border-color: var(--border-strong); }
+  .layer-row.current { border-color: var(--signal); background: rgba(217,164,65,0.1); }
+  .layer-row .layer-swatch { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .layer-row .layer-info { flex: 1; min-width: 0; }
+  .layer-row .layer-label { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--parchment); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .layer-row .layer-meta { font-family: var(--mono); font-size: 9.5px; color: var(--ash); }
+  .layer-row .layer-type { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 5px; border-radius: 2px; flex-shrink: 0; }
+  .layer-type.source { background: rgba(217,164,65,0.25); color: var(--signal); }
+  .layer-type.satellite { background: rgba(79,184,212,0.25); color: #4fb8d4; }
+  .layer-type.zoomed { background: rgba(176,74,88,0.25); color: var(--oxblood-bright); }
+  .layer-type.substrate { background: rgba(140,140,140,0.25); color: var(--parchment-dim); }
+
   .audio-toggle-btn {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em;
     background: transparent; border: 1px solid var(--border); color: var(--ash);
@@ -1464,6 +1492,7 @@
         <button class="dock-subtab" data-dockpanel="seed">Seed</button>
         <button class="dock-subtab" data-dockpanel="advanced">Advanced</button>
         <button class="dock-subtab" data-dockpanel="trees">Trees</button>
+        <button class="dock-subtab" data-dockpanel="playground">Playground</button>
       </div>
 
       <div class="dock-panel active" id="dockPanel-info">
@@ -1472,6 +1501,7 @@
         <div class="hud-controls">
           <button class="hud-btn" id="pulseBtn">⚡ Pulse the resonance</button>
           <button class="hud-btn ghost" id="zoomOutBtn" style="display:none;">↑ Return to parent sphere</button>
+          <button class="hud-btn ghost" id="zoomOutPastSourceBtn">🔭 Zoom out past source</button>
           <button class="hud-btn ghost" id="fullscreenBtn">⛶ Fullscreen</button>
         </div>
       </div>
@@ -1550,9 +1580,9 @@
       </div>
 
       <div class="dock-panel" id="dockPanel-advanced">
-        <p class="hud-note" style="margin-bottom:10px;">Node count, connecting more spheres, simulation speed, and how strongly connected spheres influence each other.</p>
+        <p class="hud-note" style="margin-bottom:10px;">Every sphere now decides its own capacity from its own seed when created — no fixed default. The field below is an explicit override: type a number and apply it to force a specific sphere to a specific size instead.</p>
         <div class="config-row">
-          <label>Nodes per sphere: <input type="number" id="nodeCountInput" min="4" max="90" value="40"></label>
+          <label>Nodes per sphere: <input type="number" id="nodeCountInput" min="4" max="500" value="40"></label>
           <button id="applyNodeCountBtn">Apply to current sphere</button>
         </div>
         <div class="config-row">
@@ -1571,13 +1601,57 @@
 
       <div class="dock-panel" id="dockPanel-trees">
         <p class="hud-caption" style="text-align:left;">Every node grows a fractal tree continuously — it never pauses. What you see is a live sample of whatever incomplete shape that tree has grown into right now. Depth fades by a constant ratio, so the sample stays bounded no matter how long a node has been growing — no clamp is doing that work, it's a real convergent series.</p>
+        <div class="retro-readout" id="hudCapacityStats" style="margin:10px 0;">
+          <div class="retro-item"><div class="ri-label">True capacity</div><div class="ri-value" id="hudTrueCapacity">0</div></div>
+          <div class="retro-item"><div class="ri-label">Simulated directly</div><div class="ri-value" id="hudSimulatedCount">0</div></div>
+        </div>
+        <p class="hud-note" id="hudCapacityNote" style="margin:-4px 0 10px;"></p>
         <div class="retro-readout" id="hudTreeStats" style="margin:10px 0;">
           <div class="retro-item"><div class="ri-label">Avg tree depth</div><div class="ri-value" id="hudAvgDepth">0.0</div></div>
           <div class="retro-item"><div class="ri-label">Sourced nodes</div><div class="ri-value" id="hudSourcedCount">0</div></div>
         </div>
+        <div class="retro-readout" id="hudTemperamentStats" style="margin:0 0 10px;">
+          <div class="retro-item"><div class="ri-label" style="color:var(--signal);">● Accumulators</div><div class="ri-value" id="hudAccumulatorCount">0</div></div>
+          <div class="retro-item"><div class="ri-label" style="color:#4fb8d4;">● Renunciates</div><div class="ri-value" id="hudRenunciateCount">0</div></div>
+        </div>
         <p class="hud-note" style="margin-bottom:6px;">The sphere's fractal — every node's tree, averaged level by level, live. Bar height/direction is the average signed contribution at that depth; brightness shows what fraction of nodes have grown deep enough to have that level active at all.</p>
         <canvas id="sphereFractalCanvas" width="330" height="130"></canvas>
-        <p class="hud-note">Hover any node on the sphere to see that one node's own tree in isolation, for comparison. A node whose own tree has grown meaningfully deeper than the sphere's average permanently "outweighs its root" — it becomes its own local source, marked with a pale ring on the sphere. It never un-crosses.</p>
+        <p class="hud-note">Hover any node on the sphere to see that one node's own tree in isolation, for comparison. A node whose own tree has grown meaningfully deeper than the sphere's average permanently "outweighs its root" — it becomes its own local source, decided once, permanently: an <strong style="color:var(--signal);">accumulator</strong> (gold ring, grows faster, chases more depth) or a <strong style="color:#4fb8d4;">renunciate</strong> (blue ring, strengthens its own decay, reaches back toward the straightness it can never confirm it lacks). Every node still uncrossed gets a growth boost each time a peer crosses over — restoring equilibrium is a genuine, open-ended arms race with no ceiling, which can produce avalanches: long quiet stretches punctuated by rapid bursts of crossovers.</p>
+
+        <div class="layers-panel" id="layersPanel">
+          <p class="hud-note" style="margin:12px 0 6px;font-weight:700;color:var(--parchment-dim);">LAYERS — every sphere generated this session</p>
+          <div id="layersList" class="layers-list"></div>
+        </div>
+      </div>
+
+      <div class="dock-panel" id="dockPanel-playground">
+        <p class="hud-caption" style="text-align:left;">Every real parameter behind the dynamics above, live-adjustable. These aren't cosmetic sliders — moving them changes the actual math the sphere is running, in real time, so you can demonstrate any of the proofs directly rather than take them on faith.</p>
+        <div class="pg-control">
+          <label>Emergence rate <span class="pg-val" id="pgEmergenceVal">0.15</span></label>
+          <input type="range" id="pgEmergenceRate" min="0.02" max="1.0" step="0.01" value="0.15">
+          <p class="pg-desc">Nodes per simulated second toward a sphere's target count. Turn this all the way down to watch a sphere emerge almost node-by-node from just its source.</p>
+        </div>
+        <div class="pg-control">
+          <label>Crossover threshold <span class="pg-val" id="pgThresholdVal">1.60×</span></label>
+          <input type="range" id="pgCrossoverThreshold" min="1.1" max="3.0" step="0.05" value="1.6">
+          <p class="pg-desc">How far a node's own tree depth must exceed the sphere's average before it outweighs its root. Lower this to watch crossovers — and the arms race they trigger — happen almost constantly.</p>
+        </div>
+        <div class="pg-control">
+          <label>Accumulator growth boost <span class="pg-val" id="pgAccBoostVal">1.50×</span></label>
+          <input type="range" id="pgAccumulatorBoost" min="1.0" max="3.0" step="0.05" value="1.5">
+          <p class="pg-desc">How much faster an accumulator grows the instant it crosses over.</p>
+        </div>
+        <div class="pg-control">
+          <label>Renunciate decay ratio <span class="pg-val" id="pgRenDecayVal">0.28</span></label>
+          <input type="range" id="pgRenunciateDecay" min="0.05" max="0.55" step="0.01" value="0.28">
+          <p class="pg-desc">Lower = branches count for less, faster. Push this near the default 0.62 and renunciates stop looking meaningfully different from ordinary nodes at all.</p>
+        </div>
+        <div class="pg-control">
+          <label>Arms-race boost per crossover <span class="pg-val" id="pgArmsRaceVal">1.06×</span></label>
+          <input type="range" id="pgArmsRace" min="1.0" max="1.3" step="0.005" value="1.06">
+          <p class="pg-desc">Growth-rate multiplier applied to every not-yet-crossed node, per fresh crossover, compounding. This is the open-ended part — set it high and watch avalanches cascade.</p>
+        </div>
+        <button class="hud-btn ghost" id="pgResetBtn" style="margin-top:8px;">↺ Reset to defaults</button>
       </div>
     </div>
   </div>
@@ -1857,6 +1931,13 @@
 </section>
 
 <script>
+// The simulation's own clock, declared first, before anything else in this
+// script runs - makeLevel/buildNodes stamp new levels with this at creation
+// time, including the very first root level built during initial page load,
+// so this has to exist before that top-level call happens, not alongside
+// the rest of the delta-time engine further down.
+let simTime = 0;
+
 // ============ GEMATRIA ENGINE ============
 const VALUES = {'א':1,'ב':2,'ג':3,'ד':4,'ה':5,'ו':6,'ז':7,'ח':8,'ט':9,'י':10,
   'כ':20,'ל':30,'מ':40,'נ':50,'ס':60,'ע':70,'פ':80,'צ':90,
@@ -2163,7 +2244,7 @@ const ctx = canvas.getContext('2d');
 let W = canvas.width, H = canvas.height;
 let CX = W/2, CY = H/2, R = W * 0.36; // scales with canvas size - same ratio resizeCanvas() uses for fullscreen
 let zoomScale = 1;
-const MAX_DEPTH = 2; // Singularity(0) -> Node(1) -> Sub-node(2), leaf level not further clickable
+let MAX_DEPTH = Infinity; // infinite inward zoom by default - playground can set a soft cap if wanted
 const NODE_COUNTS = [40, 16, 8];
 
 // Resonance seed: a word/phrase's gematria value drives the whole system's base
@@ -2271,38 +2352,77 @@ function resizeCanvas(size) {
 let allLevels = [];
 let configuredNodeCount = 40;
 
+// A sphere decides its own TRUE capacity from its own seed - genuinely large,
+// not artificially small just because a browser can't smoothly render tens
+// of thousands of individual nodes. What actually gets built and simulated
+// in full detail is a separate, much smaller number: a real, honestly-
+// computed representative SAMPLE, capped for performance. Every stat this
+// tool reports about "the sphere" beyond what's directly rendered is an
+// extrapolation from that sample - the same logic a poll of 1,000 people
+// uses to describe a population of millions - stated as an estimate, never
+// presented as if it were counted directly.
+const RENDER_CAP = 120; // hard ceiling on directly-simulated nodes, matches the neighbor-web density threshold
+function naturalCapacity(seedValue) {
+  return 12 + (Math.abs(Math.round(seedValue)) % 100000); // 12 to 100,011 - the sphere's true, unbounded-feeling scale
+}
+
 function makeLevel(depth, seedBase, label, nodeCountOverride) {
-  const count = nodeCountOverride || NODE_COUNTS[depth] || 16;
   const effectiveBase = depth === 0 ? seedBase + resonanceSeedValue * 3 : seedBase;
-  const level = { nodes: [], depth, label, rotX: 0.28, rotY: 0.35, feedback: 0, seedBase: effectiveBase, nodeCount: count };
+  const trueCapacity = nodeCountOverride || naturalCapacity(effectiveBase);
+  const simulatedCount = Math.min(trueCapacity, RENDER_CAP);
+  const level = { nodes: [], depth, label, rotX: 0.28, rotY: 0.35, feedback: 0, seedBase: effectiveBase,
+                   nodeCount: simulatedCount, trueCapacity, createdAt: simTime };
   buildNodes(level);
   allLevels.push(level);
   return level;
 }
+// Every eventual node position is precomputed using the same Fibonacci-sphere
+// math as before - what changes is that nodes.length starts at 0 (or 1, see
+// updateEmergence) and grows toward nodeCount over real simulated time,
+// rather than the sphere arriving fully-formed. "Begin with only the source"
+// is the same sphere, just watched from its own beginning instead of its
+// middle.
 function buildNodes(level) {
   const count = level.nodeCount;
-  const nodes = [];
+  const positions = [];
   for (let i = 0; i < count; i++) {
     const y = count > 1 ? 1 - (i / (count - 1)) * 2 : 0;
     const radiusAtY = Math.sqrt(Math.max(0, 1 - y*y));
     const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-    const seed = (level.seedBase * 31 + i * 17 + 7) % 9973;
-    nodes.push({
-      x: Math.cos(theta) * radiusAtY, y, z: Math.sin(theta) * radiusAtY,
-      seed, id: i, childLevel: null,
-      // Weighted Quantum Fractal Tree state: each node grows a tree
-      // continuously at its own rate (varies by seed, so crossover happens
-      // to some nodes and not others) and, once its accumulated depth
-      // outweighs the sphere's average, permanently becomes marked as
-      // having "sourced" - it can't un-cross, matching the philosophy.
-      growthRate: 0.12 + (seed % 60) / 480, // ~0.12 to ~0.245 per simulated second
-      hasSourced: false,
-    });
+    positions.push({ x: Math.cos(theta) * radiusAtY, y, z: Math.sin(theta) * radiusAtY });
   }
-  level.nodes = nodes;
+  level.plannedPositions = positions;
+  level.nodes = [];
+  level.createdAt = simTime;
+}
+function spawnNewNode(level, t) {
+  const i = level.nodes.length;
+  if (!level.plannedPositions || i >= level.plannedPositions.length) return null;
+  const pos = level.plannedPositions[i];
+  const seed = (level.seedBase * 31 + i * 17 + 7) % 9973;
+  const node = {
+    x: pos.x, y: pos.y, z: pos.z, seed, id: i, childLevel: null,
+    growthRate: 0.12 + (seed % 60) / 480,
+    hasSourced: false, temperament: null, decayRatioOverride: null,
+    spawnTime: t, // fractal-tree depth is measured from THIS moment, not from t=0
+  };
+  level.nodes.push(node);
+  return node;
+}
+// Grows a level's node count toward its target over real time. Minimum of 1
+// node always present (the moment anything at all has emerged) so nothing
+// downstream ever divides by an empty array - a deliberate, stated floor,
+// not an accident of the emergence math.
+function updateEmergence(level, t) {
+  if (level.createdAt === undefined) level.createdAt = t;
+  const shouldHave = Math.max(1, Math.min(level.nodeCount, Math.floor((t - level.createdAt) * EMERGENCE_RATE) + 1));
+  while (level.nodes.length < shouldHave) {
+    if (!spawnNewNode(level, t)) break;
+  }
 }
 function regenerateNodes(level, newCount) {
-  level.nodeCount = newCount;
+  level.trueCapacity = newCount;
+  level.nodeCount = Math.min(newCount, RENDER_CAP);
   buildNodes(level);
 }
 
@@ -2322,7 +2442,8 @@ function addSatellite() {
   if (satellites.length >= MAX_SATELLITES) return;
   const idx = satellites.length;
   const seedBase = resonanceSeedValue * 7 + (idx + 1) * 211;
-  const satLevel = makeLevel(0, seedBase, `Sphere ${idx + 2}`, configuredNodeCount);
+  const satLevel = makeLevel(0, seedBase, `Sphere ${idx + 2}`);
+  satLevel.originType = 'satellite';
   const angle = (idx / MAX_SATELLITES) * Math.PI * 2 - Math.PI/2;
   const sat = { level: satLevel, angle, anchorNodeIdx: (idx * 7) % currentLevel().nodes.length };
   satellites.push(sat);
@@ -3067,7 +3188,8 @@ function applySeedFromValue(value, label, weightsHtml) {
   pausedTimeAtSessionStart = pausedTime;
   updateSessionTimer();
   renderDigitBars();
-  levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount)];
+  levelStack = [makeLevel(0, 1, 'Singularity')];
+  levelStack[0].originType = 'source';
   renderBreadcrumb();
   updateZoomOutBtn();
   const disp = document.getElementById('seedCurrent');
@@ -3083,7 +3205,8 @@ function setResonanceSeed(word) {
   applySeedFromValue(val, `"${word}"`, weightsHtml);
 }
 
-let levelStack = [makeLevel(0, 1, 'Singularity', configuredNodeCount)];
+let levelStack = [makeLevel(0, 1, 'Singularity')];
+  levelStack[0].originType = 'source';
 let currentLevel = () => levelStack[levelStack.length - 1];
 
 let dragging = false, lastMouse = null, mouseDownPos = null;
@@ -3121,16 +3244,18 @@ const TREE_MAX_LEVELS = 14; // 0.62^14 ≈ 0.0006 - levels beyond this are alrea
 const TREE_CONVERGED_WEIGHT = 1 / (1 - TREE_DECAY_RATIO); // the geometric series' own limit, ≈2.63
 
 function fractalTreeSample(node, t, baseFreq, phaseOffset) {
-  const depth = t * node.growthRate; // continuous, unbounded growth - never reset, never paused
+  const decayRatio = node.decayRatioOverride || TREE_DECAY_RATIO;
+  const convergedWeight = node.decayRatioOverride ? 1 / (1 - decayRatio) : TREE_CONVERGED_WEIGHT;
+  const depth = (t - (node.spawnTime || 0)) * node.growthRate; // spawn-relative: a node emerging at t=500 starts fresh at depth 0 // continuous, unbounded growth - never reset, never paused
   const maxLevel = Math.min(TREE_MAX_LEVELS, Math.floor(depth));
   let sum = 0;
   for (let d = 0; d <= maxLevel; d++) {
-    const w = Math.pow(TREE_DECAY_RATIO, d);
+    const w = Math.pow(decayRatio, d);
     const freq = baseFreq * Math.pow(TREE_BRANCH_FREQ_MULT, d);
     const levelPhase = (node.seed * 0.017 * (d + 1)) % (2 * Math.PI);
     sum += w * Math.sin(freq * t + phaseOffset + levelPhase);
   }
-  return sum / TREE_CONVERGED_WEIGHT;
+  return sum / convergedWeight;
 }
 
 // Live, per-frame mini-visualization of a single node's fractal tree, drawn
@@ -3146,7 +3271,7 @@ function drawNodeFractalMini(node, t) {
   c2.strokeStyle = 'rgba(120,150,175,0.25)';
   c2.beginPath(); c2.moveTo(0, midY); c2.lineTo(w, midY); c2.stroke();
 
-  const depth = t * node.growthRate;
+  const depth = (t - (node.spawnTime || 0)) * node.growthRate; // spawn-relative: a node emerging at t=500 starts fresh at depth 0
   const maxLevel = Math.min(TREE_MAX_LEVELS, Math.floor(depth));
   const barW = w / (TREE_MAX_LEVELS + 1);
   const repFreq = 0.5; // representative base frequency for this display only
@@ -3192,7 +3317,7 @@ function drawSphereFractalChart(level, t) {
     const weight = Math.pow(TREE_DECAY_RATIO, d);
     let sumVal = 0, activeCount = 0;
     for (const node of level.nodes) {
-      const depth = t * node.growthRate;
+      const depth = (t - (node.spawnTime || 0)) * node.growthRate; // spawn-relative: a node emerging at t=500 starts fresh at depth 0
       if (d <= Math.floor(depth)) {
         const freq = repFreq * Math.pow(TREE_BRANCH_FREQ_MULT, d);
         const levelPhase = (node.seed * 0.017 * (d + 1)) % (2 * Math.PI);
@@ -3236,8 +3361,66 @@ function hexToRgb(hex) {
 const FIRE_THRESHOLD = 0.72;
 let firingPulses = []; // per-node "neuron fired" pulses traveling toward the center
 
+// Outweighed Node Dynamics: crossover is no longer a single silent flag.
+// A node crossing over is assigned a permanent temperament, decided once at
+// that exact moment - accumulator (grows faster, chases more depth) or
+// renunciate (strengthens its own decay, branches count for less, reaching
+// back toward straightness it can never confirm it lacks). Deterministic
+// from the node's own seed - "contained" in something intrinsic to it - but
+// not knowable before the moment of crossover actually arrives.
+// The arms race: any node freshly outweighed this frame boosts every peer
+// that hasn't crossed over yet - open-ended, no ceiling by design. Checked
+// against both boundedness guarantees: signal boundedness doesn't care how
+// fast growthRate climbs (the geometric series converges regardless), and
+// the self-strengthening-decay axiom was already declared broad enough to
+// absorb acceleration "however extreme it becomes," regardless of source.
+let ACCUMULATOR_GROWTH_BOOST = 1.5;
+let RENUNCIATE_DECAY_RATIO = 0.28;
+let ARMS_RACE_BOOST = 1.06;
+let CROSSOVER_THRESHOLD = 1.6;
+let EMERGENCE_RATE = 0.15; // how many new nodes emerge per simulated second, toward each level's target count
+const MAX_GROWTH_RATE = 4.0; // numerical safety only - not a boundedness mechanism
+
+function processCrossover(level, treeDepths, avgTreeDepth) {
+  const wasSourced = level.nodes.map(n => n.hasSourced);
+  level.nodes.forEach((n, i) => {
+    if (!n.hasSourced && treeDepths[i] > avgTreeDepth * CROSSOVER_THRESHOLD) {
+      n.hasSourced = true;
+      n.temperament = (n.seed % 2 === 0) ? 'accumulator' : 'renunciate';
+      if (n.temperament === 'accumulator') {
+        n.growthRate = Math.min(MAX_GROWTH_RATE, n.growthRate * ACCUMULATOR_GROWTH_BOOST);
+      } else {
+        n.decayRatioOverride = RENUNCIATE_DECAY_RATIO;
+      }
+    }
+  });
+  const freshCrossovers = level.nodes.filter((n, i) => n.hasSourced && !wasSourced[i]).length;
+  if (freshCrossovers > 0) {
+    level.nodes.forEach(n => {
+      if (!n.hasSourced) n.growthRate = Math.min(MAX_GROWTH_RATE, n.growthRate * Math.pow(ARMS_RACE_BOOST, freshCrossovers));
+    });
+  }
+  level.avgTreeDepth = avgTreeDepth;
+  level.sourcedCount = level.nodes.filter(n => n.hasSourced).length;
+  level.accumulatorCount = level.nodes.filter(n => n.temperament === 'accumulator').length;
+  level.renunciateCount = level.nodes.filter(n => n.temperament === 'renunciate').length;
+
+  // Statistical extrapolation: when trueCapacity exceeds what's actually
+  // simulated, level.nodes is a genuine, fully-computed representative
+  // sample - not a stand-in, not decoration. These estimates apply the
+  // sample's own observed rate to the true population, the same inference a
+  // poll of 1,000 uses to describe millions. Equal to the exact count
+  // whenever the whole population fits inside the simulated sample already.
+  const scaleFactor = level.trueCapacity / level.nodes.length;
+  level.isEstimated = level.trueCapacity > level.nodes.length;
+  level.estimatedSourced = Math.round(level.sourcedCount * scaleFactor);
+  level.estimatedAccumulators = Math.round(level.accumulatorCount * scaleFactor);
+  level.estimatedRenunciates = Math.round(level.renunciateCount * scaleFactor);
+}
+
 function drawSphere(t) {
   const level = currentLevel();
+  updateEmergence(level, t);
   ctx.clearRect(0, 0, W, H);
 
   // Mutual coupling: at the root level, the main sphere's effective feedback
@@ -3278,17 +3461,14 @@ function drawSphere(t) {
   });
   lastProjected = projected;
 
+// Outweighed Node Dynamics: crossover is no longer a single silent flag.
   // Crossover: a node "outweighs its root" when its own tree has grown
   // meaningfully deeper than the sphere's current average. Once true, it
   // stays true - hasSourced only ever gets set, never cleared, matching the
   // philosophy's claim that a node can't un-become a source.
-  const treeDepths = level.nodes.map(n => t * n.growthRate);
+  const treeDepths = level.nodes.map(n => (t - (n.spawnTime || 0)) * n.growthRate);
   const avgTreeDepth = treeDepths.reduce((a,b)=>a+b,0) / treeDepths.length;
-  level.nodes.forEach((n, i) => {
-    if (treeDepths[i] > avgTreeDepth * 1.6) n.hasSourced = true;
-  });
-  level.avgTreeDepth = avgTreeDepth;
-  level.sourcedCount = level.nodes.filter(n => n.hasSourced).length;
+  processCrossover(level, treeDepths, avgTreeDepth);
 
   // smooth feedback toward current average output (this level's aggregate "return signal")
   const avgOut = outputs.reduce((a,b)=>a+b,0) / outputs.length;
@@ -3310,13 +3490,18 @@ function drawSphere(t) {
     ctx.stroke();
   });
 
-  // web of near-neighbor connective lines
-  ctx.strokeStyle = 'rgba(201,163,92,0.07)';
-  for (let i = 0; i < projected.length; i++) {
-    for (let j = i+1; j < projected.length; j++) {
-      const dx = projected[i].x - projected[j].x, dy = projected[i].y - projected[j].y;
-      if (Math.sqrt(dx*dx+dy*dy) < 60) {
-        ctx.beginPath(); ctx.moveTo(projected[i].x, projected[i].y); ctx.lineTo(projected[j].x, projected[j].y); ctx.stroke();
+  // web of near-neighbor connective lines - skipped above a density threshold:
+  // an O(n²) check at 300+ nodes gets expensive, and a mesh that dense reads
+  // as visual noise rather than structure anyway, obscuring the node colors
+  // and rings that actually carry information
+  if (projected.length <= 120) {
+    ctx.strokeStyle = 'rgba(201,163,92,0.07)';
+    for (let i = 0; i < projected.length; i++) {
+      for (let j = i+1; j < projected.length; j++) {
+        const dx = projected[i].x - projected[j].x, dy = projected[i].y - projected[j].y;
+        if (Math.sqrt(dx*dx+dy*dy) < 60) {
+          ctx.beginPath(); ctx.moveTo(projected[i].x, projected[i].y); ctx.lineTo(projected[j].x, projected[j].y); ctx.stroke();
+        }
       }
     }
   }
@@ -3366,10 +3551,11 @@ function drawSphere(t) {
     const mag = Math.min(1, Math.abs(p.output));
     const baseR = 3 + depth * 3.4 + mag * 3;
     const isHovered = hoveredNode === p.node;
-    const alpha = 0.45 + depth * 0.55;
+    const fadeIn = Math.min(1, (t - (p.node.spawnTime || 0)) / 1.2); // newly emerged nodes ease in over ~1.2s
+    const alpha = (0.45 + depth * 0.55) * fadeIn;
     const [r,g,b] = hexToRgb(SEISMO_DEFAULT_COLORS[p.digit]);
     ctx.beginPath();
-    ctx.arc(p.x, p.y, baseR + (isHovered ? 2.5 : 0), 0, Math.PI*2);
+    ctx.arc(p.x, p.y, (baseR + (isHovered ? 2.5 : 0)) * fadeIn, 0, Math.PI*2);
     ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
     ctx.fill();
     if (depth > 0.55 || isHovered || mag > FIRE_THRESHOLD) {
@@ -3379,12 +3565,16 @@ function drawSphere(t) {
       ctx.shadowBlur = 0;
     }
     // sourced marker: a node whose own tree has outweighed the sphere's
-    // average gets a permanent ring - it has become its own local source
+    // average gets a permanent ring, colored by which way it resolved -
+    // accumulator (warm gold, chasing more) or renunciate (cool blue,
+    // reaching back toward straightness)
     if (p.node.hasSourced) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, baseR + 3, 0, Math.PI*2);
-      ctx.strokeStyle = `rgba(233,223,197,${0.5 + depth*0.4})`;
-      ctx.lineWidth = 1.1;
+      ctx.strokeStyle = p.node.temperament === 'accumulator'
+        ? `rgba(217,164,65,${0.55 + depth*0.4})`
+        : `rgba(79,184,212,${0.55 + depth*0.4})`;
+      ctx.lineWidth = 1.3;
       ctx.stroke();
     }
     // live digit label — the node's current output, mapped to a single digit
@@ -3431,14 +3621,34 @@ function drawSphere(t) {
 
   const avgDepthEl = document.getElementById('hudAvgDepth');
   const sourcedEl = document.getElementById('hudSourcedCount');
+  const accEl = document.getElementById('hudAccumulatorCount');
+  const renEl = document.getElementById('hudRenunciateCount');
+  const trueCapEl = document.getElementById('hudTrueCapacity');
+  const simCountEl = document.getElementById('hudSimulatedCount');
+  const capNoteEl = document.getElementById('hudCapacityNote');
   if (avgDepthEl) avgDepthEl.textContent = level.avgTreeDepth.toFixed(1);
-  if (sourcedEl) sourcedEl.textContent = `${level.sourcedCount} / ${level.nodes.length}`;
+  if (trueCapEl) trueCapEl.textContent = (level.trueCapacity || level.nodes.length).toLocaleString();
+  if (simCountEl) simCountEl.textContent = level.nodes.length;
+  if (sourcedEl) {
+    sourcedEl.textContent = level.isEstimated
+      ? `${level.sourcedCount} sampled → ~${level.estimatedSourced.toLocaleString()} est.`
+      : `${level.sourcedCount} / ${level.nodes.length}`;
+  }
+  if (accEl) accEl.textContent = level.isEstimated ? `~${(level.estimatedAccumulators||0).toLocaleString()} est.` : (level.accumulatorCount || 0);
+  if (renEl) renEl.textContent = level.isEstimated ? `~${(level.estimatedRenunciates||0).toLocaleString()} est.` : (level.renunciateCount || 0);
+  if (capNoteEl) {
+    capNoteEl.textContent = level.isEstimated
+      ? `This sphere's true scale exceeds what renders smoothly - ${level.nodes.length} nodes are fully, honestly simulated; everything above is a statistical estimate from that real sample, not a guess.`
+      : `Small enough that every node is directly simulated - no estimation needed here.`;
+  }
 
   if (hoveredNode) drawNodeFractalMini(hoveredNode, t);
   drawSphereFractalChart(level, t);
+  renderLayersList();
 }
 
 function renderSatellite(sat, t, mainFeedback) {
+  updateEmergence(sat.level, t);
   if (sat.zoomScale === undefined) sat.zoomScale = 1;
   const satR = R * 0.42 * zoomScale * sat.zoomScale;
   const orbitDist = R * zoomScale * 1.55 + 44;
@@ -3474,17 +3684,17 @@ function renderSatellite(sat, t, mainFeedback) {
   const avgOut = satOutputs.reduce((a,b)=>a+b,0) / satOutputs.length;
   lvl.feedback += (avgOut - lvl.feedback) * 0.015;
 
-  const satTreeDepths = lvl.nodes.map(n => t * n.growthRate);
+  const satTreeDepths = lvl.nodes.map(n => (t - (n.spawnTime || 0)) * n.growthRate);
   const satAvgDepth = satTreeDepths.reduce((a,b)=>a+b,0) / satTreeDepths.length;
-  lvl.nodes.forEach((n, i) => { if (satTreeDepths[i] > satAvgDepth * 1.6) n.hasSourced = true; });
-  lvl.avgTreeDepth = satAvgDepth;
-  lvl.sourcedCount = lvl.nodes.filter(n => n.hasSourced).length;
+  processCrossover(lvl, satTreeDepths, satAvgDepth);
 
-  ctx.strokeStyle = 'rgba(201,163,92,0.06)';
-  for (let i = 0; i < proj.length; i++) {
-    for (let j = i+1; j < proj.length; j++) {
-      const dx = proj[i].x-proj[j].x, dy = proj[i].y-proj[j].y;
-      if (Math.sqrt(dx*dx+dy*dy) < 32) { ctx.beginPath(); ctx.moveTo(proj[i].x,proj[i].y); ctx.lineTo(proj[j].x,proj[j].y); ctx.stroke(); }
+  if (proj.length <= 120) {
+    ctx.strokeStyle = 'rgba(201,163,92,0.06)';
+    for (let i = 0; i < proj.length; i++) {
+      for (let j = i+1; j < proj.length; j++) {
+        const dx = proj[i].x-proj[j].x, dy = proj[i].y-proj[j].y;
+        if (Math.sqrt(dx*dx+dy*dy) < 32) { ctx.beginPath(); ctx.moveTo(proj[i].x,proj[i].y); ctx.lineTo(proj[j].x,proj[j].y); ctx.stroke(); }
+      }
     }
   }
   [...proj].sort((a,b)=>a.z-b.z).forEach((p, idx) => {
@@ -3497,8 +3707,10 @@ function renderSatellite(sat, t, mainFeedback) {
     if (p.node && p.node.hasSourced) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, 1.6 + d*2 + 2, 0, Math.PI*2);
-      ctx.strokeStyle = `rgba(233,223,197,${0.4+d*0.4})`;
-      ctx.lineWidth = 0.8;
+      ctx.strokeStyle = p.node.temperament === 'accumulator'
+        ? `rgba(217,164,65,${0.45+d*0.4})`
+        : `rgba(79,184,212,${0.45+d*0.4})`;
+      ctx.lineWidth = 1.0;
       ctx.stroke();
     }
   });
@@ -3573,7 +3785,6 @@ function updateSessionTimer() {
 // are checked - oscillation phase, digit progression, stability, feedback,
 // and the seismograph all advance together, uniformly, at this rate.
 let deltaMultiplier = 1;
-let simTime = 0;
 let lastFrameTime = performance.now();
 let simUpdateAccumulator = 0;   // drives the ~10/sec digit-tally & unity checks
 let seismoUpdateAccumulator = 0; // drives the ~30/sec seismograph recording
@@ -3659,7 +3870,58 @@ function renderBreadcrumb() {
   });
 }
 function updateZoomOutBtn() {
-  document.getElementById('zoomOutBtn').style.display = levelStack.length > 1 ? 'inline-block' : 'none';
+  const atOutermost = levelStack.length === 1;
+  document.getElementById('zoomOutBtn').style.display = atOutermost ? 'none' : 'inline-block';
+  document.getElementById('zoomOutPastSourceBtn').style.display = atOutermost ? 'inline-block' : 'none';
+}
+
+// ---- Layers panel: every sphere generated this session, GIMP-style ----
+// Jumping to an arbitrary level doesn't try to reconstruct a breadcrumb path
+// back to it - it makes that level the new root of your current view,
+// exactly like satellites and substrates already work. The layers list
+// itself is what gets you back, the same way it got you here.
+function jumpToLevel(level) {
+  if (currentLevel() === level) return;
+  transitioning = true; transitionDir = -1;
+  setTimeout(() => {
+    levelStack = [level];
+    renderBreadcrumb();
+    updateZoomOutBtn();
+    transitionAlpha = 0; transitionDir = 1; transitioning = true;
+  }, 260);
+}
+const LAYER_TYPE_LABELS = { source: 'Source', satellite: 'Satellite', zoomed: 'Zoomed', substrate: 'Substrate' };
+let lastLayersRenderCount = -1;
+function renderLayersList() {
+  const list = document.getElementById('layersList');
+  if (!list) return;
+  // only rebuild the DOM when the actual set of levels has changed - cheap
+  // per-frame check, avoids rebuilding a scrollable list every frame
+  if (allLevels.length === lastLayersRenderCount && list.dataset.currentMark === (currentLevel() ? currentLevel().label : '')) return;
+  lastLayersRenderCount = allLevels.length;
+  const cur = currentLevel();
+  list.dataset.currentMark = cur ? cur.label : '';
+  list.innerHTML = allLevels.map(lvl => {
+    const type = lvl.originType || 'zoomed';
+    const isCurrent = lvl === cur;
+    const trueCap = lvl.trueCapacity || lvl.nodeCount;
+    const simCount = lvl.nodes ? lvl.nodes.length : 0;
+    const swatchColor = type === 'source' ? 'var(--signal)' : type === 'satellite' ? '#4fb8d4' : type === 'substrate' ? 'var(--parchment-dim)' : 'var(--oxblood-bright)';
+    return `<div class="layer-row ${isCurrent?'current':''}" data-layer-idx="${allLevels.indexOf(lvl)}">
+      <span class="layer-swatch" style="background:${swatchColor};"></span>
+      <span class="layer-type ${type}">${LAYER_TYPE_LABELS[type]||type}</span>
+      <div class="layer-info">
+        <div class="layer-label">${lvl.label}</div>
+        <div class="layer-meta">${simCount}/${trueCap.toLocaleString()} nodes${lvl.sourcedCount?` · ${lvl.sourcedCount} sourced`:''}</div>
+      </div>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('.layer-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const idx = parseInt(row.dataset.layerIdx);
+      jumpToLevel(allLevels[idx]);
+    });
+  });
 }
 
 function zoomIntoNode(node) {
@@ -3668,11 +3930,40 @@ function zoomIntoNode(node) {
   setTimeout(() => {
     if (!node.childLevel) {
       node.childLevel = makeLevel(currentLevel().depth + 1, node.seed, `Node ${node.seed % 1000}`);
+      node.childLevel.originType = 'zoomed';
     }
     levelStack.push(node.childLevel);
     renderBreadcrumb();
     updateZoomOutBtn();
     transitionAlpha = 0; transitionDir = 1; transitioning = true;
+  }, 260);
+}
+
+// The symmetric outward move: zooming out past the currently-known outermost
+// level doesn't hit a wall - it generates a substrate the old root turns out
+// to have been embedded within all along. Reuses makeLevel/buildNodes
+// entirely (the substrate emerges from nothing too, same as any sphere), and
+// wires one of its nodes to lead straight back to exactly what you came
+// from, not a coincidentally-similar new one.
+let substrateDepth = 0;
+function zoomOutPastSource() {
+  if (levelStack.length > 1) return; // only meaningful at the outermost known level
+  const oldRoot = levelStack[0];
+  transitioning = true; transitionDir = -1;
+  setTimeout(() => {
+    substrateDepth++;
+    const substrateSeed = ((oldRoot.seedBase || 1) * 13 + 7) % 9973;
+    const label = substrateDepth === 1 ? 'Substrate' : `Substrate (${substrateDepth})`;
+    const substrate = makeLevel(0, substrateSeed, label);
+    substrate.originType = 'substrate';
+    levelStack = [substrate];
+    renderBreadcrumb();
+    updateZoomOutBtn();
+    transitionAlpha = 0; transitionDir = 1; transitioning = true;
+    (function wireBack() {
+      if (substrate.nodes[0]) substrate.nodes[0].childLevel = oldRoot;
+      else requestAnimationFrame(wireBack);
+    })();
   }, 260);
 }
 
@@ -3843,6 +4134,7 @@ canvas.addEventListener('touchend', e => {
 });
 
 document.getElementById('pulseBtn').addEventListener('click', () => { pulseActive = true; pulsePhase = 0; });
+document.getElementById('zoomOutPastSourceBtn').addEventListener('click', () => { zoomOutPastSource(); });
 document.getElementById('zoomOutBtn').addEventListener('click', () => {
   if (levelStack.length > 1) {
     transitioning = true; transitionDir = -1;
@@ -4004,7 +4296,7 @@ document.getElementById('hexRandomBtn').addEventListener('click', () => {
 // ---- Node count & multi-sphere controls ----
 const nodeCountInput = document.getElementById('nodeCountInput');
 document.getElementById('applyNodeCountBtn').addEventListener('click', () => {
-  const n = Math.max(4, Math.min(90, parseInt(nodeCountInput.value) || 40));
+  const n = Math.max(4, Math.min(500, parseInt(nodeCountInput.value) || 40));
   nodeCountInput.value = n;
   const target = selectedSphereRef ? selectedSphereRef.level : currentLevel();
   if (!selectedSphereRef) configuredNodeCount = n; // only the main sphere's count becomes the new default for future spheres
@@ -4024,6 +4316,50 @@ document.getElementById('deltaMultiplierSlider').addEventListener('input', e => 
 document.getElementById('couplingSlider').addEventListener('input', e => {
   couplingStrength = parseInt(e.target.value) / 100;
   document.getElementById('couplingVal').textContent = `${e.target.value}%`;
+});
+
+// ---- Playground: every slider here writes directly to the real variable
+// driving that piece of the simulation - no indirection, no cosmetic-only
+// controls. Defaults match what each constant was originally declared with.
+const PG_DEFAULTS = {
+  emergence: 0.15, threshold: 1.6, accBoost: 1.5, renDecay: 0.28, armsRace: 1.06,
+};
+document.getElementById('pgEmergenceRate').addEventListener('input', e => {
+  EMERGENCE_RATE = parseFloat(e.target.value);
+  document.getElementById('pgEmergenceVal').textContent = EMERGENCE_RATE.toFixed(2);
+});
+document.getElementById('pgCrossoverThreshold').addEventListener('input', e => {
+  CROSSOVER_THRESHOLD = parseFloat(e.target.value);
+  document.getElementById('pgThresholdVal').textContent = CROSSOVER_THRESHOLD.toFixed(2) + '×';
+});
+document.getElementById('pgAccumulatorBoost').addEventListener('input', e => {
+  ACCUMULATOR_GROWTH_BOOST = parseFloat(e.target.value);
+  document.getElementById('pgAccBoostVal').textContent = ACCUMULATOR_GROWTH_BOOST.toFixed(2) + '×';
+});
+document.getElementById('pgRenunciateDecay').addEventListener('input', e => {
+  RENUNCIATE_DECAY_RATIO = parseFloat(e.target.value);
+  document.getElementById('pgRenDecayVal').textContent = RENUNCIATE_DECAY_RATIO.toFixed(2);
+});
+document.getElementById('pgArmsRace').addEventListener('input', e => {
+  ARMS_RACE_BOOST = parseFloat(e.target.value);
+  document.getElementById('pgArmsRaceVal').textContent = ARMS_RACE_BOOST.toFixed(3) + '×';
+});
+document.getElementById('pgResetBtn').addEventListener('click', () => {
+  EMERGENCE_RATE = PG_DEFAULTS.emergence;
+  CROSSOVER_THRESHOLD = PG_DEFAULTS.threshold;
+  ACCUMULATOR_GROWTH_BOOST = PG_DEFAULTS.accBoost;
+  RENUNCIATE_DECAY_RATIO = PG_DEFAULTS.renDecay;
+  ARMS_RACE_BOOST = PG_DEFAULTS.armsRace;
+  document.getElementById('pgEmergenceRate').value = PG_DEFAULTS.emergence;
+  document.getElementById('pgCrossoverThreshold').value = PG_DEFAULTS.threshold;
+  document.getElementById('pgAccumulatorBoost').value = PG_DEFAULTS.accBoost;
+  document.getElementById('pgRenunciateDecay').value = PG_DEFAULTS.renDecay;
+  document.getElementById('pgArmsRace').value = PG_DEFAULTS.armsRace;
+  document.getElementById('pgEmergenceVal').textContent = PG_DEFAULTS.emergence.toFixed(2);
+  document.getElementById('pgThresholdVal').textContent = PG_DEFAULTS.threshold.toFixed(2) + '×';
+  document.getElementById('pgAccBoostVal').textContent = PG_DEFAULTS.accBoost.toFixed(2) + '×';
+  document.getElementById('pgRenDecayVal').textContent = PG_DEFAULTS.renDecay.toFixed(2);
+  document.getElementById('pgArmsRaceVal').textContent = PG_DEFAULTS.armsRace.toFixed(3) + '×';
 });
 
 // ---- Dock collapse toggles ----
@@ -4286,6 +4622,17 @@ document.getElementById('importLogFile').addEventListener('change', e => {
 });
 
 initLogDefaults();
+
+// A seed can arrive via the URL (e.g. ?seed=Anglican), applied through the
+// exact same setResonanceSeed() path as typing it into the input by hand -
+// no separate seed-computation logic duplicated anywhere else. Lets another
+// tool (schism-explorer.html and its Structural Lens links, or any plain
+// link) hand this simulator a real seed to boot up already resonating with.
+const urlSeed = new URLSearchParams(window.location.search).get('seed');
+if (urlSeed) {
+  setResonanceSeed(decodeURIComponent(urlSeed));
+  document.getElementById('seedInput').value = decodeURIComponent(urlSeed);
+}
 
 animate();
 </script>

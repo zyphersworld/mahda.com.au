@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running Costs — a ledger, not an ask</title>
+<meta name="description" content="An honest, itemised account of what it costs to run The Waiting List. Not a charity. Not a general appeal. A ledger.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:      #EDE6D6;
+    --paper-card: #FAF7EF;
+    --paper-line: #D9CFB6;
+    --ink:        #1F2A3C;
+    --ink-soft:   #4A5568;
+    --oxblood:    #7A3428;
+    --brass:      #A98F5A;
+    --brass-dim:  #C9BB98;
+    --shadow:     0 1px 0 rgba(31,42,60,0.06), 0 8px 24px -12px rgba(31,42,60,0.18);
+    --radius: 2px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(169,143,90,0.10), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, rgba(122,52,40,0.06), transparent 55%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Source Serif 4", Georgia, serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{ max-width:760px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- Header ---------- */
+  header.masthead{
+    padding:64px 0 40px;
+    border-bottom:1px solid var(--paper-line);
+  }
+  .eyebrow{
+    font-family:"Special Elite", monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--oxblood);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--oxblood);
+    display:inline-block;
+  }
+  h1{
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:clamp(32px, 5.4vw, 48px);
+    line-height:1.08;
+    margin:0 0 18px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--oxblood);
+  }
+  .lede{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:56ch;
+    margin:0;
+  }
+  .lede b{ color:var(--ink); font-weight:600; }
+
+  /* ---------- Section headers ---------- */
+  h2.section-title{
+    font-family:"Special Elite", monospace;
+    font-size:13px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+    padding-top:56px;
+  }
+
+  /* ---------- The Ledger ---------- */
+  .ledger{
+    background:var(--paper-card);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:8px 0 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .ledger::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:4px;
+    background:repeating-linear-gradient(90deg, var(--brass) 0 10px, transparent 10px 18px);
+    opacity:0.55;
+  }
+  .ledger-row{
+    display:grid;
+    grid-template-columns: 96px 1fr auto;
+    gap:14px;
+    align-items:baseline;
+    padding:16px 22px;
+    border-bottom:1px dashed var(--paper-line);
+    opacity:0;
+    transform:translateY(6px);
+    animation:rowIn 0.5s ease forwards;
+  }
+  .ledger-row:last-of-type{ border-bottom:none; }
+  .ledger-row .date{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    letter-spacing:0.01em;
+  }
+  .ledger-row .desc{
+    font-size:15.5px;
+    color:var(--ink);
+    position:relative;
+  }
+  .ledger-row .desc .tag{
+    display:inline-block;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--oxblood);
+    background:rgba(122,52,40,0.08);
+    border:1px solid rgba(122,52,40,0.18);
+    padding:1px 6px;
+    border-radius:2px;
+    margin-left:8px;
+    transform:translateY(-1px);
+  }
+  .ledger-row .amt{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:600;
+    font-size:15.5px;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .ledger-row .amt.pending{
+    color:var(--ink-soft);
+    font-weight:400;
+    font-style:italic;
+  }
+  .ledger-row .amt.zero{ color:var(--ink-soft); font-weight:400; }
+
+  .ledger-total{
+    display:grid;
+    grid-template-columns: 96px 1fr auto;
+    gap:14px;
+    align-items:center;
+    padding:20px 22px;
+    background:linear-gradient(180deg, rgba(122,52,40,0.05), rgba(122,52,40,0.02));
+    border-top:2px solid var(--ink);
+  }
+  .ledger-total .label{
+    grid-column: 1 / 3;
+    font-family:"Special Elite", monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .ledger-total .amt{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:700;
+    font-size:24px;
+    color:var(--oxblood);
+  }
+
+  @keyframes rowIn{ to{ opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion: reduce){
+    .ledger-row{ animation:none; opacity:1; transform:none; }
+  }
+
+  .ledger-group-label{
+    font-family:"Special Elite", monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin:0 0 10px;
+  }
+  .ledger-proposed{
+    opacity:0.82;
+  }
+  .ledger-proposed::before{
+    background:repeating-linear-gradient(90deg, var(--ink-soft) 0 8px, transparent 8px 14px);
+    opacity:0.35;
+  }
+  .ledger-proposed .amt.pending{ font-size:14px; }
+
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    padding-left:2px;
+  }
+  .ledger-note code{
+    font-family:"IBM Plex Mono", monospace;
+    background:rgba(31,42,60,0.06);
+    padding:1px 5px;
+    border-radius:2px;
+    font-size:12.5px;
+  }
+
+  /* ---------- Funds / doesn't ---------- */
+  .split{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:1px;
+    background:var(--paper-line);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .split > div{
+    background:var(--paper-card);
+    padding:22px 22px 24px;
+  }
+  .split h3{
+    font-family:"Special Elite", monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin:0 0 14px;
+  }
+  .split .yes h3{ color:#3D6B4F; }
+  .split .no h3{ color:var(--oxblood); }
+  .split ul{ margin:0; padding:0; list-style:none; }
+  .split li{
+    font-size:14.5px;
+    padding:7px 0;
+    border-bottom:1px dotted var(--paper-line);
+    display:flex;
+    gap:10px;
+  }
+  .split li:last-child{ border-bottom:none; }
+  .split .mark{ font-family:"IBM Plex Mono", monospace; font-weight:700; flex:0 0 auto; }
+  .split .yes .mark{ color:#3D6B4F; }
+  .split .no .mark{ color:var(--oxblood); }
+  @media (max-width:560px){
+    .split{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Remittance card ---------- */
+  .remit{
+    background:var(--paper-card);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px 26px;
+    position:relative;
+  }
+  .remit::after{
+    content:"DIRECT DEPOSIT";
+    position:absolute; top:18px; right:22px;
+    font-family:"Special Elite", monospace;
+    font-size:10.5px;
+    letter-spacing:0.12em;
+    color:var(--brass);
+  }
+  .remit dl{
+    display:grid;
+    grid-template-columns: 120px 1fr;
+    row-gap:12px;
+    margin:0;
+  }
+  .remit dt{
+    font-family:"Special Elite", monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    align-self:center;
+  }
+  .remit dd{
+    margin:0;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink);
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .copy-btn{
+    font-family:"Special Elite", monospace;
+    font-size:10px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--oxblood);
+    background:rgba(122,52,40,0.08);
+    border:1px solid rgba(122,52,40,0.25);
+    padding:3px 8px;
+    border-radius:2px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .copy-btn:hover{ background:rgba(122,52,40,0.16); }
+  .copy-btn:focus-visible, a:focus-visible, .ledger-row:focus-visible{
+    outline:2px solid var(--oxblood);
+    outline-offset:2px;
+  }
+  .copy-btn.copied::after{ content:" ✓"; }
+
+  .remit-note{
+    margin:18px 2px 0;
+    font-family:"Source Serif 4", serif;
+    font-size:13.5px;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+
+  .remit-alt::after{
+    content:"ONLINE";
+  }
+
+  .remit-alt{
+    margin-top:16px;
+    padding:20px 26px;
+  }
+  .remit-alt-label{
+    margin:0 0 10px;
+    font-family:"Special Elite", monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .paypal-link{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:16px;
+    font-weight:600;
+    color:var(--oxblood);
+    text-decoration:underline;
+    text-decoration-color:var(--brass-dim);
+    text-underline-offset:3px;
+    word-break:break-all;
+  }
+  .paypal-link:hover{ text-decoration-color:var(--oxblood); }
+
+  /* ---------- Honesty block ---------- */
+  .honesty{
+    border-left:3px solid var(--brass);
+    padding:4px 0 4px 20px;
+    color:var(--ink-soft);
+    font-size:15px;
+  }
+  .honesty p{ margin:0 0 12px; }
+  .honesty p:last-child{ margin-bottom:0; }
+  .honesty b{ color:var(--ink); font-weight:600; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    margin-top:64px;
+    padding:28px 0 64px;
+    border-top:1px solid var(--paper-line);
+    font-size:13.5px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  footer a{ color:var(--ink); text-decoration:underline; text-decoration-color:var(--brass-dim); text-underline-offset:3px; }
+  footer a:hover{ text-decoration-color:var(--oxblood); }
+
+  .elsewhere{
+    margin-top:8px;
+  }
+  .elsewhere-lede{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    max-width:52ch;
+    margin:0 0 20px;
+  }
+  .elsewhere-links{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:1px;
+    background:var(--paper-line);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .elsewhere-links a{
+    background:var(--paper-card);
+    padding:16px 18px;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    transition:background 0.15s ease;
+  }
+  .elsewhere-links a:hover{ background:#F1EBDC; }
+  .el-label{
+    font-family:"Special Elite", monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--brass);
+  }
+  .el-name{
+    font-family:"Source Serif 4", serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  @media (max-width:560px){
+    .elsewhere-links{ grid-template-columns:1fr; }
+  }
+
+  section{ padding-bottom:8px; }
+
+  @media (max-width:600px){
+    .wrap{ padding:0 18px; }
+    header.masthead{ padding:44px 0 32px; }
+    .ledger-row{
+      grid-template-columns:1fr;
+      grid-template-areas:
+        "date amt"
+        "desc desc";
+      display:grid;
+      row-gap:6px;
+      padding:14px 18px;
+    }
+    .ledger-row .date{ grid-area:date; }
+    .ledger-row .amt{ grid-area:amt; justify-self:end; }
+    .ledger-row .desc{ grid-area:desc; }
+    .ledger-row{ grid-template-columns:1fr auto; }
+    .ledger-total{
+      grid-template-columns:1fr;
+      row-gap:8px;
+      padding:18px;
+    }
+    .ledger-total .label{ grid-column:1; }
+    .ledger-total .amt{ font-size:22px; }
+    .remit dl{ grid-template-columns:96px 1fr; row-gap:16px; }
+    .remit dd{ font-size:14.5px; }
+    .remit::after{ position:static; display:block; margin-bottom:14px; order:-1; }
+    .remit{ display:flex; flex-direction:column; }
+    .remit-alt::after{ position:static; display:block; margin-bottom:10px; order:-1; }
+    .remit-alt{ display:flex; flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Running Costs · not a charity, not a general appeal</div>
+    <h1>What this actually <em>costs</em>, itemised honestly.</h1>
+    <p class="lede">
+      The Waiting List runs on a Disability Support Pension, a laptop, and a handful of paid tools.
+      This page is a ledger, not a pitch. <b>Every figure below is either confirmed or clearly marked as
+      not yet confirmed</b> — the same standard applied to everything else in this record.
+    </p>
+  </header>
+
+  <section>
+    <h2 class="section-title">The ledger, so far</h2>
+
+    <p class="ledger-group-label">Recurring, monthly</p>
+    <div class="ledger" id="ledger-recurring">
+
+      <div class="ledger-row" style="animation-delay:0.05s">
+        <div class="date">since Aug 2026</div>
+        <div class="desc">Claude Pro subscription<span class="tag">recurring</span></div>
+        <div class="amt">$27.91 AUD</div>
+      </div>
+
+      <div class="ledger-row" style="animation-delay:0.15s">
+        <div class="date">since Aug 2026</div>
+        <div class="desc">Aldi Mobile — data plan, needed to run this from a phone<span class="tag">recurring</span></div>
+        <div class="amt">$39.00 AUD</div>
+      </div>
+
+      <div class="ledger-row" style="animation-delay:0.25s">
+        <div class="date">since Aug 2026</div>
+        <div class="desc">Public transport to Warrnambool for DFFH appointments specifically<span class="tag">recurring</span></div>
+        <div class="amt">≈$65.00 AUD</div>
+      </div>
+
+      <div class="ledger-total">
+        <div class="label">Confirmed, per month</div>
+        <div class="amt">$131.91 AUD</div>
+      </div>
+    </div>
+
+    <p class="ledger-group-label" style="margin-top:34px;">One-off / periodic</p>
+    <div class="ledger" id="ledger-oneoff">
+
+      <div class="ledger-row" style="animation-delay:0.05s">
+        <div class="date">Aug 2026</div>
+        <div class="desc">Additional AI usage credits, purchased mid-campaign when the monthly
+          allowance ran out<span class="tag">one-off</span></div>
+        <div class="amt">$120.00 AUD</div>
+      </div>
+
+      <div class="ledger-row" style="animation-delay:0.15s">
+        <div class="date">Aug 2026</div>
+        <div class="desc">.com.au domain registration, GoDaddy, 3 years, incl. GST<span class="tag">3-year</span></div>
+        <div class="amt">$48.35 AUD</div>
+      </div>
+
+      <div class="ledger-row" style="animation-delay:0.25s">
+        <div class="date">—</div>
+        <div class="desc">Website hosting — GitHub Pages</div>
+        <div class="amt zero">$0.00</div>
+      </div>
+
+      <div class="ledger-total">
+        <div class="label">Confirmed, to date</div>
+        <div class="amt">$168.35 AUD</div>
+      </div>
+    </div>
+
+    <p class="ledger-group-label" style="margin-top:34px;">Proposed, not yet started</p>
+    <div class="ledger ledger-proposed" id="ledger-proposed">
+      <div class="ledger-row" style="animation-delay:0.05s">
+        <div class="date">under review</div>
+        <div class="desc">A second AI service, as redundancy for when the primary one is
+          unavailable — decision not yet made<span class="tag">pending</span></div>
+        <div class="amt pending">$30 USD/mo, if started</div>
+      </div>
+      <div class="ledger-row" style="animation-delay:0.15s">
+        <div class="date">planned</div>
+        <div class="desc">Moving the site's GitHub repository to private, so the source code
+          isn't publicly visible — decided, not yet actioned<span class="tag">pending</span></div>
+        <div class="amt pending">≈$4 USD/mo, once started</div>
+      </div>
+    </div>
+
+    <p class="ledger-group-label" style="margin-top:34px;">Capital, genuinely needed</p>
+    <div class="ledger ledger-proposed" id="ledger-capital">
+      <div class="ledger-row" style="animation-delay:0.05s">
+        <div class="date">researched, not spent</div>
+        <div class="desc">A secondhand replacement laptop. The current machine has 6GB of RAM
+          with no swap configured, a five-year-old dual-core CPU, and regularly runs out of memory
+          entirely, forcing a reboot mid-task. Doesn't need to be new.<span class="tag">one-off</span></div>
+        <div class="amt pending">≈$400–600 AUD</div>
+      </div>
+    </div>
+    <p class="ledger-note">
+      That range is sourced from current refurbished 16GB RAM business laptops with warranty from
+      established Australian refurbishers, not an estimate pulled from nowhere. Nothing has been spent
+      here yet, and this line updates the moment it is.
+    </p>
+
+    <p class="ledger-note">
+      Figures with a date are confirmed against a bill or receipt. The proposed item above is excluded
+      from every total until it's actually started. The domain renews in June 2029 at approximately
+      $65.85 for the following term. GitHub Pages hosting costs nothing in fees, though not reflected
+      anywhere here is the unpaid time spent actually building and maintaining the site.
+    </p>
+  </section>
+
+
+  <section>
+    <h2 class="section-title">What this does, and doesn't, cover</h2>
+    <div class="split">
+      <div class="yes">
+        <h3>Covered here</h3>
+        <ul>
+          <li><span class="mark">+</span> The AI tooling used to organise, verify and correct this record</li>
+          <li><span class="mark">+</span> Domain registration for mahda.com.au</li>
+          <li><span class="mark">+</span> Any future paid tooling needed to keep the record running</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3>Not covered here</h3>
+        <ul>
+          <li><span class="mark">–</span> SCREAM, the racing game, or its development</li>
+          <li><span class="mark">–</span> Music, performance, or busking support</li>
+          <li><span class="mark">–</span> General living costs</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Send support directly</h2>
+    <div class="remit">
+      <dl>
+        <dt>Account name</dt>
+        <dd>Christopher Peter Greene</dd>
+        <dt>BSB</dt>
+        <dd>083-957 <button class="copy-btn" data-copy="083-957">Copy</button></dd>
+        <dt>Account</dt>
+        <dd>902 911 479 <button class="copy-btn" data-copy="902911479">Copy</button></dd>
+        <dt>PayID</dt>
+        <dd>0491 116 860 <button class="copy-btn" data-copy="0491116860">Copy</button></dd>
+        <dt>ABN</dt>
+        <dd>79 526 587 406 <button class="copy-btn" data-copy="79526587406">Copy</button></dd>
+      </dl>
+      <p class="remit-note">Registered under Christopher Peter Greene, known publicly as Mahda. Same
+        person, matching bank details, in case the name looks unfamiliar.</p>
+    </div>
+
+    <div class="remit remit-alt">
+      <p class="remit-alt-label">Prefer PayPal?</p>
+      <a class="paypal-link" href="https://www.paypal.com/paypalme/mahdacgmoon" target="_blank" rel="noopener">
+        paypal.com/paypalme/mahdacgmoon
+      </a>
+      <p class="remit-note">Same person, an older handle. Mahda Christopher Greene-Moon was the name
+        used before it was dropped in June 2026.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Said plainly</h2>
+    <div class="honesty">
+      <p><b>This is not a registered charity.</b> Funds go directly and personally to Christopher Peter
+        Greene, known publicly as Mahda. Nothing here is tax-deductible.</p>
+      <p><b>There is no expectation attached to this.</b> The housing record, the timeline, and everything
+        else on this site continues exactly the same whether or not anyone sends anything.</p>
+      <p>If you'd rather support the broader work, <a href="https://mahda.com.au/waiting-list/">The Waiting
+        List</a> is the place to read what it's actually funding.</p>
+    </div>
+  </section>
+
+  <section class="elsewhere">
+    <h2 class="section-title">The other things being built</h2>
+    <p class="elsewhere-lede">None of this is what the ledger above covers, and none of it needs
+      anyone's support to keep going. If you're curious what else this laptop and this pension are
+      quietly holding up:</p>
+    <div class="elsewhere-links">
+      <a href="https://mahda.com.au/reckoning-desk" target="_blank" rel="noopener">
+        <span class="el-label">Writing</span><span class="el-name">The Reckoning Desk</span>
+      </a>
+      <a href="https://mahda.itch.io/scream-2" target="_blank" rel="noopener">
+        <span class="el-label">Game</span><span class="el-name">SCREAM — itch.io</span>
+      </a>
+      <a href="https://github.com/zyphersworld/SCREAM2" target="_blank" rel="noopener">
+        <span class="el-label">Code</span><span class="el-name">SCREAM2 — GitHub</span>
+      </a>
+      <a href="https://soundcloud.com/mahdachristophergreene" target="_blank" rel="noopener">
+        <span class="el-label">Music</span><span class="el-name">SoundCloud</span>
+      </a>
+      <a href="https://suno.com/@mahdachristophergreene" target="_blank" rel="noopener">
+        <span class="el-label">Music</span><span class="el-name">Suno</span>
+      </a>
+      <a href="https://www.youtube.com/@MahdaChristopherGreene/" target="_blank" rel="noopener">
+        <span class="el-label">Video</span><span class="el-name">YouTube</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Kept honestly, updated as costs are confirmed.</span>
+    <span><a href="https://mahda.com.au/waiting-list/">The Waiting List</a> · <a href="https://mahda.com.au">mahda.com.au</a></span>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var val = btn.getAttribute('data-copy');
+      navigator.clipboard && navigator.clipboard.writeText(val).then(function(){
+        btn.classList.add('copied');
+        var original = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function(){
+          btn.classList.remove('copied');
+          btn.textContent = original;
+        }, 1400);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
