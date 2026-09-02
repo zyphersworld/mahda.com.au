@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-02T19:41:46.363Z",
+  "builtAt": "2026-09-02T22:22:30.611Z",
   "count": 12,
   "items": [
     {
@@ -31,7 +31,7 @@
       "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTTZMbXM3WWRiV25HdTJnVFJQUUZscHNZS0VLNFlENjNuVUVMNGlyUkJkRGQ5MURSZmVNMHBmQ1UxWkNQekkzSXVqb0tpdW9vZVF2MVJORHFKMmkwSU1nbDBhbncyMEtCZ0hQbnJSU0tTN2VkcUVoLV9FUG9pQVg1bHZ6emlkME5ZREJnbG9xZFpBcS1LVXdwaHB2anNiSkJIU2pLcEpCRXlEU0oyZ3lYUDlSbmxxcVRJNEVNMm5pVjVkbXViVm53cUhhM1RXQ0tWblFR?oc=5"
     },
     {
-      "src": "The Guardian",
+      "src": "theguardian.com",
       "t": "Christian Brothers abuse victims to get ‘full’ compensation in backdown after controversial property sales",
       "d": "",
       "date": "Fri, 24 Jul 2026 07:00:00 GMT",
@@ -43,13 +43,6 @@
       "d": "",
       "date": "Mon, 27 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOWTMwRFZtR19pdlc5Vk9UTmczTUVhLV9CQkppU2h0aThhSVZGVnFVMF9lSGpWU2tBamJiR0VmUGVkZmdhVjVVcUowN3ltZ2xxdTlrb3ZadWV2WlY1YVR0c3ZqdUdXbHZ6eDFJandMT2k2Mk5WcnF0WEVLei1TZnBWNmlRYWxQRDRXcVI5eDVCM1BIWVlVQ1pjdjZrUDJNU1g5b0VQRy1KZWU0aGY4amdZQ3FQS1E?oc=5"
-    },
-    {
-      "src": "The Guardian",
-      "t": "Abuse survivors have won their latest fight against the Christian Brothers. But why did it take so much pain and suffering to get here? | Christopher Knaus",
-      "d": "",
-      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMioAJBVV95cUxQd1dmVy0tYkEtTjAyRVNuemlvNmhKZFVBeHc5ZXZnYkJJYS1NaGZoQjh5X1lUaXU5Y19CMnFwOFFtNHk0LUdqdDlYNkhlMEMzeGlxQUtRb3d0b2VGOEVvQ0RTSzliMWw1aUNZUE4tZHRBQ1hKMzhHVmNSd0p6b0xiMkFPbm5lajNaYngzcG95NE9aNUtiZG9DNEJVVml1TU1ucWV0M0dPQy05dl9BdUhuYUtDY3BCeGRiWmJMRlV2djNvU0gzbXo3Q0RQM3MtU0dEcUFrOXYzYTVwRjZHUUN5TjloWDlwa0FtZ0tBa2tHM3JkanpXdlV5VU9Qb3llTDVuR2pwVFBkTXNzZWtBSGpmT2N4TWdwckNvRHJXOVk5M2M?oc=5"
     },
     {
       "src": "News.com.au",
@@ -73,6 +66,13 @@
       "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQd2RPc3BUSWRJX19uSFFDOGZZQm1GeDFBbVJHWFI5VXcwc3ZaWm53VDVkSmFSODd4dGZaQkdCNXpoLUhoTVppMWdHSUdQLXFva2JCeThEWFFHTE9HTjh4ZW85TXBRbkFPd0JER2RiSlEwdzJBOVR6aVM0UmpoamdYTlRVY2ZoUTZrRjd3LXJPZHBQRk45dXpsMGxYb0tjdkRpTHU5UWJWd09UV3lja0gwYk80QmVVTnlpQlZYdFpQUkVvZEJmY0FNR0F2RjJKNDBWWjREeExXTzVjemVsR29mcXh2UQ?oc=5"
     },
     {
+      "src": "theguardian.com",
+      "t": "Afternoon Update: Christian Brothers abuse survivors to be compensated; Trump’s new tariffs; and Alan Turing’s cheeky side | Australia news",
+      "d": "",
+      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPZmE0WWpuVndQY25rX1U5cE5XaXlLekdUbFFNeGVESGc3ejU4VVlVUFRaYVRSbzlib1Q4NFI3ODQzVGVJdWpxUHpRVUQ4QWNnMnNmdmw2WmxJNVhOMndjdG5xVnR2TFp3Y2ZBM2V1YVhnWkhwYWljZG40eVNlTUNWWWh5LWJ1cEdZMEpBWHRR?oc=5"
+    },
+    {
       "src": "Survivors Network of those Abused by Priests",
       "t": "Taxpayers could pay millions to abuse survivors if Christian Brothers goes bankrupt, court documents reveal",
       "d": "",
@@ -80,7 +80,7 @@
       "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQa0pKUXFEOWVXbUVIeG1XcnQyR3QyQjRORkY1NHBTTkVRNkh4OFd3R29QaVFtVm15WGJXZHBiSTl4dnJrNzFuR1JZODZSdWNBUzF2dldieGh6MWI0UEIzN2Jzd1BvZElVT3c1X2U2NHlRdnJ1Y24wQzU0Y3ZfZXJDWk1lemNJSVBYdkI1ajVRVkV2czkzTm1NdGNzZkh1T3N6UmR0dXNMeVU2LTJBdV9BdklQVXhkcHNYOXlDc2ZKNXhyX1M2c1ZCRS04Uk5DRGs3WmVDSC1mNDFHdw?oc=5"
     },
     {
-      "src": "The Irish Times",
+      "src": "irishtimes.com",
       "t": "Survivors experience Christian Brothers’ litigation strategy as abuse by other means",
       "d": "",
       "date": "Sat, 29 Aug 2026 23:32:32 GMT",
