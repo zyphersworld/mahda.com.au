@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-04T10:37:18.177Z",
+  "builtAt": "2026-09-04T14:47:15.414Z",
   "count": 12,
   "items": [
     {
@@ -10,18 +10,11 @@
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNS3hDejBsYlJwbm9Ob0NkemMzMHF0R2d4Tm1Kbk12cUxIQ2dkUEtSaTdUVVM0cmtSNTVINDdtQVFkbXdwM0RSZmp2X0JFQ1ctM2lWeW5xN2VpX2ZOcE1hZjlVSWlFODNUTm9NLTZ2V05jWUxFeEI3TmI5U2pjTjYxWkY0bS1UNklRT2cwdTVjeXF6aTZwcU0yMWZpcHA4MXA2MktUbU9DMVBDeS1wQkFpcVVR?oc=5"
     },
     {
-      "src": "AFR",
+      "src": "afr.com",
       "t": "Catholic archdiocese to be paid before Christian Brothers victims",
       "d": "",
       "date": "Wed, 22 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNREE0b1RoeFotUlRsVjIwenJSMWozaVhlSXhwYkFPOG5feGw1YWg5MmtpTkI5bGNBNlRDRjNjRnR0M3FNVTB5Q0NKd1dqSDBjSVZ2bm1YV2gyVG5fTzN4ekFHWFBiUktXS09USHh0M1hoVS1VMmNHa1dkYnJpa1VuWHVHWUFjRnRqQlQ2Mi1QUnIzRHpBelR4TmhlNkJ5d0x3WEZzSHlsSThQZjFab0M3eG1JYjlidURUYWc?oc=5"
-    },
-    {
-      "src": "The Catholic Leader",
-      "t": "Christian Brothers strike deal with EREA to ensure abuse victims and survivors paid in full",
-      "d": "",
-      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTTZMbXM3WWRiV25HdTJnVFJQUUZscHNZS0VLNFlENjNuVUVMNGlyUkJkRGQ5MURSZmVNMHBmQ1UxWkNQekkzSXVqb0tpdW9vZVF2MVJORHFKMmkwSU1nbDBhbncyMEtCZ0hQbnJSU0tTN2VkcUVoLV9FUG9pQVg1bHZ6emlkME5ZREJnbG9xZFpBcS1LVXdwaHB2anNiSkJIU2pLcEpCRXlEU0oyZ3lYUDlSbmxxcVRJNEVNMm5pVjVkbXViVm53cUhhM1RXQ0tWblFR?oc=5"
     },
     {
       "src": "The Guardian",
@@ -29,6 +22,13 @@
       "d": "",
       "date": "Fri, 24 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQaE9oM21JVXNoRHNzNlYtSkdZa3lrbkRTWmFIZVM1LWFDd3JCemRMUmZHUW5SZzZIVUtfa0l5eG1WYm5heC1ja2hIVDYxRkZuTFROdWRWT01iQ0xzSFpHaFlUNUtwcGFXY2cxMWdpYVNRekZ4UHpoOG5UM3FxejRoNTRNd3FrcHBiRE9DVXpKUzMwNTFKaGx2eHFISmoxMzVId1cySFhwMG1PTlk?oc=5"
+    },
+    {
+      "src": "The Catholic Leader",
+      "t": "Christian Brothers strike deal with EREA to ensure abuse victims and survivors paid in full",
+      "d": "",
+      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTTZMbXM3WWRiV25HdTJnVFJQUUZscHNZS0VLNFlENjNuVUVMNGlyUkJkRGQ5MURSZmVNMHBmQ1UxWkNQekkzSXVqb0tpdW9vZVF2MVJORHFKMmkwSU1nbDBhbncyMEtCZ0hQbnJSU0tTN2VkcUVoLV9FUG9pQVg1bHZ6emlkME5ZREJnbG9xZFpBcS1LVXdwaHB2anNiSkJIU2pLcEpCRXlEU0oyZ3lYUDlSbmxxcVRJNEVNMm5pVjVkbXViVm53cUhhM1RXQ0tWblFR?oc=5"
     },
     {
       "src": "Survivors Network of those Abused by Priests",
@@ -66,25 +66,25 @@
       "url": "https://news.google.com/rss/articles/CBMioAJBVV95cUxQd1dmVy0tYkEtTjAyRVNuemlvNmhKZFVBeHc5ZXZnYkJJYS1NaGZoQjh5X1lUaXU5Y19CMnFwOFFtNHk0LUdqdDlYNkhlMEMzeGlxQUtRb3d0b2VGOEVvQ0RTSzliMWw1aUNZUE4tZHRBQ1hKMzhHVmNSd0p6b0xiMkFPbm5lajNaYngzcG95NE9aNUtiZG9DNEJVVml1TU1ucWV0M0dPQy05dl9BdUhuYUtDY3BCeGRiWmJMRlV2djNvU0gzbXo3Q0RQM3MtU0dEcUFrOXYzYTVwRjZHUUN5TjloWDlwa0FtZ0tBa2tHM3JkanpXdlV5VU9Qb3llTDVuR2pwVFBkTXNzZWtBSGpmT2N4TWdwckNvRHJXOVk5M2M?oc=5"
     },
     {
-      "src": "News.com.au",
+      "src": "news.com.au",
       "t": "Church makes abuse payout U-turn",
       "d": "",
       "date": "Fri, 24 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxQalBJazdzaG1DNGZQdGFEQkk0cU9jaXFFdlR6RUw5WnVCVWxMUm56MUlLeE8xNDBkemE2Q0JUVzc1ZEoxV3dSS3R5ODFVQXBNVWx5R1hTTUZGR3RHM0FCNnJQeGt2cTBqRGJ1ODdxbzRjU2wwaWF3aEdseklhaDB5bjV0OUNZUlRhbTNHcklRcnJKMlJ3Zm1lU2M0TnZZVUNVQklFTEg2cl9OX1lWYzlXaVdtRnBUaEw5SzZJVlZGd1J0ZW0waGFqRWRrd0VwdFVKLVhNME1MTFdTdzJ2SXQwNUI3NWlPRFZPS3JpQlViTlZqc2Nw0gH6AUFVX3lxTE92bUdLdUswZDZvY1JHV3BSaGliNHFyYVVoZ0QxeTJaaF9EOVpyVXoxUkJmelYwQ1pGSEYtREgyczJHUkM2bjgwS3pXQjhkazkzelBvNWN4T1l4di0xaEFVaEozdnNIR3ppU1BKeTRMT2h5eUhWNXJ0WmliY09wRlBUcU81dUNUS2cyMTFxcjQxRGV6MWhMODdIUGVFdUNhci00TFk3SElmSy1aVlc1VkdYemtQM3MtTFNWR0owRGRNSDJRLWZqV2IxQ3JTZFZCT3RSbUNaSkJmVG1RVnJ6WWFvaGRIT01pcVVaN1h0N0I3LVQxN1hwN19qMkE?oc=5"
     },
     {
-      "src": "The National Tribune",
-      "t": "Statement On Christian Brothers",
+      "src": "The Nightly",
+      "t": "Christian Brothers victims to receive compensation",
       "d": "",
-      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1WdFZ6cnNYaW9LZjNOaVlpTEg4TzNKNVdPQWxQR0draGJJRWtVVURFMGZhcXV5N1ZVRTdqV2R0V1BPM0Y3T2tMSHlBRzhHZ1RIU1AyQ3NnNmxiNUJnSGZOMHVoOEs2UlBjeGRBWm1kbjJWZFEzS2c?oc=5"
+      "date": "Thu, 23 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQd2RPc3BUSWRJX19uSFFDOGZZQm1GeDFBbVJHWFI5VXcwc3ZaWm53VDVkSmFSODd4dGZaQkdCNXpoLUhoTVppMWdHSUdQLXFva2JCeThEWFFHTE9HTjh4ZW85TXBRbkFPd0JER2RiSlEwdzJBOVR6aVM0UmpoamdYTlRVY2ZoUTZrRjd3LXJPZHBQRk45dXpsMGxYb0tjdkRpTHU5UWJWd09UV3lja0gwYk80QmVVTnlpQlZYdFpQUkVvZEJmY0FNR0F2RjJKNDBWWjREeExXTzVjemVsR29mcXh2UQ?oc=5"
     },
     {
-      "src": "irishtimes.com",
-      "t": "Survivors experience Christian Brothers’ litigation strategy as abuse by other means",
+      "src": "ucanews.com",
+      "t": "Who should pay the Christian Brothers’ debt to their abuse victims?",
       "d": "",
-      "date": "Sat, 29 Aug 2026 23:32:32 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQRlgwZnRsZ3dGZlhBTWU5bF9wbDU4eHhjald4M0UyZXBJUjhPR2YxZS1rNDV6TFVRU1IzMW9ESk91Uk9YSGlxY1h1ajBPeTN5Vllzd2liU3R4Q1NYUEhqU0NaZ0ZUcXVBTzRERjZpazh1M1Y4R1RGSXFhRkFyekVOVnEtZFNCb0t4V1pyLV9mVmdXc180V0p4Y0tiMWduempaQWNWWUpfWldyVE9SQmdFMHhuVHhXZUxDdlpDaEFBcUdqeUNlbVRYZE5n?oc=5"
+      "date": "Thu, 23 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPcGxtWDZraVBfS3ZQcWVKVE1zSGRWa3FiSTNpN1o3QXdmU2NTb2dMZVZhR29TaklKZzh0NnY2cTBkOUVHcnNVRDN2LVd1a2hFY1pWbWdkWUp2a0pxUnFYXzJFVjFzQjdkcnJraERlbDBVUlZmNkxCNUFFSDRpN3dfRU1hS1dJVkpxVlA4anJtRW5GQ3N6NHJ6WUdrWkxGTjZxQmdn0gGiAUFVX3lxTFBUVnNEdTFEaUd2TGdlX1BmWXJfU0xnOGxWcGR2cmo0Rm9JOVVzbjdWTTI1d20zVzZOR3Jvc0FoNEFPWVhXT0M2bkRlaW9wSmlqZ0NBeEZyVEtmR1RYSEpMRXpPbzZhOFZCcmpoNnhoT29YWDRjTFkwOWNPc0JLRTJfcDZGTjBjVlh5d3RDay1uaXV0ZzVqMDVXZ05RZkM5LUoxQQ?oc=5"
     }
   ]
 }
