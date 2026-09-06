@@ -1,27 +1,20 @@
 {
-  "builtAt": "2026-09-06T18:01:51.947Z",
+  "builtAt": "2026-09-06T20:38:25.766Z",
   "count": 12,
   "items": [
     {
-      "src": "abc.net.au",
+      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
       "t": "Previously unheard from survivors detail horrific abuse at Christian Brothers",
       "d": "",
       "date": "Mon, 27 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNS3hDejBsYlJwbm9Ob0NkemMzMHF0R2d4Tm1Kbk12cUxIQ2dkUEtSaTdUVVM0cmtSNTVINDdtQVFkbXdwM0RSZmp2X0JFQ1ctM2lWeW5xN2VpX2ZOcE1hZjlVSWlFODNUTm9NLTZ2V05jWUxFeEI3TmI5U2pjTjYxWkY0bS1UNklRT2cwdTVjeXF6aTZwcU0yMWZpcHA4MXA2MktUbU9DMVBDeS1wQkFpcVVR?oc=5"
     },
     {
-      "src": "Michael West Media",
+      "src": "michaelwest.com.au",
       "t": "Relief as Christian Brothers back down on abuse redress",
       "d": "",
       "date": "Fri, 24 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOWkI4MG1Md0JQWmVVNmFfWXBKOW5GSHJOZmtBbDhLQjYwVTViREFQblNZUldLY0xyNkZ1bnQ4dmFkcnAxZm9nZGwzNVVsX0xxOVJfeWNHREdUQ3ZuYVAtYURCNjBKRTU2LW9jd25vSjNWcFZNdUxuLU5McEdkbzZGUkE0bUhaUG9tWlVF?oc=5"
-    },
-    {
-      "src": "The Guardian",
-      "t": "Christian Brothers abuse victims to get ‘full’ compensation in backdown after controversial property sales",
-      "d": "",
-      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQaE9oM21JVXNoRHNzNlYtSkdZa3lrbkRTWmFIZVM1LWFDd3JCemRMUmZHUW5SZzZIVUtfa0l5eG1WYm5heC1ja2hIVDYxRkZuTFROdWRWT01iQ0xzSFpHaFlUNUtwcGFXY2cxMWdpYVNRekZ4UHpoOG5UM3FxejRoNTRNd3FrcHBiRE9DVXpKUzMwNTFKaGx2eHFISmoxMzVId1cySFhwMG1PTlk?oc=5"
     },
     {
       "src": "The Catholic Leader",
@@ -29,6 +22,13 @@
       "d": "",
       "date": "Fri, 24 Jul 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTTZMbXM3WWRiV25HdTJnVFJQUUZscHNZS0VLNFlENjNuVUVMNGlyUkJkRGQ5MURSZmVNMHBmQ1UxWkNQekkzSXVqb0tpdW9vZVF2MVJORHFKMmkwSU1nbDBhbncyMEtCZ0hQbnJSU0tTN2VkcUVoLV9FUG9pQVg1bHZ6emlkME5ZREJnbG9xZFpBcS1LVXdwaHB2anNiSkJIU2pLcEpCRXlEU0oyZ3lYUDlSbmxxcVRJNEVNMm5pVjVkbXViVm53cUhhM1RXQ0tWblFR?oc=5"
+    },
+    {
+      "src": "The Guardian",
+      "t": "Christian Brothers abuse victims to get ‘full’ compensation in backdown after controversial property sales",
+      "d": "",
+      "date": "Fri, 24 Jul 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQaE9oM21JVXNoRHNzNlYtSkdZa3lrbkRTWmFIZVM1LWFDd3JCemRMUmZHUW5SZzZIVUtfa0l5eG1WYm5heC1ja2hIVDYxRkZuTFROdWRWT01iQ0xzSFpHaFlUNUtwcGFXY2cxMWdpYVNRekZ4UHpoOG5UM3FxejRoNTRNd3FrcHBiRE9DVXpKUzMwNTFKaGx2eHFISmoxMzVId1cySFhwMG1PTlk?oc=5"
     },
     {
       "src": "Survivors Network of those Abused by Priests",
@@ -59,7 +59,7 @@
       "url": "https://news.google.com/rss/articles/CBMioAJBVV95cUxQd1dmVy0tYkEtTjAyRVNuemlvNmhKZFVBeHc5ZXZnYkJJYS1NaGZoQjh5X1lUaXU5Y19CMnFwOFFtNHk0LUdqdDlYNkhlMEMzeGlxQUtRb3d0b2VGOEVvQ0RTSzliMWw1aUNZUE4tZHRBQ1hKMzhHVmNSd0p6b0xiMkFPbm5lajNaYngzcG95NE9aNUtiZG9DNEJVVml1TU1ucWV0M0dPQy05dl9BdUhuYUtDY3BCeGRiWmJMRlV2djNvU0gzbXo3Q0RQM3MtU0dEcUFrOXYzYTVwRjZHUUN5TjloWDlwa0FtZ0tBa2tHM3JkanpXdlV5VU9Qb3llTDVuR2pwVFBkTXNzZWtBSGpmT2N4TWdwckNvRHJXOVk5M2M?oc=5"
     },
     {
-      "src": "geelongadvertiser.com.au",
+      "src": "Geelong Advertiser",
       "t": "Lawyer urges caution on abuse payout deal",
       "d": "",
       "date": "Thu, 30 Jul 2026 07:00:00 GMT",
@@ -80,7 +80,7 @@
       "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxONllVRFozMktFcFFqbnNzdFpvcDJkVTI2bkFzT2ctYWVXQ2dZcVNqTnRTZGJFdkQxS3llcEZ4OGlvbjM3UzdYaDlqRjM4Wjg5N2tlLUtoS1hpS2J0YzhsRHdDNEpLU28tRzNEU1N2QnNwc0lZdERsX1ZBbGtBSlNKcnp5d3F4bzRoQldzenRiV3BnMU9aN1huTnlQQ2w1YV9TTDh5em1ObnZ6ekNEX3hkMkphckJLdHFKZlowWWt6SHJYamdYbm9vR3dzMm5zRmZmbGVnY19hTW4?oc=5"
     },
     {
-      "src": "thewest.com.au",
+      "src": "The West Australian",
       "t": "Court freezes payouts to Christian Brothers abuse survivors",
       "d": "",
       "date": "Fri, 04 Sep 2026 18:00:00 GMT",
