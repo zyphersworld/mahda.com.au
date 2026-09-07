@@ -1,71 +1,53 @@
-# The Waiting List — site folder
+# The Waiting List — site folder (v2, dashboard front door)
 
-Drop this whole `waiting-list/` folder into the web root so it serves at
-`mahda.com.au/waiting-list/`. No build step, no dependencies, all links relative.
-Same engine as the medical and refuge sites: `pages.json` drives content, a
-hash router handles navigation, six liveries via CSS variables (Iron is the
-default here — this page is meant to read as a hard, factual ledger, not a
-polished pitch).
-
-## Files
+Two layers now, deliberately:
 
     waiting-list/
-      index.html                 shell only — no copy lives here
-      404.html
-      pages.json                 ALL editable copy
-      assets/css/liveries.css    six-livery tokens (Iron default)
-      assets/css/site.css        layout, corner-bracket panels, print rules
-      assets/js/app.js           hash router + livery switcher + baked fallback
+      index.html          NEW — condensed dashboard, single self-contained file
+      full/                the previous multi-page site, unchanged, moved here
+        index.html
+        pages.json
+        assets/...
 
-## Editing
+## The dashboard (index.html)
 
-Change `pages.json` only. Update the `meta.updated` date every time you touch
-it — this page's whole credibility rests on being visibly current, since it's
-built to be handed to journalists, MP offices, and potentially the Ombudsman.
+Modelled on The Reckoning Desk's engine (mahda.com.au/reckoning-desk/): one
+self-contained HTML file, no build step, no separate CSS/JS files. Paper
+palette with a light/dark toggle (follows system preference on load), a
+live counter since the Ombudsman complaint was lodged, and six widgets —
+Where It Stands, Documented Cases, The Ledger, The Voices, Things You Need
+to Know, Where to Turn.
+
+This is the front door now. It's meant to be read in under two minutes.
+Everything in it links out to the matching page in `full/` for the
+unabridged, evidenced version.
+
+**Editing the dashboard:** unlike `full/`, content isn't in a separate JSON
+file — the stages, ledger cells, and entries are plain HTML in `index.html`;
+the Voices and Where to Turn lists are JS arrays near the bottom of the
+file, same pattern as the Reckoning Desk's `VOICES`/`RES` arrays. Update the
+`EPOCH` constant if the counter should track a different event than the
+Ombudsman complaint. Update `meta`-equivalent content (the standfirst, the
+clockbar label) by hand — there's no meta object, it's inline.
+
+## full/ — the complete record
+
+Unchanged from before: `pages.json` drives everything, hash router, six
+liveries (Iron default). See `full/README.md` for that layer's own notes —
+analytics setup, the unverified-figures caveat, and the liveries system all
+still apply there exactly as written.
 
 ## Analytics
 
-Google Tag Manager is installed and live — container `GTM-NL6F28VS`, the
-same one used on the Christian Brothers insolvency site. Both `index.html`
-and `404.html` have the standard two-part GTM snippet: the script in
-`<head>` and the `<noscript>` iframe immediately after `<body>`.
+Same GTM container (`GTM-NL6F28VS`) and GA4 property (`G-ZGWXJJ83MP`) as
+`full/` and the Reckoning Desk — both files carry the standard snippet. The
+dashboard is a single static page (no hash router here), so it doesn't need
+the `virtual_page_view` workaround `full/` uses.
 
-Because this is a single-page app (the hash router never triggers a real
-page reload), a bare GTM install only ever sees one page view per visit.
-`assets/js/app.js` pushes a `virtual_page_view` event to `dataLayer` on
-every section change to work around that.
+## Why two layers
 
-**One thing this code can't do on its own:** that dataLayer push means
-nothing in GA4 until a matching trigger exists inside the GTM container
-itself — a Custom Event trigger listening for `virtual_page_view`, wired to
-fire a GA4 Page View or Event tag. That's a one-time setup inside
-tagmanager.google.com, not something in this codebase. If it's already
-configured for the other site sharing this container, section views here
-should start showing up the same way. If not, that's the one manual step
-left.
-
-## Keeping the reach numbers honest
-
-The Reach page states figures as read directly off the platform's own
-analytics, not independently audited. Keep that framing — don't round up,
-don't drop the caveat. A tracker that oversells its own numbers is worse
-than no tracker.
-
-## The unverified figures
-
-Two numbers on the Pattern page (60,000 statewide waitlist, six-week hotel
-funding cap) are sourced from other commenters' own reported experience, not
-a document. They're flagged as such on the page. Verify them properly (a
-DFFH/Homes Victoria annual report, or a direct query to the department)
-before this page is shown to press or officialdom, or drop them if they
-can't be confirmed.
-
-## Liveries
-
-Iron is the default deliberately — this is a ledger, not a proposal. The
-other five liveries are one click away and persist via localStorage.
-
-## Deliberately kept minimal
-
-No tracking beyond Google Fonts and the GA4 setup described above (inactive
-until you add your Measurement ID). No third-party scripts beyond those two.
+The dashboard condenses ten pages into six widgets and a two-minute read —
+good for a first-time visitor, an MP's staffer, or a journalist on
+deadline. `full/` keeps every page, every row, every piece of evidence
+exactly as before, for anyone who wants to check a claim or go deep. Nothing
+was deleted; it moved one folder down.
