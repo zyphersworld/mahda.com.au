@@ -1,90 +1,41 @@
 {
-  "builtAt": "2026-09-07T11:37:17.096Z",
-  "count": 12,
+  "builtAt": "2026-06-29T08:00:00.000Z",
+  "count": 5,
   "items": [
     {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Previously unheard from survivors detail horrific abuse at Christian Brothers",
-      "d": "",
-      "date": "Mon, 27 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNS3hDejBsYlJwbm9Ob0NkemMzMHF0R2d4Tm1Kbk12cUxIQ2dkUEtSaTdUVVM0cmtSNTVINDdtQVFkbXdwM0RSZmp2X0JFQ1ctM2lWeW5xN2VpX2ZOcE1hZjlVSWlFODNUTm9NLTZ2V05jWUxFeEI3TmI5U2pjTjYxWkY0bS1UNklRT2cwdTVjeXF6aTZwcU0yMWZpcHA4MXA2MktUbU9DMVBDeS1wQkFpcVVR?oc=5"
+      "src": "The Catholic Leader",
+      "t": "Christian Brothers facing bankruptcy after 183 years in Australia",
+      "d": "Trustees seek a Creditors\u2019 Scheme to distribute remaining assets; provision flagged for 176 ageing brothers.",
+      "date": "2026-06-24T02:00:00Z",
+      "url": "https://catholicleader.com.au/news/australia/christian-brothers-facing-bankruptcy-after-183-years-in-australia/"
+    },
+    {
+      "src": "The Canberra Times",
+      "t": "Victims of Christian Brothers to share in final assets",
+      "d": "Body responsible for restitution says it is on the brink of collapse; ~$216M to be split among survivors and creditors.",
+      "date": "2026-06-22T10:03:00Z",
+      "url": "https://www.canberratimes.com.au/story/9297154/victims-of-christian-brothers-to-share-in-final-assets/"
+    },
+    {
+      "src": "Australian Lawyers Alliance",
+      "t": "Wind-up plan risks justice for abuse survivors",
+      "d": "\u201CNot surprised, but appalled\u201D \u2014 advocates warn the move echoes a Royal-Commission-documented pattern of delay.",
+      "date": "2026-06-25T00:00:00Z",
+      "url": "https://lawyersalliance.com.au/Web/News/Media-releases-internal/2026/Christian-Brothers-wind-up-plan-risks-justice-for-abuse-survivors.aspx"
     },
     {
       "src": "CathNews",
-      "t": "Christian Brothers strike deal with EREA to pay abuse victims in full",
-      "d": "",
-      "date": "Mon, 27 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTXpFQVZBc3lzX3JCVlNtczlyVF9IZEpiSTJZOEpQUGpjMmxvT0pLT3NKcEdGNXd3ZkVxcFJRdWViM0UzVW9kVXZkdGgxb3YybTd6R0d3YmlZSjRwWUlfUXNsUnZrSDlJYXdFMnVVWDdmRjF0elkzeTZQclVza1FJbnR1cWRWSGNYMkFZckhwcGFjMDEwUXJUTW1iaTQ2VjcwdjhGaA?oc=5"
+      "t": "Christian Brothers seek financial solutions",
+      "d": "Scheme would pay survivors more than liquidation, the group says, but less than the full value of claims.",
+      "date": "2026-06-23T00:00:00Z",
+      "url": "https://cathnews.com/2026/06/23/christian-brothers-seek-financial-solutions/"
     },
     {
-      "src": "Survivors Network of those Abused by Priests",
-      "t": "EREA steps in to guarantee compensation for Christian Brothers abuse survivors",
-      "d": "",
-      "date": "Mon, 27 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOWTMwRFZtR19pdlc5Vk9UTmczTUVhLV9CQkppU2h0aThhSVZGVnFVMF9lSGpWU2tBamJiR0VmUGVkZmdhVjVVcUowN3ltZ2xxdTlrb3ZadWV2WlY1YVR0c3ZqdUdXbHZ6eDFJandMT2k2Mk5WcnF0WEVLei1TZnBWNmlRYWxQRDRXcVI5eDVCM1BIWVlVQ1pjdjZrUDJNU1g5b0VQRy1KZWU0aGY4amdZQ3FQS1E?oc=5"
-    },
-    {
-      "src": "Geelong Advertiser",
-      "t": "Lawyer urges caution on abuse payout deal",
-      "d": "",
-      "date": "Thu, 30 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxOZS05QW9TY0hHM0ZvOG92UUdTaktRbml5YXBPLXFMVUxNQ19UVVRZRjlmSUE5R3NFLXBZUzVIRlVzMl9HeVQzVkcxcW5xdjZtSU5MWmJiWlVZOFFOUzRod1ZoSnJ6WVZkaVBUaktUWF9uVHU3WE1FTkxFVXlNOWltalc0czhYY2EzUWk0b0Q1WE01LXo1c2UxRURzeHhGMHNsRmNtMEN0RXowcVFicWZqSnV6azIzSHRaMXNVd085MWlDZUt4WF9INVA4MVk1TVhrbHp1bnJ3UVA3T1dXamVGaTdmV3FwR3J4YW5vWWRFS0tOZHlqWTh4Qzd30gH_AUFVX3lxTFBtaTJCMC1LT29lYzVkc0dibGFsMG14cms4NVp5elFNYTFqVnBDZ19wWFlHWGtKMU16dGFidkRxX3pqQlVKVXg5dHRhYkhOSVN4bzQ4Ql90dWppbkxlOEVrWXpVQWRvbXB6aTgzOUxyMWdXMjl1NmJLb2VKclBfRWRPX2gybVZDS3ZwS1l6VHp6aVdXTVd6UWU5OG5OYThtOEZZZmZGNHpSVm0tNDFhakkzanRoaXR5R3V4UGhhUGx5U3l3OUtDMXJjMWVWVGduMDNScjluemF4Vk9rX0xFdjd2UjBVb0g5dWF5YlhwTUczYTNkOEh6OVphYm9PeTRiMA?oc=5"
-    },
-    {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Catholic schools body moves to cut ties with Christian Brothers",
-      "d": "",
-      "date": "Sun, 06 Sep 2026 18:39:52 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOajNYTk8tVnNfdy1QbHBVaXJFb0FvY09KTUN2RU56SlZhdlVFUGJMV3RyczFUdnNPemUxUEIybXdtM0hwZEJQUDhNejhTcGF2ZzY2Z294c2J0M01jRENUM2tCVzg3NWdHa1diRzliNndSQVdBclo4YUFuUXppc0RxQVhwaUFGVlBpUndfZW00SGxfM01VY011aWpwb1dlMnZMRm5zN1RNTDk5Ymc?oc=5"
-    },
-    {
-      "src": "The Church Times",
-      "t": "Pledge for survivors at Christian Brothers schools in order’s Oceania province",
-      "d": "",
-      "date": "Fri, 31 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxONllVRFozMktFcFFqbnNzdFpvcDJkVTI2bkFzT2ctYWVXQ2dZcVNqTnRTZGJFdkQxS3llcEZ4OGlvbjM3UzdYaDlqRjM4Wjg5N2tlLUtoS1hpS2J0YzhsRHdDNEpLU28tRzNEU1N2QnNwc0lZdERsX1ZBbGtBSlNKcnp5d3F4bzRoQldzenRiV3BnMU9aN1huTnlQQ2w1YV9TTDh5em1ObnZ6ekNEX3hkMkphckJLdHFKZlowWWt6SHJYamdYbm9vR3dzMm5zRmZmbGVnY19hTW4?oc=5"
-    },
-    {
-      "src": "The West Australian",
-      "t": "Court freezes payouts to Christian Brothers abuse survivors",
-      "d": "",
-      "date": "Fri, 04 Sep 2026 18:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLUNCMXY1SEk2ak9KZzItS3oxcWliZmRCYnowdEtoc1RpZm9IcFBlbW5ibUhxN3FST2pMQzJ0eXo5eFhvRmltc2drSmZQMGo2dHJoRTZRTXgzN05wQjVjYzdjZUJRTTJRQl9OYXZIVGNBWG1yUkRYR2wxVmtKUlg4OGMzY05SS2lQelQ3TkJXWHNVbmZTMUR6WVZTNkdZUDBOQ3h4emRHOExQUWlRSUFYeUNhaGFnVXJubGh2QVQtX2dpTkgtOVVlcGI3YWRFWnBiR0lnY0ZrTlU2dw?oc=5"
-    },
-    {
-      "src": "TV Blackbox",
-      "t": "Christian Brothers’ compensation crisis on FOUR CORNERS",
-      "d": "",
-      "date": "Sun, 06 Sep 2026 19:35:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQVERWUDFmY2dnQ2w1X2kxRnFWbEJGMHRsQXZhYXdXYmJIQ3o0VW9uSUtQQnNOdVhfbFBfZUI3WGMwb3ZFbjI0MmdiWFFFbl9nWnJZRnJPc29oVkJWUzRyQUZqVFVxY0RIUmxPd0MxbUJpb2xxUE5MY2Jyb3VlYUM1UWtpYlhaUmI4X0tUYkp1dVppNUVvOXhjNzlfbDJhQQ?oc=5"
-    },
-    {
-      "src": "The Irish Times",
-      "t": "Survivors experience Christian Brothers’ litigation strategy as abuse by other means",
-      "d": "",
-      "date": "Sat, 29 Aug 2026 23:32:32 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQRlgwZnRsZ3dGZlhBTWU5bF9wbDU4eHhjald4M0UyZXBJUjhPR2YxZS1rNDV6TFVRU1IzMW9ESk91Uk9YSGlxY1h1ajBPeTN5Vllzd2liU3R4Q1NYUEhqU0NaZ0ZUcXVBTzRERjZpazh1M1Y4R1RGSXFhRkFyekVOVnEtZFNCb0t4V1pyLV9mVmdXc180V0p4Y0tiMWduempaQWNWWUpfWldyVE9SQmdFMHhuVHhXZUxDdlpDaEFBcUdqeUNlbVRYZE5n?oc=5"
-    },
-    {
-      "src": "RTE.ie",
-      "t": "Christian Brothers' focus on settling claims 'without litigation'",
-      "d": "",
-      "date": "Wed, 05 Aug 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5RU2E2WGdiRVlRT2FmOThvalo0SjVUN1dkXzc3WW10Z013SThPQk5OdGljWGYtSFZaM0UzLXgyMC0yTlNWdmc1ckVlSHZlXy15SC14Y05Qc2ptdWpFODN6dWZ0aWIxYXVxNl85cXEtZkl6aGlSN1lJ?oc=5"
-    },
-    {
-      "src": "The Journal",
-      "t": "Christian Brothers says its focus is on settling claims ‘in a timely manner’ without litigation",
-      "d": "",
-      "date": "Wed, 05 Aug 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPbmdxaEVxeUpkRDZjVG1oS3pfenVHeXc1cW1ibXBFNDU5TWNuUW5oOHZIZjJlb25lM3dGdEVwa0pLQ2FteXduRlo5MG1reGgyNkpaVFJJNHdKNF9tWTdCR1dDUm1WTElHYVBGRG80Tk1HZU5rbUdnZEx4ZGZVTlB5c1c5SGhRWkZXNmZNVXJXRHRCaHI4aFpPS1NVZ0plZTNQNFRVT0xHNVpBd2xKQkdfdjU0ZEkyZS1NY2VES0cxUV9MSXlEREE?oc=5"
-    },
-    {
-      "src": "thepress.co.nz",
-      "t": "St Thomas of Canterbury College will not be sold to pay victims of sexual abuse in Australia",
-      "d": "",
-      "date": "Thu, 20 Aug 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPbHF5MlZQdEtjZmVUeWs4WG1TVGNsVnc4WXZ0X3RtVkh2LW1JTDhTNXFVNlRic2FaX2prZmlKb2dSVzIwb21qVDREUHc0SFlIMngtU2x5STgzYjNYX3dnS2JnVWFTTDVHRlFSVTNZWFBPNl9qSHFtWUpQbTVBakVpbVlCRXZVWlZBTDU3dzI1WkxyVmMyR2FIRFNqN3dyOS1qWnlGUUphZ2dhcVk0Tk8tZ1RTbVVwblNwZGRWdmowaFR2ajQ?oc=5"
+      "src": "Burke Mead Lawyers",
+      "t": "What the proposed scheme means for survivors",
+      "d": "Plain-English guide to the moratorium, the creditor vote and the adjudication panel.",
+      "date": "2026-06-29T00:00:00Z",
+      "url": "https://www.burkemeadlawyers.com.au/christian-brothers-compensation-scheme"
     }
   ]
 }

@@ -291,7 +291,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li class="done"><div class="st-t">Insolvency announced <span class="tag done">done</span></div><div class="st-d">22 Jun 2026 &mdash; order says it cannot pay; proposes selling assets, splitting proceeds.</div></li>
           <li class="done"><div class="st-t">Moratorium granted <span class="tag done">done</span></div><div class="st-d">2 Jul 2026 &mdash; Justice Nixon stayed all civil claims to preserve the chance to weigh a scheme.</div></li>
           <li class="done"><div class="st-t">EREA agrees to pay &amp; be sued <span class="tag done">24 Jul</span></div><div class="st-d">MOU signed: EREA to become the proper defendant; crystallised claims paid in full. The June scheme is superseded.</div></li>
-          <li class="active"><div class="st-t">Revised scheme drafted <span class="tag now">~6&ndash;8 wks</span></div><div class="st-d">Terms being finalised with creditors and their advisors. A new hearing date will be sought.</div></li>
+          <li class="active"><div class="st-t">Revised scheme drafted <span class="tag now">now</span></div><div class="st-d">Terms being finalised with creditors; a new hearing date sought. EREA now signals it will move to sever ties with the order within 12&ndash;18 months.</div></li>
           <li><div class="st-t">Creditors vote <span class="tag pend">pending</span></div><div class="st-d">Needs 50% by number and 75% by value of claims in favour of the revised scheme.</div></li>
           <li><div class="st-t">Court approval <span class="tag pend">pending</span></div><div class="st-d">Final sign-off. Without it, the scheme does not bind.</div></li>
         </ul>
@@ -371,6 +371,8 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 const VOICES=[
+  {who:'ABC Four Corners',handle:'Louise Milligan, 7 Sep',av:'4C',text:'\u201CChristian Brothers Inc\u201D investigates how a religious order adopted asset-shielding tactics many say are more akin to a corporation than a church \u2014 and airs EREA chair Dr Stephen Brown\u2019s first TV interview since the crisis.',url:'https://www.abc.net.au/news/2026-09-07/edmund-rice-catholic-schools-split-from-christian-brothers/107107312'},
+  {who:'Dr Stephen Brown',handle:'Chair, EREA Trustees',av:'SB',text:'Told Four Corners that over the next 12 to 18 months the Christian Brothers\u2019 Australian province will be \u201Cout of the way or removed,\u201D calling it a \u201Cseminal moment\u201D for the schools body.',url:'https://www.abc.net.au/news/2026-09-07/edmund-rice-catholic-schools-split-from-christian-brothers/107107312'},
   {who:'Rightside Legal',handle:'Grace Wilson, partner',av:'RL',text:'Called the backdown a significant win for survivors, saying: make no mistake, survivors fought for this \u2014 Edmund Rice are folding because the law is against them.',url:'https://www.dailyadvertiser.com.au/story/9317264/relief-as-christian-brothers-back-down-on-abuse-redress/'},
   {who:'Tanya Plibersek',handle:'Social Services Minister',av:'TP',text:'Welcomed the deal but said survivors should never have been put in the position of wondering whether their claims would be met, and expects EREA to act in good faith on all matters.',url:'https://britbrief.co.uk/crime/victims/christian-brothers-abuse-victims-to-get-full-compensation.html'},
   {who:'Koffels Solicitors',handle:'For survivor creditors',av:'KF',text:'Argued the original scheme should not be approved and was unfair to their clients \u2014 and pushed to make EREA the proper defendant, the outcome now agreed in the 24 July MOU.',url:'https://koffels.com.au/christian-brothers-oceania-scheme-of-arrangement-court-update/'},
@@ -389,6 +391,7 @@ const RES=[
   ['official','National Redress Scheme','The alternative pathway survivors can still choose instead of the scheme.','https://www.nationalredress.gov.au/institutions/trustees-christian-brothers'],
   ['official','Province scheme FAQ','The Trustees\u2019 own running explainer on the moratorium and scheme.','https://www.edmundrice.org/'],
   ['legal','What the scheme means','A plain-English lawyer explainer on the moratorium, the vote and the adjudication panel.','https://www.burkemeadlawyers.com.au/christian-brothers-compensation-scheme'],
+  ['official','Four Corners: \u201CChristian Brothers Inc\u201D','ABC\u2019s 7 Sep investigation into the order\u2019s finances, the $1 transfers and EREA \u2014 watch on iview.','https://www.abc.net.au/news/2026-09-07/edmund-rice-catholic-schools-split-from-christian-brothers/107107312'],
 ];
 $('#resList').innerHTML=RES.map(([b,t,d,u])=>`<li><span class="badge ${b}">${esc(b)}</span><div><a class="t" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a><div class="d">${d}</div></div></li>`).join('');
 /* ---------- LIVE WIRE ----------
