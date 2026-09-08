@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<base href="/living-tree/"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Living Tree · Irish oak · Soft≠solid · public · 0.11.5-panel-v2+</title>
+<script type="importmap">
+{"imports":{
+  "three":"https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+<style>
+:root{
+  --ink:#1a1714;--muted:#6b645c;--line:#d9d2c8;--bg:#efe8dc;--paper:#fffdf8;
+  --ok:#2c5e3a;--open:#6a5420;--trap:#8a3b2b;--live:#1d4a6e;--ged:#7a746b;
+  --trunk-core:#3b2a1c;--trunk-mid:#5c4030;--trunk-hi:#8a6a4a;
+  --moss:#2c5e3a;--soft-amber:#6a5420;--living-cyan:#1d4a6e;--trap-c:#8a3b2b;
+  --energy-pat:#c45c26;--energy-mat:#2f6f8f;--spouse:#6a7ca0;
+  --leaf-spring:#3d7a45;--leaf-autumn:#8a6b2e;--soft-fill:#f6efd8;--live-fill:#e4eef6;
+  --rail:min(380px,94vw);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;font:15px/1.45 Georgia,serif;color:var(--ink);background:var(--bg)}
+#menuBtn{display:none;position:absolute;top:.55rem;left:.55rem;z-index:5;font:12px system-ui,sans-serif}
+#ui{position:absolute;top:0;left:0;width:var(--rail);bottom:0;background:var(--paper);border-right:1px solid var(--line);overflow:auto;padding:1rem;z-index:2}
+h1{font-size:1.2rem;margin:0 0 .15rem;letter-spacing:.02em}
+h1 .oak{display:inline-block;width:1.05em;height:1.05em;vertical-align:-.15em;margin-right:.2rem}
+.cid{font:10px/1.3 ui-monospace,monospace;color:var(--muted);margin:0 0 .55rem}
+.sub,.hint{color:var(--muted);font-size:.84rem}.cite{font-family:ui-monospace,monospace;font-size:.75rem}
+.callout{border:1px solid #c9b87a;background:var(--soft-fill);border-radius:8px;padding:.5rem .6rem;margin:.5rem 0;font:12px/1.4 system-ui,sans-serif}
+.callout strong{color:var(--soft-amber)}
+.softtag{font:10px system-ui,sans-serif;color:var(--open);margin-left:.25rem}
+.badge{font:10px/1.2 system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.supported{color:var(--ok)}.living{color:var(--live)}.gedcom{color:var(--ged)}.placeholder,.open{color:var(--open)}.trap{color:var(--trap)}
+.energy-pat{color:var(--energy-pat)}.energy-mat{color:var(--energy-mat)}
+input[type=text],input[type=password]{width:100%;font:14px system-ui,sans-serif;margin:.2rem 0 .45rem;padding:.35rem .45rem}
+.tab{display:inline-block;margin:0 .3rem .3rem 0;padding:.15rem .45rem;border:1px solid var(--line);border-radius:999px;cursor:pointer;font:11px system-ui,sans-serif;user-select:none}
+.tab.on{background:var(--ink);color:var(--paper)}
+.sec{border:1px solid var(--line);border-radius:8px;margin:.55rem 0;overflow:hidden}
+.sec>summary{list-style:none;cursor:pointer;padding:.45rem .6rem;font:600 12px system-ui,sans-serif;background:#f7f2ea;display:flex;justify-content:space-between;align-items:center}
+.sec>summary::-webkit-details-marker{display:none}.sec>summary::after{content:"▾";color:var(--muted)}.sec:not([open])>summary::after{content:"▸"}
+.sec .body{padding:.45rem .6rem .6rem}
+.toggle-row{display:flex;flex-wrap:wrap;gap:.35rem;margin:.25rem 0 .5rem}
+.toggle-row .tab{margin:0}
+.chk{display:block;font:12px system-ui,sans-serif;margin:.2rem 0;cursor:pointer}
+.chk input{margin-right:.35rem;vertical-align:middle}
+.swatch{display:inline-block;width:.7em;height:.7em;border-radius:2px;margin-right:.2em;vertical-align:-.05em;border:1px solid rgba(0,0,0,.15)}
+#stage{position:absolute;left:var(--rail);right:0;top:0;bottom:0;overflow:hidden;cursor:grab;background:radial-gradient(1200px 800px at 30% 18%,#f7f1e6 0%,#e8dfd0 45%,#d9cfbe 100%)}
+#stage:active{cursor:grabbing}#stage canvas{display:block;width:100%;height:100%}
+button{font:12px system-ui,sans-serif;padding:.3rem .5rem;margin:.15rem .2rem .15rem 0}
+#legend{position:absolute;right:.6rem;bottom:.6rem;z-index:3;background:rgba(255,253,248,.94);border:1px solid var(--line);border-radius:8px;padding:.4rem .55rem;font:11px system-ui,sans-serif;max-width:min(420px,92vw);line-height:1.55}
+#legend span{margin-right:.55rem;white-space:nowrap;display:inline-block}
+#backdrop{display:none;position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:3}
+#fallback{display:none;position:absolute;inset:0;z-index:4;background:#efe8dc;padding:2rem}
+#hoverTip{position:absolute;pointer-events:none;z-index:6;display:none;background:rgba(26,23,20,.92);color:#fffdf8;font:12px system-ui,sans-serif;padding:.25rem .45rem;border-radius:6px;transform:translate(12px,12px)}
+.chip{display:inline-block;margin:0 .25rem .3rem 0;padding:.12rem .4rem;border:1px solid var(--line);border-radius:999px;font:11px ui-monospace,monospace;cursor:pointer;background:#f7f2ea}
+.chip:hover{background:#ebe3d6}.chip.copied{background:#e8f3ea;border-color:var(--ok)}
+.fact h3{font:600 11px system-ui,sans-serif;margin:.55rem 0 .2rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+@media(max-width:720px){
+  #menuBtn{display:inline-block}
+  #ui{left:0;right:0;top:auto;bottom:0;width:100%;height:min(58vh,520px);border-right:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;transform:translateY(110%);transition:transform .2s}
+  #ui.open{transform:translateY(0)}#stage{left:0}#backdrop.show{display:block}
+}
+
+.lore{background:linear-gradient(180deg,#fffdf8 0%,#f7f1e6 100%);border:1px solid var(--line);border-radius:10px;padding:.65rem .7rem;box-shadow:inset 0 1px 0 #fff8}
+.lore h3{font:600 11px system-ui,sans-serif;margin:.65rem 0 .25rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.lore .cadence{font-style:italic;color:#4a3f32;margin:.35rem 0 .55rem;line-height:1.45}
+.lore .pill{display:inline-block;margin:0 .25rem .25rem 0;padding:.15rem .45rem;border-radius:999px;border:1px solid var(--line);font:11px system-ui,sans-serif;background:#f3efe6}
+.lore .pill.soft{background:#f6efd8;color:var(--open);border-color:#c9a22766}
+.lore .pill.solid{background:#e8f3ea;color:var(--ok)}
+.lore .pill.live{background:#e4eef6;color:var(--live)}
+.lore .pill.pat{background:#f8ebe3;color:var(--pat)}
+.lore .pill.mat{background:#e4eef3;color:var(--mat)}
+.lore .edge{padding:.35rem 0;border-bottom:1px solid #ebe4d8}
+
+.lore{position:relative;background:linear-gradient(180deg,#fffdf8 0%,#f7f1e6 100%);border:1px solid var(--line);border-radius:10px;padding:.65rem .7rem .7rem .85rem;box-shadow:inset 0 1px 0 #fff8}
+.lore .accent{position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:10px 0 0 10px}
+.lore.soft .accent{width:2px;background:repeating-linear-gradient(180deg,#6a5420 0 4px,transparent 4px 7px)}
+.lore.solid .accent{background:#2c5e3a}
+.lore.live .accent{background:#1d4a6e}
+.lore.trap .accent{background:repeating-linear-gradient(135deg,#8a3b2b 0 3px,#fffdf8 3px 6px)}
+.lore.gedcom .accent{width:2px;background:repeating-linear-gradient(180deg,#7a746b 0 2px,transparent 2px 5px)}
+.lore h3{font:600 11px system-ui,sans-serif;margin:.65rem 0 .25rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.lore .cadence{font-style:italic;color:#4a3f32;margin:.35rem 0 .55rem;line-height:1.45}
+.lore .pill{display:inline-block;margin:0 .25rem .25rem 0;padding:.15rem .45rem;border-radius:999px;border:1px solid var(--line);font:11px system-ui,sans-serif;background:#f3efe6}
+.lore .pill.soft{background:#f6efd8;color:var(--open);border-color:#c9a22766}
+.lore .pill.solid{background:#e8f3ea;color:var(--ok)}
+.lore .pill.live{background:#e4eef6;color:var(--live)}
+.lore .pill.pat{background:#f8ebe3;color:var(--pat)}
+.lore .pill.mat{background:#e4eef3;color:var(--mat)}
+.lore .ribbon{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;margin:.4rem 0 .55rem;padding:.35rem .45rem;border-radius:8px;background:#f3efe688;border:1px solid var(--line)}
+.lore .ribbon .seg{height:6px;width:36px;border-radius:3px}
+.lore .ribbon .seg.pat{background:#c45c26}
+.lore .ribbon .seg.mat{background:#2f6f8f}
+.lore .ribbon .seg.soft{opacity:.55;background:repeating-linear-gradient(90deg,#c45c26 0 4px,transparent 4px 7px)}
+.lore .ribbon .seg.soft.mat{background:repeating-linear-gradient(90deg,#2f6f8f 0 4px,transparent 4px 7px)}
+.lore .edge{padding:.35rem 0;border-bottom:1px solid #ebe4d8}
+.lore .edge.soft-row{opacity:.75}
+.lore .deepen{margin-top:.45rem}
+.lore.l1 .l2only{display:none}
+.lore.l2 .deepen{display:none}
+#hoverTip .tip-swatch{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+</style>
+</head>
+<body>
+<button type="button" id="menuBtn">Menu</button>
+<div id="backdrop"></div>
+<aside id="ui">
+  <h1><svg class="oak" viewBox="0 0 24 24" aria-hidden="true"><path fill="#2c5e3a" d="M12 2c-1.2 2.4-3.8 3.6-6 4.2 1.8.6 3.2 1.8 4 3.4C8.2 8.2 6 8.8 4 9.5c2.2.4 4 1.6 5.2 3.5C7.8 12.6 5.5 13 3.5 14c2.8.2 5 1.6 6.5 3.8-.2-2.2.4-4.2 1.8-5.8 1.4 1.6 2 3.6 1.8 5.8 1.5-2.2 3.7-3.6 6.5-3.8-2-.9-4.3-1.4-5.7-1C16 11.1 17.8 9.9 20 9.5c-2-.7-4.2-1.3-6-2.9.8-1.6 2.2-2.8 4-3.4C15.8 5.6 13.2 4.4 12 2z"/><path fill="#5c4030" d="M11.2 14h1.6v8h-1.6z"/></svg>Living Tree</h1>
+  <p class="cid">cid <code>living-tree-20260908</code> · Soft≠solid · public · 0.11.5-panel-v2+</p>
+  <p class="sub">Irish oak monument · roots / trunk / branches / leaves · evidence-readable</p>
+  <p class="hint"><a href="/family/">Classic /family</a> · static GH Pages · Soft≠solid</p>
+  <div class="callout" id="softCallout">
+    <strong>Soft ≠ solid:</strong> Soft claims are <em>thinner, dimmer, shimmer</em> — never brighter-as-solid.
+    Opacity soft 0.38–0.55 · solid 0.88–1.0. Energy soft hops are dashed + lower opacity.
+  </div>
+  <p class="hint" id="meta"></p>
+  <div id="livingBox" style="display:block;margin:8px 0;padding:8px;border:1px solid var(--line);border-radius:8px">
+    <p class="hint" id="livingHint">Living names are locked on this URL.</p>
+    <p style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+      <input id="livingPass" type="password" placeholder="passphrase (bluey)" autocomplete="current-password" style="flex:1;min-width:120px"/>
+      <button type="button" id="livingUnlock">Unlock living</button>
+      <button type="button" id="livingLock" style="display:none">Lock living</button>
+    </p>
+  </div>
+  <input id="q" type="text" placeholder="Search name or pid  (/ to focus)"/>
+  <p><button type="button" id="fit">Fit (f)</button><button type="button" id="me">Christopher</button></p>
+
+  <details class="sec" open>
+    <summary>Energy (direct ancestry)</summary>
+    <div class="body">
+      <div class="toggle-row" id="energyTabs" role="group" aria-label="Energy lane">
+        <span class="tab on" data-energy="off">Off</span>
+        <span class="tab energy-pat" data-energy="paternal"><span class="swatch" style="background:#c45c26"></span>Paternal</span>
+        <span class="tab energy-mat" data-energy="maternal"><span class="swatch" style="background:#2f6f8f"></span>Maternal</span>
+        <span class="tab" data-energy="both">Both</span>
+      </div>
+      <p class="hint">Warm ember <code>#c45c26</code> paternal · cool slate <code>#2f6f8f</code> maternal. Soft hops dashed.</p>
+    </div>
+  </details>
+
+  <details class="sec" open>
+    <summary>Kinship stubs</summary>
+    <div class="body">
+      <label class="chk"><input type="checkbox" id="kin-sib" data-kin="siblings"/> Siblings (sib)</label>
+      <label class="chk"><input type="checkbox" id="kin-gp" data-kin="grandparents"/> Grandparents (gp)</label>
+      <label class="chk"><input type="checkbox" id="kin-aunt" data-kin="aunts_uncles"/> Aunts / uncles (aunt)</label>
+      <label class="chk"><input type="checkbox" id="kin-cous" data-kin="cousins"/> Cousins (cous)</label>
+      <label class="chk"><input type="checkbox" id="kin-sp" data-kin="spouses"/> Spouses (sp)</label>
+      <p class="hint">Quieter grey kinship lines — not energy colours. Derived from graph parent edges; no invent.</p>
+    </div>
+  </details>
+
+  <details class="sec" id="sec-selected" open>
+    <summary>Lore deep-dive (L1–L2)</summary>
+    <div class="body" id="detail"><p class="hint">Click a leaf — Irish lore panel opens Soft≠solid.</p></div>
+  </details>
+</aside>
+
+<div id="stage">
+  <div id="legend">
+    <span class="supported"><span class="swatch" style="background:#2c5e3a"></span>supported</span>
+    <span class="open"><span class="swatch" style="background:#6a5420"></span>soft/open</span>
+    <span class="living"><span class="swatch" style="background:#1d4a6e"></span>living</span>
+    <span class="gedcom">◌ gedcom</span>
+    <span class="trap"><span class="swatch" style="background:#8a3b2b"></span>trap</span>
+    <span class="energy-pat"><span class="swatch" style="background:#c45c26"></span>energy paternal</span>
+    <span class="energy-mat"><span class="swatch" style="background:#2f6f8f"></span>energy maternal</span>
+  </div>
+  <div id="hoverTip"></div>
+</div>
+<div id="fallback"><h2>WebGL unavailable</h2><p>Try another browser, or open the <a href="/family/">classic /family</a> tree.</p></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* VisLang seal living-tree-20260908 — Soft≠solid opacity rule (never brighter-as-solid):
+   SOLID_OPACITY = 0.88..1.0 ; SOFT_OPACITY = 0.38..0.55 ; soft edges thinner + shimmer.
+   Soft energy hops = dashed + lower opacity. Soft leaves = lower alpha, not brighter bark. */
+const SOLID_OPACITY = 0.92;
+const SOFT_OPACITY = 0.45;          // Soft≠solid: dimmer than solid
+const SOFT_EDGE_OPACITY = 0.42;     // Soft≠solid: thinner/dimmer edges
+const SOLID_EDGE_OPACITY = 0.85;
+const LIVING_OPACITY = 0.9;
+const TRAP_OPACITY = 0.7;
+const GEDCOM_OPACITY = 0.45;
+
+const TRUNK_CORE = 0x3b2a1c, TRUNK_MID = 0x5c4030, TRUNK_HI = 0x8a6a4a;
+const MOSS = 0x2c5e3a, SOFT_AMBER = 0x6a5420, LIVING_CYAN = 0x1d4a6e, TRAP_COL = 0x8a3b2b;
+const ENERGY_PAT = 0xc45c26, ENERGY_MAT = 0x2f6f8f, SPOUSE = 0x6a7ca0;
+const LEAF_SPRING = 0x3d7a45, LEAF_AUTUMN = 0x8a6b2e, ROOT_EARTH = 0x4a3a2c;
+const KIN_GREY = 0x9a9288;
+
+const esc = s => String(s??'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const isMobile = () => matchMedia('(max-width:720px)').matches || (navigator.maxTouchPoints>1 && innerWidth<900);
+
+let G=null, sel='P1', energyMode='off', panelDepth=1;
+const kinOn = {siblings:false, grandparents:false, aunts_uncles:false, cousins:false, spouses:false};
+let pos={}, nodeById={}, meshList=[], pickMeshes=[];
+let rootGroup, oakGroup, leafMesh, renderer, scene, camera, controls, raycaster, pointer;
+let parentOf = new Map(), childrenOf = new Map(), personById = new Map();
+let patSet = new Set(), matSet = new Set(), patEdges = [], matEdges = [];
+
+/* STATIC GH Pages pack — base /living-tree/ — Christopher GO
+   Offline: ./graph.json (redacted) · unlock → ./graph-living.json · KE → ./kinship-energy.json
+   Version note 0.11.5-panel-v2+. Soft≠solid · no invent · streets scrubbed. */
+const STATIC_PUBLIC = true;
+const PASS_SHA256='46b6312339466d3b206325f6f402e1fae56cd65f117c779e3b9259833ffbcdf0'; // bluey
+const LS_UNLOCK='mahda-living-tree-living-v1';
+let unlockedLiving=sessionStorage.getItem(LS_UNLOCK)==='1';
+async function sha256hex(s){
+  const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+let kinIndex = null; // optional runtime kinship sets
+let clock = new THREE.Clock();
+let softShimmer = true;
+
+const stage=document.getElementById('stage'), tip=document.getElementById('hoverTip');
+
+function statusColor(st){
+  if(st==='supported') return MOSS;
+  if(st==='living') return LIVING_CYAN;
+  if(st==='open'||st==='placeholder') return SOFT_AMBER;
+  if(st==='trap') return TRAP_COL;
+  return 0x7a746b;
+}
+function statusOpacity(st){
+  // Soft≠solid hard rule: soft/open NEVER brighter/thicker than solid
+  if(st==='supported') return SOLID_OPACITY;
+  if(st==='living') return LIVING_OPACITY;
+  if(st==='open'||st==='placeholder') return SOFT_OPACITY;
+  if(st==='trap') return TRAP_OPACITY;
+  return GEDCOM_OPACITY;
+}
+function isSoftStatus(st){ return st==='open'||st==='placeholder'; }
+function isSoftVerdict(v){ v=(v||'').toLowerCase(); return v==='open'||v==='placeholder'||v==='soft'||v==='gedcom-map'||v==='gedcom'||v.includes('soft'); }
+function statusLabel(st){
+  if(st==='open') return 'open · soft≠solid';
+  if(st==='placeholder') return 'placeholder · soft≠solid';
+  if(st==='supported') return 'supported · solid';
+  return st||'';
+}
+
+function peopleSet(){
+  let ps = G.people||[];
+  const q=(document.getElementById('q').value||'').trim().toLowerCase();
+  if(q) ps=ps.filter(p=>(p.name+' '+p.id+' '+(p.aka||'')+' '+(p.notes||'')).toLowerCase().includes(q));
+  // never invent: only people from graph
+  return ps.filter(p=>p && p.id);
+}
+
+/** Layout people by gen on oak height bands: gen0 deep roots → ego near canopy. */
+function layout(ps){
+  const gens = ps.map(p=>p.gen??0);
+  const gmin = Math.min(...gens,0), gmax = Math.max(...gens,1);
+  const bands={};
+  ps.forEach(p=>{(bands[p.gen??0]||=[]).push(p);});
+  const P={};
+  Object.keys(bands).map(Number).sort((a,b)=>a-b).forEach(g=>{
+    const col=bands[g];
+    col.sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+    const n=col.length;
+    const t=(g-gmin)/Math.max(1,gmax-gmin);
+    // height band: roots near y≈-6..-2, trunk mid, canopy up to ~18
+    const y = -6 + t * 24;
+    const radius = 2.2 + t * 6.5;
+    col.forEach((p,i)=>{
+      const a = (i/Math.max(1,n))*Math.PI*2 + g*0.35;
+      const r = radius * (0.55 + 0.45*((i%5)/5));
+      const x = Math.cos(a)*r;
+      const z = Math.sin(a)*r;
+      P[p.id]={x,y,z,p,g};
+    });
+  });
+  return P;
+}
+
+function clearDynamic(){
+  if(!rootGroup) return;
+  while(rootGroup.children.length){
+    const ch=rootGroup.children.pop();
+    ch.traverse?.(o=>{
+      if(o.geometry && o.userData?.dyn) o.geometry.dispose?.();
+      if(o.material && o.userData?.dyn){
+        if(Array.isArray(o.material)) o.material.forEach(m=>{m.map?.dispose?.();m.dispose?.();});
+        else {o.material.map?.dispose?.();o.material.dispose?.();}
+      }
+    });
+    rootGroup.remove(ch);
+  }
+  meshList=[]; pickMeshes=[]; nodeById={};
+}
+
+function buildOakMonument(){
+  if(oakGroup){ scene.remove(oakGroup); oakGroup.traverse(o=>{o.geometry?.dispose?.(); if(o.material){ if(Array.isArray(o.material))o.material.forEach(m=>m.dispose?.()); else o.material.dispose?.(); }}); }
+  oakGroup = new THREE.Group();
+  oakGroup.name='oak';
+
+  // Single hero trunk
+  const trunkMat = new THREE.MeshStandardMaterial({color:TRUNK_CORE, roughness:0.82, metalness:0, flatShading:false});
+  const trunkMid = new THREE.MeshStandardMaterial({color:TRUNK_MID, roughness:0.88, metalness:0});
+  const trunkHi = new THREE.MeshStandardMaterial({color:TRUNK_HI, roughness:0.75, metalness:0});
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.55,1.15,16,12), trunkMat);
+  trunk.position.set(0,0,0);
+  oakGroup.add(trunk);
+  const barkBand = new THREE.Mesh(new THREE.CylinderGeometry(0.58,0.7,3.2,12), trunkMid);
+  barkBand.position.y=2; oakGroup.add(barkBand);
+  const crownBoss = new THREE.Mesh(new THREE.SphereGeometry(0.85,10,8), trunkHi);
+  crownBoss.position.y=7.6; oakGroup.add(crownBoss);
+
+  // Roots below y≈-8 (ground grid at -8)
+  const rootMatSolid = new THREE.MeshStandardMaterial({color:ROOT_EARTH, roughness:0.9, metalness:0, transparent:true, opacity:0.92});
+  const rootMatSoft = new THREE.MeshStandardMaterial({color:ROOT_EARTH, roughness:0.95, metalness:0, transparent:true, opacity:0.45}); // Soft≠solid thinner/dimmer
+  for(let i=0;i<9;i++){
+    const soft = i%3===2;
+    const len = 4.5 + (i%4)*1.1;
+    const rad = soft ? 0.12 : 0.22; // Soft≠solid: thinner soft roots
+    const root = new THREE.Mesh(new THREE.CylinderGeometry(rad*0.35, rad, len, 6), soft?rootMatSoft:rootMatSolid);
+    const ang = (i/9)*Math.PI*2;
+    root.position.set(Math.cos(ang)*1.2, -8 - len*0.15, Math.sin(ang)*1.2);
+    root.rotation.z = Math.PI/2 + Math.cos(ang)*0.55;
+    root.rotation.y = ang;
+    oakGroup.add(root);
+  }
+
+  // Branch stubs (instanced-ish simple meshes around trunk)
+  const brMat = new THREE.MeshStandardMaterial({color:TRUNK_MID, roughness:0.85, metalness:0});
+  for(let i=0;i<14;i++){
+    const soft = i%4===3;
+    const mat = soft
+      ? new THREE.MeshStandardMaterial({color:TRUNK_HI, roughness:0.9, metalness:0, transparent:true, opacity:SOFT_OPACITY})
+      : brMat;
+    const br = new THREE.Mesh(new THREE.CylinderGeometry(soft?0.06:0.11, soft?0.1:0.18, 3.2+ (i%3), 6), mat);
+    const ang=(i/14)*Math.PI*2, h=3+(i%5)*1.4;
+    br.position.set(Math.cos(ang)*1.4, h, Math.sin(ang)*1.4);
+    br.rotation.z = Math.PI/2.6 * (i%2?1:-1);
+    br.rotation.y = ang;
+    oakGroup.add(br);
+  }
+
+  // InstancedMesh canopy leaves (hundreds). Mobile: fewer instances.
+  const leafCount = isMobile() ? 180 : 520;
+  const leafGeo = new THREE.PlaneGeometry(0.55, 0.75);
+  const leafMat = new THREE.MeshStandardMaterial({
+    color: LEAF_SPRING, roughness:0.7, metalness:0,
+    transparent:true, opacity:0.82, side:THREE.DoubleSide, depthWrite:false
+  });
+  leafMesh = new THREE.InstancedMesh(leafGeo, leafMat, leafCount);
+  leafMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  const dummy = new THREE.Object3D();
+  const color = new THREE.Color();
+  for(let i=0;i<leafCount;i++){
+    const ang = Math.random()*Math.PI*2;
+    const r = 1.5 + Math.random()*7.5;
+    const y = 6 + Math.random()*10;
+    dummy.position.set(Math.cos(ang)*r, y, Math.sin(ang)*r);
+    dummy.rotation.set(Math.random()*0.8, Math.random()*Math.PI, Math.random()*0.5);
+    const s = 0.55 + Math.random()*0.9;
+    dummy.scale.set(s,s,s);
+    dummy.updateMatrix();
+    leafMesh.setMatrixAt(i, dummy.matrix);
+    // status-ish canopy mix: mostly spring, sparse autumn, soft amber tint never brighter-as-solid
+    if(i%17===0) color.setHex(LEAF_AUTUMN);
+    else if(i%23===0) color.setHex(SOFT_AMBER);
+    else if(i%31===0) color.setHex(MOSS);
+    else color.setHex(LEAF_SPRING);
+    leafMesh.setColorAt(i, color);
+  }
+  leafMesh.instanceMatrix.needsUpdate = true;
+  if(leafMesh.instanceColor) leafMesh.instanceColor.needsUpdate = true;
+  oakGroup.add(leafMesh);
+  scene.add(oakGroup);
+}
+
+function makeLabelTexture(name,id,status,selected){
+  const c=document.createElement('canvas'); c.width=512; c.height=160;
+  const ctx=c.getContext('2d');
+  const bg={supported:'#e8f3ea',living:'#e4eef6',open:'#f6efd8',placeholder:'#f3efe4',trap:'#f6e6e1',gedcom:'#f0ece6'}[status]||'#fffdf8';
+  const stroke={supported:'#2c5e3a',living:'#1d4a6e',open:'#6a5420',placeholder:'#8a7a4a',trap:'#8a3b2b',gedcom:'#7a746b'}[status]||'#d9d2c8';
+  // Soft≠solid: softer status gets thinner stroke (not brighter fill)
+  const soft = isSoftStatus(status);
+  ctx.globalAlpha = soft ? 0.72 : 1;
+  ctx.fillStyle=bg; ctx.strokeStyle=selected?'#1a1714':stroke;
+  ctx.lineWidth = selected ? 10 : (soft ? 3.5 : 7); // Soft≠solid: thinner rim
+  const r=24; ctx.beginPath();
+  ctx.moveTo(12+r,12); ctx.arcTo(500,12,500,148,r); ctx.arcTo(500,148,12,148,r); ctx.arcTo(12,148,12,12,r); ctx.arcTo(12,12,500,12,r);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.globalAlpha = soft ? SOFT_OPACITY/0.55*0.85 : 1;
+  ctx.fillStyle='#1a1714'; ctx.font='600 36px Georgia, serif';
+  ctx.fillText(String(name||'').slice(0,24),28,70);
+  ctx.fillStyle='#6b645c'; ctx.font='24px system-ui, sans-serif';
+  ctx.fillText(String(id||'')+(soft?' · soft≠solid':''),28,112);
+  const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; return tex;
+}
+
+function rebuildMaps(){
+  parentOf.clear(); childrenOf.clear(); personById.clear();
+  (G.people||[]).forEach(p=>personById.set(p.id,p));
+  (G.edges||[]).forEach(e=>{
+    const rel=(e.rel||'').toLowerCase();
+    const kind=(e.kind||'').toLowerCase();
+    const isParent = kind==='kin' && (rel.includes('parent')||rel.includes('father')||rel.includes('mother'));
+    if(!isParent) return;
+    // from=parent → to=child (KINSHIP convention)
+    if(!parentOf.has(e.to)) parentOf.set(e.to,[]);
+    parentOf.get(e.to).push({id:e.from, edge:e});
+    if(!childrenOf.has(e.from)) childrenOf.set(e.from,[]);
+    childrenOf.get(e.from).push({id:e.to, edge:e});
+  });
+  // Energy paths from ego P1 (or focus): father=sex M, mother=sex F — never invent sex
+  const ego = G.focus || 'P1';
+  const parents = parentOf.get(ego)||[];
+  let father=null, mother=null;
+  parents.forEach(pr=>{
+    const p=personById.get(pr.id);
+    if(!p) return;
+    if(p.sex==='M' && !father) father=pr.id;
+    else if(p.sex==='F' && !mother) mother=pr.id;
+  });
+  function ancestors(start){
+    const ids=new Set(), edges=[];
+    if(!start) return {ids,edges};
+    const q=[start]; ids.add(start);
+    while(q.length){
+      const cur=q.shift();
+      (parentOf.get(cur)||[]).forEach(pr=>{
+        if(ids.has(pr.id)) return;
+        // skip traps on energy
+        const pp=personById.get(pr.id);
+        if(pp && pp.status==='trap') return;
+        ids.add(pr.id); edges.push({from:pr.id,to:cur,edge:pr.edge}); q.push(pr.id);
+      });
+    }
+    return {ids,edges};
+  }
+  const pat = ancestors(father);
+  const mat = ancestors(mother);
+  patSet = pat.ids; matSet = mat.ids; patEdges = pat.edges; matEdges = mat.edges;
+
+  // Kinship stubs from graph (no invent)
+  const sibs=new Set(), gps=new Set(), aunts=new Set(), cous=new Set();
+  const egoParents = parents.map(p=>p.id);
+  egoParents.forEach(pid=>{
+    (childrenOf.get(pid)||[]).forEach(ch=>{ if(ch.id!==ego) sibs.add(ch.id); });
+  });
+  const gpIds=[];
+  egoParents.forEach(pid=>{
+    (parentOf.get(pid)||[]).forEach(pr=>{ gps.add(pr.id); gpIds.push(pr.id); });
+  });
+  gpIds.forEach(gpid=>{
+    (childrenOf.get(gpid)||[]).forEach(ch=>{
+      if(!egoParents.includes(ch.id)) aunts.add(ch.id);
+    });
+  });
+  aunts.forEach(aid=>{
+    (childrenOf.get(aid)||[]).forEach(ch=>cous.add(ch.id));
+  });
+  kinIndex = {siblings:sibs, grandparents:gps, aunts_uncles:aunts, cousins:cous};
+}
+
+function addEnergyLine(a,b,lane,soft){
+  const geo=new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(a.x,a.y,a.z), new THREE.Vector3(b.x,b.y,b.z)
+  ]);
+  const color = lane==='paternal' ? ENERGY_PAT : ENERGY_MAT;
+  // Soft≠solid: soft hop = dashed + lower opacity (never brighter)
+  let lineObj;
+  if(soft){
+    lineObj = new THREE.Line(geo, new THREE.LineDashedMaterial({
+      color, transparent:true, opacity:SOFT_EDGE_OPACITY, dashSize:0.16, gapSize:0.12, linewidth:1
+    }));
+    lineObj.computeLineDistances();
+  } else {
+    lineObj = new THREE.Line(geo, new THREE.LineBasicMaterial({
+      color, transparent:true, opacity:0.92
+    }));
+  }
+  lineObj.userData.dyn=true;
+  rootGroup.add(lineObj);
+}
+
+function addKinLine(a,b){
+  const geo=new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(a.x,a.y,a.z), new THREE.Vector3(b.x,b.y,b.z)
+  ]);
+  const lineObj=new THREE.Line(geo, new THREE.LineBasicMaterial({color:KIN_GREY, transparent:true, opacity:0.35}));
+  lineObj.userData.dyn=true;
+  rootGroup.add(lineObj);
+}
+
+function draw(){
+  if(!G||!rootGroup) return;
+  const ps=peopleSet();
+  const ids=new Set(ps.map(p=>p.id));
+  pos=layout(ps);
+  clearDynamic();
+
+  // Base kin edges (parent) — Soft≠solid opacity/dash
+  (G.edges||[]).filter(e=>ids.has(e.from)&&ids.has(e.to)).forEach(e=>{
+    const a=pos[e.from], b=pos[e.to]; if(!a||!b) return;
+    const soft = isSoftVerdict(e.verdict) || e.verdict==='gedcom' && false;
+    const softEdge = e.verdict==='placeholder'||e.verdict==='open'||isSoftVerdict(e.verdict);
+    let color=0xb6aea3, opacity=softEdge?SOFT_EDGE_OPACITY:0.55;
+    if(e.verdict==='supported'){ color=MOSS; opacity=SOLID_EDGE_OPACITY; }
+    if(e.kind==='spouse'){ color=SPOUSE; opacity=0.55; }
+    const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a.x,a.y,a.z),new THREE.Vector3(b.x,b.y,b.z)]);
+    let lineObj;
+    if(softEdge){
+      lineObj=new THREE.Line(geo,new THREE.LineDashedMaterial({color,transparent:true,opacity,dashSize:.14,gapSize:.1}));
+      lineObj.computeLineDistances();
+    } else {
+      lineObj=new THREE.Line(geo,new THREE.LineBasicMaterial({color,transparent:true,opacity}));
+    }
+    lineObj.userData.dyn=true;
+    rootGroup.add(lineObj);
+  });
+
+  // Energy overlays
+  function paintEnergy(edges, lane){
+    edges.forEach(seg=>{
+      const a=pos[seg.from], b=pos[seg.to];
+      if(!a||!b) return;
+      if(!ids.has(seg.from)||!ids.has(seg.to)) return;
+      const v = (seg.edge&&(seg.edge.truth||seg.edge.verdict))||'';
+      const soft = isSoftVerdict(v) || v==='gedcom' || v==='gedcom-map' || !v || v!=='supported';
+      // living person edges still get continuous if supported; gedcom-map = soft hop visual (dashed dimmer)
+      const softHop = v!=='supported';
+      addEnergyLine(a,b,lane,softHop);
+    });
+    // also ego→parent first hop
+  }
+  if(energyMode==='paternal'||energyMode==='both') paintEnergy(patEdges,'paternal');
+  if(energyMode==='maternal'||energyMode==='both') paintEnergy(matEdges,'maternal');
+  // ego links to father/mother
+  const ego=G.focus||'P1';
+  if(pos[ego]){
+    (parentOf.get(ego)||[]).forEach(pr=>{
+      const p=personById.get(pr.id); if(!p||!pos[pr.id]) return;
+      const lane = p.sex==='M'?'paternal':(p.sex==='F'?'maternal':null);
+      if(!lane) return;
+      if(energyMode==='off') return;
+      if(energyMode!=='both' && energyMode!==lane) return;
+      const softHop = (pr.edge&&pr.edge.verdict)!=='supported';
+      addEnergyLine(pos[pr.id], pos[ego], lane, softHop);
+    });
+  }
+
+  // Kinship stub highlights
+  if(kinIndex){
+    const egoPos=pos[ego];
+    Object.keys(kinOn).forEach(k=>{
+      if(!kinOn[k]||!kinIndex[k]) return;
+      kinIndex[k].forEach(id=>{
+        if(!pos[id]||!egoPos) return;
+        addKinLine(egoPos, pos[id]);
+      });
+    });
+  }
+
+  // Person nodes (label cards) — Soft≠solid opacity on material
+  const cardGeo=new THREE.BoxGeometry(1.65,0.58,0.06);
+  ps.forEach(p=>{
+    const o=pos[p.id]; if(!o) return;
+    const st=p.status||'gedcom';
+    const mat=new THREE.MeshStandardMaterial({
+      map:makeLabelTexture(p.name,p.id,st,sel===p.id),
+      roughness:0.55, metalness:0.02,
+      transparent:true,
+      opacity: statusOpacity(st), // Soft≠solid opacity rule
+      emissive: sel===p.id ? 0x222018 : (st==='living'?0x0a2030:0x000000),
+      emissiveIntensity: sel===p.id?0.28:(st==='living'?0.12:0)
+    });
+    const mesh=new THREE.Mesh(cardGeo,mat);
+    mesh.position.set(o.x,o.y,o.z);
+    mesh.lookAt(camera.position.x, o.y, camera.position.z);
+    mesh.userData={id:p.id,name:p.name,status:st,dyn:true};
+    mat.userData={dyn:true};
+    rootGroup.add(mesh);
+    meshList.push(mesh); pickMeshes.push(mesh); nodeById[p.id]=mesh;
+
+    // Living cyan rim (thin) — not full recolour
+    if(st==='living'){
+      const rim=new THREE.Mesh(
+        new THREE.BoxGeometry(1.72,0.64,0.02),
+        new THREE.MeshBasicMaterial({color:LIVING_CYAN, transparent:true, opacity:0.35})
+      );
+      rim.position.copy(mesh.position); rim.position.z-=0.04;
+      rim.quaternion.copy(mesh.quaternion);
+      rim.userData={dyn:true}; rootGroup.add(rim);
+    }
+  });
+
+  document.getElementById('meta').textContent =
+    `${ps.length} shown · ${ (G.counts&&G.counts.people)|| (G.people||[]).length} in graph · leaf instances ${leafMesh?leafMesh.count:0} · ${G.version||''}`;
+}
+
+function extractRegs(p){
+  const seen=new Set(),out=[];
+  const push=r=>{if(r&&!seen.has(r)){seen.add(r);out.push(r);}};
+  const arr=p.regs;
+  if(Array.isArray(arr)) arr.forEach(push);
+  else if(typeof arr==='string'&&arr.trim()) arr.split(/[\s,;]+/).forEach(push);
+  const blob=[p.notes,p.aka,p.birth,p.death,p.name].map(x=>x||'').join(' ');
+  for(const m of blob.matchAll(/\b((?:1[89]\d{2}|20\d{2})\/\d{1,6})\b/g)) push(m[1]);
+  return out;
+}
+
+function select(id, opts){
+  opts = opts || {};
+  const deepen = !!opts.deepen;
+  if(sel === id && deepen) panelDepth = Math.min(3, Math.max(2, panelDepth+1));
+  else if(sel === id && !deepen && !opts.force) { /* second click deepens */ panelDepth = Math.min(3, panelDepth+1); }
+  else { sel = id; panelDepth = 1; }
+  if(opts.level) panelDepth = opts.level;
+
+  const p=(G.people||[]).find(x=>x.id===id);
+  const box=document.getElementById('sec-selected');
+  if(!p){ document.getElementById('detail').innerHTML=`<p class="hint">No person ${esc(id)} (graph only — no invent).</p>`; draw(); return; }
+  if(box) box.open=true;
+  const nameOf=i=>((G.people||[]).find(x=>x.id===i)||{}).name||i;
+  const edges=(G.edges||[]).filter(e=>e.from===id||e.to===id);
+  const st=p.status||'gedcom';
+  const regs=extractRegs(p);
+  const birth=[p.birth,p.birth_place].filter(Boolean).join(' · ');
+  const death=[p.death,p.death_place].filter(Boolean).join(' · ');
+  const ke = window.__KE__ || null;
+  const truth = (ke && ke.truth_by_id && ke.truth_by_id[id]) || st;
+  const softPerson = isSoftStatus(st) || ['soft','open','gedcom-map','gedcom'].includes(String(truth).toLowerCase());
+  const accentClass = st==='supported'?'solid':(st==='living'?'live':(st==='trap'?'trap':(softPerson?'soft':'gedcom')));
+
+  // L1 Soft≠solid chips BEFORE lore cadence (PANEL-v2 hard rule)
+  let chips = '';
+  chips += `<span class="pill ${softPerson?'soft':(st==='supported'?'solid':(st==='living'?'live':''))}">${esc(statusLabel(st))}</span>`;
+  if(softPerson) chips += `<span class="pill soft">soft≠solid</span>`;
+  else if(st==='supported') chips += `<span class="pill solid">solid</span>`;
+  if(st==='living') chips += `<span class="pill live">living</span>`;
+  if(truth && String(truth)!==String(st)) chips += `<span class="pill">KE · ${esc(truth)}</span>`;
+
+  let cadence = '';
+  if(panelDepth >= 2){
+    if(st==='trap') cadence = 'Marked aside from the oak — trap annotate only; not kin on the energy lines.';
+    else if(softPerson) cadence = 'A soft shoot on the living oak — amber, unfinished; Soft≠solid until timber is proved.';
+    else if(st==='supported') cadence = 'Settled wood in the monument — supported green; Soft≠solid still names every soft edge nearby.';
+    else if(st==='living') cadence = 'A living leaf in the canopy — cyan breath; names unlock with bluey / localhost.';
+    else cadence = 'GEDCOM map-bark only — useful for shape, not sole evidence.';
+  }
+
+  // Energy ribbon
+  let ribbon = '';
+  if(energyMode !== 'off'){
+    const onPat = patSet.has(id), onMat = matSet.has(id);
+    if(onPat || onMat){
+      ribbon = `<div class="ribbon">`;
+      if(onPat) ribbon += `<span class="seg pat${softPerson?' soft':''}"></span><span class="pill pat">paternal path</span>`;
+      if(onMat) ribbon += `<span class="seg mat${softPerson?' soft':''}"></span><span class="pill mat">maternal path</span>`;
+      if(onPat && onMat) ribbon += `<span class="hint">both (unmixed colours)</span>`;
+      if(softPerson) ribbon += `<span class="pill soft">soft hop</span>`;
+      ribbon += `</div>`;
+    } else {
+      ribbon = `<p class="hint">Not on active energy path</p>`;
+    }
+  }
+
+  let html=`<div class="fact lore ${accentClass} l${panelDepth}">`;
+  html+=`<div class="accent" aria-hidden="true"></div>`;
+  html+=`<p><strong>${esc(p.name)}</strong></p>`;
+  html+=`<p>${chips}</p>`; // L1 chips first
+  if(panelDepth >= 2 && cadence) html+=`<p class="cadence l2only">${esc(cadence)}</p>`;
+  html+=`<p class="hint">pid <button type="button" class="chip" data-copy="${esc(p.id)}">${esc(p.id)}</button> gen ${esc(p.gen??'?')} ${esc(p.aka||'')} ${p.sex?'· '+esc(p.sex):''}</p>`;
+  if(panelDepth >= 2){
+    if(birth) html+=`<p class="cite l2only">b. ${esc(birth)}</p>`;
+    else html+=`<p class="cite l2only">b. —</p>`;
+    if(death) html+=`<p class="cite l2only">d. ${esc(death)}</p>`;
+  }
+  if(panelDepth >= 2) html += ribbon;
+  if(panelDepth >= 2){
+    html+=`<h3 class="l2only">Regs</h3>`;
+    if(regs.length) html+=`<p class="l2only">${regs.map(r=>`<button type="button" class="chip" data-copy="${esc(r)}">${esc(r)}</button>`).join('')}</p>`;
+    else html+=`<p class="hint l2only">No Vic regs on this card.</p>`;
+  }
+  if(panelDepth >= 2){
+    html+=`<h3 class="l2only">Kin edges <span class="hint">(${Math.min(edges.length,24)}${edges.length>24?'/'+edges.length:''})</span></h3>`;
+    if(!edges.length) html+=`<p class="hint l2only">No graph edges.</p>`;
+    edges.slice(0,24).forEach(e=>{
+      const other=e.from===id?e.to:e.from;
+      const v=e.verdict||'';
+      const softEdge = (v==='open'||v==='placeholder'||isSoftVerdict(v));
+      const softMark = softEdge ? ' <span class="softtag">soft≠solid</span>' : '';
+      html+=`<div class="edge l2only${softEdge?' soft-row':''}"><span class="badge ${esc(v)}">${esc(v||'—')}</span>${softMark} ${esc(e.rel||e.kind||'kin')} — ${esc(nameOf(other))} <button type="button" class="chip" data-copy="${esc(other)}">${esc(other)}</button><br><span class="cite">${esc(e.source||'')}</span></div>`;
+    });
+  }
+  if(panelDepth >= 2){
+    html+=`<h3 class="l2only">Notes</h3><p class="l2only">${esc(p.notes||'—')}</p>`;
+  }
+  if(panelDepth >= 3){
+    html+=`<h3 class="l2only">L3 lore</h3><p class="cadence l2only">${esc(cadence)} Soft≠solid forever — never invent kin or place.</p>`;
+  }
+  if(!G.living_visible && (G.living_redacted||0)>0)
+    html+=`<p class="hint">Living locked (${G.living_redacted} hidden) — unlock with bluey if needed.</p>`;
+  if(panelDepth < 3){
+    html+=`<p class="deepen"><button type="button" id="btnDeepen">Deepen lore (L${panelDepth+1})</button></p>`;
+  }
+  html+=`<p class="hint">Traps stay off energy lines. Soft never paints as solid.</p>`;
+  html+=`</div>`;
+  document.getElementById('detail').innerHTML=html;
+  document.querySelectorAll('#detail [data-copy]').forEach(btn=>btn.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(btn.getAttribute('data-copy')||''); btn.classList.add('copied'); setTimeout(()=>btn.classList.remove('copied'),800);}catch(e){}
+  });
+  const bd=document.getElementById('btnDeepen');
+  if(bd) bd.onclick=()=>select(id,{deepen:true,force:true,level:panelDepth+1});
+  draw();
+  const o=pos[id];
+  if(o&&controls){
+    const dolly = panelDepth>=2 ? 5.0 : 5.5;
+    controls.target.set(o.x,o.y,o.z);
+    camera.position.set(o.x+1.6, o.y+1.2, o.z+dolly);
+    controls.update();
+  } else centerOn(id);
+}
+
+function centerOn(id){
+  const o=pos[id]; if(!o||!controls) return;
+  controls.target.set(o.x,o.y,o.z);
+  camera.position.set(o.x+2.5, o.y+1.8, o.z+9);
+  controls.update();
+}
+function fit(){
+  const ps=peopleSet(); if(!ps.length||!controls) return;
+  pos=layout(ps);
+  const ys=Object.values(pos).map(o=>o.y), xs=Object.values(pos).map(o=>o.x);
+  const cy=(Math.min(...ys)+Math.max(...ys))/2;
+  const cx=(Math.min(...xs)+Math.max(...xs))/2;
+  controls.target.set(cx, cy, 0);
+  camera.position.set(cx+8, cy+6, 28);
+  controls.update(); draw();
+}
+
+function syncLivingUi(){
+  const box=document.getElementById('livingBox'), hint=document.getElementById('livingHint'), lockBtn=document.getElementById('livingLock');
+  if(!box||!G) return;
+  const unlocked=!!(unlockedLiving || G.living_visible), redacted=(G.living_redacted||0)>0;
+  box.style.display='block';
+  if(unlocked){
+    hint.textContent='Living names unlocked for this browser session.';
+    lockBtn.style.display='';
+    document.getElementById('livingPass').style.display='none';
+    document.getElementById('livingUnlock').style.display='none';
+  } else {
+    hint.textContent=redacted?`Living names locked (${G.living_redacted} hidden). Enter passphrase to unlock.`:'Living names locked. Enter passphrase to unlock.';
+    lockBtn.style.display='none';
+    document.getElementById('livingPass').style.display='';
+    document.getElementById('livingUnlock').style.display='';
+  }
+}
+
+async function unlockLiving(){
+  const pass=document.getElementById('livingPass').value;
+  const h=await sha256hex(pass);
+  if(h!==PASS_SHA256){ document.getElementById('livingHint').textContent='Wrong passphrase.'; return; }
+  unlockedLiving=true; sessionStorage.setItem(LS_UNLOCK,'1');
+  document.getElementById('livingPass').value='';
+  await load();
+}
+async function lockLiving(){
+  unlockedLiving=false; sessionStorage.removeItem(LS_UNLOCK);
+  await load();
+}
+
+
+async function loadKE(){
+  try{
+    const r = await fetch('./kinship-energy.json', {cache:'no-store'});
+    if(!r.ok){ kinIndex = null; return null; }
+    const ke = await r.json();
+    // Prefer KE energy packs Soft≠solid (never promote soft→supported)
+    if(ke && ke.energy){
+      const e = ke.energy;
+      patSet = new Set((e.pat && e.pat.pids) || []);
+      matSet = new Set((e.mat && e.mat.pids) || []);
+      // Build energy edges from edge_highlights tagged by membership
+      const truth = ke.truth_by_id || {};
+      const highlights = ke.edge_highlights || [];
+      function softTruth(t){
+        t = (t||'').toLowerCase();
+        return t==='soft'||t==='open'||t==='gedcom-map'||t==='gedcom'||t==='placeholder';
+      }
+      function edgesFor(band){
+        const out=[];
+        highlights.forEach(h=>{
+          const a=h.from, b=h.to;
+          if(!band.has(a) && !band.has(b)) return;
+          // at least one endpoint in band; prefer both on path
+          if((truth[a]||'').toLowerCase()==='trap' || (truth[b]||'').toLowerCase()==='trap') return;
+          const t = h.truth || h.verdict || truth[a] || truth[b] || '';
+          out.push({from:a, to:b, edge:{verdict: softTruth(t)?'open':(t==='supported'?'supported':'gedcom'), truth:t}});
+        });
+        return out;
+      }
+      if(patSet.size) patEdges = edgesFor(patSet);
+      if(matSet.size) matEdges = edgesFor(matSet);
+      kinIndex = {
+        siblings: new Set((e.sib && e.sib.pids) || []),
+        grandparents: new Set((e.gp && e.gp.pids) || []),
+        aunts_uncles: new Set((e.aunt && e.aunt.pids) || []),
+        cousins: new Set((e.cous && e.cous.pids) || []),
+        spouses: new Set((e.sp && e.sp.pids) || []),
+      };
+      // parents discovery for ego
+      window.__KE__ = ke;
+      return ke;
+    }
+  }catch(err){ console.warn('KE feed offline', err); }
+  return null;
+}
+
+
+async function load(){
+  const url = unlockedLiving ? './graph-living.json' : './graph.json';
+  const r=await fetch(url,{cache:'no-store'});
+  G=await r.json();
+  rebuildMaps();
+  const ke = await loadKE(); // KE overrides pat/mat/kin Soft≠solid packs
+  syncLivingUi();
+  const c=G.counts||{};
+  const keNote = ke ? ` · KE ${ke.version||''}` : ' · KE offline';
+  document.getElementById('meta').textContent=
+    `${c.people||0} people · living ${(c.by_status||{}).living||0} · supported ${(c.by_status||{}).supported||0} · Soft≠solid · ${G.version||''}${keNote} · public`;
+  draw();
+  if(sel) select(sel); else { fit(); centerOn(G.focus||'P1'); }
+}
+
+function initThree(){
+  try{ renderer=new THREE.WebGLRenderer({antialias:true, alpha:true}); }
+  catch(e){ document.getElementById('fallback').style.display='block'; return false; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1, isMobile()?1.5:2));
+  renderer.setSize(stage.clientWidth, stage.clientHeight);
+  renderer.setClearColor(0x000000,0);
+  stage.appendChild(renderer.domElement);
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(50, stage.clientWidth/Math.max(1,stage.clientHeight), 0.1, 500);
+  camera.position.set(12, 8, 28);
+  controls=new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping=true; controls.dampingFactor=0.08;
+  controls.minDistance=3; controls.maxDistance=140; controls.target.set(0,4,0);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+  const key=new THREE.DirectionalLight(0xfff2dd, 0.7); key.position.set(8,18,12); scene.add(key);
+  const fill=new THREE.DirectionalLight(0xb8c9d4, 0.28); fill.position.set(-10,6,-8); scene.add(fill); // Irish sky cool fill
+
+  const grid=new THREE.GridHelper(80,40,0xc9c0b2,0xddd4c6);
+  grid.position.y=-8; grid.material.transparent=true; grid.material.opacity=0.35; scene.add(grid);
+
+  buildOakMonument();
+  rootGroup=new THREE.Group(); scene.add(rootGroup);
+
+  raycaster=new THREE.Raycaster(); pointer=new THREE.Vector2();
+  renderer.domElement.addEventListener('pointermove', onPointerMove);
+  renderer.domElement.addEventListener('click', onClick);
+  window.addEventListener('resize', onResize);
+
+  (function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    // Soft shimmer (gentle) — Soft≠solid motion; freeze on mobile degrade
+    if(softShimmer && !isMobile() && leafMesh){
+      leafMesh.rotation.y = Math.sin(t*0.15)*0.02;
+      // breath on soft-looking materials via slight opacity pulse 0.4–0.8Hz band for living rim only — keep subtle
+    }
+    controls.update();
+    renderer.render(scene,camera);
+  })();
+  return true;
+}
+
+function onResize(){
+  if(!renderer) return;
+  const w=stage.clientWidth, h=Math.max(1,stage.clientHeight);
+  camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h);
+  // rebuild leaf count on big mobile flip
+}
+function ndcFromEvent(ev){
+  const rect=renderer.domElement.getBoundingClientRect();
+  pointer.x=((ev.clientX-rect.left)/rect.width)*2-1;
+  pointer.y=-((ev.clientY-rect.top)/rect.height)*2+1;
+}
+function pick(ev){
+  ndcFromEvent(ev); raycaster.setFromCamera(pointer,camera);
+  return raycaster.intersectObjects(pickMeshes,false)[0]?.object||null;
+}
+function onPointerMove(ev){
+  const obj=pick(ev);
+  if(obj){ tip.style.display='block'; tip.style.left=ev.clientX+'px'; tip.style.top=ev.clientY+'px';
+    tip.innerHTML=`<span class="tip-swatch" style="background:${hit.userData.status==='supported'?'#2c5e3a':hit.userData.status==='living'?'#1d4a6e':hit.userData.status==='open'||hit.userData.status==='placeholder'?'#6a5420':hit.userData.status==='trap'?'#8a3b2b':'#7a746b'}"></span>${esc(hit.userData.name)} · ${esc(hit.userData.status||'')} `; renderer.domElement.style.cursor='pointer'; }
+  else { tip.style.display='none'; renderer.domElement.style.cursor='grab'; }
+}
+function onClick(ev){ const obj=pick(ev); if(obj?.userData?.id) select(obj.userData.id); }
+
+// UI wiring
+document.querySelectorAll('#energyTabs .tab').forEach(t=>{
+  t.onclick=()=>{
+    energyMode=t.getAttribute('data-energy')||'off';
+    document.querySelectorAll('#energyTabs .tab').forEach(x=>x.classList.toggle('on',x===t));
+    draw();
+  };
+});
+document.querySelectorAll('[data-kin]').forEach(inp=>{
+  inp.onchange=()=>{ kinOn[inp.getAttribute('data-kin')]=!!inp.checked; draw(); };
+});
+document.getElementById('q').addEventListener('input',()=>draw());
+document.getElementById('fit').onclick=fit;
+document.getElementById('me').onclick=()=>{ sel='P1'; select('P1'); };
+document.getElementById('livingUnlock').onclick=unlockLiving;
+document.getElementById('livingLock').onclick=lockLiving;
+document.getElementById('livingPass').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); unlockLiving(); }});
+
+window.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement!==document.getElementById('q')){ e.preventDefault(); document.getElementById('q').focus(); }
+  else if(e.key==='f'&&document.activeElement!==document.getElementById('q')) fit();
+  else if(e.key==='Escape'){ closeRail(); }
+});
+
+const ui=document.getElementById('ui'), backdrop=document.getElementById('backdrop');
+function openRail(){ ui.classList.add('open'); backdrop.classList.add('show'); }
+function closeRail(){ ui.classList.remove('open'); backdrop.classList.remove('show'); }
+document.getElementById('menuBtn').onclick=()=>ui.classList.contains('open')?closeRail():openRail();
+backdrop.onclick=closeRail;
+
+if(initThree()){
+  load();
+  /* static pack: no live SSE */
+} else document.getElementById('fallback').style.display='block';
+</script>
+</body>
+</html>
