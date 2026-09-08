@@ -1,73 +1,61 @@
-# Greene–Hoy family tree
+# /family — Greene–Hoy tree
 
-Static public tree for **https://mahda.com.au/family**. Plain HTML/CSS/JS, same livery system as the rest of mahda.com.au. No build step on deploy.
+Public static explorer for the Greene–Hoy graph on [mahda.com.au/family](https://mahda.com.au/family).
 
-## Living unlock
+## What is live
 
-- Default graph (`graph.json` / `graph.public.json`) redacts every living person to the name **Living**.
-- Passphrase **`bluey`** loads `graph-living.json` for this browser session (`sessionStorage`).
-- Lock again to return to the redacted graph.
-- This is a courtesy gate on a static host. Anyone who fetches `graph-living.json` directly can read living names. Do not put streets, NDIS figures, SMS bodies, or sealed housing notes in the living file.
+Interactive **Three.js** explorer (`three@0.160` + OrbitControls): orbit drag, wheel zoom, right-drag pan, click a node for detail. Soft≠solid colours: supported (green), open (amber), living (violet), gedcom (steel), trap (crimson).
 
-## Soft ≠ solid
+Living names default to **Living**. Passphrase `bluey` (SHA-256 client check) unlocks the living graph for the session (`sessionStorage`).
 
-| Mark | Meaning in this pack |
-| --- | --- |
-| **Solid** | Named on a Victorian historical death-register page we actually hold (Yangery / Southern Cross, 1909 and 1912). |
-| **Soft** | Family memoir, or the public compiled Augustine Hoy descendant report. Not a certificate in this folder. |
+## Honest empty graph
 
-Dashed strokes are soft (or step). Solid strokes are solid. The two are not the same, and the page says so.
+This folder does **not** invent people. Until Christopher drops the real GR export (~583 people), `graph.json` / `graph-living.json` ship with **empty** `people` and `edges` arrays.
 
-## What is in the graph
+Do **not**:
 
-Three **unjoined** components. No invented people, and no invented register numbers.
+- Infer spouses or children from compound surnames (Greene-Moon ≠ a person named Andrea Moon).
+- Turn `sources/hoykin-augustine-hoy.txt` into tree nodes. That file is **text notes only**.
+- Pad the graph from memoir guesses or Tripod scrapes and present them as fact.
 
-1. **Contemporary Greene** (soft) — household named in Ethan Greene's memoir *Biography Christopher Peter Greene*.
-2. **Yangery Green, 1909–1912** (solid) — Michael Green (d. 1912) and Jane Green (d. 1909), their parents as stated on those registers, and the children named in the issue columns. The two issue lists disagree; names that appear on only one page stay **soft**.
-3. **Hoy kin** (soft) — parsed from the public compiled report [Descendants of Augustine HOY](https://hoykin.tripod.com/id101.html), including Ellen Hoy × Francis Patrick Greene (1926). People without a death date who could still be living are marked living and redacted.
+## Schema
 
-The memoir does not prove that Elizabeth's maiden name is Hoy. The registers do not prove that Francis Patrick Greene (1899–1970) is a grandson of Michael and Jane. Those links are **not drawn**.
-
-This pack is hundreds of people, not ~583. The 583-scale tree needs a GEDCOM or Ancestry/FamilySearch export dropped in and regenerated.
-
-## Regenerate
-
-From the repo root:
-
-```bash
-# Rebuild the current sources (Hoy extract + BDM cluster + memoir household)
-python3 family/scripts/build-graph.py
-
-# Or replace the living graph from a GEDCOM, then redact
-node family/scripts/from-gedcom.mjs path/to/export.ged
-
-# If you edited graph-living.json by hand
-node family/scripts/redact.mjs
+```json
+{
+  "version": 1,
+  "living_redacted": true,
+  "living_visible": false,
+  "people": [{ "id": "", "name": "", "status": "living|deceased|unknown", "aka": [], "verdict": "supported|open|living|gedcom|trap|unknown" }],
+  "edges": [{ "from": "", "to": "", "kind": "child|spouse", "verdict": "supported|open|gedcom|unknown" }]
+}
 ```
 
-`from-gedcom.mjs` strips street-like strings, `$` amounts, and NDIS snippets from notes. It marks every imported fact **soft** unless a GEDCOM note contains the word `SOLID`.
+- `graph.json` — public default (living redacted).
+- `graph-living.json` — unlocked living names. Streets / sealed housing never belong here.
+- `graph.public.json` — alias of the public graph.
 
-To add a new solid person: put them in `scripts/build-graph.py` (`add_bdm_green`) with a real source sentence, or tag a GEDCOM note `SOLID` only when you hold the register.
+Replace both JSON files with the real export, then `node scripts/redact.mjs` if you only have the living file.
 
-The Hoy extract used by the builder lives at `sources/hoykin-augustine-hoy.txt`. Replace that file if the compiled report is updated.
+## Soft≠solid
 
-## GitHub Pages
+| Verdict | Meaning |
+|---|---|
+| supported | Named + dated + sourced |
+| open | Hypothesis — still shown, labelled open |
+| living | Privacy default (name hidden until unlock) |
+| gedcom | Import only; not independently checked |
+| trap | Confusable / do not merge |
 
-This site is already a user Pages site from the repository root (`CNAME` → mahda.com.au). There is no Jekyll config. After this folder is on `main`:
+Open is not a licence to invent people.
 
-- `https://mahda.com.au/family` and `https://mahda.com.au/family/` both serve `family/index.html`.
-- Asset URLs are relative (`graph.json`, `assets/...`) so they resolve under `/family/`.
-- `family/.nojekyll` is present in case a future `_` file is added.
+## Unlock
 
-One-time check if `/family` 404s after merge: **Settings → Pages → Build and deployment** should be **Deploy from a branch**, source **`main` / `/ (root)`**. No extra Action is required. Custom domain is already `mahda.com.au`.
+SHA-256 of `bluey` (no newline):
 
-Do not add a homepage plaque unless you want the tree linked from the landing nav. This pack only adds `family/`.
+`46b6312339466d3b206325f6f402e1fae56cd65f117c779e3b9259833ffbcdf0`
 
-## Local preview
+The living JSON is still a static file. Unlock is a courtesy gate.
 
-```bash
-python3 -m http.server 8080
-# open http://127.0.0.1:8080/family/
-```
+## Paths
 
-Opening `index.html` as `file://` will not fetch the JSON.
+All assets are relative (`./graph.json`, `./assets/…`) so the explorer works at `/family/` on GitHub Pages.
