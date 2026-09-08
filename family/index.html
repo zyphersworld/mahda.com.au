@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-AU" data-theme="vellum">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greene–Hoy family tree</title>
+<meta name="description" content="A public, static Greene–Hoy family tree. Living names are redacted until unlocked.">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/liveries.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<base href="./">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="theme-fade" aria-hidden="true"></div>
+
+<div class="docket">
+  <div class="wrap">
+    <span><b id="docket-status">Public tree</b></span>
+    <span>People <b id="docket-count">—</b></span>
+    <span>Updated <b id="docket-updated">8 September 2026</b></span>
+    <span class="pill" id="lock-pill">Living redacted</span>
+    <span class="spacer"></span>
+    <span class="liveries" id="liveries" role="group" aria-label="Livery"></span>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Genealogy &middot; mahda.com.au/family</p>
+    <h1>Greene–Hoy <span class="rubric">family tree</span></h1>
+    <p class="standfirst">A hand-kept public tree. Living people show as <i>Living</i> until the family unlocks this session. Soft lines are not solid lines.</p>
+    <div class="knot" aria-hidden="true"></div>
+  </header>
+
+  <section class="unlock-bar panel" aria-labelledby="unlock-title">
+    <p class="kicker" id="unlock-title">Living names</p>
+    <form id="unlock-form" autocomplete="off">
+      <label class="sr-only" for="pass">Passphrase</label>
+      <input id="pass" name="pass" type="password" placeholder="Family passphrase" spellcheck="false">
+      <button type="submit" class="btn">Unlock living</button>
+      <button type="button" class="btn ghost" id="lock-btn" hidden>Redact again</button>
+    </form>
+    <p class="hint" id="unlock-msg">Default view redacts every living name. Unlock lasts for this browser session.</p>
+  </section>
+
+  <div class="legend panel" aria-label="Evidence key">
+    <span class="leg"><i class="ln solid"></i> Solid — named on a civil register we hold</span>
+    <span class="leg"><i class="ln soft"></i> Soft — memoir or compiled kin, not a certificate in this pack</span>
+    <span class="leg"><i class="nd living"></i> Living (redacted until unlock)</span>
+    <span class="leg"><i class="nd dead"></i> Deceased</span>
+  </div>
+
+  <div class="toolbar">
+    <label class="field">
+      <span>Find</span>
+      <input id="q" type="search" placeholder="Name or year" autocomplete="off">
+    </label>
+    <label class="field">
+      <span>Line</span>
+      <select id="line">
+        <option value="">All lines</option>
+      </select>
+    </label>
+    <div class="views" role="group" aria-label="View">
+      <button type="button" class="btn" data-view="tree" aria-pressed="true">Tree</button>
+      <button type="button" class="btn" data-view="list" aria-pressed="false">Index</button>
+      <button type="button" class="btn" data-view="about" aria-pressed="false">Sources</button>
+    </div>
+  </div>
+
+  <main id="main">
+    <div id="tree-view">
+      <div class="tree-frame panel">
+        <canvas id="tree" width="1200" height="720" aria-label="Family tree canvas"></canvas>
+        <div class="tree-tools">
+          <button type="button" class="btn ghost" id="zoom-in" aria-label="Zoom in">+</button>
+          <button type="button" class="btn ghost" id="zoom-out" aria-label="Zoom out">−</button>
+          <button type="button" class="btn ghost" id="zoom-fit">Fit</button>
+        </div>
+        <p class="tree-hint">Drag to pan. Scroll to zoom. Click a person for the card.</p>
+      </div>
+      <aside class="card panel" id="card" hidden>
+        <p class="kicker" id="card-kicker">Person</p>
+        <h2 id="card-name"></h2>
+        <div id="card-body"></div>
+      </aside>
+    </div>
+    <div id="list-view" hidden></div>
+    <div id="about-view" hidden></div>
+  </main>
+
+  <footer class="foot">
+    <p>Genealogy only. No street addresses, no payments, no messages. Soft is not solid.</p>
+    <p><a href="https://mahda.com.au/">mahda.com.au</a> &middot; <a href="mailto:mahdagreenemoon@gmail.com">mahdagreenemoon@gmail.com</a></p>
+  </footer>
+</div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
