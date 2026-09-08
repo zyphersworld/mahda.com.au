@@ -1,104 +1,118 @@
 <!DOCTYPE html>
-<html lang="en-AU" data-theme="vellum">
+<html lang="en-AU" data-theme="iron">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Greene–Hoy family tree</title>
-<meta name="description" content="A public, static Greene–Hoy family tree. Living names are redacted until unlocked.">
+<meta name="description" content="Interactive Three.js Greene–Hoy explorer. Living names stay redacted until unlock.">
 <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/liveries.css">
 <link rel="stylesheet" href="assets/css/site.css">
-<base href="./">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#view">Skip to explorer</a>
 <div class="theme-fade" aria-hidden="true"></div>
 
-<div class="docket">
-  <div class="wrap">
-    <span><b id="docket-status">Public tree</b></span>
-    <span>People <b id="docket-count">—</b></span>
-    <span>Updated <b id="docket-updated">8 September 2026</b></span>
+<header class="hud-top">
+  <div class="brand">
+    <p class="eyebrow">mahda.com.au/family · Three.js explorer</p>
+    <h1>Greene–Hoy <span class="rubric">tree</span></h1>
+  </div>
+  <div class="hud-meta">
     <span class="pill" id="lock-pill">Living redacted</span>
-    <span class="spacer"></span>
+    <span class="stat">People <b id="docket-count">0</b></span>
+    <span class="stat" id="placeholder-flag" hidden>Empty graph — no invented kin</span>
     <span class="liveries" id="liveries" role="group" aria-label="Livery"></span>
   </div>
+</header>
+
+<section class="hud-bar" aria-labelledby="unlock-title">
+  <form id="unlock-form" autocomplete="off">
+    <span class="kicker" id="unlock-title">Unlock living</span>
+    <label class="sr-only" for="pass">Passphrase</label>
+    <input id="pass" name="pass" type="password" placeholder="Passphrase" spellcheck="false">
+    <button type="submit" class="btn">Unlock</button>
+    <button type="button" class="btn ghost" id="lock-btn" hidden>Redact</button>
+    <p class="hint" id="unlock-msg">Living stay redacted until the family passphrase unlocks this session.</p>
+  </form>
+  <div class="legend" aria-label="Soft not equal solid">
+    <span class="leg"><i class="sw supported"></i> Supported</span>
+    <span class="leg"><i class="sw open"></i> Open</span>
+    <span class="leg"><i class="sw living"></i> Living</span>
+    <span class="leg"><i class="sw gedcom"></i> GEDCOM</span>
+    <span class="leg"><i class="sw trap"></i> Trap</span>
+    <span class="leg"><i class="ln solid"></i> Solid edge</span>
+    <span class="leg"><i class="ln soft"></i> Soft edge</span>
+  </div>
+</section>
+
+<div class="hud-tools">
+  <label class="field">
+    <span>Find</span>
+    <input id="q" type="search" placeholder="Name, aka, id" autocomplete="off">
+  </label>
+  <label class="field">
+    <span>Verdict</span>
+    <select id="verdict">
+      <option value="">All verdicts</option>
+      <option value="supported">Supported</option>
+      <option value="open">Open</option>
+      <option value="living">Living</option>
+      <option value="gedcom">GEDCOM</option>
+      <option value="trap">Trap</option>
+    </select>
+  </label>
+  <label class="field">
+    <span>Kind</span>
+    <select id="kind">
+      <option value="">All edges</option>
+      <option value="parent">Parent</option>
+      <option value="spouse">Spouse</option>
+      <option value="step">Step</option>
+      <option value="child">Child</option>
+    </select>
+  </label>
+  <div class="views" role="group" aria-label="View">
+    <button type="button" class="btn" data-view="tree" aria-pressed="true">Orbit</button>
+    <button type="button" class="btn" data-view="list" aria-pressed="false">Index</button>
+    <button type="button" class="btn" data-view="about" aria-pressed="false">Sources</button>
+  </div>
 </div>
 
-<div class="wrap">
-  <header class="masthead">
-    <p class="eyebrow">Genealogy &middot; mahda.com.au/family</p>
-    <h1>Greene–Hoy <span class="rubric">family tree</span></h1>
-    <p class="standfirst">A hand-kept public tree. Living people show as <i>Living</i> until the family unlocks this session. Soft lines are not solid lines.</p>
-    <div class="knot" aria-hidden="true"></div>
-  </header>
-
-  <section class="unlock-bar panel" aria-labelledby="unlock-title">
-    <p class="kicker" id="unlock-title">Living names</p>
-    <form id="unlock-form" autocomplete="off">
-      <label class="sr-only" for="pass">Passphrase</label>
-      <input id="pass" name="pass" type="password" placeholder="Family passphrase" spellcheck="false">
-      <button type="submit" class="btn">Unlock living</button>
-      <button type="button" class="btn ghost" id="lock-btn" hidden>Redact again</button>
-    </form>
-    <p class="hint" id="unlock-msg">Default view redacts every living name. Unlock lasts for this browser session.</p>
-  </section>
-
-  <div class="legend panel" aria-label="Evidence key">
-    <span class="leg"><i class="ln solid"></i> Solid — named on a civil register we hold</span>
-    <span class="leg"><i class="ln soft"></i> Soft — memoir or compiled kin, not a certificate in this pack</span>
-    <span class="leg"><i class="nd living"></i> Living (redacted until unlock)</span>
-    <span class="leg"><i class="nd dead"></i> Deceased</span>
-  </div>
-
-  <div class="toolbar">
-    <label class="field">
-      <span>Find</span>
-      <input id="q" type="search" placeholder="Name or year" autocomplete="off">
-    </label>
-    <label class="field">
-      <span>Line</span>
-      <select id="line">
-        <option value="">All lines</option>
-      </select>
-    </label>
-    <div class="views" role="group" aria-label="View">
-      <button type="button" class="btn" data-view="tree" aria-pressed="true">Tree</button>
-      <button type="button" class="btn" data-view="list" aria-pressed="false">Index</button>
-      <button type="button" class="btn" data-view="about" aria-pressed="false">Sources</button>
+<main id="main">
+  <div id="tree-view" class="stage">
+    <div id="view" aria-label="Three.js family tree"></div>
+    <p class="orbit-hint">Drag to orbit · wheel zoom · right-drag pan · click a person</p>
+    <aside class="card" id="card" hidden>
+      <p class="kicker" id="card-kicker">Person</p>
+      <h2 id="card-name"></h2>
+      <div id="card-body"></div>
+      <button type="button" class="btn ghost" id="card-close">Close</button>
+    </aside>
+    <div class="empty-banner" id="empty-banner" hidden>
+      <p class="kicker">No people loaded</p>
+      <p>This is an honest empty graph. The private GR export is not in the repo. Nobody has been invented to fill it — including no Andrea Moon and no scraped Hoy living nodes.</p>
     </div>
   </div>
+  <div id="list-view" hidden></div>
+  <div id="about-view" hidden></div>
+</main>
 
-  <main id="main">
-    <div id="tree-view">
-      <div class="tree-frame panel">
-        <canvas id="tree" width="1200" height="720" aria-label="Family tree canvas"></canvas>
-        <div class="tree-tools">
-          <button type="button" class="btn ghost" id="zoom-in" aria-label="Zoom in">+</button>
-          <button type="button" class="btn ghost" id="zoom-out" aria-label="Zoom out">−</button>
-          <button type="button" class="btn ghost" id="zoom-fit">Fit</button>
-        </div>
-        <p class="tree-hint">Drag to pan. Scroll to zoom. Click a person for the card.</p>
-      </div>
-      <aside class="card panel" id="card" hidden>
-        <p class="kicker" id="card-kicker">Person</p>
-        <h2 id="card-name"></h2>
-        <div id="card-body"></div>
-      </aside>
-    </div>
-    <div id="list-view" hidden></div>
-    <div id="about-view" hidden></div>
-  </main>
+<footer class="foot">
+  <p>Soft ≠ solid. Genealogy only. <a href="https://mahda.com.au/">mahda.com.au</a></p>
+</footer>
 
-  <footer class="foot">
-    <p>Genealogy only. No street addresses, no payments, no messages. Soft is not solid.</p>
-    <p><a href="https://mahda.com.au/">mahda.com.au</a> &middot; <a href="mailto:mahdagreenemoon@gmail.com">mahdagreenemoon@gmail.com</a></p>
-  </footer>
-</div>
-
-<script src="assets/js/app.js"></script>
+<script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
