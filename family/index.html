@@ -1,118 +1,111 @@
 <!DOCTYPE html>
-<html lang="en-AU" data-theme="iron">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Greene–Hoy family tree</title>
-<meta name="description" content="Interactive Three.js Greene–Hoy explorer. Living names stay redacted until unlock.">
-<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/liveries.css">
-<link rel="stylesheet" href="assets/css/site.css">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Greene family tree · mahda.com.au/family</title>
+<base href="/family/"/>
 <script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
+{"imports":{
+  "three":"https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
 </script>
+<style>
+:root{--ink:#1a1714;--muted:#6b645c;--line:#d9d2c8;--bg:#efe8dc;--paper:#fffdf8;--ok:#2c5e3a;--open:#6a5420;--trap:#8a3b2b;--live:#1d4a6e;--ged:#7a746b;--rail:min(360px,92vw)}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font:15px/1.4 Georgia,serif;color:var(--ink);background:var(--bg)}
+#menuBtn{display:none;position:absolute;top:.6rem;left:.6rem;z-index:5;font:12px system-ui,sans-serif}
+#ui{position:absolute;top:0;left:0;width:var(--rail);bottom:0;background:var(--paper);border-right:1px solid var(--line);overflow:auto;padding:1rem;z-index:2}
+h1{font-size:1.15rem;margin:0 0 .25rem}.sub,.hint{color:var(--muted);font-size:.84rem}.cite{font-family:ui-monospace,monospace;font-size:.75rem}
+.callout{border:1px solid #c9a22766;background:#f6efd8;border-radius:8px;padding:.45rem .55rem;margin:.45rem 0;font-size:.84rem}
+.chip{display:inline-block;margin:0 .25rem .3rem 0;padding:.12rem .4rem;border:1px solid var(--line);border-radius:999px;font:11px ui-monospace,monospace;cursor:pointer;background:#f7f2ea}
+.badge{font:10px/1.2 system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.supported{color:var(--ok)}.living{color:var(--live)}.gedcom{color:var(--ged)}.placeholder,.open{color:var(--open)}.trap{color:var(--trap)}
+input{width:100%;font:14px system-ui,sans-serif;margin:.2rem 0 .45rem;padding:.35rem .45rem}
+.tab{display:inline-block;margin:0 .3rem .3rem 0;padding:.15rem .45rem;border:1px solid var(--line);border-radius:999px;cursor:pointer;font:11px system-ui,sans-serif;user-select:none}
+.tab.on{background:var(--ink);color:var(--paper)}.tab .n{opacity:.7;margin-left:.2rem}
+.sec{border:1px solid var(--line);border-radius:8px;margin:.55rem 0;overflow:hidden}
+.sec>summary{list-style:none;cursor:pointer;padding:.45rem .6rem;font:600 12px system-ui,sans-serif;background:#f7f2ea;display:flex;justify-content:space-between;align-items:center}
+.sec>summary::-webkit-details-marker{display:none}.sec>summary::after{content:"▾";color:var(--muted)}.sec:not([open])>summary::after{content:"▸"}
+.sec .body{padding:.45rem .6rem .6rem}
+#stage{position:absolute;left:var(--rail);right:0;top:0;bottom:0;overflow:hidden;cursor:grab;background:radial-gradient(1200px 800px at 30% 20%,#f7f1e6 0%,#e8dfd0 45%,#d9cfbe 100%)}
+#stage:active{cursor:grabbing}#stage canvas{display:block;width:100%;height:100%}
+.trapbox{border:1px solid var(--trap);padding:.45rem .55rem;margin:.35rem 0}button{font:12px system-ui,sans-serif;padding:.3rem .5rem;margin:.15rem .2rem .15rem 0}
+#legend{position:absolute;right:.6rem;bottom:.6rem;z-index:3;background:rgba(255,253,248,.92);border:1px solid var(--line);border-radius:8px;padding:.35rem .5rem;font:11px system-ui,sans-serif}
+#legend span{margin-right:.55rem}#backdrop{display:none;position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:3}
+#fallback{display:none;position:absolute;inset:0;z-index:4;background:#efe8dc;padding:2rem}
+#hoverTip{position:absolute;pointer-events:none;z-index:6;display:none;background:rgba(26,23,20,.92);color:#fffdf8;font:12px system-ui,sans-serif;padding:.25rem .45rem;border-radius:6px;transform:translate(12px,12px)}
+#livingBox{margin:8px 0;padding:8px;border:1px solid var(--line);border-radius:8px}
+@media(max-width:720px){#menuBtn{display:inline-block}#ui{left:0;right:0;top:auto;bottom:0;width:100%;height:min(58vh,520px);border-right:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;transform:translateY(110%);transition:transform .2s}#ui.open{transform:translateY(0)}#stage{left:0}#backdrop.show{display:block}}
+</style>
 </head>
 <body>
-<a class="skip" href="#view">Skip to explorer</a>
-<div class="theme-fade" aria-hidden="true"></div>
-
-<header class="hud-top">
-  <div class="brand">
-    <p class="eyebrow">mahda.com.au/family · Three.js explorer</p>
-    <h1>Greene–Hoy <span class="rubric">tree</span></h1>
+<button type="button" id="menuBtn">Menu</button>
+<div id="backdrop"></div>
+<div id="ui">
+  <h1>Family tree</h1>
+  <p class="sub">mahda.com.au/family · public snapshot · Soft≠solid</p>
+  <div class="callout"><strong>Soft ≠ solid.</strong> Amber/open is a soft lead — not Vic-proven green. Living names stay hidden until you unlock.</div>
+  <p class="hint" id="meta"></p>
+  <p><a href="COLLECTIVE_STATUS_REPORT.md" download>Download status report</a> · <a href="graph.public.json" download>graph.public.json</a></p>
+  <div id="livingBox">
+    <p class="hint" id="livingHint">Living names are locked on this public site.</p>
+    <p style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+      <input id="livingPass" type="password" placeholder="passphrase" autocomplete="current-password" style="flex:1;min-width:120px"/>
+      <button type="button" id="livingUnlock">Unlock living</button>
+      <button type="button" id="livingLock" style="display:none">Lock living</button>
+    </p>
   </div>
-  <div class="hud-meta">
-    <span class="pill" id="lock-pill">Living redacted</span>
-    <span class="stat">People <b id="docket-count">0</b></span>
-    <span class="stat" id="placeholder-flag" hidden>Empty graph — no invented kin</span>
-    <span class="liveries" id="liveries" role="group" aria-label="Livery"></span>
-  </div>
-</header>
-
-<section class="hud-bar" aria-labelledby="unlock-title">
-  <form id="unlock-form" autocomplete="off">
-    <span class="kicker" id="unlock-title">Unlock living</span>
-    <label class="sr-only" for="pass">Passphrase</label>
-    <input id="pass" name="pass" type="password" placeholder="Passphrase" spellcheck="false">
-    <button type="submit" class="btn">Unlock</button>
-    <button type="button" class="btn ghost" id="lock-btn" hidden>Redact</button>
-    <p class="hint" id="unlock-msg">Living stay redacted until the family passphrase unlocks this session.</p>
-  </form>
-  <div class="legend" aria-label="Soft not equal solid">
-    <span class="leg"><i class="sw supported"></i> Supported</span>
-    <span class="leg"><i class="sw open"></i> Open</span>
-    <span class="leg"><i class="sw living"></i> Living</span>
-    <span class="leg"><i class="sw gedcom"></i> GEDCOM</span>
-    <span class="leg"><i class="sw trap"></i> Trap</span>
-    <span class="leg"><i class="ln solid"></i> Solid edge</span>
-    <span class="leg"><i class="ln soft"></i> Soft edge</span>
-  </div>
-</section>
-
-<div class="hud-tools">
-  <label class="field">
-    <span>Find</span>
-    <input id="q" type="search" placeholder="Name, aka, id" autocomplete="off">
-  </label>
-  <label class="field">
-    <span>Verdict</span>
-    <select id="verdict">
-      <option value="">All verdicts</option>
-      <option value="supported">Supported</option>
-      <option value="open">Open</option>
-      <option value="living">Living</option>
-      <option value="gedcom">GEDCOM</option>
-      <option value="trap">Trap</option>
-    </select>
-  </label>
-  <label class="field">
-    <span>Kind</span>
-    <select id="kind">
-      <option value="">All edges</option>
-      <option value="parent">Parent</option>
-      <option value="spouse">Spouse</option>
-      <option value="step">Step</option>
-      <option value="child">Child</option>
-    </select>
-  </label>
-  <div class="views" role="group" aria-label="View">
-    <button type="button" class="btn" data-view="tree" aria-pressed="true">Orbit</button>
-    <button type="button" class="btn" data-view="list" aria-pressed="false">Index</button>
-    <button type="button" class="btn" data-view="about" aria-pressed="false">Sources</button>
-  </div>
+  <input id="q" placeholder="Search name, pid, or reg  (/ to focus)"/>
+  <p><button type="button" id="fit">Fit (f)</button><button type="button" id="me">Focus root</button><button type="button" id="sourced">Sourced only</button></p>
+  <details class="sec" id="sec-filters" open><summary>Filters <span class="hint" id="filterBadge"></span></summary><div class="body"><p class="hint">Line</p><div id="tabs"></div><p class="hint">Status (multi)</p><div id="statusTabs"></div></div></details>
+  <details class="sec" id="sec-selected" open><summary>Selected</summary><div class="body" id="detail"><p class="hint">Orbit drag · wheel zoom · click a person.</p></div></details>
+  <details class="sec" id="sec-traps"><summary>Not this tree <span class="hint" id="trapBadge"></span></summary><div class="body" id="traps"></div></details>
 </div>
+<div id="stage"><div id="legend"><span class="supported">● supported</span><span class="open">● soft/open</span><span class="living">● living</span><span class="gedcom">◌ gedcom</span><span class="trap">● trap</span></div><div id="hoverTip"></div></div>
+<div id="fallback"><h2>WebGL unavailable</h2><p>Try another browser, or download the <a href="COLLECTIVE_STATUS_REPORT.md">status report</a>.</p></div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const PASS_SHA256='46b6312339466d3b206325f6f402e1fae56cd65f117c779e3b9259833ffbcdf0'; // same passphrase as :8793 living unlock
+const LS_UNLOCK='mahda-family-living-v1';
+async function sha256hex(s){const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');}
 
-<main id="main">
-  <div id="tree-view" class="stage">
-    <div id="view" aria-label="Three.js family tree"></div>
-    <p class="orbit-hint">Drag to orbit · wheel zoom · right-drag pan · click a person</p>
-    <aside class="card" id="card" hidden>
-      <p class="kicker" id="card-kicker">Person</p>
-      <h2 id="card-name"></h2>
-      <div id="card-body"></div>
-      <button type="button" class="btn ghost" id="card-close">Close</button>
-    </aside>
-    <div class="empty-banner" id="empty-banner" hidden>
-      <p class="kicker">No people loaded</p>
-      <p>This is an honest empty graph. The private GR export is not in the repo. Nobody has been invented to fill it — including no Andrea Moon and no scraped Hoy living nodes.</p>
-    </div>
-  </div>
-  <div id="list-view" hidden></div>
-  <div id="about-view" hidden></div>
-</main>
+const esc = s => String(s??'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const STATUSES=['supported','living','gedcom','placeholder','trap','open'];
+let G=null, unlocked=false, line='greene', sel=null, sourcedOnly=false, statusOn=new Set(STATUSES);
+let pos={}, meshList=[], root, renderer, scene, camera, controls, raycaster, pointer;
+const stage=document.getElementById('stage'), tip=document.getElementById('hoverTip');
 
-<footer class="foot">
-  <p>Soft ≠ solid. Genealogy only. <a href="https://mahda.com.au/">mahda.com.au</a></p>
-</footer>
-
-<script type="module" src="assets/js/app.js"></script>
+function peopleSet(){let ps=G.people||[];if(line&&line!=='all')ps=ps.filter(p=>p.line===line||p.id==='unknown-parent');const q=(document.getElementById('q').value||'').trim().toLowerCase();if(q)ps=ps.filter(p=>(p.name+' '+p.id+' '+(p.aka||'')+' '+(p.notes||'')+' '+(p.birth||'')+' '+(p.death||'')).toLowerCase().includes(q));if(sourcedOnly)ps=ps.filter(p=>p.status==='supported'||p.status==='trap'||p.id==='unknown-parent');else ps=ps.filter(p=>statusOn.has(p.status||'gedcom')||p.id==='unknown-parent');return ps;}
+function layout(ps){const cols={};ps.forEach(p=>{(cols[p.gen??0]||=[]).push(p);});const P={};Object.keys(cols).map(Number).sort((a,b)=>a-b).forEach(g=>{cols[g].sort((a,b)=>(a.name||'').localeCompare(b.name||''));const n=cols[g].length;cols[g].forEach((p,i)=>{const y=(i-(n-1)/2)*1.15;const z=(p.status==='living'?0.35:p.status==='supported'?0.15:p.status==='trap'?-0.2:0);P[p.id]={x:g*2.55,y,z,p};});});return P;}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function makeLabelTexture(name,id,status,selected){const c=document.createElement('canvas');c.width=512;c.height=192;const ctx=c.getContext('2d');const bg={supported:'#e8f3ea',living:'#e4eef6',open:'#f6efd8',placeholder:'#f3efe4',trap:'#f6e6e1',gedcom:'#f0ece6'}[status]||'#fffdf8';const stroke={supported:'#2c5e3a',living:'#1d4a6e',open:'#6a5420',placeholder:'#8a7a4a',trap:'#8a3b2b',gedcom:'#7a746b'}[status]||'#d9d2c8';ctx.fillStyle=bg;ctx.strokeStyle=selected?'#1a1714':stroke;ctx.lineWidth=selected?10:6;roundRect(ctx,8,8,496,176,28);ctx.fill();ctx.stroke();ctx.fillStyle='#1a1714';ctx.font='600 42px Georgia, serif';ctx.fillText(String(name||'').slice(0,22),28,78);ctx.fillStyle='#6b645c';ctx.font='28px system-ui, sans-serif';ctx.fillText(String(id||''),28,130);const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;return tex;}
+function clearSceneGraph(){if(!root)return;while(root.children.length){const ch=root.children.pop();ch.traverse?.(o=>{if(o.geometry)o.geometry.dispose?.();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>{m.map?.dispose?.();m.dispose?.();});else{o.material.map?.dispose?.();o.material.dispose?.();}}});root.remove(ch);}meshList=[];}
+function draw(){if(!G||!root)return;const ps=peopleSet();const ids=new Set(ps.map(p=>p.id));pos=layout(ps);clearSceneGraph();(G.edges||[]).filter(e=>ids.has(e.from)&&ids.has(e.to)).forEach(e=>{const a=pos[e.from],b=pos[e.to];if(!a||!b)return;const soft=e.verdict==='placeholder'||e.verdict==='open';const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a.x,a.y,a.z),new THREE.Vector3(b.x,b.y,b.z)]);let color=0xb6aea3,opacity=soft?0.35:0.7;if(e.verdict==='supported'){color=0x2c5e3a;opacity=0.85;}if(e.kind==='spouse')color=0x6a7ca0;const lineObj=soft?new THREE.Line(geo,new THREE.LineDashedMaterial({color,transparent:true,opacity,dashSize:.14,gapSize:.1})):new THREE.Line(geo,new THREE.LineBasicMaterial({color,transparent:true,opacity}));if(soft)lineObj.computeLineDistances();root.add(lineObj);});const geo=new THREE.BoxGeometry(1.9,0.72,0.08);ps.forEach(p=>{const o=pos[p.id];if(!o)return;const st=p.status||'gedcom';const mat=new THREE.MeshStandardMaterial({map:makeLabelTexture(p.name,p.id,st,sel===p.id),roughness:0.55,metalness:0.05,emissive:sel===p.id?0x222018:0x000000,emissiveIntensity:sel===p.id?0.25:0});const mesh=new THREE.Mesh(geo,mat);mesh.position.set(o.x,o.y,o.z);mesh.rotation.x=-0.08;mesh.userData={id:p.id,name:p.name};root.add(mesh);meshList.push(mesh);});document.getElementById('filterBadge').textContent=`${ps.length} shown`;}
+function statusLabel(st){if(st==='open')return 'open · soft';if(st==='supported')return 'supported · solid';return st||'';}
+function select(id){sel=id;const p=(G.people||[]).find(x=>x.id===id);if(!p){document.getElementById('detail').innerHTML=`<p class="hint">No person ${esc(id)}.</p>`;draw();return;}document.getElementById('sec-selected').open=true;const nameOf=i=>((G.people||[]).find(x=>x.id===i)||{}).name||i;const edges=(G.edges||[]).filter(e=>e.from===id||e.to===id);const st=p.status||'gedcom';let html=`<div><p><strong>${esc(p.name)}</strong> <span class="badge ${esc(st)}">${esc(statusLabel(st))}</span>${st==='open'?' <span class="hint">soft≠solid</span>':''}</p><p class="hint">pid ${esc(p.id)} ${esc(p.aka||'')}</p>`;const birth=[p.birth,p.birth_place].filter(Boolean).join(' · ');const death=[p.death,p.death_place].filter(Boolean).join(' · ');if(birth)html+=`<p class="cite">b. ${esc(birth)}</p>`;if(death)html+=`<p class="cite">d. ${esc(death)}</p>`;html+=`<p>${esc(p.notes||'—')}</p>`;html+=`<p class="hint">Edges (${Math.min(edges.length,20)})</p>`;edges.slice(0,20).forEach(e=>{const other=e.from===id?e.to:e.from;html+=`<p><span class="badge ${esc(e.verdict||'')}">${esc(e.verdict||'')}</span> ${esc(e.rel||e.kind||'kin')} — ${esc(nameOf(other))}</p>`;});html+='</div>';document.getElementById('detail').innerHTML=html;draw();centerOn(id);}
+function centerOn(id){const o=pos[id];if(!o||!controls)return;controls.target.set(o.x,o.y,o.z);camera.position.set(o.x+0.8,o.y+1.2,o.z+6.5);controls.update();}
+function fit(){const ps=peopleSet();if(!ps.length||!controls)return;pos=layout(ps);const xs=Object.values(pos).map(o=>o.x),ys=Object.values(pos).map(o=>o.y);const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);const cx=(minX+maxX)/2,cy=(minY+maxY)/2,span=Math.max(maxX-minX,maxY-minY,4);controls.target.set(cx,cy,0);camera.position.set(cx,cy+span*0.08,Math.max(8,span*1.15));controls.update();draw();}
+function renderStatusTabs(){const counts=(G&&G.counts&&G.counts.by_status)||{};document.getElementById('statusTabs').innerHTML=STATUSES.map(s=>`<span class="tab ${statusOn.has(s)?'on':''} ${esc(s)}" data-st="${esc(s)}">${esc(s)}<span class="n">${counts[s]||0}</span></span>`).join('');document.querySelectorAll('#statusTabs .tab').forEach(t=>t.onclick=()=>{const s=t.getAttribute('data-st');if(statusOn.has(s))statusOn.delete(s);else statusOn.add(s);if(!statusOn.size)statusOn=new Set(STATUSES);renderStatusTabs();draw();});}
+function syncLivingUi(){const hint=document.getElementById('livingHint'),lockBtn=document.getElementById('livingLock');if(unlocked){hint.textContent='Living names unlocked for this browser session.';lockBtn.style.display='';document.getElementById('livingPass').style.display='none';document.getElementById('livingUnlock').style.display='none';}else{hint.textContent=`Living names locked (${G?.living_redacted||0} hidden). Enter passphrase to unlock.`;lockBtn.style.display='none';document.getElementById('livingPass').style.display='';document.getElementById('livingUnlock').style.display='';}}
+async function load(){const url=unlocked?'graph.living.json':'graph.public.json';const r=await fetch(url,{cache:'no-store'});G=await r.json();const c=G.counts||{};document.getElementById('meta').textContent=`${c.people||0} people · living ${(c.by_status||{}).living||0} · supported ${(c.by_status||{}).supported||0} · ${G.version||''} · public`;syncLivingUi();document.getElementById('tabs').innerHTML=(G.lines||[{id:'greene',title:'Greene'},{id:'all',title:'All'}]).map(l=>`<span class="tab${l.id===line?' on':''}" data-line="${esc(l.id)}">${esc(l.title||l.id)}</span>`).join('');document.querySelectorAll('#tabs .tab').forEach(t=>t.onclick=()=>{line=t.getAttribute('data-line');document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.toggle('on',x===t));draw();fit();});renderStatusTabs();const traps=G.traps||[];document.getElementById('trapBadge').textContent=String(traps.length);document.getElementById('traps').innerHTML=traps.map(t=>`<div class="trapbox"><div class="badge trap">trap</div><strong>${esc(t.title)}</strong><p class="hint">${esc(t.detail||'')}</p></div>`).join('')||'<p class="hint">None.</p>';sel=sel||G.focus||'P1';draw();if(sel)select(sel);else fit();}
+async function unlockLiving(){const pass=document.getElementById('livingPass').value;const h=await sha256hex(pass);if(h!==PASS_SHA256){document.getElementById('livingHint').textContent='Wrong passphrase.';return;}unlocked=true;sessionStorage.setItem(LS_UNLOCK,'1');document.getElementById('livingPass').value='';await load();}
+async function lockLiving(){unlocked=false;sessionStorage.removeItem(LS_UNLOCK);await load();}
+function initThree(){try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){document.getElementById('fallback').style.display='block';return false;}renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(stage.clientWidth,stage.clientHeight);renderer.setClearColor(0x000000,0);stage.appendChild(renderer.domElement);scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(50,stage.clientWidth/Math.max(1,stage.clientHeight),0.1,500);camera.position.set(20,4,28);controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=0.08;controls.minDistance=2;controls.maxDistance=120;controls.target.set(18,0,0);scene.add(new THREE.AmbientLight(0xffffff,0.85));const dir=new THREE.DirectionalLight(0xfff2dd,0.65);dir.position.set(8,18,12);scene.add(dir);root=new THREE.Group();scene.add(root);raycaster=new THREE.Raycaster();pointer=new THREE.Vector2();renderer.domElement.addEventListener('pointermove',ev=>{const rect=renderer.domElement.getBoundingClientRect();pointer.x=((ev.clientX-rect.left)/rect.width)*2-1;pointer.y=-((ev.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(pointer,camera);const obj=raycaster.intersectObjects(meshList,false)[0]?.object;if(obj){tip.style.display='block';tip.style.left=ev.clientX+'px';tip.style.top=ev.clientY+'px';tip.textContent=`${obj.userData.name||''} (${obj.userData.id||''})`;renderer.domElement.style.cursor='pointer';}else{tip.style.display='none';renderer.domElement.style.cursor='grab';}});renderer.domElement.addEventListener('click',ev=>{const rect=renderer.domElement.getBoundingClientRect();pointer.x=((ev.clientX-rect.left)/rect.width)*2-1;pointer.y=-((ev.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(pointer,camera);const obj=raycaster.intersectObjects(meshList,false)[0]?.object;if(obj?.userData?.id)select(obj.userData.id);});window.addEventListener('resize',()=>{const w=stage.clientWidth,h=Math.max(1,stage.clientHeight);camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});(function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);})();return true;}
+document.getElementById('q').addEventListener('input',()=>draw());
+document.getElementById('fit').onclick=fit;
+document.getElementById('me').onclick=()=>{line='all';sourcedOnly=false;statusOn=new Set(STATUSES);renderStatusTabs();select(G.focus||'P1');};
+document.getElementById('sourced').onclick=()=>{sourcedOnly=!sourcedOnly;document.getElementById('sourced').textContent=sourcedOnly?'Show GEDCOM map':'Sourced only';draw();fit();};
+document.getElementById('livingUnlock').onclick=unlockLiving;
+document.getElementById('livingLock').onclick=lockLiving;
+document.getElementById('livingPass').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();unlockLiving();}});
+window.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==document.getElementById('q')){e.preventDefault();document.getElementById('q').focus();}else if(e.key==='f'&&document.activeElement!==document.getElementById('q'))fit();});
+const ui=document.getElementById('ui'),backdrop=document.getElementById('backdrop');
+document.getElementById('menuBtn').onclick=()=>{ui.classList.toggle('open');backdrop.classList.toggle('show');};
+backdrop.onclick=()=>{ui.classList.remove('open');backdrop.classList.remove('show');};
+unlocked=sessionStorage.getItem(LS_UNLOCK)==='1';
+if(initThree())load(); else document.getElementById('fallback').style.display='block';
+</script>
 </body>
 </html>
