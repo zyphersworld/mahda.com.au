@@ -1,27 +1,20 @@
 {
-  "builtAt": "2026-09-14T06:43:32.740Z",
+  "builtAt": "2026-09-14T13:38:34.374Z",
   "count": 12,
   "items": [
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
       "t": "Catholic schools body moves to cut ties with Christian Brothers",
       "d": "",
-      "date": "Sun, 06 Sep 2026 18:39:52 GMT",
+      "date": "Sun, 06 Sep 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOajNYTk8tVnNfdy1QbHBVaXJFb0FvY09KTUN2RU56SlZhdlVFUGJMV3RyczFUdnNPemUxUEIybXdtM0hwZEJQUDhNejhTcGF2ZzY2Z294c2J0M01jRENUM2tCVzg3NWdHa1diRzliNndSQVdBclo4YUFuUXppc0RxQVhwaUFGVlBpUndfZW00SGxfM01VY011aWpwb1dlMnZMRm5zN1RNTDk5Ymc?oc=5"
     },
     {
-      "src": "thewest.com.au",
+      "src": "The West Australian",
       "t": "WA Government to draft abuse survivor compensation rules",
       "d": "",
       "date": "Tue, 08 Sep 2026 09:04:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQMlB0bjlOam4yUHMwbFdIRnhycFZIMUNsWG96VFAxMjRMZXdRNWp2YlRSeVhQQThVWjUzd283M0VrQkI0S0RGQy0xUGc5Y3pwa2ZLNzdjWjMzNU1FQUpEeDhmU1Z0LXpDRUFKaUhfWE9hYnh5aGgtSXpJSzBHNjBobGNFYy1qNk9QNU5Yejd1MGZTVmh1RDFCb3lNZlRmaWlYRTlpVFA0WXo3ZUw3Qm9MVkN0RWZBRWU0b0sydFRERmw3M0R5M2Y1VW1WOEJUa2lmVnd0V3gtZnFHV0pZRy13VnBiRG43endKckNJQ0o3endaVXdvRUJkeF9R?oc=5"
-    },
-    {
-      "src": "churchtimes.co.uk",
-      "t": "Pledge for survivors at Christian Brothers schools in order’s Oceania province",
-      "d": "",
-      "date": "Fri, 31 Jul 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxONllVRFozMktFcFFqbnNzdFpvcDJkVTI2bkFzT2ctYWVXQ2dZcVNqTnRTZGJFdkQxS3llcEZ4OGlvbjM3UzdYaDlqRjM4Wjg5N2tlLUtoS1hpS2J0YzhsRHdDNEpLU28tRzNEU1N2QnNwc0lZdERsX1ZBbGtBSlNKcnp5d3F4bzRoQldzenRiV3BnMU9aN1huTnlQQ2w1YV9TTDh5em1ObnZ6ekNEX3hkMkphckJLdHFKZlowWWt6SHJYamdYbm9vR3dzMm5zRmZmbGVnY19hTW4?oc=5"
     },
     {
       "src": "Mirage News",
@@ -38,7 +31,7 @@
       "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9uUXVOMERHVHcxazZmM2dFbVBvbkM5amE0dVN5cTc5c2RrR2tFa3UyNXlfUl82ZllVc1gtTjdfWlVrTmZTQXB6cTkwY255Rjc5V0N1OHVfYnNjUkpGZWZhdHU3N2c5cmxJN1dnQXRLd2w3RHpQWThIdl9EbEM?oc=5"
     },
     {
-      "src": "TV Blackbox",
+      "src": "tvblackbox.com.au",
       "t": "Christian Brothers’ compensation crisis on FOUR CORNERS",
       "d": "",
       "date": "Sun, 06 Sep 2026 19:35:00 GMT",
@@ -52,7 +45,7 @@
       "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxPSTZaYlhMU0hqdl9yOUpXaHVCU1hrZS1QazdwWXJrRFpKNEFPM3JORDJYM01YazI3RHBHNU95NUM0SE5zbjlxR3U1M09ZY1VrWG1xYkNIbFlaNElmSW9IV1RUbU0ta1ZqQTk1WkgyakMyRWVMNlUteDZxYUoyOXhHcV9hTnpuM0JzejlQY29KTnVMVjFSNXBwOXRqaGxkTTRuN3pKV2VnU1NpV2VNSTM2ZlMyY2h1TTh0X0lndFBPbHpIRFNjUUtFcGRWcFEyc3RNaGJsVVBuVWtfM3dNbTZEa2szeDd4LXpxaDZFanREZmkteHhnV1BqaWdxQlFtNVE?oc=5"
     },
     {
-      "src": "thewest.com.au",
+      "src": "The West Australian",
       "t": "Court freezes payouts to Christian Brothers abuse survivors",
       "d": "",
       "date": "Fri, 04 Sep 2026 18:00:00 GMT",
@@ -85,6 +78,13 @@
       "d": "",
       "date": "Wed, 05 Aug 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5RU2E2WGdiRVlRT2FmOThvalo0SjVUN1dkXzc3WW10Z013SThPQk5OdGljWGYtSFZaM0UzLXgyMC0yTlNWdmc1ckVlSHZlXy15SC14Y05Qc2ptdWpFODN6dWZ0aWIxYXVxNl85cXEtZkl6aGlSN1lJ?oc=5"
+    },
+    {
+      "src": "ABC iview",
+      "t": "Four Corners: S2026 Christian Brothers Inc. Four Corners",
+      "d": "",
+      "date": "Mon, 07 Sep 2026 10:37:37 GMT",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBGUWZTY2dqQXIxS24temRQNjNQU0poNmFoaTlUYTcxWU5UYVVYWC03ODNkTGh3TkVlZUYtYlNHQkg5V1FqUFJGVTg2b0x2dmU3UHF6V0c0cDh4bFR2Q3lmelAwWk81bFktTENuR2ktOFd6ckVibWxuY0pXU09RT28?oc=5"
     }
   ]
 }
