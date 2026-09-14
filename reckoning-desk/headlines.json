@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-14T13:38:34.374Z",
+  "builtAt": "2026-09-14T19:01:32.324Z",
   "count": 12,
   "items": [
     {
@@ -17,13 +17,6 @@
       "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQMlB0bjlOam4yUHMwbFdIRnhycFZIMUNsWG96VFAxMjRMZXdRNWp2YlRSeVhQQThVWjUzd283M0VrQkI0S0RGQy0xUGc5Y3pwa2ZLNzdjWjMzNU1FQUpEeDhmU1Z0LXpDRUFKaUhfWE9hYnh5aGgtSXpJSzBHNjBobGNFYy1qNk9QNU5Yejd1MGZTVmh1RDFCb3lNZlRmaWlYRTlpVFA0WXo3ZUw3Qm9MVkN0RWZBRWU0b0sydFRERmw3M0R5M2Y1VW1WOEJUa2lmVnd0V3gtZnFHV0pZRy13VnBiRG43endKckNJQ0o3endaVXdvRUJkeF9R?oc=5"
     },
     {
-      "src": "Mirage News",
-      "t": "Govt Reforms Aid Child Abuse Victims' Compensation",
-      "d": "",
-      "date": "Tue, 08 Sep 2026 00:34:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1FdzNBZHFMalA4Uk1UVG4xdFA3OEJ3cGNOVVFJMEZIaEExbG42Um5BU3VSZEt1bndrRFBWWWxDZlpJdVlNbXdhYjluSWRlTWZVZUU1Z0cwb0VFX01UMUs3QWJXUnFlUGdWM09iOGdVMTNZbVhWQ0d5QkNJTk8?oc=5"
-    },
-    {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
       "t": "VIDEO: Christian Brothers Inc.",
       "d": "",
@@ -31,7 +24,14 @@
       "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9uUXVOMERHVHcxazZmM2dFbVBvbkM5amE0dVN5cTc5c2RrR2tFa3UyNXlfUl82ZllVc1gtTjdfWlVrTmZTQXB6cTkwY255Rjc5V0N1OHVfYnNjUkpGZWZhdHU3N2c5cmxJN1dnQXRLd2w3RHpQWThIdl9EbEM?oc=5"
     },
     {
-      "src": "tvblackbox.com.au",
+      "src": "Mirage News",
+      "t": "Govt Reforms Aid Child Abuse Victims' Compensation",
+      "d": "",
+      "date": "Tue, 08 Sep 2026 00:34:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1FdzNBZHFMalA4Uk1UVG4xdFA3OEJ3cGNOVVFJMEZIaEExbG42Um5BU3VSZEt1bndrRFBWWWxDZlpJdVlNbXdhYjluSWRlTWZVZUU1Z0cwb0VFX01UMUs3QWJXUnFlUGdWM09iOGdVMTNZbVhWQ0d5QkNJTk8?oc=5"
+    },
+    {
+      "src": "TV Blackbox",
       "t": "Christian Brothers’ compensation crisis on FOUR CORNERS",
       "d": "",
       "date": "Sun, 06 Sep 2026 19:35:00 GMT",
@@ -52,7 +52,7 @@
       "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLUNCMXY1SEk2ak9KZzItS3oxcWliZmRCYnowdEtoc1RpZm9IcFBlbW5ibUhxN3FST2pMQzJ0eXo5eFhvRmltc2drSmZQMGo2dHJoRTZRTXgzN05wQjVjYzdjZUJRTTJRQl9OYXZIVGNBWG1yUkRYR2wxVmtKUlg4OGMzY05SS2lQelQ3TkJXWHNVbmZTMUR6WVZTNkdZUDBOQ3h4emRHOExQUWlRSUFYeUNhaGFnVXJubGh2QVQtX2dpTkgtOVVlcGI3YWRFWnBiR0lnY0ZrTlU2dw?oc=5"
     },
     {
-      "src": "The Australian",
+      "src": "theaustralian.com.au",
       "t": "Survivor sues state over unpaid abuse settlement",
       "d": "",
       "date": "Fri, 11 Sep 2026 12:06:00 GMT",
@@ -73,18 +73,18 @@
       "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE85NElVR0RYR3Jfd3d5WVRjbXhrSnNpNlhFbnVWRmRCX3l4ZC1PMkJqLVFaaURXU0NaUXNVZTRJUnFlc25NRE9BMER4aGZFMk5BYVY1MmJHc3I5NkFka2hPdUd2NDFSZw?oc=5"
     },
     {
-      "src": "RTE.ie",
+      "src": "rte.ie",
       "t": "Christian Brothers' focus on settling claims 'without litigation'",
       "d": "",
       "date": "Wed, 05 Aug 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5RU2E2WGdiRVlRT2FmOThvalo0SjVUN1dkXzc3WW10Z013SThPQk5OdGljWGYtSFZaM0UzLXgyMC0yTlNWdmc1ckVlSHZlXy15SC14Y05Qc2ptdWpFODN6dWZ0aWIxYXVxNl85cXEtZkl6aGlSN1lJ?oc=5"
     },
     {
-      "src": "ABC iview",
-      "t": "Four Corners: S2026 Christian Brothers Inc. Four Corners",
+      "src": "The Irish Times",
+      "t": "I urge Christian Brothers to show remorse, compassion and basic human decency",
       "d": "",
-      "date": "Mon, 07 Sep 2026 10:37:37 GMT",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBGUWZTY2dqQXIxS24temRQNjNQU0poNmFoaTlUYTcxWU5UYVVYWC03ODNkTGh3TkVlZUYtYlNHQkg5V1FqUFJGVTg2b0x2dmU3UHF6V0c0cDh4bFR2Q3lmelAwWk81bFktTENuR2ktOFd6ckVibWxuY0pXU09RT28?oc=5"
+      "date": "Tue, 11 Aug 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNanM3ZGR1ZmlKRERvRERfYk9SUXAtS2I2QlZkUktNQlFPNDRVS3RRNVJtaXEtalVMVW9jSUFrNWFsWUNMY25oeUhoRUo3VnYyQml6bGItb0JwQVV5NjNYb2g3OXJwUXprcHVCRFE5REFOYl9HcUMwVXNwTlk4SXgwVzNBS2hQVTN6?oc=5"
     }
   ]
 }
