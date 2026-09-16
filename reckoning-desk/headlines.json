@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-16T01:06:05.837Z",
+  "builtAt": "2026-09-16T06:25:36.925Z",
   "count": 12,
   "items": [
     {
@@ -10,11 +10,18 @@
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOajNYTk8tVnNfdy1QbHBVaXJFb0FvY09KTUN2RU56SlZhdlVFUGJMV3RyczFUdnNPemUxUEIybXdtM0hwZEJQUDhNejhTcGF2ZzY2Z294c2J0M01jRENUM2tCVzg3NWdHa1diRzliNndSQVdBclo4YUFuUXppc0RxQVhwaUFGVlBpUndfZW00SGxfM01VY011aWpwb1dlMnZMRm5zN1RNTDk5Ymc?oc=5"
     },
     {
-      "src": "The West Australian",
+      "src": "thewest.com.au",
       "t": "WA Government to draft abuse survivor compensation rules",
       "d": "",
       "date": "Tue, 08 Sep 2026 09:04:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQMlB0bjlOam4yUHMwbFdIRnhycFZIMUNsWG96VFAxMjRMZXdRNWp2YlRSeVhQQThVWjUzd283M0VrQkI0S0RGQy0xUGc5Y3pwa2ZLNzdjWjMzNU1FQUpEeDhmU1Z0LXpDRUFKaUhfWE9hYnh5aGgtSXpJSzBHNjBobGNFYy1qNk9QNU5Yejd1MGZTVmh1RDFCb3lNZlRmaWlYRTlpVFA0WXo3ZUw3Qm9MVkN0RWZBRWU0b0sydFRERmw3M0R5M2Y1VW1WOEJUa2lmVnd0V3gtZnFHV0pZRy13VnBiRG43endKckNJQ0o3endaVXdvRUJkeF9R?oc=5"
+    },
+    {
+      "src": "TV Blackbox",
+      "t": "Christian Brothers’ compensation crisis on FOUR CORNERS",
+      "d": "",
+      "date": "Mon, 07 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQVERWUDFmY2dnQ2w1X2kxRnFWbEJGMHRsQXZhYXdXYmJIQ3o0VW9uSUtQQnNOdVhfbFBfZUI3WGMwb3ZFbjI0MmdiWFFFbl9nWnJZRnJPc29oVkJWUzRyQUZqVFVxY0RIUmxPd0MxbUJpb2xxUE5MY2Jyb3VlYUM1UWtpYlhaUmI4X0tUYkp1dVppNUVvOXhjNzlfbDJhQQ?oc=5"
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
@@ -31,11 +38,11 @@
       "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1FdzNBZHFMalA4Uk1UVG4xdFA3OEJ3cGNOVVFJMEZIaEExbG42Um5BU3VSZEt1bndrRFBWWWxDZlpJdVlNbXdhYjluSWRlTWZVZUU1Z0cwb0VFX01UMUs3QWJXUnFlUGdWM09iOGdVMTNZbVhWQ0d5QkNJTk8?oc=5"
     },
     {
-      "src": "TV Blackbox",
-      "t": "Christian Brothers’ compensation crisis on FOUR CORNERS",
+      "src": "thewest.com.au",
+      "t": "Court freezes payouts to Christian Brothers abuse survivors",
       "d": "",
-      "date": "Mon, 07 Sep 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQVERWUDFmY2dnQ2w1X2kxRnFWbEJGMHRsQXZhYXdXYmJIQ3o0VW9uSUtQQnNOdVhfbFBfZUI3WGMwb3ZFbjI0MmdiWFFFbl9nWnJZRnJPc29oVkJWUzRyQUZqVFVxY0RIUmxPd0MxbUJpb2xxUE5MY2Jyb3VlYUM1UWtpYlhaUmI4X0tUYkp1dVppNUVvOXhjNzlfbDJhQQ?oc=5"
+      "date": "Fri, 04 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLUNCMXY1SEk2ak9KZzItS3oxcWliZmRCYnowdEtoc1RpZm9IcFBlbW5ibUhxN3FST2pMQzJ0eXo5eFhvRmltc2drSmZQMGo2dHJoRTZRTXgzN05wQjVjYzdjZUJRTTJRQl9OYXZIVGNBWG1yUkRYR2wxVmtKUlg4OGMzY05SS2lQelQ3TkJXWHNVbmZTMUR6WVZTNkdZUDBOQ3h4emRHOExQUWlRSUFYeUNhaGFnVXJubGh2QVQtX2dpTkgtOVVlcGI3YWRFWnBiR0lnY0ZrTlU2dw?oc=5"
     },
     {
       "src": "The Australian",
@@ -66,7 +73,7 @@
       "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNanM3ZGR1ZmlKRERvRERfYk9SUXAtS2I2QlZkUktNQlFPNDRVS3RRNVJtaXEtalVMVW9jSUFrNWFsWUNMY25oeUhoRUo3VnYyQml6bGItb0JwQVV5NjNYb2g3OXJwUXprcHVCRFE5REFOYl9HcUMwVXNwTlk4SXgwVzNBS2hQVTN6?oc=5"
     },
     {
-      "src": "The West Australian",
+      "src": "thewest.com.au",
       "t": "Running on the power of seeking justice",
       "d": "",
       "date": "Fri, 28 Aug 2026 07:00:00 GMT",
@@ -78,13 +85,6 @@
       "d": "",
       "date": "Sat, 08 Aug 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOeXJTYU1QdFdyam9zU1daVktJaVdiWlNKbTZPRTNzYXNaYTBMdnpWREJWZXJuMHlzLXdGcWZUQlRCVi1maU9KczE3VTlyTW1PM2JvOFBXaE93X1dnTGhfQ3ZrbXZHa0RaTDVqeVhXX2NYc3NEaGVRb0VCdjlwdTdRY0lmOXctTzlORG5neEswel8?oc=5"
-    },
-    {
-      "src": "The Irish Times",
-      "t": "Legal strategy of Christian Brothers and naming in newspaper",
-      "d": "",
-      "date": "Thu, 06 Aug 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQZWlNM0pFaXNRQjJhb3NBRFNDUmtRMXVNcExSSGY2UllzRl9DSHBzWURBU25mbTJ4UnIzWDRVV08wRVlmNWIwb0RfdW9ZczhZY2E3VjNMd1hEMXVWb01RYTEwZzBQcjl1djlFdG9udDNSNlJZclVGV0w4anE4SU53V2VnNFJWalVDaVFMYzh2RzE3Xy1kUkNBVjVyY0FKTTNWQ3hwekxqZTdZUU1YeDc5dW1pUGtNQQ?oc=5"
     }
   ]
 }
