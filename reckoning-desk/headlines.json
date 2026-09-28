@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-28T01:50:43.377Z",
+  "builtAt": "2026-09-28T08:13:57.877Z",
   "count": 12,
   "items": [
     {
@@ -24,7 +24,7 @@
       "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9uUXVOMERHVHcxazZmM2dFbVBvbkM5amE0dVN5cTc5c2RrR2tFa3UyNXlfUl82ZllVc1gtTjdfWlVrTmZTQXB6cTkwY255Rjc5V0N1OHVfYnNjUkpGZWZhdHU3N2c5cmxJN1dnQXRLd2w3RHpQWThIdl9EbEM?oc=5"
     },
     {
-      "src": "tvblackbox.com.au",
+      "src": "TV Blackbox",
       "t": "Christian Brothers’ compensation crisis on FOUR CORNERS",
       "d": "",
       "date": "Mon, 07 Sep 2026 07:00:00 GMT",
@@ -36,6 +36,13 @@
       "d": "",
       "date": "Mon, 21 Sep 2026 00:55:03 GMT",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9QZkxJOGNKbjBHdWJSTFc2X3JFS1JkU212LWxOMGt6bS1uZVJhRDhjZC1jSnlIRTJKLWFZMm14TGZoR3FyXzlQMzAtREU0TGtONm90UjJiRXBYdzR3TUxfVnhqWTZrM1YwR0poOGsxanhvdXJR?oc=5"
+    },
+    {
+      "src": "Herald Sun",
+      "t": "Catholic pedophile priests’ final insult to victims",
+      "d": "",
+      "date": "Tue, 08 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNajNrNWN3QXQzWVdCQlpxQlZ1UTB5andJUWlDSWpFbWctVEFZdjJDSjloNzcwdjZSeEFWdHNaWFB1Mk9oc2JBTFFxcVRhUGtUZE54OVhWM3VlWUJEcmotSVB5b3FnTGd0STVwZjFHRDRyRWdodTNoTEZSTDJ6YWEtR1FpSWtPSjBHakNnRXFRUVBZS2hfX1FUNFh6SWFBRmc3emFpemVDRUhERWVnQnJpbkRyUFlHdWx5LTZKVmRYbU54WHAtR05UMDI2T3ZFRmZfWEpZcGF3UGVuSEFJSE1kQndSQ0t0WlFGbW1hWGlPSW1XMVdValdDd21wRW4?oc=5"
     },
     {
       "src": "The Australian",
@@ -52,7 +59,7 @@
       "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLUNCMXY1SEk2ak9KZzItS3oxcWliZmRCYnowdEtoc1RpZm9IcFBlbW5ibUhxN3FST2pMQzJ0eXo5eFhvRmltc2drSmZQMGo2dHJoRTZRTXgzN05wQjVjYzdjZUJRTTJRQl9OYXZIVGNBWG1yUkRYR2wxVmtKUlg4OGMzY05SS2lQelQ3TkJXWHNVbmZTMUR6WVZTNkdZUDBOQ3h4emRHOExQUWlRSUFYeUNhaGFnVXJubGh2QVQtX2dpTkgtOVVlcGI3YWRFWnBiR0lnY0ZrTlU2dw?oc=5"
     },
     {
-      "src": "The Irish Times",
+      "src": "irishtimes.com",
       "t": "Survivors experience Christian Brothers’ litigation strategy as abuse by other means",
       "d": "",
       "date": "Sun, 30 Aug 2026 07:00:00 GMT",
@@ -73,18 +80,11 @@
       "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBGUWZTY2dqQXIxS24temRQNjNQU0poNmFoaTlUYTcxWU5UYVVYWC03ODNkTGh3TkVlZUYtYlNHQkg5V1FqUFJGVTg2b0x2dmU3UHF6V0c0cDh4bFR2Q3lmelAwWk81bFktTENuR2ktOFd6ckVibWxuY0pXU09RT28?oc=5"
     },
     {
-      "src": "FOX40",
-      "t": "Jesuit defeats Christian Brothers in 55th Holy Bowl, remains undefeated",
-      "d": "",
-      "date": "Mon, 21 Sep 2026 06:45:50 GMT",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPU25SQXllYzlPdXF5a1Q2d1Z1SFFzbnRQM3VXenVIWlZnZW41aHlSSGVRV1l1UlZoc2ItXzluWWNyQ09DQUk0enBPZ1dhbklPbUpRblllVUU1Tm55a3FqODZjM1BtYmZIcnFDNkpjVEwyWlRQM3BjeXFsNUR1NkRHTm9LQUpPSE5JQ1BRUjhCQUJDNmRHN3J4dW5CZEdjT1hITXpDYmZFaHBacDlV0gGyAUFVX3lxTE9Zekp2Mlk3UE9WZDdvVko1ZWY1UThsVVVTNnZBNkhQY0F4WFJzd2tXczdlZmJ4UWR5QnVmc1dseTRxWl9hanZYMXJobnlvbkt3YWt6QnhISGtaenpRNWo3MFdDQnVlOFRaeVl1NGRYZmFHcTdyZnZ3VTFMTF9FY0w2d296d3NJWkktdG9EcG5WMUNtY25EVmhFajhBTHFBWVBaWXZjdlNQbFFsUVlIaks1bmc?oc=5"
-    },
-    {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Catholic governance and a community of equals - ABC Religion & Ethics",
+      "t": "Book highlights abuse UK child migrants endured in WA",
       "d": "",
-      "date": "Wed, 23 Sep 2026 07:02:11 GMT",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPVnFwcnd5LXFWeFNfRW5TdFV1UnQtVjhqN1hVcGVvc2lxck1pT3NFUzdNWFcyV1VfYjVSNFJVWnZpRzB3QkNRM3lJc0lPREtOTmdqZVpLZ3NpdDZqRnYxc3FoUkhidFdycFNSQzFtNk1zRWlSVTliNEJvMDNZQmdROXFtd2d4cUtRRDZZdEh6WE0zbDY1TEVaUmJMVHNvZzdIdWYtRlZ6aw?oc=5"
+      "date": "Wed, 16 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNQ2V4SWZXdFllLXVFeGlCWDZnSldJa0pRTklYWE52ZDcwNjNQeExEaTlYUk9TeWg2T1hlRE9heVpSelJlRDRKeWNLLWdHanplbVdhM3BnMFhVOE9tV1VVQk85NUJlSzV3TWNDbXJTTXFqQl9VTTVvbnV5QVNDOGdVQmZtdVcxVGpnWHlpZnE3UW9jUHA5YTNlUjk0bzZETnNa?oc=5"
     }
   ]
 }
