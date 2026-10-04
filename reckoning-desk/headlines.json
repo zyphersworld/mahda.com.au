@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-04T00:28:09.219Z",
+  "builtAt": "2026-10-04T06:13:18.923Z",
   "count": 12,
   "items": [
     {
@@ -10,11 +10,11 @@
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOajNYTk8tVnNfdy1QbHBVaXJFb0FvY09KTUN2RU56SlZhdlVFUGJMV3RyczFUdnNPemUxUEIybXdtM0hwZEJQUDhNejhTcGF2ZzY2Z294c2J0M01jRENUM2tCVzg3NWdHa1diRzliNndSQVdBclo4YUFuUXppc0RxQVhwaUFGVlBpUndfZW00SGxfM01VY011aWpwb1dlMnZMRm5zN1RNTDk5Ymc?oc=5"
     },
     {
-      "src": "thewest.com.au",
-      "t": "Court freezes payouts to Christian Brothers abuse survivors",
+      "src": "The West Australian",
+      "t": "WA Government to draft abuse survivor compensation rules",
       "d": "",
-      "date": "Fri, 04 Sep 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLUNCMXY1SEk2ak9KZzItS3oxcWliZmRCYnowdEtoc1RpZm9IcFBlbW5ibUhxN3FST2pMQzJ0eXo5eFhvRmltc2drSmZQMGo2dHJoRTZRTXgzN05wQjVjYzdjZUJRTTJRQl9OYXZIVGNBWG1yUkRYR2wxVmtKUlg4OGMzY05SS2lQelQ3TkJXWHNVbmZTMUR6WVZTNkdZUDBOQ3h4emRHOExQUWlRSUFYeUNhaGFnVXJubGh2QVQtX2dpTkgtOVVlcGI3YWRFWnBiR0lnY0ZrTlU2dw?oc=5"
+      "date": "Tue, 08 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQMlB0bjlOam4yUHMwbFdIRnhycFZIMUNsWG96VFAxMjRMZXdRNWp2YlRSeVhQQThVWjUzd283M0VrQkI0S0RGQy0xUGc5Y3pwa2ZLNzdjWjMzNU1FQUpEeDhmU1Z0LXpDRUFKaUhfWE9hYnh5aGgtSXpJSzBHNjBobGNFYy1qNk9QNU5Yejd1MGZTVmh1RDFCb3lNZlRmaWlYRTlpVFA0WXo3ZUw3Qm9MVkN0RWZBRWU0b0sydFRERmw3M0R5M2Y1VW1WOEJUa2lmVnd0V3gtZnFHV0pZRy13VnBiRG43endKckNJQ0o3endaVXdvRUJkeF9R?oc=5"
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
@@ -38,6 +38,13 @@
       "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxPSXhKUnFJUl9HQVNGZkpyS1BRc0xJSnNBc1ZOUjZwc0RFcUUzMzRELTdBSU1YVThFcU1yT21SdmhqMWRyYmJIVFJud3RKanRlWnAzSjlqM0lBaG9NVHpvQU1wc0hSQmlTM2pQVEc1Qm4yYm8tdV9UOXBLTE9MbHpBcHdLOGlVOERuX090ZXB1SlBoRDNPNnozR1JMa2d6NGVHNVpuOUtleG1YZEljY1AwZzVBdHdYRWF4M2xiaUw2dGpxbzZWb1lKZFJNb21LdV9VTjY0aDBOZHVveHM4WFVJTVVWZm8wM0pnTENsZmRMQTlnZW8?oc=5"
     },
     {
+      "src": "The West Australian",
+      "t": "Court freezes payouts to Christian Brothers abuse survivors",
+      "d": "",
+      "date": "Fri, 04 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQLUNCMXY1SEk2ak9KZzItS3oxcWliZmRCYnowdEtoc1RpZm9IcFBlbW5ibUhxN3FST2pMQzJ0eXo5eFhvRmltc2drSmZQMGo2dHJoRTZRTXgzN05wQjVjYzdjZUJRTTJRQl9OYXZIVGNBWG1yUkRYR2wxVmtKUlg4OGMzY05SS2lQelQ3TkJXWHNVbmZTMUR6WVZTNkdZUDBOQ3h4emRHOExQUWlRSUFYeUNhaGFnVXJubGh2QVQtX2dpTkgtOVVlcGI3YWRFWnBiR0lnY0ZrTlU2dw?oc=5"
+    },
+    {
       "src": "The Irish Times",
       "t": "Survivors experience Christian Brothers’ litigation strategy as abuse by other means",
       "d": "",
@@ -59,13 +66,6 @@
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPbHF5MlZQdEtjZmVUeWs4WG1TVGNsVnc4WXZ0X3RtVkh2LW1JTDhTNXFVNlRic2FaX2prZmlKb2dSVzIwb21qVDREUHc0SFlIMngtU2x5STgzYjNYX3dnS2JnVWFTTDVHRlFSVTNZWFBPNl9qSHFtWUpQbTVBakVpbVlCRXZVWlZBTDU3dzI1WkxyVmMyR2FIRFNqN3dyOS1qWnlGUUphZ2dhcVk0Tk8tZ1RTbVVwblNwZGRWdmowaFR2ajQ?oc=5"
     },
     {
-      "src": "The Church Times",
-      "t": "World news in brief",
-      "d": "",
-      "date": "Fri, 21 Aug 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPVVJsRktDMHA4LTBJam1ub3FTS1pjTVVnTHlDdjl5eGhLbnVwQ0NtY0t0QUlZZVI3bEpjTDVHbkpkZTRJaVI3end5SDVXbFp5ZGZ4WlJ3Mm1mUmVnSEJ6eGhfTXhZNlNaZngzeWxsVG15NlVWQ2tqSDhQV1RKVl9rZFRONXdVbjQ2UzdDNA?oc=5"
-    },
-    {
       "src": "ABC iview",
       "t": "Four Corners: S2026 Christian Brothers Inc. Four Corners",
       "d": "",
@@ -73,18 +73,18 @@
       "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBGUWZTY2dqQXIxS24temRQNjNQU0poNmFoaTlUYTcxWU5UYVVYWC03ODNkTGh3TkVlZUYtYlNHQkg5V1FqUFJGVTg2b0x2dmU3UHF6V0c0cDh4bFR2Q3lmelAwWk81bFktTENuR2ktOFd6ckVibWxuY0pXU09RT28?oc=5"
     },
     {
-      "src": "thewest.com.au",
-      "t": "Running on the power of seeking justice",
-      "d": "",
-      "date": "Fri, 28 Aug 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQODZXX0dtU3M2aWZzOTNpQ2lrRXBsVHVWeklUYW5YS0J0bFVEZkswRl9pM2JVbHpfd0tOTzdZU0lSUjZhQVdMVEdXRzJzQTktTmZjY0FsM3c5eU1ZVER6bXNYX3VZS0VyNDNuTDJUZmRJQVZ5YnJTNW96REFKZnNMU25XTklNYnlIRnhaNjZtQVJkTHdINm9jYXNRUGIyZC1pWFczWGJQdDIzdDRISGJfazJrWXo1dFA2RHJENVZmazhzQmtyN0hXSGlDbGZsanFsbTFKdFNEMkZ6UXRBM295eVRSS1B0Vzlq?oc=5"
-    },
-    {
       "src": "The Irish Times",
       "t": "State’s newest Irish language school eyes ex-Christian Brothers monastery next door",
       "d": "",
       "date": "Fri, 18 Sep 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOOVpzajJjMEpZaEo1czhNanN4TUM0UzVoRmhrWFduTGlDdkNGcFVfMGZyYm56bEN4YWVud0VBMlhUdGlIX1hnXzVjQThJOW5EamdNSFZxV0tVdjlrQmtCWlpVbVFKenlDT0pfSTZ2UWpfc3B4WDRFc2MtR3lLUlJTZTU1UkRNeDRMOUVMSHQ4Vy1DQkZTZnBrUzh3RkxYdUJYSkJEZ1pvNDA2alctSUZCMWc1SU1oZEtQaHBXb1RsR1lIMi1kTXlCSXhlTlJ4YmlIQzkyY1F3?oc=5"
+    },
+    {
+      "src": "The West Australian",
+      "t": "Running on the power of seeking justice",
+      "d": "",
+      "date": "Fri, 28 Aug 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQODZXX0dtU3M2aWZzOTNpQ2lrRXBsVHVWeklUYW5YS0J0bFVEZkswRl9pM2JVbHpfd0tOTzdZU0lSUjZhQVdMVEdXRzJzQTktTmZjY0FsM3c5eU1ZVER6bXNYX3VZS0VyNDNuTDJUZmRJQVZ5YnJTNW96REFKZnNMU25XTklNYnlIRnhaNjZtQVJkTHdINm9jYXNRUGIyZC1pWFczWGJQdDIzdDRISGJfazJrWXo1dFA2RHJENVZmazhzQmtyN0hXSGlDbGZsanFsbTFKdFNEMkZ6UXRBM295eVRSS1B0Vzlq?oc=5"
     }
   ]
 }
