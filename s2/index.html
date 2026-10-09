@@ -2988,12 +2988,12 @@ function startEvent(sess) {
     const c = newCar(def, isP, isP ? state.tyres.brand : undefined); cars.push(c); c.ref = e.ref || null;
     if (isP) player = c;
     c.skill = e.skill != null ? clamp(e.skill + sr(-.008, .008), .8, .97) : sr(.85, .94) - k*.003; c.pref = [-4.2, -1.2, 2.2, 4.8][(Math.random()*4)|0];
-    if (laps) { const row = (k/2)|0, lane = k % 2 ? 3.2 : -3.2, s0 = startS - row*9.5; c.lane = lane; placeCar(c, s0, lane, pace); if (s0 < 0) c.laps = -1; }   // rows still short of the line are a lap down until they cross it
+    if (laps) { const row = (k/2)|0, lane = k % 2 ? 3.2 : -3.2, s0 = startS - row*9.5; c.lane = lane; c.row = row; placeCar(c, s0, lane, pace); if (s0 < 0) c.laps = -1; }   // rows still short of the line are a lap down until they cross it
     else if (race.qual) placeCar(c, 24, 0, 12);
     else placeCar(c, L - 70, 0, 14);
   });
   if (REPLAY.playing) stopReplay(); REC.ring.length = 0; REC.race.length = 0; REC.events.length = 0; REC.raceNext = 0; REPLAY.lastCrash = null; hideOffer();
-  race.pace = pace; race.leader = cars[0]; if (laps) paceLead(startS + 24, 0, pace, true); else pacePark(); addDriverArms(player); applySetupVisual(); resetSurface(); for (const g of GATES) g.target = 0;
+  race.pace = pace; race.formS = startS; race.leader = cars[0]; if (laps) paceLead(startS + 24, 0, pace, true); else pacePark(); addDriverArms(player); applySetupVisual(); resetSurface(); for (const g of GATES) g.target = 0;
   state.screen = 'race'; state.paused = false; state.cam = (state.cam || 0) % CAMS.length; CAMQ.reset = true; CAMQ.snap = true; setCamChip();
   $('title').style.display = 'none'; $('results').style.display = 'none'; $('pause').style.display = 'none'; $('night').style.display = 'none'; $('hud').style.display = 'block';
   $('touch').style.display = matchMedia('(pointer: coarse)').matches ? 'block' : 'none';
@@ -3095,9 +3095,12 @@ function stepAI(c, dt) {
     c.spinT -= dt; c.v = Math.max(0, c.v - 16*dt); c.kick += c.spinDir * dt * (2.2 + c.v*.08); c.latV += dt * 1.5;
     if (c.v < .5 && c.state === 'run') { c.state = 'stalled'; c.outT = race.t; c.spinT = 0; queueCaution(c); }
     target = c.d; vT = 0;
-  } else if (c.finished || race.state === 'formation') {
-    target = c.finished ? HW - 2 : c.lane;
-    vT = c.finished ? 15 : race.pace;
+  } else if (c.finished) { target = HW - 2; vT = 15;
+  } else if (race.state === 'formation') {
+    // two by two: each car holds its row's spot along the track. In the turns the outside lane is longer, so the outside car has to
+    // run faster than the inside one to stay level with it: speed in its own lane = pace x (1 + curvature x offset), plus a correction
+    target = c.lane; let e = (race.formS - (c.row || 0) * 9.5) - c.s; e = ((e + L/2) % L + L) % L - L/2;
+    vT = Math.max(0, race.pace * (1 + q.k * c.d) + clamp(e * .9, -5, 5));
   } else {
     // traffic
     let bd = 1e9, bv = 0, bdd = 0;
@@ -3118,9 +3121,7 @@ function stepAI(c, dt) {
     { const over = c.v - vBase * 1.03; if (over > 0 && q.corner > .2) { c.latV += over * 1.1 * q.corner * dt; if (c.err && c.err.type === 'hot' && !c.incCause) c.incCause = `overcooked ${turnName(c.s)}`; } }   // too quick for the grip: slides up the track
     if (bd < 7 && bv < c.v) vT = Math.min(vT, bv + bd*.35);
     const haz = c.hazard != null; if (haz) { vT *= c.hazard; c.hazard = null; }
-    if (race.caution) {   // under yellow: single file behind whatever is ahead, closing up to ten metres, the pace ute at the front
-      const F = cautionGap(c); vT = Math.min(vT, F ? clamp(F.v + (F.gap - 10) * .8, 0, 24) : 16);
-      if (!haz) { c.passT = 0; target = PACE.on || PACE.st === 'merge' || PACE.st === 'stage' ? -2.2 : c.d; } }
+    if (race.caution) { const S = cautionSlot(c); vT = Math.min(vT, S.v); if (!haz) { c.passT = 0; target = S.d; } }
   }
   if (c.v < vT) c.v += 12 * (1 - c.v/62) * dt; else c.v = Math.max(vT, c.v - 20*dt);
   c.d += clamp(target - c.d, -2.6*dt, 2.6*dt) + c.latV*dt; c.latV *= Math.exp(-2.8*dt); if (!(c.spinT > 0)) c.kick *= Math.exp(-3*dt);
@@ -3429,7 +3430,7 @@ function placeAtTail(c) {
 function retireCar(c) { c.dnf = true; c.state = 'dnf'; c.mesh.visible = false; for (let k = debris.length - 1; k >= 0; k--) if (debris[k].owner === c) { const o = debris[k].obj; if (o.parent) o.parent.remove(o); debris.splice(k, 1); } }
 function handleWrecks() {
   if (race.pending && race.t >= race.pending.t) {   // three seconds after the incident: yellow flag (and the replay)
-    const pc = race.pending.car; race.pending = null; race.caution = { car: pc, auto: true }; race.flag = 'yellow'; paceDeploy();
+    const pc = race.pending.car; race.pending = null; race.caution = { car: pc, auto: true, t0: race.t }; race.flag = 'yellow';
     flash('Caution', pc.isPlayer ? 'You\'re in trouble!' : `${pc.num} ${pc.name} ${pc.incCause || 'is in trouble'}`, 2600, 'yellow');
     if (state.replayMode === 'auto') startReplay(pc); else if (state.replayMode !== 'off') offerReplay(pc);
   }
@@ -3443,18 +3444,27 @@ function handleWrecks() {
     } else retireCar(c);
     if (C && C.car === c) race.restartT = race.t + 4.5;
   }
-  if (C && race.restartT && race.t >= race.restartT) { race.restartT = 0;   // track clear: the ute pulls off after turn two, the leader brings them to the line
-    if (PACE.on || PACE.st === 'merge' || PACE.st === 'stage' || PACE.st === 'out') { C.go = true; PACE.exitAt = true; flash('Pace car in this lap', 'Single file. Green at the line.', 2200, 'yellow'); }
-    else greenRestart(); }
-  if (C && C.go && C.paceOff) C.armed = true;
+  // track clear and the field back in racing order (or half a minute gone): green next time the leader reaches the line
+  if (C && race.restartT && race.t >= race.restartT && !C.armed && (cautionFormed() || race.t - race.restartT > 30)) { C.armed = true; flash('Green next lap', 'Single file in racing order. Green at the line.', 2200, 'yellow'); }
 }
-function greenRestart() { race.caution = null; race.restartT = 0; race.flag = race.white ? 'white' : 'green'; PACE.exitAt = true; flash('Green, green, green', 'Back racing', 1700, 'green'); AudioSys.cheer(.25, 3); }
+function greenRestart() { race.caution = null; race.restartT = 0; race.flag = race.white ? 'white' : 'green'; flash('Green, green, green', 'Back racing', 1700, 'green'); AudioSys.cheer(.25, 3); }
+// under yellow every running car has a spot in the line: ten metres per place behind the leader, in racing order. A car short of its spot
+// moves up through the middle lane, a car past it (a lapped car, say) pulls up the track and slows to let the line by; the rest hold the bottom.
+function cautionOrder() { const C = race.caution; if (C.ordT !== race.t) { C.ord = standings().filter(o => o.state === 'run' && !o.dnf && !o.finished); C.ordT = race.t; } return C.ord; }
+function cautionErr(c, ord) { const i = ord.indexOf(c); if (i <= 0) return 0; let e = (ord[0].s - i * 10) - c.s; return ((e + L/2) % L + L) % L - L/2; }
+function cautionSlot(c) {
+  const ord = cautionOrder(), e = cautionErr(c, ord);
+  if (ord.indexOf(c) <= 0) return { v: 15, d: -2 };
+  if (e < -6) return { v: 9, d: 4.2 };
+  if (e > 6) return { v: clamp(15 + e * .5, 15, 24), d: 1.2 };
+  return { v: clamp(15 + e * .8, 8, 22), d: -2 };
+}
+function cautionFormed() { const ord = cautionOrder(); return ord.every(c => Math.abs(cautionErr(c, ord)) < 8); }
 
 /* ============================ PACE UTE ============================
    The Premier Speedway pace ute leads the formation lap and pulls off into the infield chute on the back straight,
-   after turn two; the green flies when the leader reaches the line. Under yellow it comes back out of the chute ahead
-   of the leader, the field forms up single file behind it, and when the track is clear it pulls off after turn two
-   again and the leader brings them back to the green. Parked in the chute the rest of the time. Six draw calls. */
+   after turn two; the green flies when the leader reaches the line. Parked in the chute the rest of the time (cautions
+   are run without it: the field re-forms in racing order). About ten draw calls. */
 const PACE = { mesh: null, st: 'park', s: 0, d: -2.2, v: 0, x: 0, z: 0, h: 0, u: 0, len: 1, curve: null, end: 'B', exitAt: false, after: null, on: false, t: 0 };
 function paceTex() {   // tub-side signage: 4.9 m by half a metre, so a long, low strip
   return ctex(2048, 224, (g, w, h) => {
@@ -3504,14 +3514,6 @@ function pacePark() {
   PACE.x = P[0]; PACE.z = P[1]; PACE.h = Math.atan2(-C.u[1], -C.u[0]); paceLights(false); paceMesh(0);
 }
 function paceLead(s, d, v, exitAt) { if (!PACE.mesh) buildPace(); Object.assign(PACE, { st: 'track', on: true, s: wrapS(s), d, v, exitAt, x: 0, z: 0 }); paceMesh(0); }
-// yellow: drive out of the chute at whichever end the leader reaches next with room to spare, wait there, pull out ahead of him
-function paceDeploy() {
-  if (!PACE.mesh) buildPace(); if (PACE.on || PACE.st === 'out' || PACE.st === 'stage') { PACE.exitAt = false; return; }
-  const ld = standings().find(c => c.state === 'run' && !c.dnf) || cars[0], ls = ld ? ld.s : 0, ahead = e => { let g = e - ls; while (g < 0) g += L; return g; };
-  const gB = ahead(CHUTE.sB * L), gF = ahead(CHUTE.sF * L); PACE.end = (gB > 70 && (gB < gF || gF <= 70)) ? 'B' : 'A';
-  const C = chuteEnds(), E = PACE.end === 'B' ? C.B : C.A, ui = PACE.end === 'B' ? C.u : [-C.u[0], -C.u[1]];
-  PACE.stage = [E[0] + ui[0] * 11, E[1] + ui[1] * 11]; PACE.st = 'out'; PACE.exitAt = false; PACE.v = Math.max(PACE.v, 2);
-}
 function paceStep(dt) {
   const P = PACE; if (!P.mesh) return; P.t += dt;
   if (P.st === 'park') return;
@@ -3520,7 +3522,7 @@ function paceStep(dt) {
     const sOld = P.s; P.s = wrapS(P.s + P.v * dt); P.d += clamp((race && race.state === 'formation' ? 0 : -2.2) - P.d, -1.5 * dt, 1.5 * dt);
     const sx = CHUTE.sB * L - 26, toX = ((sx - sOld) % L + L) % L; if (P.exitAt && toX <= P.v * dt + .01) {   // pull off after turn two
       const C = chuteEnds(); P.curve = bez(xz(P.s, P.d), xz(CHUTE.sB * L - 1, -HW + .6), [C.B[0] + C.u[0] * 13, C.B[1] + C.u[1] * 13]); P.u = 0; P.st = 'exit'; P.on = false;
-      if (race && race.caution) race.caution.paceOff = true; }
+ }
     const p = posAt(P.s, P.d), q = tsample(P.s); P.x = p[0]; P.z = p[2]; P.h = Math.atan2(q.tz, q.tx); paceMesh(dt, p[1]); return;
   }
   if (P.st === 'exit' || P.st === 'merge') {
@@ -3550,19 +3552,13 @@ function paceMesh(dt, y) {
   else { G.rotation.x = 0; G.rotation.z = 0; }
   if (P.st !== 'park') { if (!P.lit) P.lit = true; const ph = (P.t * 2.6) % 1, on0 = ph < .5; for (let k = 0; k < 2; k++) { const on = (k === 0) === on0, a = P.amb[k]; a.m.emissiveIntensity = on ? 2.4 : .08; a.sp.material.opacity = on ? .9 : 0; } }
 }
-// gap to whatever is physically ahead under yellow: another car or the pace ute
-function cautionGap(c) {
-  let bg = 140, v = null;
-  for (const o of cars) { if (o === c || o.state !== 'run' || o.dnf || o.spinT > 0) continue; let ds = o.s - c.s; if (ds < 0) ds += L; if (ds > .5 && ds < bg) { bg = ds; v = o.v; } }
-  if (PACE.on) { let ds = PACE.s - c.s; if (ds < 0) ds += L; if (ds > .5 && ds < bg) { bg = ds; v = PACE.v; } }
-  return v == null ? null : { gap: bg, v };
-}
 
 /* ============================ RACE LOOP ============================ */
 function updateRace(dt) {
   race.t += dt; paceStep(dt);
   readInput(dt);
   if (race.state === 'formation') {
+    race.formS = wrapS(race.formS + race.pace * dt);
     stepCars(dt); collide(); handleWrecks();
     const ld = race.leader;
     if (ld.prevS > L*.75 && ld.s < L*.25) {           // pole car hits the line: green
