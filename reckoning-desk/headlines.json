@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-20T22:06:32.016Z",
+  "builtAt": "2026-10-21T00:45:26.103Z",
   "count": 12,
   "items": [
     {
@@ -15,6 +15,13 @@
       "d": "",
       "date": "Tue, 08 Sep 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQMlB0bjlOam4yUHMwbFdIRnhycFZIMUNsWG96VFAxMjRMZXdRNWp2YlRSeVhQQThVWjUzd283M0VrQkI0S0RGQy0xUGc5Y3pwa2ZLNzdjWjMzNU1FQUpEeDhmU1Z0LXpDRUFKaUhfWE9hYnh5aGgtSXpJSzBHNjBobGNFYy1qNk9QNU5Yejd1MGZTVmh1RDFCb3lNZlRmaWlYRTlpVFA0WXo3ZUw3Qm9MVkN0RWZBRWU0b0sydFRERmw3M0R5M2Y1VW1WOEJUa2lmVnd0V3gtZnFHV0pZRy13VnBiRG43endKckNJQ0o3endaVXdvRUJkeF9R?oc=5"
+    },
+    {
+      "src": "AFR",
+      "t": "Christian Brothers’ $25m headquarters up for sale amid collapse",
+      "d": "",
+      "date": "Mon, 19 Oct 2026 23:21:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNWUVCc3pWQlZ3X3Z1d3pSQUFKaS1RYnVGTlVFbGYwOVJwX29oQWhiMFktSnhWbzlDRkljeDFWcWYzaUhjdXlnQ1p3clhSdjl6dWZFNFFDcDh5UDItamQ3dXdVX2lMYTZjUmtmWTUxY0NtR2lHTGo4dU1SUWttVC16ZDhnaFFycTFpV0Z4T0JpYjNpN2lxT055cWVMRFE1VVNkNjJqRDJ1eUM4SGhlSGhibzF4NkJSTndR?oc=5"
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
@@ -52,18 +59,18 @@
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPV0FoYmVGcE1UQjZWSDdZQVJYSkxPNHZ3ZEFGcm13cTdRcThrN2FiUDIzNk9JemR6SUN6ZGhRQ1A1dnFvNnY2aFozLWdaRTJGcjctQVBaXzVQY0tOay1nUWl0QjBJUEdMRDA5WjhCbHR4enhCV0tob3pURnVrRktvVG1rTkdDajJQUEhwUlZvZzFOTDBi?oc=5"
     },
     {
-      "src": "The Australian",
-      "t": "Survivor sues state over unpaid abuse settlement",
-      "d": "",
-      "date": "Fri, 11 Sep 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxPSXhKUnFJUl9HQVNGZkpyS1BRc0xJSnNBc1ZOUjZwc0RFcUUzMzRELTdBSU1YVThFcU1yT21SdmhqMWRyYmJIVFJud3RKanRlWnAzSjlqM0lBaG9NVHpvQU1wc0hSQmlTM2pQVEc1Qm4yYm8tdV9UOXBLTE9MbHpBcHdLOGlVOERuX090ZXB1SlBoRDNPNnozR1JMa2d6NGVHNVpuOUtleG1YZEljY1AwZzVBdHdYRWF4M2xiaUw2dGpxbzZWb1lKZFJNb21LdV9VTjY0aDBOZHVveHM4WFVJTVVWZm8wM0pnTENsZmRMQTlnZW8?oc=5"
-    },
-    {
       "src": "Real Commercial",
       "t": "Christian Brothers list historic $25m Parkville estate",
       "d": "",
       "date": "Tue, 20 Oct 2026 02:36:51 GMT",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxONHhtOU5teC14dkY5SFJoeFRMVDJjaVV4OUx6Y2VHbW13N1pnSi0xQUlrOF9ENnFVZ1p2bkZzOWdEWVBoQWxhdGtjcHU5Q2tXMXJfWk9nSmlKWTNrWDJ1WWtRWjh3T3FxUVozSjNTOFUxbDlmaEpMZTBzMzhIRDhNcFJLMkZlVDNLQmZScUZER0paZzNjc2pz?oc=5"
+    },
+    {
+      "src": "The Australian",
+      "t": "Survivor sues state over unpaid abuse settlement",
+      "d": "",
+      "date": "Fri, 11 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxPSXhKUnFJUl9HQVNGZkpyS1BRc0xJSnNBc1ZOUjZwc0RFcUUzMzRELTdBSU1YVThFcU1yT21SdmhqMWRyYmJIVFJud3RKanRlWnAzSjlqM0lBaG9NVHpvQU1wc0hSQmlTM2pQVEc1Qm4yYm8tdV9UOXBLTE9MbHpBcHdLOGlVOERuX090ZXB1SlBoRDNPNnozR1JMa2d6NGVHNVpuOUtleG1YZEljY1AwZzVBdHdYRWF4M2xiaUw2dGpxbzZWb1lKZFJNb21LdV9VTjY0aDBOZHVveHM4WFVJTVVWZm8wM0pnTENsZmRMQTlnZW8?oc=5"
     },
     {
       "src": "SMH.com.au",
@@ -78,13 +85,6 @@
       "d": "",
       "date": "Tue, 22 Sep 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPVnFwcnd5LXFWeFNfRW5TdFV1UnQtVjhqN1hVcGVvc2lxck1pT3NFUzdNWFcyV1VfYjVSNFJVWnZpRzB3QkNRM3lJc0lPREtOTmdqZVpLZ3NpdDZqRnYxc3FoUkhidFdycFNSQzFtNk1zRWlSVTliNEJvMDNZQmdROXFtd2d4cUtRRDZZdEh6WE0zbDY1TEVaUmJMVHNvZzdIdWYtRlZ6aw?oc=5"
-    },
-    {
-      "src": "The Catholic Weekly",
-      "t": "Say ‘No’ to telehealth VAD",
-      "d": "",
-      "date": "Thu, 10 Sep 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE85NElVR0RYR3Jfd3d5WVRjbXhrSnNpNlhFbnVWRmRCX3l4ZC1PMkJqLVFaaURXU0NaUXNVZTRJUnFlc25NRE9BMER4aGZFMk5BYVY1MmJHc3I5NkFka2hPdUd2NDFSZw?oc=5"
     }
   ]
 }
