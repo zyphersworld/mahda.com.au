@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-25T21:04:09.886Z",
+  "builtAt": "2026-10-25T23:26:26.667Z",
   "count": 12,
   "items": [
     {
@@ -31,18 +31,18 @@
       "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxPSXhKUnFJUl9HQVNGZkpyS1BRc0xJSnNBc1ZOUjZwc0RFcUUzMzRELTdBSU1YVThFcU1yT21SdmhqMWRyYmJIVFJud3RKanRlWnAzSjlqM0lBaG9NVHpvQU1wc0hSQmlTM2pQVEc1Qm4yYm8tdV9UOXBLTE9MbHpBcHdLOGlVOERuX090ZXB1SlBoRDNPNnozR1JMa2d6NGVHNVpuOUtleG1YZEljY1AwZzVBdHdYRWF4M2xiaUw2dGpxbzZWb1lKZFJNb21LdV9VTjY0aDBOZHVveHM4WFVJTVVWZm8wM0pnTENsZmRMQTlnZW8?oc=5"
     },
     {
-      "src": "Real Commercial",
-      "t": "Christian Brothers list historic $25m Parkville estate",
-      "d": "",
-      "date": "Tue, 20 Oct 2026 02:36:51 GMT",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxONHhtOU5teC14dkY5SFJoeFRMVDJjaVV4OUx6Y2VHbW13N1pnSi0xQUlrOF9ENnFVZ1p2bkZzOWdEWVBoQWxhdGtjcHU5Q2tXMXJfWk9nSmlKWTNrWDJ1WWtRWjh3T3FxUVozSjNTOFUxbDlmaEpMZTBzMzhIRDhNcFJLMkZlVDNLQmZScUZER0paZzNjc2pz?oc=5"
-    },
-    {
       "src": "SMH.com.au",
       "t": "Church victim accused of having ‘credibility of $3 note’ gets $2.2 million",
       "d": "",
       "date": "Sat, 10 Oct 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOR0oydmpqdmJfSEVpbU5WUlFTVnNUTnNkc04xd0lWUjZWazg1RWF5eVcwNzlVQS02M1NIdGlYb2pheU5FQW51QTl3WTc4RUhoMDVnUTRFUksweTh1NlIxV0RCSmsyaDhkX19nZFBNc2dxbkF5UDA5a2wyTkEtdlNhSmNEX2REM18ydlFYVEZMcFZwZUJWSUpEaG1KM2o4VXFXZTRTVkJOVVQ5WXVMaHVyQ01INkVXNDd2SkJJVGZqUjhUTlRHdHNuLU5CU1E?oc=5"
+    },
+    {
+      "src": "Real Commercial",
+      "t": "Christian Brothers list historic $25m Parkville estate",
+      "d": "",
+      "date": "Tue, 20 Oct 2026 02:36:51 GMT",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxONHhtOU5teC14dkY5SFJoeFRMVDJjaVV4OUx6Y2VHbW13N1pnSi0xQUlrOF9ENnFVZ1p2bkZzOWdEWVBoQWxhdGtjcHU5Q2tXMXJfWk9nSmlKWTNrWDJ1WWtRWjh3T3FxUVozSjNTOFUxbDlmaEpMZTBzMzhIRDhNcFJLMkZlVDNLQmZScUZER0paZzNjc2pz?oc=5"
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
@@ -66,6 +66,13 @@
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPd3B5Y3lJZ3pQYTlnMTlxZzU1TW5ZajgyejM3MW45NFprZWRpVG1LdDZnSHA4R1NOZU93VTI3X0ZRbl9XUDNMbDMwcnNjX2hEaHo2V2ZONGl1YnY2MmJyUEZnVnJrTDNjZ080d21ab1lNUkhud29xZUdFcnVpZFNoNnlWVnA5eWtPT3lRLURBUE1hMm04OThEOUlTUmVTNnhtWHF3?oc=5"
     },
     {
+      "src": "Yahoo",
+      "t": "Christian Brothers College High School president resigns",
+      "d": "",
+      "date": "Sat, 24 Oct 2026 10:11:41 GMT",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQaUhVRnBXbDVxbUVEaVlhNEN5TU03TE56czhDVGlRaS1GSzN1bUFsVU1Dd0h4M3ZzWjRGM21BWXZ5QUJTbGk1Y3NWejhaTkJzaXpDdHctSmRqY0dwajRiZmYwWXdTc1FQaDJDdVBBWjdVQmhyLUpWeW1NOWw5T2czRGFMNGRYbTc2MTR6c2lxaXZ0VTQ?oc=5"
+    },
+    {
       "src": "The Irish Times",
       "t": "State’s newest Irish language school eyes ex-Christian Brothers monastery next door",
       "d": "",
@@ -73,18 +80,11 @@
       "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOOVpzajJjMEpZaEo1czhNanN4TUM0UzVoRmhrWFduTGlDdkNGcFVfMGZyYm56bEN4YWVud0VBMlhUdGlIX1hnXzVjQThJOW5EamdNSFZxV0tVdjlrQmtCWlpVbVFKenlDT0pfSTZ2UWpfc3B4WDRFc2MtR3lLUlJTZTU1UkRNeDRMOUVMSHQ4Vy1DQkZTZnBrUzh3RkxYdUJYSkJEZ1pvNDA2alctSUZCMWc1SU1oZEtQaHBXb1RsR1lIMi1kTXlCSXhlTlJ4YmlIQzkyY1F3?oc=5"
     },
     {
-      "src": "localmemphis.com",
-      "t": "Christian Brothers University athletic affiliation application approved by NAIA",
+      "src": "American Center for Law and Justice",
+      "t": "ACLJ Urges UN To Act in Case of Christian Brother Who Is Facing Execution by Hanging After Pakistan Supreme Court Upholds Death Sentence",
       "d": "",
-      "date": "Mon, 28 Sep 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQM3hnQ01qUW5OZmQ5YXoyX2hJWXhaT3A5ZDY4eFMyUHBYLW96c2xqNEtqNVlwLXE2RHVnb2NfenA4VFlSd090em9BYm1GUEhwUlFqQU9NUWItekNaaURYWnhMeUNSSENGNE5rNldOVW5ZN0hocTlqb3RlemlXR1JwbzFucnBZaXNwVXBwODlseXVSellVUjlTYnBaQnQ4VkJWcFRmLWxLUFB1S2gydndES1JDOXk1R1JwOHlQUEpOMENaMS0tRGpUX0hhU2xxYTVCZmZpaWwtZGYtWmlVZlU3VDlUR3VRSzNXTEhkcTJZc25STUlfVjFMTURESUFkQXNvR0ZtaWJpWG4?oc=5"
-    },
-    {
-      "src": "Action News 5",
-      "t": "Friday Football Fever Week 4: Christian Brothers loses heartbreaker in Game of Week and more",
-      "d": "",
-      "date": "Fri, 11 Sep 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNcDk0YS1OWFd2Y1ZCTm95dldGR0dPeTJKRXJMT0dnSGJGOUhGV0s4bmtHZC0tWVZFa3FoWE96UnhjRWZSZWZEV1NqelJVS1BibWRiNWpYd3RBenRscmdFWnVxaVBMbVhjeW9JZ3piSGM3T0NhV2JXM082THFyLUYwVWZZZld3YVIyVUFRX2hOM3hHS2ZoOGhNOHFyUFg1RW5vcmUtTGdRM25zOG1BNmJQS0IxSXJrOWhLLWhrMlp30gHSAUFVX3lxTE1rM3VXdk55bjY2Sk5uSHdTX2FZbTlTbmtUYnJaSnE1X1YxcDNqVTE4dnhRcHhxdk1wTnY2NFlUTmdTRzd0V01zc1ktRzJtaFRJVENUYzBGNHk2THlxbC1fVEN4WEJ6Wnp4dnRTZDVnVDRMb3ZueEVYRTdQOUJER2lXbEFqVW5Mcng2TGgwZGR2b0tzZkI3SUxwZWJObjBpb25Gdno1LVpSbkhTZ0R0bzZwMWRJbW52MGFodUdyaUxxaWh5STF4Smpnc0dfVkt1ZWJjZw?oc=5"
+      "date": "Tue, 20 Oct 2026 17:40:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxNejVDYUNjWnBTazQwdXRmRW00R2dBWFFkN0pseWxnRzB1Zno2S1RwUUhYYlZXU00wdThxTGgzWm1ZSkR0SjJOWmljSi1aSTlBV25QNFZVcnVPX0s1Wk5lSDM5MkJXb3prX0I4QUJtdWVMM1pocVQxT082bHJJa3BJNGNOQWZvUGliTnE3dC1QdWNXS3dUdWQzdkpxNVZZa0x1dDNpR0ljRnBXal96NFZLc1BDTVplS1ZvUkFocE9IcmM2ajdtQ2k1YUxES1F1WlZhdE9SaVcydjdsQjVXUUs4TkUwMTlWSEpHVF8yakI0aXQycjl0ZDdxY2ZfcGNfX0xh?oc=5"
     }
   ]
 }
