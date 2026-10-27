@@ -1,6 +1,6 @@
 {
-  "builtAt": "2026-10-27T15:43:33.176Z",
-  "count": 10,
+  "builtAt": "2026-10-27T20:25:52.210Z",
+  "count": 12,
   "items": [
     {
       "src": "The Catholic Weekly",
@@ -31,25 +31,11 @@
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxONHhtOU5teC14dkY5SFJoeFRMVDJjaVV4OUx6Y2VHbW13N1pnSi0xQUlrOF9ENnFVZ1p2bkZzOWdEWVBoQWxhdGtjcHU5Q2tXMXJfWk9nSmlKWTNrWDJ1WWtRWjh3T3FxUVozSjNTOFUxbDlmaEpMZTBzMzhIRDhNcFJLMkZlVDNLQmZScUZER0paZzNjc2pz?oc=5"
     },
     {
-      "src": "The Age",
-      "t": "Church victim accused of having ‘credibility of $3 note’ gets $2.2 million",
-      "d": "",
-      "date": "Sat, 10 Oct 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOeDJQYjdCOVliWUJJazJEVmhCc1U0VGRiZWNVQjh4cDlnYTdqbFpFZ2tBQ2ZrVTl3c0tDNkpCbUNYbDluYi1aZkpSeFJ3OTVpZGFrUUdocHVRWlpHZ1l5QncxcmxWaUc5QjhQODJ1WThySXEwaWIxeTJjc0ZuSW9uVkhPZGRZVmVCdTJhQ25HX1RqVVNZTl9rYTRPVmhYb09Ud3NlQTZHb0xzMEFkd2ZmdjJGX2lIanc1b1JrVzJUOGN0cGJNYTcwRXlNM3JzTVNI?oc=5"
-    },
-    {
       "src": "ABC iview",
       "t": "Four Corners: S2026 Christian Brothers Inc. Four Corners",
       "d": "",
       "date": "Tue, 27 Oct 2026 09:59:14 GMT",
       "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBGUWZTY2dqQXIxS24temRQNjNQU0poNmFoaTlUYTcxWU5UYVVYWC03ODNkTGh3TkVlZUYtYlNHQkg5V1FqUFJGVTg2b0x2dmU3UHF6V0c0cDh4bFR2Q3lmelAwWk81bFktTENuR2ktOFd6ckVibWxuY0pXU09RT28?oc=5"
-    },
-    {
-      "src": "Survivors Network of those Abused by Priests",
-      "t": "‘Devastating’: Fresno Diocese retirees lose benefits",
-      "d": "",
-      "date": "Tue, 15 Sep 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNbG9abEdqMFpMSXRMbmlZZTA5eHZ0NERCVzVxVHYwVDVObWFpZEhFQ2FXZ3AzaDlzRGZUZFl1RWRCZkVPazFpdXZrSS1OaXhRQ3BmYVBQZUZMS0NvSE5mdUV1QVNra1o4MXFldVlWaU04dTZDaWhsT2NCLTN2NEgzTUplaUlTd1RVclpDVlp3?oc=5"
     },
     {
       "src": "ABC News & Headlines – Australian Broadcasting Corporation",
@@ -59,6 +45,13 @@
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNQ2V4SWZXdFllLXVFeGlCWDZnSldJa0pRTklYWE52ZDcwNjNQeExEaTlYUk9TeWg2T1hlRE9heVpSelJlRDRKeWNLLWdHanplbVdhM3BnMFhVOE9tV1VVQk85NUJlSzV3TWNDbXJTTXFqQl9VTTVvbnV5QVNDOGdVQmZtdVcxVGpnWHlpZnE3UW9jUHA5YTNlUjk0bzZETnNa?oc=5"
     },
     {
+      "src": "The Irish Times",
+      "t": "State’s newest Irish language school eyes ex-Christian Brothers monastery next door",
+      "d": "",
+      "date": "Fri, 18 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOOVpzajJjMEpZaEo1czhNanN4TUM0UzVoRmhrWFduTGlDdkNGcFVfMGZyYm56bEN4YWVud0VBMlhUdGlIX1hnXzVjQThJOW5EamdNSFZxV0tVdjlrQmtCWlpVbVFKenlDT0pfSTZ2UWpfc3B4WDRFc2MtR3lLUlJTZTU1UkRNeDRMOUVMSHQ4Vy1DQkZTZnBrUzh3RkxYdUJYSkJEZ1pvNDA2alctSUZCMWc1SU1oZEtQaHBXb1RsR1lIMi1kTXlCSXhlTlJ4YmlIQzkyY1F3?oc=5"
+    },
+    {
       "src": "localmemphis.com",
       "t": "Christian Brothers University athletic affiliation application approved by NAIA",
       "d": "",
@@ -66,11 +59,32 @@
       "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQM3hnQ01qUW5OZmQ5YXoyX2hJWXhaT3A5ZDY4eFMyUHBYLW96c2xqNEtqNVlwLXE2RHVnb2NfenA4VFlSd090em9BYm1GUEhwUlFqQU9NUWItekNaaURYWnhMeUNSSENGNE5rNldOVW5ZN0hocTlqb3RlemlXR1JwbzFucnBZaXNwVXBwODlseXVSellVUjlTYnBaQnQ4VkJWcFRmLWxLUFB1S2gydndES1JDOXk1R1JwOHlQUEpOMENaMS0tRGpUX0hhU2xxYTVCZmZpaWwtZGYtWmlVZlU3VDlUR3VRSzNXTEhkcTJZc25STUlfVjFMTURESUFkQXNvR0ZtaWJpWG4?oc=5"
     },
     {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Recommendation to extend National Redress Scheme",
+      "src": "YourCentralValley.com",
+      "t": "‘Devastating’: Fresno Diocese retirees lose benefits",
       "d": "",
-      "date": "Wed, 14 Oct 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPd3B5Y3lJZ3pQYTlnMTlxZzU1TW5ZajgyejM3MW45NFprZWRpVG1LdDZnSHA4R1NOZU93VTI3X0ZRbl9XUDNMbDMwcnNjX2hEaHo2V2ZONGl1YnY2MmJyUEZnVnJrTDNjZ080d21ab1lNUkhud29xZUdFcnVpZFNoNnlWVnA5eWtPT3lRLURBUE1hMm04OThEOUlTUmVTNnhtWHF3?oc=5"
+      "date": "Mon, 14 Sep 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPdkpZTUVXOWFmZmcweXdPYmVhYm1jR1hpalI3X0ZERHhpY2lPOGdxSzVIcGJ3TDZpZ2JpaEd0bkQxTDIzSnhJQWZFd0hjd0dHNkkzRUdYT3ZoYTA5ZlBQMzB2TFBrUHJGUjRtNUctdnUyX2s1aUNBYWUxeXF2dGpjM1RHZUZpaXVRbVRuR21ScGtEbVFVbHZycNIBngFBVV95cUxOdzBUR0hsc0JEalgzMDRCNVQtWFhlT3dpb3kwRnhXaHpoQ2hGam1JQnotdEVlX3VzZUJpS3VFbTNsTXFaYlRCTVZqcHpTdmlMOWdyS3pWZklQdFJleE05ZnZoR2ZrdnJRQlJUcVY1RUgzcHF3cnhPaGlKclFCbjJmTDBhWTZDbFRWSV8xVHpXYVd6TFRHSzJsY3NjVG56QQ?oc=5"
+    },
+    {
+      "src": "KRQE",
+      "t": "Fixer in lucrative NCAA basketball betting scheme sentenced to 6 years in prison",
+      "d": "",
+      "date": "Tue, 13 Oct 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPbmV1MkwwM1BWV3owUmNwQkVrUGs2M0ZNb0hyNWxFMFpMNHgwTUNPTlZWQnh0dWJkTlRYeEpsdGlHXzhEWlpoeFV6R2FGMzFfSzkzeVBSZFoyN3B6a3VwTDBDWFl0bG53ckRiYU1iUXM4UnNEZWxxQzVxRTRUazZod3l5Y3BCZG12OGR3LUpJWVVwRzVRY1BxUTRUa0xwMUs5UW05TFZjSVBPbzhCbEpJNVFB0gG3AUFVX3lxTE1tM2k4WVpQc3hkN0o3Y3JyYk1zTmJkeFZuWFk5M0dZY3hnZWRSak5uMUp0NW9SRVkzMmpaRm9zdXNUSl9vdmFpNHJNQlBPaERCQ1E3RmloODk2c1pSNGd6c2E0Y3JBWHpnWV93VHpuQWhrb3pfWnFqUWo3RFlBQ0lpOXBYbTRzVVNDNmNsakZGb1hoYmJkM0cxdEhCdUpUMzJfTXozd2JPbzJWb2taZEgtWl9nQUx3cw?oc=5"
+    },
+    {
+      "src": "American Center for Law and Justice",
+      "t": "ACLJ Urges UN To Act in Case of Christian Brother Who Is Facing Execution by Hanging After Pakistan Supreme Court Upholds Death Sentence",
+      "d": "",
+      "date": "Tue, 20 Oct 2026 17:40:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxNejVDYUNjWnBTazQwdXRmRW00R2dBWFFkN0pseWxnRzB1Zno2S1RwUUhYYlZXU00wdThxTGgzWm1ZSkR0SjJOWmljSi1aSTlBV25QNFZVcnVPX0s1Wk5lSDM5MkJXb3prX0I4QUJtdWVMM1pocVQxT082bHJJa3BJNGNOQWZvUGliTnE3dC1QdWNXS3dUdWQzdkpxNVZZa0x1dDNpR0ljRnBXal96NFZLc1BDTVplS1ZvUkFocE9IcmM2ajdtQ2k1YUxES1F1WlZhdE9SaVcydjdsQjVXUUs4TkUwMTlWSEpHVF8yakI0aXQycjl0ZDdxY2ZfcGNfX0xh?oc=5"
+    },
+    {
+      "src": "WRIC ABC 8News",
+      "t": "Christian Brothers Automotive Brandermill: National Service Day",
+      "d": "",
+      "date": "Thu, 15 Oct 2026 19:00:14 GMT",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQM0hOVXNHWlVlejhWYVdMd21XalI0eGJ3NTJheGFzSkNrZVczOGdCdll1eXJxQUZIVVBVY0FUYTdQN1A2cUI0RnZ4dGRGUzFLWldtMVQ0U2ZINURMM2ViM1MxR0prTDZyNWJ1RnBmMi1WTzJLakhESVVLcGdEaHp6aXJmU19TSUE2akNoSng5SU5PcllCRzRpQTlkNjd1LVRa?oc=5"
     }
   ]
 }
