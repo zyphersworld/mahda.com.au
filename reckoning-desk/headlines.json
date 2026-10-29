@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-29T15:23:56.300Z",
+  "builtAt": "2026-10-29T20:25:51.423Z",
   "count": 12,
   "items": [
     {
@@ -27,7 +27,7 @@
       "src": "Real Commercial",
       "t": "Christian Brothers list historic $25m Parkville estate",
       "d": "",
-      "date": "Tue, 20 Oct 2026 02:36:51 GMT",
+      "date": "Tue, 20 Oct 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxONHhtOU5teC14dkY5SFJoeFRMVDJjaVV4OUx6Y2VHbW13N1pnSi0xQUlrOF9ENnFVZ1p2bkZzOWdEWVBoQWxhdGtjcHU5Q2tXMXJfWk9nSmlKWTNrWDJ1WWtRWjh3T3FxUVozSjNTOFUxbDlmaEpMZTBzMzhIRDhNcFJLMkZlVDNLQmZScUZER0paZzNjc2pz?oc=5"
     },
     {
@@ -52,11 +52,25 @@
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNQ2V4SWZXdFllLXVFeGlCWDZnSldJa0pRTklYWE52ZDcwNjNQeExEaTlYUk9TeWg2T1hlRE9heVpSelJlRDRKeWNLLWdHanplbVdhM3BnMFhVOE9tV1VVQk85NUJlSzV3TWNDbXJTTXFqQl9VTTVvbnV5QVNDOGdVQmZtdVcxVGpnWHlpZnE3UW9jUHA5YTNlUjk0bzZETnNa?oc=5"
     },
     {
+      "src": "Yahoo",
+      "t": "Christian Brothers College High School president resigns",
+      "d": "",
+      "date": "Sat, 24 Oct 2026 10:11:41 GMT",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQaUhVRnBXbDVxbUVEaVlhNEN5TU03TE56czhDVGlRaS1GSzN1bUFsVU1Dd0h4M3ZzWjRGM21BWXZ5QUJTbGk1Y3NWejhaTkJzaXpDdHctSmRqY0dwajRiZmYwWXdTc1FQaDJDdVBBWjdVQmhyLUpWeW1NOWw5T2czRGFMNGRYbTc2MTR6c2lxaXZ0VTQ?oc=5"
+    },
+    {
       "src": "localmemphis.com",
       "t": "Christian Brothers University athletic affiliation application approved by NAIA",
       "d": "",
       "date": "Mon, 28 Sep 2026 07:00:00 GMT",
       "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQM3hnQ01qUW5OZmQ5YXoyX2hJWXhaT3A5ZDY4eFMyUHBYLW96c2xqNEtqNVlwLXE2RHVnb2NfenA4VFlSd090em9BYm1GUEhwUlFqQU9NUWItekNaaURYWnhMeUNSSENGNE5rNldOVW5ZN0hocTlqb3RlemlXR1JwbzFucnBZaXNwVXBwODlseXVSellVUjlTYnBaQnQ4VkJWcFRmLWxLUFB1S2gydndES1JDOXk1R1JwOHlQUEpOMENaMS0tRGpUX0hhU2xxYTVCZmZpaWwtZGYtWmlVZlU3VDlUR3VRSzNXTEhkcTJZc25STUlfVjFMTURESUFkQXNvR0ZtaWJpWG4?oc=5"
+    },
+    {
+      "src": "Fox News",
+      "t": "Pakistan’s top court upholds Christian man’s death sentence for blasphemy",
+      "d": "",
+      "date": "Tue, 27 Oct 2026 14:48:54 GMT",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQNVRLT2NkWkt0dVNFbmdndEhyaHQtWXZpTDFYa3NwZjFMZGZDVUJheUlKN3MyWV9xaDBTNm9YV3JQeEhxN0VIazJGWVZfbV9Za29Ud2tDeXNYMXlYUmFUSDZrdlFGbDVzR1p5RlVCMWZpbWdaMUxCQ1VEWFRCdTFUSHk1czJVOHFRNlZrVTY1VkFSMG51dUhIWUJpdm9Sd9IBowFBVV95cUxOa1ZlQWlXRTMwaV9IUHZHMUxiUGZ3YmZvS0EwOHhOMzdJSTN4WE9RejhsalI4dHJaUXhsTlpDOXNGNXNvMEtsR3lxazdkWVIxUmRvZ2NHeTV6NnJGM1I5bi1UaEVzQXFCQ2FVVEZkSlBmaGxWdEV1anVyOGJWRkdIc0sxeGEzcnZmSlFHNW1Eb0l5YjFxS2Z1RFR0TXBhRWhiXzlF?oc=5"
     },
     {
       "src": "FOX40",
@@ -66,25 +80,11 @@
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPU25SQXllYzlPdXF5a1Q2d1Z1SFFzbnRQM3VXenVIWlZnZW41aHlSSGVRV1l1UlZoc2ItXzluWWNyQ09DQUk0enBPZ1dhbklPbUpRblllVUU1Tm55a3FqODZjM1BtYmZIcnFDNkpjVEwyWlRQM3BjeXFsNUR1NkRHTm9LQUpPSE5JQ1BRUjhCQUJDNmRHN3J4dW5CZEdjT1hITXpDYmZFaHBacDlV0gGyAUFVX3lxTE9Zekp2Mlk3UE9WZDdvVko1ZWY1UThsVVVTNnZBNkhQY0F4WFJzd2tXczdlZmJ4UWR5QnVmc1dseTRxWl9hanZYMXJobnlvbkt3YWt6QnhISGtaenpRNWo3MFdDQnVlOFRaeVl1NGRYZmFHcTdyZnZ3VTFMTF9FY0w2d296d3NJWkktdG9EcG5WMUNtY25EVmhFajhBTHFBWVBaWXZjdlNQbFFsUVlIaks1bmc?oc=5"
     },
     {
-      "src": "American Center for Law and Justice",
-      "t": "Long-Awaited Verdict in the Ayub Brothers Death Row Case: A Day for Celebration and Heartbreak",
+      "src": "NEWS10 ABC",
+      "t": "Christian Brothers Academy to Host Open House for Prospective Students and Families",
       "d": "",
-      "date": "Wed, 07 Oct 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNWDl3eUN1aFJVR3VyWTdwRXMwb1FVdDRJbFJ0c2E0N0JmWV9TMUYtYVhhV25KN2hsSERDN1pVY2hUaEhjdS03WGJXSWJ5SjRxeFJjcmNaY0JhcDNNN2tySFozT1Z6bmoteUxsQjdYeHN1U29YdDNlTTNheFNzRFhNRUVpekU0QW5VLUcxSjlQbTczcDBKSlk2R0JEdHpLWlE4akcyMW81cWNQU0t3Sk1vUU9BbFRWcm1PWDNwbGNWQWc4VnpCYTVv?oc=5"
-    },
-    {
-      "src": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "t": "Recommendation to extend National Redress Scheme",
-      "d": "",
-      "date": "Wed, 14 Oct 2026 07:00:00 GMT",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPd3B5Y3lJZ3pQYTlnMTlxZzU1TW5ZajgyejM3MW45NFprZWRpVG1LdDZnSHA4R1NOZU93VTI3X0ZRbl9XUDNMbDMwcnNjX2hEaHo2V2ZONGl1YnY2MmJyUEZnVnJrTDNjZ080d21ab1lNUkhud29xZUdFcnVpZFNoNnlWVnA5eWtPT3lRLURBUE1hMm04OThEOUlTUmVTNnhtWHF3?oc=5"
-    },
-    {
-      "src": "WSTM",
-      "t": "Hochul signs 3 new laws expanding protections for domestic violence, trafficking survivors",
-      "d": "",
-      "date": "Tue, 27 Oct 2026 20:52:32 GMT",
-      "url": "https://news.google.com/rss/articles/CBMijgNBVV95cUxPNVQtd3A2RzBCVXVPOFpHTVJ5T3FTczUtT1JMd2pzVUtOeDQwZWtTdGVJTEVrek9xQ0gzTXNEODVWSVgtaUFWNkpPN2haUUtKRFZ5a1lKWTN4bkhPNUVPWllTS01yRVRFT05OM3hINHBESG5ieURCanJoOUNVWG1WemtWMUV5Q0NKRXJkMDhTb0FQSHNOTmpVNHJmNVdGREZyWEJmclRBcUR1SWxDZGQ5YVdmZHBsejJGTGhhaDRCSng0bjhSQjE0QU8taDRxVzhRYjM0Z1J0T0ItT3hBUm52R1FDLUQ3TXVyNnpBMjM5UTRHTkJmRDVOYkRrb0M2OXY2ZFNMV0pnVVY4VVlJNk5VOVdDZFRKRTZGLWo5cWpnV09YVWgyNlloUzdrZU12cVJSWHZqMkxqTV9vcUJwWmdNSW1nWVdFbUlvdXU3a0VEdGZKTUJtd0hnN2Fwckc0bXJXVFBBMkQzWXRyUWZPWlpPSldYNkRjXzV2Qnd1MmpNODk0ei1OVUt5OHVjSGdsZw?oc=5"
+      "date": "Tue, 13 Oct 2026 07:00:00 GMT",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOTFJDdGdZbHp3VXRYX3FleGs2Z3RvQUVOVGFoNTRLT3JKRzVJQ3hGMU5IUjUzOFFCOTZDNEpCX3FxdDR2UnVMOHFOY3haLURaTFp2M1lfZVVXNXpxOHp3VWNuNDgxVEg5WnBlN1RtcjhiTHZJZC1TSmJKRGhPUHBHQmZJM0V4Q2U2MkdRdlJjbUN0T3FPenBzNHBoR0RuckNrSDZDSXMzcTlyNTdwb1Z3LUJ1dDlPX3BSdU0tTm5vb9IBxAFBVV95cUxPY1VWN2R1SHF4XzRMaHd1b3V0TFpSMzA5UjNmdjdQSlNSaHdYNS0wMEFsVHhoOHFlNGZYRWNNeTRoT0d0Q2l2VVhySG5nWWZRUDBMdTVfeFVva0tueEN6NEFkYk01a2VkVUZHZzFIQzhvUXZRU25WU1dDTk03MnJWVjV4VmpMOHk0S3V0WTUxaFdzQ1FYY1FTV1RkdTlWT251S2FOX1ptRnBnLXdKQXZjSGJTT2I5ZGF2VGVYZlhUNGUtZTJm?oc=5"
     }
   ]
 }
