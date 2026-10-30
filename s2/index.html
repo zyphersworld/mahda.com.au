@@ -4008,16 +4008,16 @@ function formSpeed(c, q = tsample(c.s)) {
   return race.pushRoll && e > 12 ? Math.min(v, Math.max(lv, tsample(c.s + 12).vp * .8)) : v;
 }
 // the light hand: an autopilot drives the car and your inputs are mixed in at k (0..1)
-function assistInputs(c, dT, vT) {
+function assistInputs(c, dT, vT, hold) {
   const spd = Math.hypot(c.vx, c.vz), q = tsample(c.s + 4 + spd * .3), q2 = tsample(c.s + 3), vh = spd > 3 ? Math.atan2(c.vz, c.vx) : c.h, d = c.loc ? c.loc.d : c.d;
-  let e = Math.atan2(q.tz, q.tx) + clamp((dT - d) * .11, -.32, .32) - vh; while (e > Math.PI) e -= TAU; while (e < -Math.PI) e += TAU;
-  const wdes = -q2.k * spd + e * 3;
+  let e = Math.atan2(q.tz, q.tx) + clamp((dT - d) * (hold ? 0.14 : .11), -.32, .32) - vh; while (e > Math.PI) e -= TAU; while (e < -Math.PI) e += TAU;
+  const wdes = -q2.k * spd + e * (hold ? 2.2 : 3);
   return { st: clamp(-wdes * .5 + (c.w - wdes) * 1.2, -1, 1), th: spd < vT ? 1 : spd < vT + 1.5 ? .3 : 0, br: spd > vT + 5 ? 1 : 0 };
 }
 function assistK() {
   if (!race || !player) return 1;
   if (race.state === 'formation' && race.paceOff) return .25;
-  if (race.assistT0 != null && race.t - race.assistT0 < 3) return .25 + .75 * (race.t - race.assistT0) / 3;
+  if (race.assistT0 != null && race.t - race.assistT0 < 5) { const x = (race.t - race.assistT0) / 5; return .25 + .75 * x * x * (3 - 2 * x); }
   return 1;
 }
 // mixes the autopilot into this step's inputs; returns what to put back afterwards so the input filters stay clean
@@ -4026,7 +4026,7 @@ function assistK() {
 function applyAssist() {
   const c = player, k = assistK(); if (k >= 1 || !c || c.state !== 'run' || c.finished || c.push || race.state === 'formation') return null;
   const P = { st: input.steer, th: input.throttle, br: input.brake }, vT = tsample(c.s + 10).vp * .95; c.formV = vT;
-  const A = assistInputs(c, (c.lane || 0) - P.st * 1.4, vT), hand = clamp((k - .25) / .75, 0, 1);
+  const A = assistInputs(c, (c.lane != null ? c.lane : (c.loc ? c.loc.d : c.d)) - P.st * 1.4, vT, 1), hand = clamp(Math.max(Math.pow((k - .25) / .75, 3), Math.abs(P.st) * 1.5), 0, 1);
   input.steer = clamp(lerp(A.st + P.st * .35, P.st, hand), -1, 1); input.throttle = lerp(A.th, P.th, hand); input.brake = lerp(A.br, P.br, hand) > .5 ? 1 : 0;
   return P;
 }
@@ -7975,6 +7975,22 @@ $('wHint').addEventListener('click', e => { const b = e.target.closest('button[d
   b.addEventListener('click', e => { e.stopPropagation(); tog(); });
   addEventListener('keydown', e => { if (e.code === 'KeyH' && !e.repeat && !/INPUT|TEXTAREA|SELECT/.test((e.target && e.target.tagName) || '') && (state.screen === 'race' || (typeof WASH !== 'undefined' && WASH.on))) tog(); });
   setInterval(vis, 400); vis(); }
+
+/* ---------- v74: a clean launch for your car ----------
+   At the green your car leaves the formation rails for full physics. It used to arrive with its nose a few degrees off its
+   direction of travel (the formation's "nose where it's going") and the tyres snapped it sideways: up to 3 m off its lane in
+   a second. Now it's squared up to the track at the line, and for the first two seconds a fading hand keeps it on its own
+   lane (yaw rate and drift pulled toward holding the line) while you take over. Your steering always wins over it. */
+{ const g0 = goGreen; goGreen = function () { const r = g0.apply(this, arguments); const c = player;
+    if (c && c.state === 'run' && !c.push) { const q = tsample(c.s), spd = Math.hypot(c.vx, c.vz); c.h = Math.atan2(q.tz, q.tx); c.vx = q.tx * spd; c.vz = q.tz * spd; c.w = -q.k * spd; c.slide = 0; c.kick = 0; c.latV = 0; c.yawL = 0; c.launchD = c.loc ? c.loc.d : c.d; c.lane = c.launchD; }
+    return r; }; }
+{ const u0 = updateRace; updateRace = function (dt) { const r = u0(dt); const c = player;
+    if (c && race && race.state === 'green' && c.launchD != null && c.state === 'run' && !c.finished) { const t = race.t - race.greenT;
+      if (t > 4) c.launchD = null; else { const k = (1 - (t / 4) * (t / 4)) * (1 - Math.min(1, Math.abs(input.steer) * 1.6)), q = tsample(c.s), spd = Math.hypot(c.vx, c.vz), d = c.loc ? c.loc.d : c.d;
+        const th = Math.atan2(q.tz, q.tx) + clamp((c.launchD - d) * .1, -.1, .1); let dh = th - c.h; dh -= Math.round(dh / TAU) * TAU;
+        const wT = -q.k * spd + dh * 4; c.w += (wT - c.w) * Math.min(1, k * dt * 14); c.h += dh * Math.min(1, k * dt * 6);
+        const vh = Math.atan2(c.vz, c.vx); let dv = c.h - vh; dv -= Math.round(dv / TAU) * TAU; if (spd > 2) { const nv = vh + dv * Math.min(1, k * dt * 8); c.vx = Math.cos(nv) * spd; c.vz = Math.sin(nv) * spd; } } }
+    return r; }; }
 </script>
 </body>
 </html>
