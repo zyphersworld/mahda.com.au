@@ -1,8 +1,9 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SCREAM Sprintcar Racing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -537,6 +538,7 @@ input[type=range].rng{ -webkit-appearance:none; appearance:none; width:100%; hei
 #tearBtn{ position:absolute; right:calc(16px + env(safe-area-inset-right,0px)); top:40%; display:none; align-items:center; justify-content:center; width:64px; height:64px; border-radius:50%; border:2px solid rgba(255,255,255,.5); background:rgba(10,12,20,.45); color:#fff; font-family:var(--display); font-weight:900; font-size:15px; letter-spacing:.06em; pointer-events:auto; }
 .call-vol{ margin:2px 0 6px; }
 #bye{ z-index:40; background:radial-gradient(ellipse at center, #0d1124, #030409 75%); }
+html,body{touch-action:manipulation}   /* no double-tap zoom on phones */
 </style>
 </head>
 <body>
@@ -658,12 +660,13 @@ input[type=range].rng{ -webkit-appearance:none; appearance:none; width:100%; hei
       <div class="tiles sm" id="callSeg"><button data-v="G" aria-pressed="true"><b>Gavin White</b><small>Track announcer: the start, the race call, the crowd</small></button><button data-v="W" aria-pressed="true"><b>Wade Aunger</b><small>Broadcast: replays, the finish, victory lane</small></button></div>
       <div class="bank call-vol"><label for="callVol">Call volume</label><output id="callVolOut"></output><input type="range" class="rng" id="callVol" min="0" max="200" step="5"></div>
       <div class="bank call-vol"><label for="callDens">Call density</label><output id="callDensOut"></output><input type="range" class="rng" id="callDens" min="0" max="100" step="5"></div>
-      <div class="m-h">Multiplayer <small style="opacity:.6">(early test: see each other on track, no contact yet)</small></div>
+      <div class="m-h">Multiplayer <small style="opacity:.6">(race each other: no contact yet)</small></div>
       <div class="mp-box" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:6px 0 4px">
         <label style="display:grid;gap:3px;font-size:13px">Server<input id="mpUrl" type="text" spellcheck="false" style="padding:7px 9px;border:0;border-radius:6px;background:rgba(255,255,255,.1);color:inherit;font:inherit"></label>
         <label style="display:grid;gap:3px;font-size:13px">Room<input id="mpRoom" type="text" spellcheck="false" style="padding:7px 9px;border:0;border-radius:6px;background:rgba(255,255,255,.1);color:inherit;font:inherit"></label>
         <label style="display:grid;gap:3px;font-size:13px">Your name<input id="mpName" type="text" maxlength="24" style="padding:7px 9px;border:0;border-radius:6px;background:rgba(255,255,255,.1);color:inherit;font:inherit"></label>
         <button class="ghost sm" id="mpBtn" style="align-self:end">Connect</button>
+        <button class="ghost sm" id="mpRaceBtn" style="align-self:end" disabled>Race together</button>
       </div>
       <div style="font-size:13px;opacity:.8;margin-bottom:10px"><span id="mpStatus">Off</span> · <span id="mpPeers"></span></div>
       <div class="m-h">Pre-race music</div>
@@ -777,8 +780,12 @@ input[type=range].rng{ -webkit-appearance:none; appearance:none; width:100%; hei
   <div class="g-top"><button class="ghost" id="wBack">◀ Back</button><h2>WASH BAY</h2></div>
   <div class="w-panel">
     <div class="w-prog"><span>Clean</span><div class="w-bar"><i id="wBar"></i></div><b id="wPct">0%</b></div>
-    <div class="seg w-tools" id="wTools"><button data-v="hose">Pressure hose</button><button data-v="foam">Snow foam</button><button data-v="sponge">Sponge</button><button data-v="brush">Brush</button><button data-v="cloth">Microfibre</button></div>
-    <div class="w-opts"><button class="ghost sm" id="wPanels">Take the panels off</button><button class="ghost sm" id="wEngine">Look at the engine</button><button class="ghost sm" id="wView">Whole car</button><button class="ghost sm" id="wDirty">Muddy it up again</button></div>
+    <div class="seg w-tools" id="wTools"><button data-v="hose">Pressure hose</button><button data-v="foam">Snow foam</button><button data-v="sponge">Sponge</button><button data-v="brush">Brush</button><button data-v="cloth">Microfibre</button><button data-v="garden">Garden</button></div>
+    <div class="w-opts"><button class="ghost sm" id="wPanels">Take the panels off</button><button class="ghost sm" id="wEngine">Look at the engine</button><button class="ghost sm" id="wView">Whole car</button><button class="ghost sm" id="wDirty">Muddy it up again</button><button class="ghost sm" id="wGardenView">The garden</button></div>
+    <div class="w-opts w-env" style="align-items:center;flex-wrap:wrap;gap:6px"><label for="wEnv" style="font-size:13px;opacity:.8">Location</label><select id="wEnv" style="padding:6px 8px;border-radius:6px;border:0;background:rgba(255,255,255,.12);color:inherit;font:inherit"></select>
+      <button class="ghost sm" id="wEnvPhoto">Use my 360° photo here</button><button class="ghost sm" id="wEnvPhotoOff" style="display:none">Back to painted</button><input type="file" id="wEnvFile" accept="image/jpeg,image/png,image/webp" hidden>
+      <span id="wEnvNote" style="font-size:12px;opacity:.75;flex-basis:100%"></span></div>
+    <p class="w-hint" id="wGarden" style="margin-top:4px"></p>
     <p class="w-hint" id="wHint" role="status"></p>
   </div>
 </div>
@@ -3171,7 +3178,7 @@ function carTune() {
 }
 function carTuneTyres(t) {   // tyre choices on top of the chassis setup: all four pressures and sizes, and the grooving
   const Y = state.tyres, slick = state.cond === 'slick', tacky = state.cond === 'tacky', hoo = Y.brand === 'hoosier', G = grooveStats(Y.groove), wet = WX ? WX.rain : 0;
-  const lf = Y.lfPsi ?? 14, rf = Y.rfPsi ?? 17, fr = (lf + rf) / 2, stg = (Y.rrSize ?? 105) - (Y.lrSize ?? 98), fst = (Y.rfSize ?? 75) - (Y.lfSize ?? 74);
+  const lf = Y.lfPsi ?? 14, rf = Y.rfPsi ?? 17, fr = (lf + rf) / 2, stg = (Y.rrSize ?? 105) - ((Y.lrSize ?? 92) > 97.5 ? Y.lrSize - 6 : (Y.lrSize ?? 92)) - 6, fst = (Y.rfSize ?? 75) - (Y.lfSize ?? 74);
   const grooveGrip = 1 + (slick ? G.g * .32 + G.s * .5 : tacky ? -G.g * .1 + G.s * .05 : G.g * .06 + G.s * .15) + G.s * .35 * wet, grooveWear = 1 + G.g * 2.4 + G.s * 1.5;
   t.grip *= (1 + (7 - Y.rrPsi) * .012) * (hoo ? 1.01 : .995) * grooveGrip * (1 - Math.abs(fr - 15.5) * .002);
   t.wear *= Math.max(.3, 1 + (7 - Y.rrPsi) * .07) * (hoo ? 1.1 : .85) * grooveWear;
@@ -3182,8 +3189,8 @@ function carTuneTyres(t) {   // tyre choices on top of the chassis setup: all fo
   t.drag += (7 - Y.rrPsi) * .00005 + Math.max(0, stg - 7) * .00003;
   return t;
 }
-const TYRE_BASE = { brand: 'hoosier', rrPsi: 7, lrPsi: 9, frPsi: 16, lfPsi: 14, rfPsi: 17, lfSize: 74, rfSize: 75, lrSize: 98, rrSize: 105, rrSpace: 2, groove: 'light' };
-function loadTyres() { try { return { ...TYRE_BASE, ...JSON.parse(store.get('scream-tyres') || '{}') }; } catch (e) { return { ...TYRE_BASE }; } }
+const TYRE_BASE = { brand: 'hoosier', rrPsi: 7, lrPsi: 9, frPsi: 16, lfPsi: 14, rfPsi: 17, lfSize: 74, rfSize: 75, lrSize: 92, rrSize: 105, rrSpace: 2, groove: 'light' };
+function loadTyres() { let t; try { t = { ...TYRE_BASE, ...JSON.parse(store.get('scream-tyres') || '{}') }; } catch (e) { t = { ...TYRE_BASE }; } if (t.lrSize > 97.5) t.lrSize -= 6; return t; }   // left rear sizes moved to real circumferences (old saves were 6 up)
 const state = { tyres: loadTyres(), chaseDist: 10, chaseH: 4.3, replayMode: store.get('scream-rp') || 'ask', incidents: store.get('scream-inc') || 'rare', weather: store.get('scream-wx') || 'clear', prep: store.get('scream-prep') || 'fresh', bumpScale: .016, setup: null, cond: 'medium', screen: 'title', mode: 'dusk', event: ['practice', 'quick', 'night'].includes(store.get('scream-ev')) ? store.get('scream-ev') : 'quick', cam: 0, paused: false, shake: 0, color: '#1f5fbf', num: 'V1' };
 
 const DRIVERS = [
@@ -4870,7 +4877,7 @@ function stepSuspension(c, dt) {
   const spd = Math.hypot(c.vx, c.vz), vLong = c.isPlayer ? c.v : spd;
   if (c.prevV == null) c.prevV = vLong; const aLong = clamp((vLong - c.prevV) / Math.max(dt, 1e-3), -30, 30); c.prevV = vLong;
   const aLat = c.isPlayer ? -spd * c.w : tsample(c.s).k * c.v * c.v;
-  const hT = (gF + gR) / 2, pT = Math.atan2(gF - gR, wb) + aLong * .0022, rG = Math.atan2(gL - gRt, tw), rT = rG + clamp(aLat, -40, 40) * .0045;
+  const hT = (gF + gR) / 2, pT = Math.atan2(gF - gR, wb) + aLong * .0022 + Math.min(Math.abs(aLat), 35) * .0013, rG = Math.atan2(gL - gRt, tw), rT = rG + clamp(aLat, -40, 40) * .0014;
   if (!c.sp) c.sp = { h: hT, hv: 0, p: pT, pv: 0, r: rT, rv: 0 };
   const sp = c.sp, n = Math.max(1, Math.ceil(dt / .008)), h = dt / n;
   for (let i = 0; i < n; i++) {
@@ -5223,7 +5230,7 @@ function showResults() {
   $('resSub').textContent = `${race.name}, ${race.laps} laps at ${VENUE.name.split(',')[0]}. ` + (player.bestLap ? `Your best lap: ${player.bestLap.toFixed(3)}.` : '');
   st.forEach((c, i) => { const tr = document.createElement('tr'); tr.className = (c.isPlayer ? 'me ' : '') + (i < 3 ? 'p' + (i + 1) : ''); tr.style.animationDelay = (i * 55) + 'ms';
     const td1 = document.createElement('td'); td1.textContent = i + 1; const td2 = document.createElement('td'); const n = document.createElement('span'); n.className = 'num'; n.textContent = c.num; n.style.background = c.col; n.style.color = textColorFor(c.col); td2.append(n);
-    const td3 = document.createElement('td'); td3.textContent = c.isPlayer ? 'You' : c.name; const td4 = document.createElement('td'); td4.textContent = c.dnf ? 'DNF (flipped)' : c.finished ? 'Finished' : 'Running'; tr.append(td1, td2, td3, td4); tb.append(tr); });
+    const td3 = document.createElement('td'); td3.textContent = c.isPlayer ? 'You' : c.name; const td4 = document.createElement('td'); td4.textContent = c.mpGhost != null ? 'Multiplayer: see the board' : c.dnf ? 'DNF (flipped)' : c.finished ? 'Finished' : 'Running'; tr.append(td1, td2, td3, td4); tb.append(tr); });
   $('raceRpBtn').style.display = REC.race.length > 30 ? '' : 'none'; $('watchBtn').style.display = PIT.parked ? 'none' : '';
   $('results').style.display = 'flex'; AudioSys.cheer(.2, 3);
 }
@@ -5316,12 +5323,12 @@ const SLIDERS = [
 ];
 const TYRE_SLIDERS = [
   ['rrPsi', 'Right rear pressure', 4, 12, .5, v => v.toFixed(1) + ' psi', 'Low: bite', 'High: drive', 'Lower pressure puts more rubber down on a slick track but wears faster and drags.'],
-  ['lrPsi', 'Left rear pressure', 6, 14, .5, v => v.toFixed(1) + ' psi', 'Tighter', 'Freer', 'More left rear pressure frees the car up to turn.'],
+  ['lrPsi', 'Left rear pressure', 4, 14, .5, v => v.toFixed(1) + ' psi', 'Tighter', 'Freer', 'More left rear pressure frees the car up to turn.'],
   ['lfPsi', 'Left front pressure', 8, 20, .5, v => v.toFixed(1) + ' psi', 'Soft: bite', 'Hard: darty', 'The left front points the car into the turn. Softer bites, harder turns in quicker and skates.'],
   ['rfPsi', 'Right front pressure', 10, 24, .5, v => v.toFixed(1) + ' psi', 'Soft, grippy', 'Sharp, darty', 'Higher right front pressure sharpens turn-in but loses a little grip.'],
   ['lfSize', 'Left front size', 72, 77, .5, v => v.toFixed(1) + '"', 'Small', 'Tall', 'Front stagger is the right front against the left front: more of it helps the car point left.'],
   ['rfSize', 'Right front size', 73, 78, .5, v => v.toFixed(1) + '"', 'Small', 'Tall', 'A taller right front adds front stagger and sharpens the car up.'],
-  ['lrSize', 'Left rear size', 94, 103, .5, v => v.toFixed(1) + '"', 'Short: more stagger', 'Tall: less', 'Rear stagger is the right rear against the left rear. A smaller left rear turns the car left on its own and drags on the straights.'],
+  ['lrSize', 'Left rear size', 88, 97, .5, v => v.toFixed(1) + '"', 'Short: more stagger', 'Tall: less', 'Rear stagger is the right rear against the left rear. A smaller left rear turns the car left on its own and drags on the straights.'],
   ['rrSize', 'Right rear size', 104, 110, 1, v => v + '"', 'Short', 'Tall', 'A taller right rear adds stagger and gears the car up: more top speed, less drive.'],
   ['rrSpace', 'Right rear spacing', 0, 4, .5, v => v.toFixed(1) + '" out', 'In: loose', 'Out: stable', 'Spacing the right rear out settles the car and slows its rotation.'],
 ];
@@ -5392,7 +5399,7 @@ function garageVisual() {
   for (const car of [GAR.car, GAR.mirror]) { if (!car) continue; const U = car.userData, Y = state.tyres, S2 = state.setup;
     const rr = U.wheels && U.wheels.find(w => w.name === 'wheel_rear_right');
     if (rr) { const sc = Y.rrSize / 105 * (1 + (S2.stagger - 6) * .006); rr.piv.scale.setScalar(sc); rr.piv.position.y = rr.baseY + (sc - 1) * rr.r0; rr.piv.position.z = rr.baseZ + (Y.rrSpace - 2) * .0254; }
-    for (const [nm, sz, base] of [['wheel_rear_left', Y.lrSize ?? 98, 98], ['wheel_front_left', Y.lfSize ?? 74, 74], ['wheel_front_right', Y.rfSize ?? 75, 75]]) { const w = U.wheels && U.wheels.find(x => x.name === nm); if (!w) continue; const sc = sz / base; w.piv.scale.setScalar(sc); w.piv.position.y = w.baseY + (sc - 1) * w.r0; }
+    for (const [nm, sz, base] of [['wheel_rear_left', Y.lrSize ?? 92, 92], ['wheel_front_left', Y.lfSize ?? 74, 74], ['wheel_front_right', Y.rfSize ?? 75, 75]]) { const w = U.wheels && U.wheels.find(x => x.name === nm); if (!w) continue; const sc = sz / base; w.piv.scale.setScalar(sc); w.piv.position.y = w.baseY + (sc - 1) * w.r0; }
     if (U.wing) { U.wing.rotation.z = (U.wing.userData.baseRz || 0) - (S2.wing - 14) * D2R * .9; U.wing.position.x = (U.wing.userData.baseX ?? -.22) + S2.slider * .06; }
     if (U.inner) U.inner.rotation.z = -S2.bite * .004; }
 }
@@ -6706,12 +6713,12 @@ function washStep(dt) {
     if (pts.size === 2) { const [a, b] = [...pts.values()]; d0 = Math.hypot(a.x - b.x, a.y - b.y) || 1; mode = 'pinch'; WASH.act = false; return; }
     if (e.button === 2 || !washPick(e)) { mode = 'orbit'; return; } mode = 'work'; WASH.act = true; WASH.ptr = { clientX: e.clientX, clientY: e.clientY }; });
   el.addEventListener('pointermove', e => { if (!WASH.on) return; const q = pts.get(e.pointerId); if (!q) return; const dx = e.clientX - q.x, dy = e.clientY - q.y; q.x = e.clientX; q.y = e.clientY;
-    if (mode === 'pinch' && pts.size === 2) { const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1; WASH.orb.dist = clamp(WASH.orb.dist * d0 / d, 1.6, 12); d0 = d; }
+    if (mode === 'pinch' && pts.size === 2) { const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1; WASH.orb.dist = clamp(WASH.orb.dist * d0 / d, 1.6, WASH.tool === 'garden' ? 20 : 12); d0 = d; }
     else if (mode === 'orbit') { WASH.orb.yaw += dx * .008; WASH.orb.pitch = clamp(WASH.orb.pitch + dy * .005, -.05, 1.35); }
     else if (mode === 'work') WASH.ptr = { clientX: e.clientX, clientY: e.clientY }; });
   const up = e => { if (!pts.delete(e.pointerId)) return; if (!pts.size) { mode = null; WASH.act = false; } else if (mode === 'pinch') mode = 'orbit'; };
   el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('contextmenu', e => { if (WASH.on) e.preventDefault(); });
-  el.addEventListener('wheel', e => { if (!WASH.on) return; WASH.orb.dist = clamp(WASH.orb.dist * Math.exp(e.deltaY * .0011), 1.6, 12); }, { passive: true }); }
+  el.addEventListener('wheel', e => { if (!WASH.on) return; WASH.orb.dist = clamp(WASH.orb.dist * Math.exp(e.deltaY * .0011), 1.6, WASH.tool === 'garden' ? 20 : 12); }, { passive: true }); }
 $('wBack').onclick = washClose;
 $('wTools').addEventListener('click', e => { const b = e.target.closest('button'); if (b) washTool(b.dataset.v); });
 $('wPanels').onclick = () => { washPanels(!WASH.panels); washPct(true); };
@@ -7489,47 +7496,97 @@ function gaEvent(name, p) { try { if (GA_ID) gtag('event', name, p || {}); else 
 { const se0 = startEvent; startEvent = function (sess) { const r = se0.apply(this, arguments); try { gaEvent('race_start', { session: sess && sess.name, event: state.event, cars: cars.length, laps: race && race.laps }); } catch (e) {} return r; }; }
 { const sr0 = showResults; showResults = function () { const r = sr0.apply(this, arguments); try { gaEvent('race_finish', { event: state.event, position: player && player.finishPos || 0, cars: cars.length }); } catch (e) {} return r; }; }
 
-/* ---------- v70: multiplayer, first step ----------
-   A WebSocket room on a small relay server (scream-mp-server.js). Everyone in the room sees everyone else's car on track:
-   each client sends its own car 15 times a second, and draws the others ~120 ms behind, interpolated between packets.
-   No shared race yet: each player still runs their own race and AI field; remote cars are ghosts (no contact).
-   Options > Multiplayer: server address, room, name, connect. */
-const MP = { ws: null, url: store.get('scream-mp-url') || 'ws://localhost:8787', room: store.get('scream-mp-room') || 'premier', name: store.get('scream-mp-name') || 'Driver',
-  id: null, peers: new Map(), sendT: 0, status: 'off', delay: .12 };
-function mpStatus(t) { MP.status = t; const o = $('mpStatus'); if (o) o.textContent = t; }
+/* ---------- v71: multiplayer you can race in ----------
+   A room on a relay: the Cloudflare Worker (scream-mp-worker.js) for the hosted game, or scream-mp-server.js on your own machine.
+   On mahda.com.au the game joins the public room by itself (MP_PUBLIC). Everyone in the room sees everyone else's car.
+   "Race together": the room's host starts a race and everyone starts it at the same moment on one grid, in join order.
+   Each client runs the whole grid, with the other drivers' slots filled by hidden stand-in cars, so the pace ute, the
+   formation and the green happen the same way on every screen. At the green the stand-ins drop out and the other drivers'
+   real cars (sent 15x a second, drawn 120 ms behind) take their places. No contact between drivers yet, no yellows in
+   a multiplayer race (a car that goes over is put back on the track), and the board on the right shows the running order. */
+const MP_PUBLIC = 'wss://scream-mp.mahda.workers.dev';   // the deployed Worker, e.g. 'wss://scream-mp.yourname.workers.dev' (fill in after `wrangler deploy`)
+const MP_HOSTED = /^https?:$/.test(location.protocol) && !!location.host && !/claude|anthropic/.test(location.host);
+const MP_SITE = /mahda\.com\.au$/.test(location.hostname) || /github\.io$/.test(location.hostname);
+const MP_LOCALSERVER = MP_HOSTED && !MP_SITE;   // loaded from scream-mp-server.js: connect back to it
+const MP = { ws: null, url: MP_LOCALSERVER ? (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host : MP_SITE ? MP_PUBLIC : (store.get('scream-mp-url') || MP_PUBLIC),
+  room: store.get('scream-mp-room') || 'premier', name: store.get('scream-mp-name') || 'Driver', id: null, host: null, peers: new Map(), sendT: 0, status: 'off', delay: .12, race: null, outT: 0 };
+function mpStatus(t) { MP.status = t; const o = $('mpStatus'); if (o) o.textContent = t; mpUI(); }
+function mpUI() { const b = $('mpBtn'), r = $('mpRaceBtn'); if (b) b.textContent = MP.ws ? 'Disconnect' : 'Connect';
+  if (r) { const on = !!MP.ws && MP.id != null && MP.host === MP.id; r.disabled = !on; r.textContent = !MP.ws ? 'Race together' : on ? 'Race together (' + (MP.peers.size + 1) + ')' : 'Waiting for the host to start'; } }
 function mpConnect() {
-  mpClose(); let ws; try { ws = new WebSocket(MP.url); } catch (e) { mpStatus('Bad address'); return; }
+  mpClose(); if (location.protocol === 'https:' && /^ws:/.test(MP.url) && !/localhost|127\.0\.0\.1/.test(MP.url)) { mpStatus('This page is https, so the server needs wss://'); return; }
+  let ws; const u = MP.url + (MP.url.includes('?') ? '&' : '?') + 'room=' + encodeURIComponent(MP.room);
+  try { ws = new WebSocket(u); } catch (e) { mpStatus('Blocked here: open the game from its web page'); return; }
   MP.ws = ws; mpStatus('Connecting…');
-  ws.onopen = () => { mpStatus('Connected'); ws.send(JSON.stringify({ t: 'hello', room: MP.room, name: MP.name, num: String(state.num || ''), col: state.color || '#ffb547' })); };
+  ws.onopen = () => { mpStatus('Connected'); ws.send(JSON.stringify({ t: 'hello', room: MP.room, name: MP.name, num: String(state.num || ''), col: '#' + new THREE.Color(state.color || '#ffb547').getHexString() })); };
   ws.onclose = () => { if (MP.ws === ws) { MP.ws = null; mpStatus('Disconnected'); mpClear(); } };
-  ws.onerror = () => mpStatus('Could not connect');
+  ws.onerror = () => mpStatus(/claude|anthropic/.test(location.host) || window !== window.top ? 'Blocked on this page: open the game from its web page' : 'Could not reach the multiplayer server');
   ws.onmessage = e => { let m; try { m = JSON.parse(e.data); } catch (_) { return; } mpOnMsg(m); };
 }
-function mpClose() { if (MP.ws) { const w = MP.ws; MP.ws = null; try { w.close(); } catch (e) {} } mpClear(); MP.id = null; }
+function mpClose() { if (MP.ws) { const w = MP.ws; MP.ws = null; try { w.close(); } catch (e) {} } mpClear(); MP.id = MP.host = null; mpUI(); }
 function mpClear() { for (const P of MP.peers.values()) mpDrop(P); MP.peers.clear(); mpList(); }
 function mpDrop(P) { if (P.car && P.car.parent) P.car.parent.remove(P.car); }
 function mpPeer(id, info) {
   let P = MP.peers.get(id); if (P) { Object.assign(P, info || {}); return P; }
-  P = { id, name: 'Driver', num: '', col: '#888', buf: [], car: null, ...(info || {}) }; MP.peers.set(id, P); mpList(); return P;
+  P = { id, name: 'Driver', num: '', col: '#888888', buf: [], car: null, prog: -1, fin: 0, ...(info || {}) }; MP.peers.set(id, P); mpList(); return P;
 }
+function mpSend(m) { if (MP.ws && MP.ws.readyState === 1) MP.ws.send(JSON.stringify(m)); }
 function mpOnMsg(m) {
-  if (m.t === 'welcome') { MP.id = m.id; for (const p of m.peers || []) mpPeer(p.id, p); mpStatus('Connected · room ' + MP.room); }
-  else if (m.t === 'join') { mpPeer(m.id, m); flash(m.name + ' joined', 'Multiplayer room ' + MP.room, 1800); }
-  else if (m.t === 'leave') { const P = MP.peers.get(m.id); if (P) { mpDrop(P); MP.peers.delete(m.id); mpList(); } }
-  else if (m.t === 's') { const P = mpPeer(m.id); P.buf.push({ at: performance.now() / 1000, s: m.s }); if (P.buf.length > 30) P.buf.shift(); }
+  if (m.host != null) MP.host = m.host;
+  if (m.t === 'welcome') { MP.id = m.id; for (const p of m.peers || []) mpPeer(p.id, p); mpStatus('Connected · ' + (MP.peers.size + 1) + ' in room ' + MP.room); }
+  else if (m.t === 'join') { mpPeer(m.id, m); flash(m.name + ' joined', 'Multiplayer: ' + (MP.peers.size + 1) + ' in the room', 1800); mpStatus('Connected · ' + (MP.peers.size + 1) + ' in room ' + MP.room); }
+  else if (m.t === 'leave') { const P = MP.peers.get(m.id); if (P) { mpDrop(P); MP.peers.delete(m.id); mpList(); } mpStatus('Connected · ' + (MP.peers.size + 1) + ' in room ' + MP.room); }
+  else if (m.t === 's') { const P = mpPeer(m.id); P.buf.push({ at: performance.now() / 1000, s: m.s }); if (P.buf.length > 30) P.buf.shift(); if (m.s.length >= 10) { P.prog = m.s[8]; P.fin = m.s[9]; } }
+  else if (m.t === 'start') mpRaceStart(m);
+  mpUI();
 }
 function mpList() { const o = $('mpPeers'); if (!o) return; const n = MP.peers.size; o.textContent = n ? n + (n === 1 ? ' other driver: ' : ' other drivers: ') + [...MP.peers.values()].map(p => p.name + (p.num ? ' #' + p.num : '')).join(', ') : 'Nobody else here yet'; }
-// a remote car: a stand-alone sprintcar in the driver's colour
+// the host starts a race for the whole room
+function mpRaceGo() {
+  if (!MP.ws || MP.host !== MP.id) return; const order = [MP.id, ...[...MP.peers.keys()].sort((a, b) => a - b)];
+  const m = { t: 'start', laps: clamp(QR.laps | 0, 2, 50), order, names: Object.fromEntries([[MP.id, MP.name], ...[...MP.peers.values()].map(p => [p.id, p.name])]) };
+  mpSend(m); mpRaceStart(m);
+}
+function mpRaceStart(m) {
+  if (!Array.isArray(m.order) || !m.order.includes(MP.id)) return;
+  AudioSys.init(); for (const P of MP.peers.values()) { P.prog = -1; P.fin = 0; }
+  const pool = fieldDrivers().filter(d => d.liv !== LIVLIB.sel), entries = m.order.map((id, k) => id === MP.id ? { def: playerDef(), isP: true } : { def: pool[k % pool.length], isP: false, mpId: id });
+  MP.race = { order: m.order, names: m.names || {}, laps: m.laps, finT: 0 };
+  startEvent({ name: 'Multiplayer race', type: 'race', laps: clamp(m.laps | 0, 2, 50), entries, mp: true });
+  race.mp = true; cars.forEach((c, k) => { if (entries[k] && entries[k].mpId != null) { c.mpGhost = entries[k].mpId; c.mesh.visible = false; c.name = (m.names || {})[c.mpGhost] || 'Driver'; } });
+  flash('Multiplayer race', m.order.length + ' drivers · ' + m.laps + ' laps · you start ' + ordinal(m.order.indexOf(MP.id) + 1), 3200);
+}
+// at the green the stand-ins drop out: from here the other drivers are their real cars
+{ const g0 = goGreen; goGreen = function () { const r = g0.apply(this, arguments); if (race && race.mp) for (const c of cars) if (c.mpGhost != null) { c.dnf = true; c.state = 'dnf'; c.mesh.visible = false; } return r; }; }
+// no yellows in a multiplayer race; a car that's gone over is put back on its wheels on the track
+{ const hw0 = handleWrecks; handleWrecks = function () { if (race && race.mp) race.pending = null; return hw0.apply(this, arguments); }; }
+{ const co0 = collide; collide = function () { if (!race || !race.mp) return co0(); const hid = cars.filter(c => c.mpGhost != null && c.state === 'run'); for (const c of hid) c.state = 'mpwait'; co0(); for (const c of hid) c.state = 'run'; }; }
+function mpRecover(dt) {
+  if (!race || !race.mp || !player || race.state !== 'green' || player.finished) { MP.outT = 0; return; }
+  if (player.state === 'out' || player.state === 'stalled' || player.state === 'dnf') { MP.outT += dt; if (MP.outT > 3) { MP.outT = 0; player.dnf = false; placeCar(player, player.s, clamp(player.d, -HW + 2, HW - 2), 6); player.state = 'run'; player.mesh.visible = true; flash('Back on track', 'Multiplayer: no yellows, off you go', 1600); } } else MP.outT = 0;
+}
+// the running order of the drivers in the race
+function mpBoard() {
+  let el = $('mpBoard'); const show = !!(race && race.mp && state.screen === 'race' && MP.race);
+  if (!el) { if (!show) return; el = document.createElement('div'); el.id = 'mpBoard'; el.style.cssText = 'position:fixed;right:12px;top:96px;z-index:30;min-width:150px;padding:8px 10px;border-radius:8px;background:rgba(10,10,14,.62);color:#fff;font:600 13px/1.45 Barlow,system-ui,sans-serif;pointer-events:none'; document.body.appendChild(el); }
+  el.style.display = show ? 'block' : 'none'; if (!show) return;
+  const L0 = race.laps, me = { name: MP.name + ' (you)', prog: race.state === 'green' ? player.laps + player.s / L : -1, fin: player.finished ? (MP.race.finT || 1) : 0, me: true };
+  const rows = [me, ...[...MP.peers.values()].filter(p => MP.race.order.includes(p.id)).map(p => ({ name: p.name, prog: p.prog, fin: p.fin }))];
+  rows.sort((a, b) => (a.fin && b.fin) ? a.fin - b.fin : a.fin ? -1 : b.fin ? 1 : b.prog - a.prog);
+  el.innerHTML = '<div style="opacity:.7;font-size:11px;letter-spacing:.08em">MULTIPLAYER</div>' + rows.map((r, i) => `<div style="${r.me ? 'color:#ffb547' : ''}">${i + 1}. ${r.name.replace(/[<&]/g, '')}${r.fin ? ' 🏁' : r.prog >= 0 ? ' · L' + Math.min(L0, Math.floor(r.prog) + 1) : ''}</div>`).join('');
+}
+const _mq = new THREE.Quaternion(), _mq2 = new THREE.Quaternion();
 function mpCar(P) {
-  if (P.car) return P.car; const c = new THREE.Color(P.col || '#888'), c2 = c.clone().offsetHSL(.5, 0, -.2);
+  if (P.car) return P.car; const c = new THREE.Color(P.col || '#888888'), c2 = c.clone().offsetHSL(.5, 0, -.2);
   try { P.car = makeSprintcar(c.getHex(), c2.getHex(), P.num || '0', 'hoosier', 'mesh'); } catch (e) { P.car = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1, 3.6), new THREE.MeshStandardMaterial({ color: c })); }
   P.car.userData.mp = true; scene.add(P.car); return P.car;
 }
-const _mq = new THREE.Quaternion(), _mq2 = new THREE.Quaternion();
 function mpStep(dt) {
+  mpBoard(); mpRecover(dt);
   if (!MP.ws || MP.ws.readyState !== 1) return; const now = performance.now() / 1000, onTrack = state.screen === 'race' && race && player && player.mesh;
-  MP.sendT += dt; if (onTrack && MP.sendT > 1 / 15) { MP.sendT = 0; const m = player.mesh, p = m.position, q = m.quaternion;
-    MP.ws.send(JSON.stringify({ t: 's', s: [+p.x.toFixed(2), +p.y.toFixed(2), +p.z.toFixed(2), +q.x.toFixed(4), +q.y.toFixed(4), +q.z.toFixed(4), +q.w.toFixed(4), +(player.v || 0).toFixed(1)] })); }
+  if (race && race.mp && player && player.finished && !MP.race.finT) MP.race.finT = Date.now() / 1000;
+  MP.sendT += dt; if (onTrack && MP.sendT > 1 / 15) { MP.sendT = 0; const m = player.mesh, p = m.position, q = m.quaternion, inR = race.mp && race.state === 'green';
+    mpSend({ t: 's', s: [+p.x.toFixed(2), +p.y.toFixed(2), +p.z.toFixed(2), +q.x.toFixed(4), +q.y.toFixed(4), +q.z.toFixed(4), +q.w.toFixed(4), +(player.v || 0).toFixed(1), inR ? +(player.laps + player.s / L).toFixed(4) : -1, race.mp && player.finished ? +(MP.race.finT).toFixed(2) : 0] }); }
   const tt = now - MP.delay;
   for (const P of MP.peers.values()) {
     const B = P.buf; if (!B.length) continue; const car = mpCar(P); car.visible = !!onTrack && now - B[B.length - 1].at < 3;
@@ -7540,14 +7597,320 @@ function mpStep(dt) {
   }
 }
 { const cs0 = commStep; commStep = function (dt) { cs0(dt); try { mpStep(dt); } catch (e) {} }; }
-{ const u = $('mpUrl'), r = $('mpRoom'), n = $('mpName'), b = $('mpBtn');
+{ const u = $('mpUrl'), r = $('mpRoom'), n = $('mpName'), b = $('mpBtn'), rb = $('mpRaceBtn');
   if (u) { u.value = MP.url; r.value = MP.room; n.value = MP.name;
     u.addEventListener('change', () => { MP.url = u.value.trim(); store.set('scream-mp-url', MP.url); });
     r.addEventListener('change', () => { MP.room = r.value.trim() || 'premier'; store.set('scream-mp-room', MP.room); });
     n.addEventListener('change', () => { MP.name = n.value.trim().slice(0, 24) || 'Driver'; store.set('scream-mp-name', MP.name); });
-    b.addEventListener('click', () => { if (MP.ws) { mpClose(); mpStatus('Off'); b.textContent = 'Connect'; } else { MP.url = u.value.trim(); MP.room = r.value.trim() || 'premier'; MP.name = n.value.trim() || 'Driver'; mpConnect(); b.textContent = 'Disconnect'; } });
-    mpStatus('Off'); mpList(); } }
+    b.addEventListener('click', () => { if (MP.ws) { mpClose(); mpStatus('Off'); } else { MP.url = u.value.trim(); MP.room = r.value.trim() || 'premier'; MP.name = n.value.trim() || 'Driver'; mpConnect(); } });
+    if (rb) rb.addEventListener('click', mpRaceGo);
+    mpStatus('Off'); mpList(); }
+  if (MP_SITE && MP_PUBLIC) setTimeout(mpConnect, 1500); }   // on the website: straight into the public room
+
+
+
+{ const no = e => e.preventDefault(); for (const ev of ['gesturestart', 'gesturechange', 'gestureend']) document.addEventListener(ev, no, { passive: false });   // iOS ignores user-scalable=no: block pinch and double-tap zoom ourselves
+  document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false }); }
+
+/* ---------- v72: the wash bay goes on tour round the South West, and grows a garden ----------
+   ENVIRONMENTS. Twelve places painted live as 360° panoramas by one sky shader (no image files: a recipe each of sky, sun, cloud,
+   three layers of land, water and a few landmarks), which also lights the car: the panorama is rendered into a PMREM
+   environment map whenever the place changes, and the sun, sky and ground light take its colours. Any place can use a real
+   360° photo instead (an equirectangular JPG/PNG, 2:1): it's scaled to 2048×1024, kept in this browser, and lights the car too.
+   THE GARDEN. Raised beds round the bay that grow in real time (from the clock, so they carry on while you're away):
+   water them, pull the weeds, harvest what's ready. Plants are drawn with five instanced meshes for the whole garden. */
+
+const WENV = [
+  { k: 'gor', name: 'Great Ocean Road', note: 'Limestone stacks in the surf below the cliffs',
+    zen: '#3d78c9', hor: '#cfe2ee', sun: [.55, .32, -.35], glow: '#fff1d2', cloud: .35, haze: .45, ground: '#a99a74',
+    L: [[.012, .02, 3, 1.3, '#7f8f96'], [.03, .03, 7, 4.1, '#c9b48a'], [.05, .04, 11, 2.2, '#8d9a5c']], land: [2.2, 1.0], water: 1, wcol: '#2f6d8c', stacks: -.6 },
+  { k: 'hfalls', name: 'Hopkins Falls', note: 'The wide basalt falls on the Hopkins, near Wangoom',
+    zen: '#4a80c4', hor: '#dde8e6', sun: [-.4, .45, .5], glow: '#fff4da', cloud: .45, haze: .3, ground: '#6d7a45',
+    L: [[.02, .02, 3, 5.2, '#7d9070'], [.06, .02, 4, 1.7, '#4b4a44'], [.03, .05, 13, 3.3, '#5f7a3c']], land: [0, 4], water: 2, wcol: '#5d6e58', waz: [.2, .9], fall: .2 },
+  { k: 'botan', name: 'Warrnambool Botanic Gardens', note: 'Guilfoyle\'s lawns, the lake and the big old trees',
+    zen: '#3f7bc6', hor: '#d9e7ea', sun: [.3, .5, .6], glow: '#fff3d6', cloud: .3, haze: .25, ground: '#5f8a3a',
+    L: [[.02, .01, 2, 2.9, '#87a07a'], [.09, .05, 9, 6.6, '#3f6a32'], [.04, .07, 17, 1.1, '#4f7d36']], land: [0, 4], water: 3, wcol: '#4f6f6a', waz: [2.6, .5], trees: .5 },
+  { k: 'thunder', name: 'Thunder Point', note: 'Basalt and limestone ledges, the swell and Merri Island',
+    zen: '#33689f', hor: '#c9d8de', sun: [-.6, .22, -.3], glow: '#ffe7c0', cloud: .6, haze: .5, ground: '#8f8c62',
+    L: [[.01, .015, 3, 7.7, '#808d90'], [.015, .02, 8, 2.4, '#6f6a5c'], [.03, .03, 12, 9.1, '#7e8a4e']], land: [1.6, 1.3], water: 1, wcol: '#2b5a73', stacks: -1.9, rocks: 1 },
+  { k: 'break', name: 'The Breakwater', note: 'Lady Bay, the breakwater wall and the harbour',
+    zen: '#3d77bf', hor: '#dbe6ea', sun: [.2, .4, -.7], glow: '#fff3d8', cloud: .4, haze: .4, ground: '#c8bb93',
+    L: [[.015, .02, 3, 3.7, '#8a9799'], [.02, .02, 6, 8.2, '#9aa58a'], [.025, .02, 9, 1.9, '#b9ad86']], land: [2.4, .9], water: 1, wcol: '#3a7896', wall: [-1.2, .55] },
+  { k: 'cannon', name: 'Cannon Hill', note: 'Over the town to Lady Bay and the lighthouse',
+    zen: '#4a84c9', hor: '#e0eaec', sun: [-.3, .38, .6], glow: '#fff2d4', cloud: .3, haze: .4, ground: '#6c8e43',
+    L: [[.01, .02, 3, 4.4, '#8b989a'], [-.01, .015, 6, 2.2, '#9aa086'], [.02, .02, 8, 6.1, '#6f9046']], land: [1.9, 1.4], water: 1, wcol: '#3a7896', town: [1.0, .9], light: -.25 },
+  { k: 'lavers', name: 'Lavers Hill Rainforest', note: 'Myrtle beech, tree ferns and the canopy closing over',
+    zen: '#6f9a8a', hor: '#c9d9c9', sun: [.2, .7, .3], glow: '#f4f7df', cloud: .7, haze: .55, ground: '#3e4a26',
+    L: [[.05, .03, 4, 1.9, '#5f7c64'], [.15, .08, 9, 5.5, '#2f4b2c'], [.32, .14, 15, 3.1, '#1f3520']], land: [0, 4], water: 0, wcol: '#344a3a', trees: 1, ferns: 1 },
+  { k: 'tower', name: 'Tower Hill', note: 'Inside the old volcano: the crater lake and its islands',
+    zen: '#4683c7', hor: '#dde8e8', sun: [.45, .42, .4], glow: '#fff1d0', cloud: .4, haze: .3, ground: '#6b7e3e',
+    L: [[.07, .03, 5, 2.7, '#6e8a52'], [.1, .04, 7, 7.3, '#5b7d3c'], [.025, .02, 13, 4.8, '#7d8f46']], land: [0, 4], water: 3, wcol: '#5f7e7a', waz: [0, 4], crater: 1 },
+  { k: 'pfairy', name: 'Port Fairy', note: 'The Moyne, the wharf and Griffiths Island lighthouse',
+    zen: '#3e7cc6', hor: '#dde9ee', sun: [-.5, .3, -.4], glow: '#ffeccc', cloud: .35, haze: .4, ground: '#9a9a78',
+    L: [[.012, .015, 3, 6.3, '#8f9a9c'], [.012, .012, 7, 3.6, '#9a9a80'], [.02, .02, 11, 8.8, '#788c50']], land: [2.6, 1.1], water: 1, wcol: '#356f8a', light: .55, town: [-2.4, .45] },
+  { k: 'hopriv', name: 'Hopkins River', note: 'Wide and slow below the Proudfoots bank',
+    zen: '#3f7cc5', hor: '#dbe7ea', sun: [.5, .35, .2], glow: '#fff0d0', cloud: .3, haze: .35, ground: '#6c8540',
+    L: [[.02, .015, 3, 9.3, '#86998a'], [.04, .025, 6, 4.4, '#6d8a4a'], [.02, .03, 14, 2.6, '#5c7a38']], land: [0, 4], water: 2, wcol: '#4f6e72', waz: [0, 1.15] },
+  { k: 'merri', name: 'Merri River', note: 'Reeds and river red gums along the Merri',
+    zen: '#4a84c8', hor: '#dfe9e8', sun: [-.2, .45, .55], glow: '#fff3d6', cloud: .35, haze: .3, ground: '#5d7d38',
+    L: [[.02, .015, 3, 1.4, '#86998a'], [.06, .04, 10, 8.1, '#4c6a34'], [.02, .02, 21, 5.9, '#6f8a3e']], land: [0, 4], water: 2, wcol: '#56705e', waz: [-.4, .7], trees: .35, reeds: 1 },
+  { k: 'wool', name: 'Woolsthorpe Bridge', note: 'The old bridge over the river, out in the paddocks',
+    zen: '#4785c9', hor: '#e1eaea', sun: [.35, .4, -.55], glow: '#fff2d2', cloud: .3, haze: .3, ground: '#768a42',
+    L: [[.015, .015, 3, 3.3, '#8d9c88'], [.03, .02, 6, 7.4, '#7f9248'], [.015, .02, 12, 1.6, '#6f8a3c']], land: [0, 4], water: 2, wcol: '#58706a', waz: [.9, .8], bridge: [.9, .45] },
+  { k: 'bay', name: 'The bay (original)', note: 'The plain wash bay', plain: 1 },
+];
+const WE = { k: store.get('scream-wash-env') || 'gor', mat: null, sky: null, skyScene: null, pmrem: null, rt: null, photo: null, photoTex: null, disc: null };
+
+const WENV_FS = `
+varying vec3 vP; uniform float uT;
+uniform vec3 uZen, uHor, uGlow, uSun, uGround, uWCol, uC1, uC2, uC3; uniform vec4 uL1, uL2, uL3; uniform vec2 uLand, uWaz, uWall, uTown, uBridge;
+uniform float uCloud, uHaze, uWater, uStacks, uFall, uTrees, uFerns, uCrater, uLight, uRocks, uReeds;
+float h1(float x){ return fract(sin(x * 127.1) * 43758.5453); }
+float n1(float x){ float i = floor(x), f = fract(x); f = f * f * (3. - 2. * f); return mix(h1(i), h1(i + 1.), f); }
+float f1(float x){ return .5 * n1(x) + .25 * n1(x * 2.1 + 3.) + .125 * n1(x * 4.3 + 7.) + .0625 * n1(x * 8.9 + 1.); }
+float h2(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f); return mix(mix(h2(i), h2(i + vec2(1, 0)), f.x), mix(h2(i + vec2(0, 1)), h2(i + vec2(1, 1)), f.x), f.y); }
+float f2(vec2 p){ float s = 0., a = .5; for (int i = 0; i < 5; i++) { s += a * n2(p); p = p * 2.03 + 1.7; a *= .5; } return s; }
+float adist(float a, float b){ float d = a - b; return abs(d - 6.2831853 * floor((d + 3.14159265) / 6.2831853)); }
+float landMask(float a){ return uLand.y >= 3.1 ? 1. : smoothstep(uLand.y, uLand.y - .25, adist(a, uLand.x)); }
+float ridge(float a, vec4 L, float m){ float r = L.x + L.y * (f1(a * L.z + L.w) - .45) * 2.; return mix(-.4, r, m); }
+void main(){
+  vec3 d = normalize(vP); float h = d.y, a = atan(d.z, d.x);
+  vec3 sd = normalize(uSun); float sdot = max(dot(d, sd), 0.);
+  // sky
+  vec3 c = mix(uHor, uZen, pow(smoothstep(-.02, .75, h), .7));
+  c += uGlow * (pow(sdot, 900.) * 6. + pow(sdot, 12.) * .25);
+  if (h > 0.) { vec2 cp = d.xz / (h + .12) * 1.6 + vec2(uT * .004, 0.); float cl = smoothstep(1. - uCloud, 1.2 - uCloud * .6, f2(cp)); vec3 cc = mix(vec3(.62, .66, .7), vec3(1.), .55 + .45 * pow(sdot, 3.)); c = mix(c, cc, cl * smoothstep(0., .08, h) * .92); }
+  float lm = landMask(a);
+  // the sea (or river/lake) below the horizon
+  if (h < .002) {
+    vec3 w = uGround; float wv = 0.;
+    bool wet = uWater > .5 && (uWater < 1.5 || adist(a, uWaz.x) < uWaz.y);
+    if (wet) { float rip = f2(vec2(a * 60., log(max(-h, .001)) * 18. + uT * .6)); w = mix(uWCol * .8, mix(uHor, uZen, .4), .35 + .2 * rip); w += uGlow * pow(max(dot(reflect(d, vec3(0, 1, 0)), sd), 0.), 60.) * 1.4 * rip;
+      if (uWater < 1.5) { float surf = smoothstep(.006, .0, abs(h + .03 + .012 * n1(a * 9.)) ) * (.5 + .5 * n1(a * 40. + uT)); w = mix(w, vec3(.95), surf * .8); } }
+    c = mix(w, uGround, smoothstep(-.11, -.2, h));
+  }
+  // limestone stacks out in the surf
+  if (uStacks > -9.) for (int i = 0; i < 6; i++) { float fi = float(i), ac = uStacks + (fi - 2.5) * .11 + (h1(fi) - .5) * .05, wd = .012 + .014 * h1(fi + 9.), ht = .025 + .05 * h1(fi + 3.), x = (a - ac) / wd;
+    if (abs(x) < 1. && h < ht * (1. - .12 * x * x * x * x) - .004 * n1(a * 400.) && h > -.035) { float band = .85 + .15 * sin(h * 900.); c = mix(vec3(.86, .74, .55), vec3(.5, .4, .28), .45 + .55 * x) * band * (.7 + .4 * f2(vec2(a * 500., h * 500.))); if (h < -.025 + .006 * n1(a * 90. + uT)) c = mix(c, vec3(.95), .7); } }
+  // three layers of land, far to near, hazed with distance
+  vec3 C[3]; C[0] = uC1; C[1] = uC2; C[2] = uC3; vec4 LL[3]; LL[0] = uL1; LL[1] = uL2; LL[2] = uL3;
+  for (int i = 0; i < 3; i++) { float m = i == 0 ? max(lm, uWater > 1.5 || uWater < .5 ? 1. : 0.) : lm, r = ridge(a, LL[i], m);
+    if (uCrater > .5 && i == 1) r = .055 + .025 * f1(a * 3. + 2.);
+    if (uTrees > 0. && i == 2) r += uTrees * .06 * pow(n1(a * 22.), 3.) + uTrees * .03 * n1(a * 61.);
+    if (h < r && (i > 0 || h > -.06)) { float k = float(i) / 2.; vec3 col = C[i] * (.62 + .6 * f2(vec2(a * (60. + 140. * k), h * (140. + 260. * k)))) * (.85 + .25 * smoothstep(r - .03, r, h));
+      col *= .75 + .35 * clamp(dot(normalize(vec3(cos(a), .6, sin(a))), sd), 0., 1.); c = mix(col, mix(uHor, c, .3), uHaze * (1. - k) * .7); if (i == 2 && h < -.004) c = mix(c, uGround, smoothstep(-.02, -.12, h)); } }
+  // Tower Hill: islands in the crater lake
+  if (uCrater > .5) for (int i = 0; i < 3; i++) { float fi = float(i), ac = -1.2 + fi * 1.9, wd = .3 + .1 * fi, x = (a - ac) / wd; if (abs(x) < 1. && h < .03 * (1. - x * x) - .01 && h > -.02) c = vec3(.33, .44, .24) * (.8 + .3 * n1(a * 80.)); }
+  // waterfall: white water down the basalt
+  if (uFall > -9. && adist(a, uFall) < .09 && h < .055 && h > -.03) { float s = n2(vec2(a * 260., h * 70. + uT * 4.)); c = mix(c, vec3(.93, .95, .96), smoothstep(.35, .7, s) * (1. - smoothstep(.07, .09, adist(a, uFall)))); }
+  // rocks at the water's edge
+  if (uRocks > .5 && h < -.008 && h > -.05) { float r = n2(vec2(a * 90., h * 140.)); if (r > .62) c = mix(vec3(.25, .24, .22), vec3(.45, .43, .38), n2(vec2(a * 400., h * 400.))); }
+  // the breakwater wall
+  if (uWall.y > 0. && adist(a, uWall.x) < uWall.y && h > -.016 && h < -.006 + .002 * n1(a * 200.)) c = vec3(.5, .5, .48) * (.75 + .3 * n2(vec2(a * 500., h * 900.)));
+  // the town
+  if (uTown.y > 0. && adist(a, uTown.x) < uTown.y) { float b = floor(a * 70.), bh = .004 + .016 * h1(b) * h1(b + .5); if (h < bh && h > -.002) { c = mix(vec3(.82, .8, .74), vec3(.62, .52, .45), h1(b + 2.)); if (fract(a * 70.) < .12) c *= .7; if (h > bh - .003) c = mix(c, vec3(.55, .3, .25), h1(b + 7.)); } }
+  // a lighthouse
+  if (uLight > -9. && adist(a, uLight) < .006 && h > -.003 && h < .05) { c = h > .042 ? vec3(.12) : vec3(.96, .95, .92) * (.8 + .2 * step(0., cos(a * 900.))); }
+  // the bridge: deck and arches over the river
+  if (uBridge.y > 0. && adist(a, uBridge.x) < uBridge.y) { float u = (a - uBridge.x) / uBridge.y; float deck = .022; if (abs(h - deck) < .003) c = vec3(.42, .38, .33);
+    float sp = fract(u * 4. + .5) - .5; if (h < deck && h > -.012 && h > deck - .03 * (1. - 4. * sp * sp) && abs(sp) > .42) c = vec3(.5, .45, .38) * (.85 + .2 * n2(vec2(a * 600., h * 600.))); }
+  // rainforest: trunks, tree ferns, and the canopy closing overhead
+  if (uFerns > .5) { float tr = n1(a * 38.); if (tr > .78 && h > -.05 && h < .55) c = mix(vec3(.18, .14, .1), vec3(.32, .27, .2), n2(vec2(a * 400., h * 20.)));
+    float fc = .05 + .03 * n1(a * 13.); vec2 fp = vec2(fract(a * 6.) - .5, h - fc); if (length(fp * vec2(2.5, 6.)) < .25 + .08 * sin(atan(fp.y, fp.x) * 14.)) c = vec3(.2, .36, .16) * (.8 + .3 * n2(fp * 80.)); }
+  if (uTrees > .7 && h > .45) { float can = f2(vec2(a * 5., h * 7.)) + (h - .45) * 1.2; if (can > .62) c = mix(vec3(.12, .22, .1), vec3(.3, .45, .2), n2(vec2(a * 70., h * 70.))) * (.6 + .5 * smoothstep(.62, .9, can)); }
+  if (uReeds > .5 && h < .02 && h > -.04) { float r = n2(vec2(a * 900., 0.)); if (r > .55 && h < -.04 + .06 * r) c = mix(vec3(.45, .5, .25), vec3(.62, .58, .32), n1(a * 300.)); }
+  gl_FragColor = vec4(c, 1.);
+}`;
+
+function wenvUniforms(E) {
+  const C = x => new THREE.Color(x), V = a => new THREE.Vector3(...a), L = i => new THREE.Vector4(...E.L[i].slice(0, 4));
+  return { uT: { value: 0 }, uZen: { value: C(E.zen) }, uHor: { value: C(E.hor) }, uGlow: { value: C(E.glow) }, uSun: { value: V(E.sun) }, uGround: { value: C(E.ground) }, uWCol: { value: C(E.wcol || '#305060') },
+    uC1: { value: C(E.L[0][4]) }, uC2: { value: C(E.L[1][4]) }, uC3: { value: C(E.L[2][4]) }, uL1: { value: L(0) }, uL2: { value: L(1) }, uL3: { value: L(2) },
+    uLand: { value: new THREE.Vector2(...(E.land || [0, 4])) }, uWaz: { value: new THREE.Vector2(...(E.waz || [0, 4])) }, uWall: { value: new THREE.Vector2(...(E.wall || [0, 0])) }, uTown: { value: new THREE.Vector2(...(E.town || [0, 0])) }, uBridge: { value: new THREE.Vector2(...(E.bridge || [0, 0])) },
+    uCloud: { value: E.cloud }, uHaze: { value: E.haze }, uWater: { value: E.water || 0 }, uStacks: { value: E.stacks ?? -99 }, uFall: { value: E.fall ?? -99 }, uTrees: { value: E.trees || 0 }, uFerns: { value: E.ferns || 0 },
+    uCrater: { value: E.crater || 0 }, uLight: { value: E.light ?? -99 }, uRocks: { value: E.rocks || 0 }, uReeds: { value: E.reeds || 0 } };
+}
+function wenvFind(k) { return WENV.find(e => e.k === k) || WENV[0]; }
+function wenvApply(k) {
+  const S = WASH.scene; if (!S) return; const E = wenvFind(k); WE.k = E.k; store.set('scream-wash-env', E.k);
+  if (!WE.sky) { WE.sky = S.children.find(o => o.isMesh && o.geometry && o.geometry.type === 'SphereGeometry' && o.material.side === THREE.BackSide); WE.plainMat = WE.sky && WE.sky.material; }
+  const grass = S.children.find(o => o.isMesh && o.geometry && o.geometry.parameters && o.geometry.parameters.width === 260);
+  const hemi = S.children.find(o => o.isHemisphereLight), sun = S.children.find(o => o.isDirectionalLight);
+  const photo = wenvPhotoGet(E.k);
+  if (E.plain) { WE.sky.material = WE.plainMat; S.environment = null; S.fog.color.set(0xcfd8de); if (grass) { grass.visible = true; grass.material.color.set(0x5b7a3c); } hemi.color.set(0xdbe8ff); hemi.groundColor.set(0x6b5a40); sun.color.set(0xfff0d6); sun.position.set(8, 14, 6); wenvLabel(E, false); return; }
+  if (photo) { wenvPhoto(photo, E); return; }
+  const U = wenvUniforms(E); WE.mat = new THREE.ShaderMaterial({ side: THREE.BackSide, depthWrite: false, fog: false, uniforms: U, vertexShader: 'varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }', fragmentShader: WENV_FS });
+  WE.sky.material = WE.mat; WE.sky.scale.setScalar(1);
+  // the ground near the bay: a disc in the place's colour, so the panorama's water and land show beyond it
+  if (grass) grass.visible = false; if (!WE.disc) { WE.disc = new THREE.Mesh(new THREE.CircleGeometry(30, 48).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ roughness: 1 })); WE.disc.position.y = -.03; S.add(WE.disc); }
+  WE.disc.visible = true; WE.disc.material.color.set(E.ground).convertSRGBToLinear(); S.fog.color.set(E.hor); S.fog.near = 40; S.fog.far = 160;
+  hemi.color.set(E.zen).lerp(new THREE.Color(1, 1, 1), .45); hemi.groundColor.set(E.ground); sun.color.set(E.glow); sun.position.set(E.sun[0], Math.max(.25, E.sun[1]), E.sun[2]).normalize().multiplyScalar(18);
+  sun.intensity = 1.5 + .6 * (1 - E.cloud); hemi.intensity = .7 + .3 * E.cloud;
+  wenvLight(); wenvLabel(E, false);
+}
+function wenvLight() {   // the panorama lights the car: render it into an environment map
+  const S = WASH.scene; if (!WE.skyScene) WE.skyScene = new THREE.Scene(); const sk = WE.skyScene; while (sk.children.length) sk.remove(sk.children[0]);
+  const m = new THREE.Mesh(WE.sky.geometry, WE.sky.material); m.scale.setScalar(.5); sk.add(m);
+  // an ordinary 8-bit cube map with mipmaps (half-float PMREM targets come out black on some GPUs)
+  if (!WE.cube) { WE.cube = new THREE.WebGLCubeRenderTarget(128, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, type: THREE.UnsignedByteType, encoding: THREE.sRGBEncoding }); WE.cubeCam = new THREE.CubeCamera(.1, 200, WE.cube); }
+  sk.add(WE.cubeCam); WE.cubeCam.update(renderer, sk); S.environment = WE.cube.texture;
+}
+function wenvLabel(E, photo) { const o = $('wEnvNote'); if (o) o.textContent = E.note ? E.note + (photo ? ' · your 360° photo' : E.plain ? '' : ' · painted') : ''; const b = $('wEnvPhotoOff'); if (b) b.style.display = photo ? '' : 'none'; }
+// your own 360 photo for a place
+function wenvPhotoGet(k) { try { return store.get('scream-wash-photo-' + k) || null; } catch (e) { return null; } }
+function wenvPhoto(url, E) {
+  const img = new Image(); img.onload = () => {
+    const tex = new THREE.Texture(img); tex.encoding = THREE.sRGBEncoding; tex.wrapS = THREE.RepeatWrapping; tex.repeat.x = -1; tex.needsUpdate = true;
+    if (WE.photoTex) WE.photoTex.dispose(); WE.photoTex = tex; WE.sky.material = new THREE.MeshBasicMaterial({ map: tex, side: THREE.BackSide, depthWrite: false, fog: false });
+    const S = WASH.scene, grass = S.children.find(o => o.isMesh && o.geometry && o.geometry.parameters && o.geometry.parameters.width === 260); if (grass) grass.visible = false;
+    if (!WE.disc) { WE.disc = new THREE.Mesh(new THREE.CircleGeometry(30, 48).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ roughness: 1 })); WE.disc.position.y = -.03; S.add(WE.disc); }
+    WE.disc.visible = true; WE.disc.material.color.set(E.ground || '#777').convertSRGBToLinear(); wenvLight(); wenvLabel(E, true);
+  }; img.src = url;
+}
+function wenvPhotoLoad(file) {
+  const E = wenvFind(WE.k); if (E.plain) { $('wHint').textContent = 'Pick one of the places first, then give it your photo.'; return; }
+  const r = new FileReader(); r.onload = () => { const img = new Image(); img.onload = () => {
+      const cv = document.createElement('canvas'); cv.width = 2048; cv.height = 1024; cv.getContext('2d').drawImage(img, 0, 0, 2048, 1024); let url = cv.toDataURL('image/jpeg', .85);
+      try { localStorage.setItem('scream-wash-photo-' + E.k, url); } catch (e) { url = cv.toDataURL('image/jpeg', .6); try { localStorage.setItem('scream-wash-photo-' + E.k, url); } catch (e2) { $('wHint').textContent = 'That photo is in for now, but there isn\'t room to keep it in this browser.'; } }
+      if (Math.abs(img.width / img.height - 2) > .15) $('wHint').textContent = 'That photo isn\'t 2:1, so it will look stretched. A 360° panorama (equirectangular) works best.';
+      wenvPhoto(url, E); }; img.src = r.result; }; r.readAsDataURL(file);
+}
+
+/* ---------------- the garden ---------------- */
+const GSP = {   // days to full grown when kept watered
+  correa:   { name: 'Native correa', days: 3, kind: 'shrub', leaf: '#3f6a34', flower: '#d6455f', native: 1 },
+  kpaw:     { name: 'Kangaroo paw', days: 2.5, kind: 'paw', leaf: '#4d7a3a', flower: '#d2302a', native: 1 },
+  banksia:  { name: 'Banksia', days: 4, kind: 'shrub', leaf: '#4b6b3a', flower: '#e3a43b', native: 1 },
+  lavender: { name: 'Lavender', days: 2, kind: 'shrub', leaf: '#7f9a78', flower: '#8a6fc4' },
+  sunflwr:  { name: 'Sunflower', days: 3, kind: 'tall', leaf: '#4f8a32', flower: '#f2c21b' },
+  tomato:   { name: 'Tomato', days: 2.5, kind: 'tomato', leaf: '#3f7a2e', flower: '#d8331f', crop: 1 },
+  straw:    { name: 'Strawberry', days: 1.5, kind: 'rosette', leaf: '#3e7a34', flower: '#d81f2e', crop: 1 },
+  lettuce:  { name: 'Lettuce', days: 1, kind: 'lettuce', leaf: '#7cc04f', flower: '#7cc04f', crop: 1 },
+};
+const GKEYS = Object.keys(GSP);
+const GARD = { plots: [], seed: store.get('scream-garden-seed') || 'correa', meshes: null, t: 0, sway: 0, goals: {}, stats: { weeds: 0, harvest: 0, planted: 0, watered: 0 }, group: null, rc: new THREE.Raycaster() };
+function gardLoad() {
+  let d = null; try { d = JSON.parse(store.get('scream-garden') || 'null'); } catch (e) {}
+  const spots = []; for (const [x0, z0, nx, nz] of [[-12.6, -4.35, 3, 7], [10.2, -4.35, 3, 7], [-5.85, 9.8, 10, 2]]) for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) spots.push([x0 + i * 1.3, z0 + j * 1.45 * (nx === 10 ? 1.1 : 1) + (nx === 10 ? 0 : 0)]);
+  GARD.plots = spots.map((p, i) => ({ x: p[0], z: p[1], sp: null, g: 0, w: .6, weed: Math.random() * .3, t: Date.now(), ...(d && d.plots && d.plots[i] ? d.plots[i] : {}) }));
+  GARD.goals = d && d.goals || {}; GARD.stats = { ...GARD.stats, ...(d && d.stats || {}) };
+  if (!d) { const start = ['correa', 'lettuce', 'kpaw', 'straw', 'sunflwr', 'tomato', 'lavender', 'banksia', 'sunflwr', 'correa', 'tomato', 'kpaw', 'straw', 'lavender', 'banksia', 'lettuce']; start.forEach((sp, k) => { const P = GARD.plots[(k * 7 + 1) % GARD.plots.length]; P.sp = sp; P.g = .35 + .55 * Math.random(); P.w = .3 + .5 * Math.random(); }); }   // a garden someone's already started
+}
+function gardSave() { try { store.set('scream-garden', JSON.stringify({ plots: GARD.plots.map(p => ({ sp: p.sp, g: +p.g.toFixed(4), w: +p.w.toFixed(3), weed: +p.weed.toFixed(3), t: p.t })), goals: GARD.goals, stats: GARD.stats })); } catch (e) {} }
+// growth from the clock: water runs out over about a day, weeds come up, thirsty or weedy plants slow right down
+function gardGrow(now = Date.now()) {
+  for (const P of GARD.plots) { let dd = (now - (P.t || now)) / 864e5; P.t = now; if (dd <= 0) continue;
+    while (dd > 0) { const st = Math.min(dd, .02); dd -= st; P.w = Math.max(0, P.w - .9 * st); P.weed = Math.min(1, P.weed + .35 * st);
+      if (P.sp) { const S = GSP[P.sp], f = (P.w > .25 ? 1 : P.w / .25 * .25) * (P.weed > .6 ? .5 : 1); P.g = Math.min(1.15, P.g + st / S.days * f); } } }
+}
+const GBED = { geo: null };
+function gardBuild() {
+  const S = WASH.scene; if (GARD.group) return; gardLoad(); gardGrow(); const G = new THREE.Group(); GARD.group = G; S.add(G);
+  // timber-edged raised beds with mulch, a gravel path
+  const beds = [[-11.3, 0, 4.4, 10.8], [11.5, 0, 4.4, 10.8], [0, 10.6, 13.8, 3.4]], parts = [];
+  const wood = new THREE.MeshStandardMaterial({ color: 0x2a190b, roughness: .9, envMapIntensity: .3 }), mulch = new THREE.MeshStandardMaterial({ color: 0x0c0703, roughness: 1, envMapIntensity: .15 }), gravel = new THREE.MeshStandardMaterial({ color: 0x423c33, roughness: 1, envMapIntensity: .3 });
+  for (const [x, z, w, d] of beds) { const m = new THREE.Mesh(new THREE.BoxGeometry(w, .28, d), mulch); m.position.set(x, .14, z); G.add(m); m.userData.bed = 1;
+    for (const [ox, oz, bw, bd] of [[0, d / 2, w + .16, .08], [0, -d / 2, w + .16, .08], [w / 2, 0, .08, d], [-w / 2, 0, .08, d]]) { const b = new THREE.Mesh(new THREE.BoxGeometry(bw, .34, bd), wood); b.position.set(x + ox, .17, z + oz); G.add(b); } }
+  const path = new THREE.Mesh(new THREE.PlaneGeometry(30, 1.6).rotateX(-Math.PI / 2), gravel); path.position.set(0, .005, 8.4); G.add(path);
+  for (const s of [-1, 1]) { const p2 = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 18).rotateX(-Math.PI / 2), gravel); p2.position.set(s * 8.4, .004, 0); G.add(p2); }
+  // a tap and a watering can, a sign
+  const can = new THREE.Mesh(new THREE.CylinderGeometry(.14, .16, .3, 12), new THREE.MeshStandardMaterial({ color: 0x2f8a4a, roughness: .5, metalness: .3 })); can.position.set(8.6, .15, 7.6); G.add(can);
+  const sign = new THREE.Mesh(new THREE.BoxGeometry(1.1, .5, .05), new THREE.MeshStandardMaterial({ map: ctex(256, 116, (g, w, h) => { g.fillStyle = '#e9e0c8'; g.fillRect(0, 0, w, h); g.fillStyle = '#3a2a1a'; g.font = 'bold 30px Georgia'; g.textAlign = 'center'; g.fillText('PIT CREW', w / 2, 46); g.font = 'italic 24px Georgia'; g.fillText('garden', w / 2, 84); }) })); sign.position.set(0, .7, 12.6); sign.rotation.y = Math.PI; G.add(sign);
+  const post = new THREE.Mesh(new THREE.BoxGeometry(.06, .7, .06), wood); post.position.set(0, .35, 12.62); G.add(post);
+  // the plants: five instanced meshes for the lot
+  const N = GARD.plots.length * 26, mk = (geo, mat) => { const m = new THREE.InstancedMesh(geo, mat, N); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(N * 3).fill(1), 3); m.instanceColor.setUsage(THREE.DynamicDrawUsage); m.count = 0; m.frustumCulled = false; G.add(m); return m; };
+  const lm = new THREE.MeshStandardMaterial({ roughness: .8, envMapIntensity: .35, flatShading: true }), fm = new THREE.MeshStandardMaterial({ roughness: .55, envMapIntensity: .4 }), sm = new THREE.MeshStandardMaterial({ color: 0x163a0a, roughness: .9, envMapIntensity: .3 });
+  GARD.meshes = { leaf: mk(new THREE.IcosahedronGeometry(.5, 0), lm), flower: mk(new THREE.SphereGeometry(.5, 8, 6), fm), stem: mk(new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sm), weed: mk(new THREE.ConeGeometry(.5, 1, 4).translate(0, .5, 0), new THREE.MeshStandardMaterial({ color: 0x2a4a0c, roughness: 1 })), mound: mk(new THREE.SphereGeometry(.5, 12, 4, 0, TAU, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x120b05, roughness: 1, envMapIntensity: .15 })) };
+  gardDraw();
+}
+const _gc2 = new THREE.Color(), _gw = new THREE.Color(1, 1, 1), _gm = new THREE.Matrix4(), _gq = new THREE.Quaternion(), _ge = new THREE.Euler(), _gv = new THREE.Vector3(), _gs = new THREE.Vector3(), _gc = new THREE.Color();
+function gardDraw() {
+  const M = GARD.meshes; if (!M) return; for (const k in M) M[k].count = 0; const sw = GARD.sway;
+  const put = (m, x, y, z, sx, sy, sz, rx = 0, ry = 0, rz = 0, col = null) => { const i = m.count++; if (i >= m.instanceMatrix.count) { m.count--; return; } _ge.set(rx, ry, rz); _gq.setFromEuler(_ge); _gm.compose(_gv.set(x, y, z), _gq, _gs.set(sx, sy, sz)); m.setMatrixAt(i, _gm); m.setColorAt(i, col ? _gc2.copy(col).convertSRGBToLinear() : _gw); };   // every instance gets a colour (else it keeps whatever was last in that slot)
+  const top = .28;
+  GARD.plots.forEach((P, pi) => {
+    const x = P.x, z = P.z, hs = pi * 1.7; put(M.mound, x, top, z, .9, .18, .9, 0, 0, 0);
+    if (P.weed > .2) for (let k = 0; k < Math.round(P.weed * 4); k++) { const a = hs + k * 2.3, r = .32; put(M.weed, x + Math.cos(a) * r, top, z + Math.sin(a) * r, .07, .14 + P.weed * .22, .07, Math.sin(sw + a) * .15, a, 0); }
+    if (!P.sp) return; const S = GSP[P.sp], g = Math.min(1, P.g), dry = P.w < .25 ? 1 - P.w / .25 : 0;
+    const leaf = _gc.set(S.leaf).lerp(new THREE.Color(0x9a7a3a), dry * .7).clone(), fl = new THREE.Color(S.flower), droop = dry * .5, s = Math.sin(sw + hs) * .05;
+    const bloom = g >= .8 ? Math.min(1, (g - .8) / .2) : 0;
+    if (S.kind === 'shrub') { const R = .12 + .38 * g; for (let k = 0; k < 7; k++) { const a = hs + k * .9, r = R * (k ? .55 : 0), y = top + R * (k ? .7 : 1) * (1 - droop * .4); put(M.leaf, x + Math.cos(a) * r, y, z + Math.sin(a) * r, R * .9, R * .8, R * .9, s, a, s, leaf); }
+      if (bloom) for (let k = 0; k < 10; k++) { const a = hs * 3 + k * 2.4, r = R * .75, y = top + R * (.6 + .8 * ((k * 37) % 10) / 10); put(M.flower, x + Math.cos(a) * r, y, z + Math.sin(a) * r, .07 * bloom * (P.sp === 'banksia' ? 1.8 : 1), .07 * bloom * (P.sp === 'banksia' ? 3 : 1), .07 * bloom * (P.sp === 'banksia' ? 1.8 : 1), 0, 0, 0, fl); } }
+    else if (S.kind === 'tall') { const H = .2 + 2.1 * g; put(M.stem, x, top, z, .05, H, .05, s, 0, s * (1 + droop * 4));
+      for (let k = 1; k < 1 + Math.floor(H * 3); k++) { const y = top + k * .3, a = hs + k * 2.1; put(M.leaf, x + Math.cos(a) * .14, y, z + Math.sin(a) * .14, .2, .04 + .02 * (1 - droop), .12, 0, a, -droop, leaf); }
+      if (g > .55) { const fs = Math.min(1, (g - .55) / .45); put(M.flower, x, top + H, z + .04, .38 * fs, .38 * fs, .08, -.5 - droop, 0, 0, fl); put(M.flower, x, top + H, z + .07, .18 * fs, .18 * fs, .06, -.5 - droop, 0, 0, new THREE.Color(0x4a2a12)); } }
+    else if (S.kind === 'paw') { for (let k = 0; k < 6; k++) { const a = hs + k * 1.05; put(M.stem, x + Math.cos(a) * .06, top, z + Math.sin(a) * .06, .03, .25 + .45 * g, .01, Math.cos(a) * (.25 + droop), 0, Math.sin(a) * (.25 + droop)); }
+      if (g > .5) for (let k = 0; k < 3; k++) { const a = hs * 2 + k * 2.1, H = .5 + .8 * g; put(M.stem, x + Math.cos(a) * .05, top, z + Math.sin(a) * .05, .015, H, .015, Math.cos(a) * .12, 0, Math.sin(a) * .12); if (bloom) put(M.flower, x + Math.cos(a) * (.05 + H * .12), top + H, z + Math.sin(a) * (.05 + H * .12), .09, .16, .09, 0, 0, 0, fl); } }
+    else if (S.kind === 'tomato') { const H = .2 + 1.1 * g; put(M.stem, x, top, z, .03, H + .2, .03); put(M.stem, x + .18, top, z, .02, 1.4, .02, 0, 0, -.05);
+      for (let k = 0; k < 2 + Math.floor(H * 5); k++) { const a = hs + k * 2.4, y = top + .15 + k * .2; if (y > top + H) break; put(M.leaf, x + Math.cos(a) * .18, y, z + Math.sin(a) * .18, .22, .12 * (1 - droop * .5), .22, s, a, 0, leaf); }
+      if (g > .75) for (let k = 0; k < 6; k++) { const a = hs * 5 + k * 1.3, y = top + .3 + (k % 3) * .25; const rip = Math.min(1, (g - .75) / .25); put(M.flower, x + Math.cos(a) * .22, y, z + Math.sin(a) * .22, .09, .09, .09, 0, 0, 0, new THREE.Color(0x4a9a2a).lerp(fl, rip)); } }
+    else if (S.kind === 'rosette' || S.kind === 'lettuce') { const R = .08 + (S.kind === 'lettuce' ? .3 : .22) * g; for (let k = 0; k < 8; k++) { const a = hs + k * .785, r = R * .5; put(M.leaf, x + Math.cos(a) * r, top + R * .25, z + Math.sin(a) * r, R * .7, R * (S.kind === 'lettuce' ? .6 : .3), R * .5, .5 + droop, a, 0, leaf); }
+      if (S.kind === 'lettuce') put(M.leaf, x, top + R * .45, z, R * .8, R * .6, R * .8, 0, 0, 0, leaf);
+      if (S.kind === 'rosette' && g > .7) for (let k = 0; k < 5; k++) { const a = hs * 4 + k * 1.25; const rip = Math.min(1, (g - .7) / .3); put(M.flower, x + Math.cos(a) * R * 1.05, top + .04, z + Math.sin(a) * R * 1.05, .05, .065, .05, 0, 0, 0, new THREE.Color(0xe8e2c8).lerp(fl, rip)); } }
+  });
+  for (const k in M) { M[k].instanceMatrix.needsUpdate = true; if (M[k].instanceColor) M[k].instanceColor.needsUpdate = true; }
+}
+// the side mission
+const GGOALS = [
+  ['plant', 'Plant a seedling in an empty bed', () => GARD.stats.planted >= 1],
+  ['water', 'Give a thirsty plant a drink', () => GARD.stats.watered >= 1],
+  ['weeds', 'Pull ten weeds', () => GARD.stats.weeds >= 10],
+  ['native', 'Get a native into flower (correa, kangaroo paw or banksia)', () => GARD.plots.some(p => p.sp && GSP[p.sp].native && p.g >= 1)],
+  ['sun', 'Grow a sunflower taller than the top wing', () => GARD.plots.some(p => p.sp === 'sunflwr' && p.g >= .9)],
+  ['crop', 'Pick twelve from the vegie beds', () => GARD.stats.harvest >= 12],
+  ['full', 'Have every bed planted', () => GARD.plots.every(p => p.sp)],
+];
+function gardStatus() {
+  const n = GARD.plots.filter(p => p.sp).length, thirsty = GARD.plots.filter(p => p.sp && p.w < .25).length, weeds = GARD.plots.filter(p => p.weed > .45).length, ready = GARD.plots.filter(p => p.sp && GSP[p.sp].crop && p.g >= 1).length;
+  for (const [k, txt, ok] of GGOALS) if (!GARD.goals[k] && ok()) { GARD.goals[k] = Date.now(); flash('Garden', '✓ ' + txt, 2600); gardSave(); }
+  const next = GGOALS.find(g => !GARD.goals[g[0]]), done = GGOALS.filter(g => GARD.goals[g[0]]).length;
+  const o = $('wGarden'); if (o) o.innerHTML = `<b>Garden</b> · ${n} growing · ${thirsty ? '<span style="color:#ffb547">' + thirsty + ' thirsty</span>' : 'all watered'} · ${weeds} weedy · ${ready} ready to pick<br><span style="opacity:.8">Side mission ${done}/${GGOALS.length}${next ? ': ' + next[1] : ': complete. A proper pit-crew garden.'}</span>`;
+}
+function gardPick(e) {
+  const r = renderer.domElement.getBoundingClientRect(), v = new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1); GARD.rc.setFromCamera(v, WASH.cam);
+  const pl = new THREE.Plane(new THREE.Vector3(0, 1, 0), -.28), p = new THREE.Vector3(); if (!GARD.rc.ray.intersectPlane(pl, p)) return null;
+  let best = null, bd = .75; for (const P of GARD.plots) { const d = Math.hypot(P.x - p.x, P.z - p.z); if (d < bd) { bd = d; best = P; } } return { plot: best, point: p };
+}
+function gardAct(P) {
+  if (!P) return; let msg;
+  if (P.weed > .25) { const n = Math.max(1, Math.round(P.weed * 4)); P.weed = 0; GARD.stats.weeds += n; msg = 'Pulled ' + n + ' weed' + (n > 1 ? 's' : '') + '.'; }
+  else if (!P.sp) { P.sp = GARD.seed; P.g = .05; P.w = Math.max(P.w, .6); GARD.stats.planted++; msg = 'Planted a ' + GSP[P.sp].name.toLowerCase() + '. Keep it watered: about ' + GSP[P.sp].days + ' days to full grown.'; }
+  else if (GSP[P.sp].crop && P.g >= 1) { const n = P.sp === 'lettuce' ? 1 : 3; GARD.stats.harvest += n; P.g = P.sp === 'lettuce' ? 0 : .7; if (P.sp === 'lettuce') P.sp = null; msg = 'Picked ' + n + ' ' + (P.sp === 'tomato' ? 'tomatoes' : P.sp === 'straw' ? 'strawberries' : 'lettuce') + '. That\'s ' + GARD.stats.harvest + ' from the beds.'; }
+  else { const was = P.w; P.w = 1; if (was < .25) GARD.stats.watered++; msg = GSP[P.sp].name + ': ' + Math.round(Math.min(1, P.g) * 100) + '% grown, ' + (was < .25 ? 'and it needed that drink.' : 'watered.'); washDrops(new THREE.Vector3(P.x, 1.2, P.z), new THREE.Vector3(P.x, .3, P.z), 18, 0, false); }
+  $('wHint').textContent = msg; gardDraw(); gardSave(); gardStatus();
+}
+function gardStep(dt) {
+  if (!GARD.meshes) return; GARD.t += dt; GARD.sway += dt * 1.3;
+  if (GARD.t > 2) { GARD.t = 0; gardGrow(); gardStatus(); gardSave(); }
+  if (Math.floor(GARD.sway * 5) !== Math.floor((GARD.sway - dt * 1.3) * 5)) gardDraw();   // a gentle sway, a few times a second
+}
+function gardSeedUI() {
+  const o = $('wHint'); o.innerHTML = 'Seedling to plant: ' + GKEYS.map(k => `<button class="ghost sm" data-seed="${k}" style="margin:2px;${k === GARD.seed ? 'outline:2px solid #ffb547' : ''}">${GSP[k].name}</button>`).join('') +
+    '<br>Click a bed: pull the weeds, plant in an empty spot, water what\'s growing, pick what\'s ready. Click the ground to walk there; drag to look round.';
+}
+
+// hooks into the wash bay
+{ const b0 = washBuildScene; washBuildScene = function () { const r = b0.apply(this, arguments); try { gardBuild(); } catch (e) { console.warn('garden', e); } return r; }; }
+{ const o0 = washOpen; washOpen = function () { const r = o0.apply(this, arguments); try { wenvApply(WE.k); gardGrow(); gardDraw(); gardStatus(); const sel = $('wEnv'); if (sel) sel.value = WE.k; } catch (e) { console.warn('wash env', e); } return r; }; }
+{ const s0 = washStep; washStep = function (dt) { s0(dt); if (WE.mat) WE.mat.uniforms.uT.value += dt; gardStep(dt); }; }
+{ const t0 = washTool; washTool = function (t) { t0(t); if (t === 'garden') { gardSeedUI(); WASH.orb.dist = Math.max(WASH.orb.dist, 9); } }; }
+{ const p0 = washPick; washPick = function (e) { return WASH.tool === 'garden' ? null : p0(e); }; }
+WASH_T.garden = { mud: 1, film: 1, r: 1 };
+{ const el = renderer.domElement; let down = null;
+  el.addEventListener('pointerdown', e => { if (WASH.on && WASH.tool === 'garden') down = { x: e.clientX, y: e.clientY }; }, true);
+  el.addEventListener('pointerup', e => { if (!WASH.on || WASH.tool !== 'garden' || !down) return; const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y); down = null; if (moved > 6) return;
+    const H = gardPick(e); if (!H) return; if (H.plot) gardAct(H.plot); else if (Math.hypot(H.point.x, H.point.z) < 26) { WASH.tgtW.set(H.point.x, .5, H.point.z); } }, true);
+  el.addEventListener('wheel', e => { if (WASH.on && WASH.tool === 'garden') WASH.orb.dist = clamp(WASH.orb.dist, 1.6, 20); }, { passive: true }); }
+$('wHint').addEventListener('click', e => { const b = e.target.closest('button[data-seed]'); if (!b) return; GARD.seed = b.dataset.seed; store.set('scream-garden-seed', GARD.seed); gardSeedUI(); });
+{ const sel = $('wEnv'); if (sel) { sel.innerHTML = WENV.map(E => `<option value="${E.k}">${E.name}</option>`).join(''); sel.value = WE.k; sel.addEventListener('change', () => wenvApply(sel.value)); }
+  const f = $('wEnvFile'); if (f) f.addEventListener('change', () => { if (f.files[0]) wenvPhotoLoad(f.files[0]); f.value = ''; });
+  const ph = $('wEnvPhoto'); if (ph) ph.onclick = () => $('wEnvFile').click();
+  const off = $('wEnvPhotoOff'); if (off) off.onclick = () => { try { localStorage.removeItem('scream-wash-photo-' + WE.k); } catch (e) {} wenvApply(WE.k); };
+  const gv = $('wGardenView'); if (gv) gv.onclick = () => { washTool('garden'); WASH.tgtW.set(0, .5, 9.5); WASH.orb.dist = 11; WASH.orb.pitch = .45; WASH.orb.yaw = 1.57; }; }
 
 </script>
 </body>
 </html>
+
+</body></html>
