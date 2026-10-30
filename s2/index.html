@@ -542,6 +542,7 @@ html,body{touch-action:manipulation}   /* no double-tap zoom on phones */
 
 /* v72: hide the controls (H or the eye button) for a clean view */
 body.noui #hud, body.noui #touch, body.noui #mpBoard, body.noui #wash .w-panel, body.noui #wash .g-top, body.noui #fireBtn, body.noui #resBtn, body.noui #visor .vz-to { visibility: hidden !important; }
+select, select option { background-color: #1c2026; color: #f2f2f2; color-scheme: dark; }   /* native dropdown lists were white on white */
 #uiEye { position: fixed; left: 10px; bottom: 10px; z-index: 60; width: 38px; height: 38px; border-radius: 50%; border: 0; background: rgba(10,10,14,.55); color: #fff; font-size: 18px; line-height: 38px; text-align: center; cursor: pointer; opacity: .55; padding: 0; }
 #uiEye:hover, body.noui #uiEye { opacity: .9; }
 </style>
@@ -787,7 +788,7 @@ body.noui #hud, body.noui #touch, body.noui #mpBoard, body.noui #wash .w-panel, 
     <div class="w-prog"><span>Clean</span><div class="w-bar"><i id="wBar"></i></div><b id="wPct">0%</b></div>
     <div class="seg w-tools" id="wTools"><button data-v="hose">Pressure hose</button><button data-v="foam">Snow foam</button><button data-v="sponge">Sponge</button><button data-v="brush">Brush</button><button data-v="cloth">Microfibre</button><button data-v="garden">Garden</button></div>
     <div class="w-opts"><button class="ghost sm" id="wPanels">Take the panels off</button><button class="ghost sm" id="wEngine">Look at the engine</button><button class="ghost sm" id="wView">Whole car</button><button class="ghost sm" id="wDirty">Muddy it up again</button><button class="ghost sm" id="wGardenView">The garden</button></div>
-    <div class="w-opts w-env" style="align-items:center;flex-wrap:wrap;gap:6px"><label for="wEnv" style="font-size:13px;opacity:.8">Location</label><select id="wEnv" style="padding:6px 8px;border-radius:6px;border:0;background:rgba(255,255,255,.12);color:inherit;font:inherit"></select>
+    <div class="w-opts w-env" style="align-items:center;flex-wrap:wrap;gap:6px"><label for="wEnv" style="font-size:13px;opacity:.8">Location</label><select id="wEnv" style="padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:#1c2026;color:#f2f2f2;font:inherit"></select>
       <button class="ghost sm" id="wEnvPhoto">Use my 360° photo here</button><button class="ghost sm" id="wEnvPhotoOff" style="display:none">Back to painted</button><input type="file" id="wEnvFile" accept="image/jpeg,image/png,image/webp" hidden>
       <span id="wEnvNote" style="font-size:12px;opacity:.75;flex-basis:100%"></span></div>
     <p class="w-hint" id="wGarden" style="margin-top:4px"></p>
