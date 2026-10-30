@@ -539,6 +539,11 @@ input[type=range].rng{ -webkit-appearance:none; appearance:none; width:100%; hei
 .call-vol{ margin:2px 0 6px; }
 #bye{ z-index:40; background:radial-gradient(ellipse at center, #0d1124, #030409 75%); }
 html,body{touch-action:manipulation}   /* no double-tap zoom on phones */
+
+/* v72: hide the controls (H or the eye button) for a clean view */
+body.noui #hud, body.noui #touch, body.noui #mpBoard, body.noui #wash .w-panel, body.noui #wash .g-top, body.noui #fireBtn, body.noui #resBtn, body.noui #visor .vz-to { visibility: hidden !important; }
+#uiEye { position: fixed; left: 10px; bottom: 10px; z-index: 60; width: 38px; height: 38px; border-radius: 50%; border: 0; background: rgba(10,10,14,.55); color: #fff; font-size: 18px; line-height: 38px; text-align: center; cursor: pointer; opacity: .55; padding: 0; }
+#uiEye:hover, body.noui #uiEye { opacity: .9; }
 </style>
 </head>
 <body>
@@ -7621,115 +7626,126 @@ function mpStep(dt) {
    water them, pull the weeds, harvest what's ready. Plants are drawn with five instanced meshes for the whole garden. */
 
 const WENV = [
-  { k: 'gor', name: 'Great Ocean Road', note: 'Limestone stacks in the surf below the cliffs',
-    zen: '#3d78c9', hor: '#cfe2ee', sun: [.55, .32, -.35], glow: '#fff1d2', cloud: .35, haze: .45, ground: '#a99a74',
-    L: [[.012, .02, 3, 1.3, '#7f8f96'], [.03, .03, 7, 4.1, '#c9b48a'], [.05, .04, 11, 2.2, '#8d9a5c']], land: [2.2, 1.0], water: 1, wcol: '#2f6d8c', stacks: -.6 },
+  { k: 'gor', name: 'Great Ocean Road', note: 'Limestone cliffs and the stacks standing out in the surf',
+    zen: '#3d78c9', hor: '#d3e4ee', glow: '#fff1d2', sun: [.55, .32, -.35], cloud: .35, haze: .5, ground: '#b9a77c',
+    far: [.02, .015, 3, 1.3, '#8a9aa2'], mid: [.05, .02, 6, 4.1, '#7d8f58'], near: [.1, .03, 9, 2.2, '#6f8a46'], face: '#d8c39a', land: [2.0, 1.25], water: 1, wcol: '#2a6f8e', stacks: [-.5, .55] },
   { k: 'hfalls', name: 'Hopkins Falls', note: 'The wide basalt falls on the Hopkins, near Wangoom',
-    zen: '#4a80c4', hor: '#dde8e6', sun: [-.4, .45, .5], glow: '#fff4da', cloud: .45, haze: .3, ground: '#6d7a45',
-    L: [[.02, .02, 3, 5.2, '#7d9070'], [.06, .02, 4, 1.7, '#4b4a44'], [.03, .05, 13, 3.3, '#5f7a3c']], land: [0, 4], water: 2, wcol: '#5d6e58', waz: [.2, .9], fall: .2 },
+    zen: '#4a80c4', hor: '#dfe9e6', glow: '#fff4da', sun: [-.4, .45, .5], cloud: .45, haze: .35, ground: '#6d7f45',
+    far: [.03, .02, 3, 5.2, '#7f9472'], mid: [.06, .02, 5, 1.7, '#5f7d40'], near: [.06, .02, 8, 3.3, '#587a36'], land: [0, 4], water: 2, wcol: '#56695a', waz: [.2, .35], falls: [.2, .5] },
   { k: 'botan', name: 'Warrnambool Botanic Gardens', note: 'Guilfoyle\'s lawns, the lake and the big old trees',
-    zen: '#3f7bc6', hor: '#d9e7ea', sun: [.3, .5, .6], glow: '#fff3d6', cloud: .3, haze: .25, ground: '#5f8a3a',
-    L: [[.02, .01, 2, 2.9, '#87a07a'], [.09, .05, 9, 6.6, '#3f6a32'], [.04, .07, 17, 1.1, '#4f7d36']], land: [0, 4], water: 3, wcol: '#4f6f6a', waz: [2.6, .5], trees: .5 },
-  { k: 'thunder', name: 'Thunder Point', note: 'Basalt and limestone ledges, the swell and Merri Island',
-    zen: '#33689f', hor: '#c9d8de', sun: [-.6, .22, -.3], glow: '#ffe7c0', cloud: .6, haze: .5, ground: '#8f8c62',
-    L: [[.01, .015, 3, 7.7, '#808d90'], [.015, .02, 8, 2.4, '#6f6a5c'], [.03, .03, 12, 9.1, '#7e8a4e']], land: [1.6, 1.3], water: 1, wcol: '#2b5a73', stacks: -1.9, rocks: 1 },
-  { k: 'break', name: 'The Breakwater', note: 'Lady Bay, the breakwater wall and the harbour',
-    zen: '#3d77bf', hor: '#dbe6ea', sun: [.2, .4, -.7], glow: '#fff3d8', cloud: .4, haze: .4, ground: '#c8bb93',
-    L: [[.015, .02, 3, 3.7, '#8a9799'], [.02, .02, 6, 8.2, '#9aa58a'], [.025, .02, 9, 1.9, '#b9ad86']], land: [2.4, .9], water: 1, wcol: '#3a7896', wall: [-1.2, .55] },
-  { k: 'cannon', name: 'Cannon Hill', note: 'Over the town to Lady Bay and the lighthouse',
-    zen: '#4a84c9', hor: '#e0eaec', sun: [-.3, .38, .6], glow: '#fff2d4', cloud: .3, haze: .4, ground: '#6c8e43',
-    L: [[.01, .02, 3, 4.4, '#8b989a'], [-.01, .015, 6, 2.2, '#9aa086'], [.02, .02, 8, 6.1, '#6f9046']], land: [1.9, 1.4], water: 1, wcol: '#3a7896', town: [1.0, .9], light: -.25 },
+    zen: '#3f7bc6', hor: '#dae8ea', glow: '#fff3d6', sun: [.3, .5, .6], cloud: .3, haze: .3, ground: '#5f8f3a',
+    far: [.02, .01, 2, 2.9, '#8aa37c'], mid: [.05, .02, 5, 6.6, '#4f7d38'], near: [.02, .005, 6, 1.1, '#5f8f3a'], land: [0, 4], water: 3, wcol: '#4d6f6a', waz: [2.6, .8], crowns: 1 },
+  { k: 'thunder', name: 'Thunder Point', note: 'Basalt ledges, the swell breaking, and Merri Island',
+    zen: '#33689f', hor: '#cbd9de', glow: '#ffe7c0', sun: [-.6, .22, -.3], cloud: .6, haze: .5, ground: '#8f8c62',
+    far: [.015, .01, 3, 7.7, '#8a979a'], mid: [.03, .015, 7, 2.4, '#7a8c4e'], near: [.06, .02, 11, 9.1, '#7e8a4e'], face: '#67625a', land: [1.6, 1.25], water: 1, wcol: '#28597a', rocks: 1, island: [-1.6, .3] },
+  { k: 'break', name: 'The Breakwater', note: 'Lady Bay, the breakwater wall reaching out, the harbour',
+    zen: '#3d77bf', hor: '#dce7ea', glow: '#fff3d8', sun: [.2, .4, -.7], cloud: .4, haze: .4, ground: '#c9bb92',
+    far: [.02, .012, 3, 3.7, '#8a9799'], mid: [.035, .015, 6, 8.2, '#7f9466'], near: [.03, .01, 9, 1.9, '#8d9a6a'], land: [2.4, .95], water: 1, wcol: '#357a98', wall: [-1.1, .7], town: [2.0, .5, 0] },
+  { k: 'cannon', name: 'Cannon Hill', note: 'Up on the hill: the town below, Lady Bay and the lighthouse',
+    zen: '#4a84c9', hor: '#e1ebec', glow: '#fff2d4', sun: [-.3, .38, .6], cloud: .3, haze: .45, ground: '#6c8e43',
+    far: [.012, .01, 3, 4.4, '#8b989a'], mid: [-.02, .01, 6, 2.2, '#7f9466'], near: [-.035, .01, 8, 6.1, '#6f9046'], land: [1.9, 1.5], water: 1, wcol: '#357a98', town: [1.4, 1.1, 1], light: [-.3, .05] },
   { k: 'lavers', name: 'Lavers Hill Rainforest', note: 'Myrtle beech, tree ferns and the canopy closing over',
-    zen: '#6f9a8a', hor: '#c9d9c9', sun: [.2, .7, .3], glow: '#f4f7df', cloud: .7, haze: .55, ground: '#3e4a26',
-    L: [[.05, .03, 4, 1.9, '#5f7c64'], [.15, .08, 9, 5.5, '#2f4b2c'], [.32, .14, 15, 3.1, '#1f3520']], land: [0, 4], water: 0, wcol: '#344a3a', trees: 1, ferns: 1 },
-  { k: 'tower', name: 'Tower Hill', note: 'Inside the old volcano: the crater lake and its islands',
-    zen: '#4683c7', hor: '#dde8e8', sun: [.45, .42, .4], glow: '#fff1d0', cloud: .4, haze: .3, ground: '#6b7e3e',
-    L: [[.07, .03, 5, 2.7, '#6e8a52'], [.1, .04, 7, 7.3, '#5b7d3c'], [.025, .02, 13, 4.8, '#7d8f46']], land: [0, 4], water: 3, wcol: '#5f7e7a', waz: [0, 4], crater: 1 },
-  { k: 'pfairy', name: 'Port Fairy', note: 'The Moyne, the wharf and Griffiths Island lighthouse',
-    zen: '#3e7cc6', hor: '#dde9ee', sun: [-.5, .3, -.4], glow: '#ffeccc', cloud: .35, haze: .4, ground: '#9a9a78',
-    L: [[.012, .015, 3, 6.3, '#8f9a9c'], [.012, .012, 7, 3.6, '#9a9a80'], [.02, .02, 11, 8.8, '#788c50']], land: [2.6, 1.1], water: 1, wcol: '#356f8a', light: .55, town: [-2.4, .45] },
-  { k: 'hopriv', name: 'Hopkins River', note: 'Wide and slow below the Proudfoots bank',
-    zen: '#3f7cc5', hor: '#dbe7ea', sun: [.5, .35, .2], glow: '#fff0d0', cloud: .3, haze: .35, ground: '#6c8540',
-    L: [[.02, .015, 3, 9.3, '#86998a'], [.04, .025, 6, 4.4, '#6d8a4a'], [.02, .03, 14, 2.6, '#5c7a38']], land: [0, 4], water: 2, wcol: '#4f6e72', waz: [0, 1.15] },
+    zen: '#7aa596', hor: '#cfdfcf', glow: '#f4f7df', sun: [.2, .75, .3], cloud: .7, haze: .55, ground: '#3a4a24',
+    far: [.08, .03, 4, 1.9, '#4f6e52'], mid: [.16, .05, 9, 5.5, '#2e4a2c'], near: [.3, .1, 15, 3.1, '#1f3520'], land: [0, 4], water: 0, wcol: '#344a3a', forest: 1 },
+  { k: 'tower', name: 'Tower Hill', note: 'Inside the old volcano: the crater rim, the lake and its islands',
+    zen: '#4683c7', hor: '#dee9e8', glow: '#fff1d0', sun: [.45, .42, .4], cloud: .4, haze: .3, ground: '#6b7e3e',
+    far: [.06, .02, 4, 2.7, '#76905a'], mid: [.12, .035, 6, 7.3, '#5d7f3e'], near: [-.12, .005, 9, 4.8, '#6b7e3e'], land: [0, 4], water: 3, wcol: '#5d7e7a', waz: [0, 4], crater: 1 },
+  { k: 'pfairy', name: 'Port Fairy', note: 'The Moyne, the wharf, and Griffiths Island lighthouse',
+    zen: '#3e7cc6', hor: '#deeaee', glow: '#ffeccc', sun: [-.5, .3, -.4], cloud: .35, haze: .4, ground: '#8f9a74',
+    far: [.012, .01, 3, 6.3, '#8f9a9c'], mid: [.02, .01, 7, 3.6, '#8c9a76'], near: [.025, .01, 11, 8.8, '#788c50'], land: [2.5, 1.2], water: 1, wcol: '#32708c', light: [.5, .09], town: [-2.5, .5, 0], wall: [.15, .25] },
+  { k: 'hopriv', name: 'Hopkins River', note: 'Wide and slow, winding away between the banks',
+    zen: '#3f7cc5', hor: '#dce8ea', glow: '#fff0d0', sun: [.5, .35, .2], cloud: .3, haze: .35, ground: '#6c8540',
+    far: [.03, .015, 3, 9.3, '#86998a'], mid: [.06, .025, 5, 4.4, '#6d8a4a'], near: [.05, .02, 9, 2.6, '#5c7a38'], land: [0, 4], water: 2, wcol: '#4d6c72', waz: [0, .5], crowns: .5 },
   { k: 'merri', name: 'Merri River', note: 'Reeds and river red gums along the Merri',
-    zen: '#4a84c8', hor: '#dfe9e8', sun: [-.2, .45, .55], glow: '#fff3d6', cloud: .35, haze: .3, ground: '#5d7d38',
-    L: [[.02, .015, 3, 1.4, '#86998a'], [.06, .04, 10, 8.1, '#4c6a34'], [.02, .02, 21, 5.9, '#6f8a3e']], land: [0, 4], water: 2, wcol: '#56705e', waz: [-.4, .7], trees: .35, reeds: 1 },
-  { k: 'wool', name: 'Woolsthorpe Bridge', note: 'The old bridge over the river, out in the paddocks',
-    zen: '#4785c9', hor: '#e1eaea', sun: [.35, .4, -.55], glow: '#fff2d2', cloud: .3, haze: .3, ground: '#768a42',
-    L: [[.015, .015, 3, 3.3, '#8d9c88'], [.03, .02, 6, 7.4, '#7f9248'], [.015, .02, 12, 1.6, '#6f8a3c']], land: [0, 4], water: 2, wcol: '#58706a', waz: [.9, .8], bridge: [.9, .45] },
+    zen: '#4a84c8', hor: '#e0eae8', glow: '#fff3d6', sun: [-.2, .45, .55], cloud: .35, haze: .3, ground: '#5d7d38',
+    far: [.025, .015, 3, 1.4, '#86998a'], mid: [.05, .02, 7, 8.1, '#5a7a3a'], near: [.03, .01, 13, 5.9, '#6f8a3e'], land: [0, 4], water: 2, wcol: '#53705e', waz: [-.4, .4], crowns: .8, reeds: 1 },
+  { k: 'wool', name: 'Woolsthorpe Bridge', note: 'The old bridge across the river, out in the paddocks',
+    zen: '#4785c9', hor: '#e2ebea', glow: '#fff2d2', sun: [.35, .4, -.55], cloud: .3, haze: .3, ground: '#768a42',
+    far: [.02, .012, 3, 3.3, '#8d9c88'], mid: [.04, .015, 6, 7.4, '#7f9248'], near: [.03, .01, 10, 1.6, '#6f8a3c'], land: [0, 4], water: 2, wcol: '#56706a', waz: [.9, .45], bridge: [.9, .55], crowns: .4 },
   { k: 'bay', name: 'The bay (original)', note: 'The plain wash bay', plain: 1 },
 ];
 const WE = { k: store.get('scream-wash-env') || 'gor', mat: null, sky: null, skyScene: null, pmrem: null, rt: null, photo: null, photoTex: null, disc: null };
 
 const WENV_FS = `
 varying vec3 vP; uniform float uT;
-uniform vec3 uZen, uHor, uGlow, uSun, uGround, uWCol, uC1, uC2, uC3; uniform vec4 uL1, uL2, uL3; uniform vec2 uLand, uWaz, uWall, uTown, uBridge;
-uniform float uCloud, uHaze, uWater, uStacks, uFall, uTrees, uFerns, uCrater, uLight, uRocks, uReeds;
+uniform vec3 uZen, uHor, uGlow, uSun, uGround, uWCol, uC1, uC2, uC3, uFace; uniform vec4 uL1, uL2, uL3; uniform vec2 uLand, uWaz, uWall, uLight, uStacks, uFalls, uBridge, uIsland; uniform vec3 uTown;
+uniform float uCloud, uHaze, uWater, uCrowns, uForest, uCrater, uRocks, uReeds, uCliff;
 float h1(float x){ return fract(sin(x * 127.1) * 43758.5453); }
 float n1(float x){ float i = floor(x), f = fract(x); f = f * f * (3. - 2. * f); return mix(h1(i), h1(i + 1.), f); }
 float f1(float x){ return .5 * n1(x) + .25 * n1(x * 2.1 + 3.) + .125 * n1(x * 4.3 + 7.) + .0625 * n1(x * 8.9 + 1.); }
 float h2(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f); return mix(mix(h2(i), h2(i + vec2(1, 0)), f.x), mix(h2(i + vec2(0, 1)), h2(i + vec2(1, 1)), f.x), f.y); }
 float f2(vec2 p){ float s = 0., a = .5; for (int i = 0; i < 5; i++) { s += a * n2(p); p = p * 2.03 + 1.7; a *= .5; } return s; }
-float adist(float a, float b){ float d = a - b; return abs(d - 6.2831853 * floor((d + 3.14159265) / 6.2831853)); }
-float landMask(float a){ return uLand.y >= 3.1 ? 1. : smoothstep(uLand.y, uLand.y - .25, adist(a, uLand.x)); }
-float ridge(float a, vec4 L, float m){ float r = L.x + L.y * (f1(a * L.z + L.w) - .45) * 2.; return mix(-.4, r, m); }
+float ad(float a, float b){ float d = a - b; return abs(d - 6.2831853 * floor((d + 3.14159265) / 6.2831853)); }
+float sd(float a, float b){ float d = a - b; return d - 6.2831853 * floor((d + 3.14159265) / 6.2831853); }
+float landM(float a){ return uLand.y >= 3.1 ? 1. : smoothstep(uLand.y, uLand.y - .3, ad(a, uLand.x)); }
+float valley(float a){ return uWater > 1.5 && uWater < 2.5 ? smoothstep(uWaz.y * .5, uWaz.y * 1.6, ad(a, uWaz.x)) : 1.; }
+vec3 shade(vec3 col, float a, float h, float k, vec3 sd3){ return col * (.66 + .55 * f2(vec2(a * (50. + 160. * k), h * (120. + 360. * k)))) * (.78 + .32 * clamp(dot(normalize(vec3(cos(a), .5, sin(a))), sd3), 0., 1.)); }
 void main(){
-  vec3 d = normalize(vP); float h = d.y, a = atan(d.z, d.x);
-  vec3 sd = normalize(uSun); float sdot = max(dot(d, sd), 0.);
-  // sky
-  vec3 c = mix(uHor, uZen, pow(smoothstep(-.02, .75, h), .7));
-  c += uGlow * (pow(sdot, 900.) * 6. + pow(sdot, 12.) * .25);
-  if (h > 0.) { vec2 cp = d.xz / (h + .12) * 1.6 + vec2(uT * .004, 0.); float cl = smoothstep(1. - uCloud, 1.2 - uCloud * .6, f2(cp)); vec3 cc = mix(vec3(.62, .66, .7), vec3(1.), .55 + .45 * pow(sdot, 3.)); c = mix(c, cc, cl * smoothstep(0., .08, h) * .92); }
-  float lm = landMask(a);
-  // the sea (or river/lake) below the horizon
-  if (h < .002) {
-    vec3 w = uGround; float wv = 0.;
-    bool wet = uWater > .5 && (uWater < 1.5 || adist(a, uWaz.x) < uWaz.y);
-    if (wet) { float rip = f2(vec2(a * 60., log(max(-h, .001)) * 18. + uT * .6)); w = mix(uWCol * .8, mix(uHor, uZen, .4), .35 + .2 * rip); w += uGlow * pow(max(dot(reflect(d, vec3(0, 1, 0)), sd), 0.), 60.) * 1.4 * rip;
-      if (uWater < 1.5) { float surf = smoothstep(.006, .0, abs(h + .03 + .012 * n1(a * 9.)) ) * (.5 + .5 * n1(a * 40. + uT)); w = mix(w, vec3(.95), surf * .8); } }
-    c = mix(w, uGround, smoothstep(-.11, -.2, h));
+  vec3 d = normalize(vP); float h = d.y, a = atan(d.z, d.x); vec3 S = normalize(uSun); float sdot = max(dot(d, S), 0.);
+  vec3 sky = mix(uHor, uZen, pow(smoothstep(-.02, .75, h), .7)); sky += uGlow * (pow(sdot, 900.) * 6. + pow(sdot, 12.) * .25);
+  if (h > 0.) { vec2 cp = d.xz / (h + .12) * 1.6 + vec2(uT * .004, 0.); float cl = smoothstep(1. - uCloud, 1.2 - uCloud * .6, f2(cp)); vec3 cc = mix(vec3(.62, .66, .7), vec3(1.), .55 + .45 * pow(sdot, 3.)); sky = mix(sky, cc, cl * smoothstep(0., .08, h) * .92); }
+  vec3 c = sky; float lm = landM(a), vm = valley(a);
+  // the ground plane out to the horizon: sea, river, lake or paddock
+  if (h < .0015) {
+    vec3 g = shade(uGround, a, h, 1., S); float dep = -h;
+    vec3 wat = mix(uWCol, mix(uHor, uZen, .35), .3 + .25 * f2(vec2(a * 80., log(max(dep, .0005)) * 20. + uT * .5))); wat += uGlow * pow(max(dot(reflect(d, vec3(0, 1, 0)), S), 0.), 50.) * 1.3;
+    float w = 0.;
+    if (uWater > .5 && uWater < 1.5) { float shore = -.045 - .015 * f1(a * 4.); w = step(shore, h) * (1. - lm * smoothstep(.0, .2, lm)); w = max(w, step(shore, h) * (1. - lm));
+      float surf = smoothstep(.004, 0., abs(h - shore - .004 - .002 * sin(a * 30. + uT))) * (.6 + .4 * n1(a * 50. + uT)); wat = mix(wat, vec3(.95), surf); }
+    if (uWater > 1.5 && uWater < 2.5) { float wd = uWaz.y * (.18 + 3.5 * dep); w = step(ad(a, uWaz.x), wd + .02 * sin(dep * 60. + a * 3.)); }
+    if (uWater > 2.5) { w = step(-.09 - .02 * f1(a * 3.), h) * step(ad(a, uWaz.x), uWaz.y) * step(h, -.004); }
+    c = mix(g, wat, w); if (uWater > .5 && uWater < 1.5 && w < .5 && h > -.06) c = mix(c, vec3(.86, .8, .64), .5);
+    if (uReeds > .5 && w < .5) { float r = h2(vec2(floor(a * 700.), 1.)); float rh = -.035 + .03 * r; if (r > .45 && h < rh && h > -.06 && ad(a, uWaz.x) < uWaz.y * 3.) c = mix(vec3(.4, .48, .22), vec3(.66, .6, .34), h2(vec2(floor(a * 700.), 2.))); }
   }
   // limestone stacks out in the surf
-  if (uStacks > -9.) for (int i = 0; i < 6; i++) { float fi = float(i), ac = uStacks + (fi - 2.5) * .11 + (h1(fi) - .5) * .05, wd = .012 + .014 * h1(fi + 9.), ht = .025 + .05 * h1(fi + 3.), x = (a - ac) / wd;
-    if (abs(x) < 1. && h < ht * (1. - .12 * x * x * x * x) - .004 * n1(a * 400.) && h > -.035) { float band = .85 + .15 * sin(h * 900.); c = mix(vec3(.86, .74, .55), vec3(.5, .4, .28), .45 + .55 * x) * band * (.7 + .4 * f2(vec2(a * 500., h * 500.))); if (h < -.025 + .006 * n1(a * 90. + uT)) c = mix(c, vec3(.95), .7); } }
-  // three layers of land, far to near, hazed with distance
-  vec3 C[3]; C[0] = uC1; C[1] = uC2; C[2] = uC3; vec4 LL[3]; LL[0] = uL1; LL[1] = uL2; LL[2] = uL3;
-  for (int i = 0; i < 3; i++) { float m = i == 0 ? max(lm, uWater > 1.5 || uWater < .5 ? 1. : 0.) : lm, r = ridge(a, LL[i], m);
-    if (uCrater > .5 && i == 1) r = .055 + .025 * f1(a * 3. + 2.);
-    if (uTrees > 0. && i == 2) r += uTrees * .06 * pow(n1(a * 22.), 3.) + uTrees * .03 * n1(a * 61.);
-    if (h < r && (i > 0 || h > -.06)) { float k = float(i) / 2.; vec3 col = C[i] * (.62 + .6 * f2(vec2(a * (60. + 140. * k), h * (140. + 260. * k)))) * (.85 + .25 * smoothstep(r - .03, r, h));
-      col *= .75 + .35 * clamp(dot(normalize(vec3(cos(a), .6, sin(a))), sd), 0., 1.); c = mix(col, mix(uHor, c, .3), uHaze * (1. - k) * .7); if (i == 2 && h < -.004) c = mix(c, uGround, smoothstep(-.02, -.12, h)); } }
+  if (uStacks.y > 0.) for (int i = 0; i < 6; i++) { float fi = float(i), ac = uStacks.x + (fi - 2.5) / 5. * uStacks.y * 2. + (h1(fi) - .5) * .06, wd = .018 + .02 * h1(fi + 9.), ht = .04 + .06 * h1(fi + 3.), x = sd(a, ac) / wd;
+    if (abs(x) < 1. && h < ht * (1. - .1 * pow(x, 4.)) - .006 * n1(a * 300.) && h > -.04) { float band = .86 + .14 * sin(h * 700. + h1(fi) * 6.); c = mix(vec3(.88, .76, .56), vec3(.46, .37, .26), .4 + .6 * x) * band * (.72 + .4 * f2(vec2(a * 400., h * 400.)));
+      if (h > ht * (1. - .1 * pow(x, 4.)) - .01) c = vec3(.42, .5, .26); if (h < -.03 + .008 * n1(a * 90. + uT)) c = mix(c, vec3(.96), .75); } }
+  // an island offshore
+  if (uIsland.y > 0.) { float x = sd(a, uIsland.x) / uIsland.y; if (abs(x) < 1. && h < .02 * (1. - x * x) - .002 && h > -.03) c = shade(vec3(.45, .5, .32), a, h, .6, S); }
+  // land: far, middle and near ridges
+  float rf = uL1.x + uL1.y * (f1(a * uL1.z + uL1.w) - .45) * 2.; rf = mix(-.5, rf, max(lm, uWater > .5 && uWater < 1.5 ? 0. : 1.));
+  if (h < rf && h > -.05) c = mix(shade(uC1, a, h, 0., S), uHor, uHaze * .65);
+  float rm = uL2.x + uL2.y * (f1(a * uL2.z + uL2.w) - .45) * 2.; if (uCrater > .5) rm = .1 + .035 * f1(a * 3. + 2.); rm = mix(-.5, rm, lm * mix(.6, 1., vm));
+  if (h < rm && h > (uCrater > .5 ? -.004 : mix(.001, -.08, vm))) c = mix(shade(uC2, a, h, .4, S), uHor, uHaze * .3);
+  float rn = uL3.x + uL3.y * (f1(a * uL3.z + uL3.w) - .45) * 2.; if (uCrowns > 0.) { float cb = 0.; for (int j = 0; j < 2; j++) { float fj = float(j), q = a * 9. + fj * .5, cell = floor(q), x = fract(q) - .5, r = .25 + .25 * h1(cell + fj * 17.); cb = max(cb, (.03 + .05 * h1(cell + 4. + fj)) * sqrt(max(0., 1. - (x / r) * (x / r)))); } rn += uCrowns * cb; }
+  float lk = uWater > 2.5 ? (uWaz.y >= 3.1 ? 0. : smoothstep(uWaz.y * .8, uWaz.y * 1.15, ad(a, uWaz.x))) : 1.; rn = mix(uWater > 2.5 ? -.1 : -.5, rn, lm * vm * lk);
+  if (h < rn && rn > -.2) { vec3 col = shade(uC3, a, h, 1., S); float cap = .012 + .006 * n1(a * 40.);
+    if (uCliff > .5 && h < rn - cap) { col = shade(uFace, a, h, 1., S) * (.85 + .15 * sin(h * 500. + n1(a * 20.) * 3.)); if (uWater > .5 && uWater < 1.5 && h < -.03) col = mix(col, vec3(.95), .4 * n1(a * 60. + uT)); }
+    if (uCrowns > 0. && h > rn - .03) col *= .85 + .3 * n2(vec2(a * 120., h * 160.)); c = col; }
   // Tower Hill: islands in the crater lake
-  if (uCrater > .5) for (int i = 0; i < 3; i++) { float fi = float(i), ac = -1.2 + fi * 1.9, wd = .3 + .1 * fi, x = (a - ac) / wd; if (abs(x) < 1. && h < .03 * (1. - x * x) - .01 && h > -.02) c = vec3(.33, .44, .24) * (.8 + .3 * n1(a * 80.)); }
-  // waterfall: white water down the basalt
-  if (uFall > -9. && adist(a, uFall) < .09 && h < .055 && h > -.03) { float s = n2(vec2(a * 260., h * 70. + uT * 4.)); c = mix(c, vec3(.93, .95, .96), smoothstep(.35, .7, s) * (1. - smoothstep(.07, .09, adist(a, uFall)))); }
-  // rocks at the water's edge
-  if (uRocks > .5 && h < -.008 && h > -.05) { float r = n2(vec2(a * 90., h * 140.)); if (r > .62) c = mix(vec3(.25, .24, .22), vec3(.45, .43, .38), n2(vec2(a * 400., h * 400.))); }
-  // the breakwater wall
-  if (uWall.y > 0. && adist(a, uWall.x) < uWall.y && h > -.016 && h < -.006 + .002 * n1(a * 200.)) c = vec3(.5, .5, .48) * (.75 + .3 * n2(vec2(a * 500., h * 900.)));
-  // the town
-  if (uTown.y > 0. && adist(a, uTown.x) < uTown.y) { float b = floor(a * 70.), bh = .004 + .016 * h1(b) * h1(b + .5); if (h < bh && h > -.002) { c = mix(vec3(.82, .8, .74), vec3(.62, .52, .45), h1(b + 2.)); if (fract(a * 70.) < .12) c *= .7; if (h > bh - .003) c = mix(c, vec3(.55, .3, .25), h1(b + 7.)); } }
+  if (uCrater > .5) for (int i = 0; i < 3; i++) { float fi = float(i), x = sd(a, -1.2 + fi * 1.9) / (.35 + .12 * fi); if (abs(x) < 1. && h < .035 * (1. - x * x) - .03 && h > -.07) c = shade(vec3(.42, .56, .3), a, h, .8, S); }
+  // Hopkins Falls: a wide curtain of white water over the basalt, into the pool
+  if (uFalls.y > 0.) { float x = sd(a, uFalls.x) / uFalls.y; if (abs(x) < 1. && h > -.025 && h < .028 + .004 * n1(a * 30.)) { float s = f2(vec2(a * 90., h * 18. + uT * 2.5)) * .7 + .3 * n2(vec2(a * 400., h * 60. + uT * 6.)); vec3 rock = shade(vec3(.27, .26, .24), a, h, 1., S);
+      c = mix(rock, mix(vec3(.7, .76, .78), vec3(.97), smoothstep(.35, .7, s)), smoothstep(1., .8, abs(x))); if (h > .022) c = shade(vec3(.4, .5, .3), a, h, 1., S); }
+    if (abs(x) < 1.3 && h < -.025 && h > -.04) c = mix(c, vec3(.92), .5 * n2(vec2(a * 200., uT * 2.))); }
+  // the breakwater
+  if (uWall.y > 0. && ad(a, uWall.x) < uWall.y && h > -.022 && h < -.008 + .002 * n1(a * 200.)) c = vec3(.52, .52, .5) * (.7 + .35 * n2(vec2(a * 500., h * 900.)));
+  // the town (below the horizon from Cannon Hill)
+  if (uTown.y > 0. && ad(a, uTown.x) < uTown.y) { float b = floor(a * 60.), base = uTown.z > .5 ? -.04 + .02 * h1(b + 9.) : -.003, bh = base + .008 + .028 * h1(b) * h1(b + .5);
+    if (h < bh && h > base - .01) { c = mix(vec3(.86, .84, .78), vec3(.66, .55, .47), h1(b + 2.)); if (fract(a * 60.) < .12) c *= .7; if (h > bh - .004) c = mix(c, vec3(.58, .3, .24), h1(b + 7.)); } }
   // a lighthouse
-  if (uLight > -9. && adist(a, uLight) < .006 && h > -.003 && h < .05) { c = h > .042 ? vec3(.12) : vec3(.96, .95, .92) * (.8 + .2 * step(0., cos(a * 900.))); }
-  // the bridge: deck and arches over the river
-  if (uBridge.y > 0. && adist(a, uBridge.x) < uBridge.y) { float u = (a - uBridge.x) / uBridge.y; float deck = .022; if (abs(h - deck) < .003) c = vec3(.42, .38, .33);
-    float sp = fract(u * 4. + .5) - .5; if (h < deck && h > -.012 && h > deck - .03 * (1. - 4. * sp * sp) && abs(sp) > .42) c = vec3(.5, .45, .38) * (.85 + .2 * n2(vec2(a * 600., h * 600.))); }
+  if (uLight.y > 0. && ad(a, uLight.x) < .007 && h > -.004 && h < uLight.y) c = h > uLight.y - .012 ? vec3(.1) : vec3(.97, .96, .93) * (.75 + .25 * step(0., sd(a, uLight.x)));
+  // the bridge over the river: stone piers and arches
+  if (uBridge.y > 0. && ad(a, uBridge.x) < uBridge.y) { float u = sd(a, uBridge.x) / uBridge.y, deck = .045; if (h > deck - .006 && h < deck) c = vec3(.5, .45, .38);
+    float sp = fract(u * 2.5 + .5) - .5; if (h < deck && h > -.012 && h > deck - .05 * sqrt(max(0., 1. - pow(abs(sp) / .44, 2.)))) c = vec3(.58, .52, .43) * (.8 + .25 * n2(vec2(a * 600., h * 600.))); }
   // rainforest: trunks, tree ferns, and the canopy closing overhead
-  if (uFerns > .5) { float tr = n1(a * 38.); if (tr > .78 && h > -.05 && h < .55) c = mix(vec3(.18, .14, .1), vec3(.32, .27, .2), n2(vec2(a * 400., h * 20.)));
-    float fc = .05 + .03 * n1(a * 13.); vec2 fp = vec2(fract(a * 6.) - .5, h - fc); if (length(fp * vec2(2.5, 6.)) < .25 + .08 * sin(atan(fp.y, fp.x) * 14.)) c = vec3(.2, .36, .16) * (.8 + .3 * n2(fp * 80.)); }
-  if (uTrees > .7 && h > .45) { float can = f2(vec2(a * 5., h * 7.)) + (h - .45) * 1.2; if (can > .62) c = mix(vec3(.12, .22, .1), vec3(.3, .45, .2), n2(vec2(a * 70., h * 70.))) * (.6 + .5 * smoothstep(.62, .9, can)); }
-  if (uReeds > .5 && h < .02 && h > -.04) { float r = n2(vec2(a * 900., 0.)); if (r > .55 && h < -.04 + .06 * r) c = mix(vec3(.45, .5, .25), vec3(.62, .58, .32), n1(a * 300.)); }
+  if (uForest > .5) { float col = floor(a * 30.), tr = h1(col); if (tr > .66 && abs(fract(a * 30.) - .5) < .05 + .2 * h1(col + 3.) && h > -.06 && h < .7) c = shade(vec3(.24, .19, .13), a, h, 1., S);
+    vec2 fp = vec2(fract(a * 4. + .3 * h1(floor(a * 4.))) - .5, h - .05 - .04 * h1(floor(a * 4.) + 5.)); float ang = atan(fp.y, fp.x), rr = length(fp * vec2(1.1, 3.)); if (h1(floor(a * 4.) + 2.) > .35 && rr < .22 + .07 * sin(ang * 18.) && fp.y > -.04) c = shade(vec3(.2, .38, .15), a, h, 1., S);
+    float can = f2(vec2(a * 4., h * 6.)) + (h - .35) * 1.6; if (h > .35 && can > .55) c = shade(mix(vec3(.12, .24, .1), vec3(.3, .46, .2), smoothstep(.55, 1., can)), a, h, 1., S); }
+  // rocks along the water's edge
+  if (uRocks > .5 && h < -.035 && h > -.08) { float r = f2(vec2(a * 30., h * 50.)); if (r > .6) c = shade(vec3(.36, .34, .3), a, h, .5, S) * (.8 + .4 * smoothstep(.6, .75, r)); }
   gl_FragColor = vec4(c, 1.);
 }`;
 
 function wenvUniforms(E) {
-  const C = x => new THREE.Color(x), V = a => new THREE.Vector3(...a), L = i => new THREE.Vector4(...E.L[i].slice(0, 4));
-  return { uT: { value: 0 }, uZen: { value: C(E.zen) }, uHor: { value: C(E.hor) }, uGlow: { value: C(E.glow) }, uSun: { value: V(E.sun) }, uGround: { value: C(E.ground) }, uWCol: { value: C(E.wcol || '#305060') },
-    uC1: { value: C(E.L[0][4]) }, uC2: { value: C(E.L[1][4]) }, uC3: { value: C(E.L[2][4]) }, uL1: { value: L(0) }, uL2: { value: L(1) }, uL3: { value: L(2) },
-    uLand: { value: new THREE.Vector2(...(E.land || [0, 4])) }, uWaz: { value: new THREE.Vector2(...(E.waz || [0, 4])) }, uWall: { value: new THREE.Vector2(...(E.wall || [0, 0])) }, uTown: { value: new THREE.Vector2(...(E.town || [0, 0])) }, uBridge: { value: new THREE.Vector2(...(E.bridge || [0, 0])) },
-    uCloud: { value: E.cloud }, uHaze: { value: E.haze }, uWater: { value: E.water || 0 }, uStacks: { value: E.stacks ?? -99 }, uFall: { value: E.fall ?? -99 }, uTrees: { value: E.trees || 0 }, uFerns: { value: E.ferns || 0 },
-    uCrater: { value: E.crater || 0 }, uLight: { value: E.light ?? -99 }, uRocks: { value: E.rocks || 0 }, uReeds: { value: E.reeds || 0 } };
+  const C = x => new THREE.Color(x), V2 = (v, z = [0, 0]) => new THREE.Vector2(...(v || z)), L4 = l => new THREE.Vector4(...l.slice(0, 4));
+  return { uT: { value: 0 }, uZen: { value: C(E.zen) }, uHor: { value: C(E.hor) }, uGlow: { value: C(E.glow) }, uSun: { value: new THREE.Vector3(...E.sun) }, uGround: { value: C(E.ground) }, uWCol: { value: C(E.wcol || '#305060') },
+    uC1: { value: C(E.far[4]) }, uC2: { value: C(E.mid[4]) }, uC3: { value: C(E.near[4]) }, uFace: { value: C(E.face || E.near[4]) }, uL1: { value: L4(E.far) }, uL2: { value: L4(E.mid) }, uL3: { value: L4(E.near) },
+    uLand: { value: V2(E.land, [0, 4]) }, uWaz: { value: V2(E.waz, [0, 4]) }, uWall: { value: V2(E.wall) }, uLight: { value: V2(E.light) }, uStacks: { value: V2(E.stacks) }, uFalls: { value: V2(E.falls) }, uBridge: { value: V2(E.bridge) }, uIsland: { value: V2(E.island) },
+    uTown: { value: new THREE.Vector3(...(E.town || [0, 0, 0])) }, uCloud: { value: E.cloud }, uHaze: { value: E.haze }, uWater: { value: E.water || 0 }, uCrowns: { value: E.crowns || 0 }, uForest: { value: E.forest || 0 },
+    uCrater: { value: E.crater || 0 }, uRocks: { value: E.rocks || 0 }, uReeds: { value: E.reeds || 0 }, uCliff: { value: E.face ? 1 : 0 } };
 }
 function wenvFind(k) { return WENV.find(e => e.k === k) || WENV[0]; }
 function wenvApply(k) {
@@ -7909,6 +7925,14 @@ $('wHint').addEventListener('click', e => { const b = e.target.closest('button[d
   const off = $('wEnvPhotoOff'); if (off) off.onclick = () => { try { localStorage.removeItem('scream-wash-photo-' + WE.k); } catch (e) {} wenvApply(WE.k); };
   const gv = $('wGardenView'); if (gv) gv.onclick = () => { washTool('garden'); WASH.tgtW.set(0, .5, 9.5); WASH.orb.dist = 11; WASH.orb.pitch = .45; WASH.orb.yaw = 1.57; }; }
 
+
+/* ---------- v72: toggle the on-screen controls (H, or the eye button in the corner) ---------- */
+{ const b = document.createElement('button'); b.id = 'uiEye'; b.type = 'button'; b.title = 'Hide or show the controls (H)'; b.setAttribute('aria-label', 'Hide or show the controls'); b.textContent = '👁'; document.body.appendChild(b);
+  const vis = () => { const on = state.screen === 'race' || (typeof WASH !== 'undefined' && WASH.on); b.style.display = on ? 'block' : 'none'; if (!on) document.body.classList.remove('noui'); };
+  const tog = () => { document.body.classList.toggle('noui'); b.textContent = document.body.classList.contains('noui') ? '◉' : '👁'; };
+  b.addEventListener('click', e => { e.stopPropagation(); tog(); });
+  addEventListener('keydown', e => { if (e.code === 'KeyH' && !e.repeat && !/INPUT|TEXTAREA|SELECT/.test((e.target && e.target.tagName) || '') && (state.screen === 'race' || (typeof WASH !== 'undefined' && WASH.on))) tog(); });
+  setInterval(vis, 400); vis(); }
 </script>
 </body>
 </html>
