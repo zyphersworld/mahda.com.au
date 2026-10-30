@@ -7520,16 +7520,16 @@ function mpStatus(t) { MP.status = t; const o = $('mpStatus'); if (o) o.textCont
 function mpUI() { const b = $('mpBtn'), r = $('mpRaceBtn'); if (b) b.textContent = MP.ws ? 'Disconnect' : 'Connect';
   if (r) { const on = !!MP.ws && MP.id != null && MP.host === MP.id; r.disabled = !on; r.textContent = !MP.ws ? 'Race together' : on ? 'Race together (' + (MP.peers.size + 1) + ')' : 'Waiting for the host to start'; } }
 function mpConnect() {
-  mpClose(); if (location.protocol === 'https:' && /^ws:/.test(MP.url) && !/localhost|127\.0\.0\.1/.test(MP.url)) { mpStatus('This page is https, so the server needs wss://'); return; }
+  mpClose(false); if (location.protocol === 'https:' && /^ws:/.test(MP.url) && !/localhost|127\.0\.0\.1/.test(MP.url)) { mpStatus('This page is https, so the server needs wss://'); return; }
   let ws; const u = MP.url + (MP.url.includes('?') ? '&' : '?') + 'room=' + encodeURIComponent(MP.room);
   try { ws = new WebSocket(u); } catch (e) { mpStatus('Blocked here: open the game from its web page'); return; }
   MP.ws = ws; mpStatus('Connecting…');
-  ws.onopen = () => { mpStatus('Connected'); ws.send(JSON.stringify({ t: 'hello', room: MP.room, name: MP.name, num: String(state.num || ''), col: '#' + new THREE.Color(state.color || '#ffb547').getHexString() })); };
-  ws.onclose = () => { if (MP.ws === ws) { MP.ws = null; mpStatus('Disconnected'); mpClear(); } };
+  ws.onopen = () => { MPN.back = 1; mpStatus('Connected'); ws.send(JSON.stringify({ t: 'hello', room: MP.room, name: MP.name, num: String(state.num || ''), col: '#' + new THREE.Color(state.color || '#ffb547').getHexString() })); };
+  ws.onclose = () => { if (MP.ws !== ws) return; MP.ws = null; mpClear(); if (MPN.manual) { mpStatus('Disconnected'); return; } const w = Math.min(30, MPN.back); MPN.back = Math.min(30, MPN.back * 2); mpStatus('Connection lost · retrying in ' + w + ' s'); clearTimeout(MPN.rtimer); MPN.rtimer = setTimeout(() => { if (!MP.ws && !MPN.manual) mpConnect(); }, w * 1000); };
   ws.onerror = () => mpStatus(/claude|anthropic/.test(location.host) || window !== window.top ? 'Blocked on this page: open the game from its web page' : 'Could not reach the multiplayer server');
-  ws.onmessage = e => { let m; try { m = JSON.parse(e.data); } catch (_) { return; } mpOnMsg(m); };
+  ws.binaryType = 'arraybuffer'; ws.onmessage = e => { if (typeof e.data !== 'string') { mpOnBin(e.data); return; } let m; try { m = JSON.parse(e.data); } catch (_) { return; } mpOnMsg(m); };
 }
-function mpClose() { if (MP.ws) { const w = MP.ws; MP.ws = null; try { w.close(); } catch (e) {} } mpClear(); MP.id = MP.host = null; mpUI(); }
+function mpClose(manual = true) { MPN.manual = manual; clearTimeout(MPN.rtimer); if (MP.ws) { const w = MP.ws; MP.ws = null; try { w.close(); } catch (e) {} } mpClear(); MP.id = MP.host = null; mpUI(); }
 function mpClear() { for (const P of MP.peers.values()) mpDrop(P); MP.peers.clear(); mpList(); }
 function mpDrop(P) { if (P.car && P.car.parent) P.car.parent.remove(P.car); }
 function mpPeer(id, info) {
@@ -7587,21 +7587,62 @@ function mpCar(P) {
   try { P.car = makeSprintcar(c.getHex(), c2.getHex(), P.num || '0', 'hoosier', 'mesh'); } catch (e) { P.car = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1, 3.6), new THREE.MeshStandardMaterial({ color: c })); }
   P.car.userData.mp = true; scene.add(P.car); return P.car;
 }
+// v73 netcode: binary car states (41 bytes, sender-timestamped), an adaptive jitter buffer, Hermite interpolation with velocity,
+// short extrapolation when packets are late, a light final smoothing, wheels that turn and steer, and automatic reconnects.
+const MPN = { t0: performance.now(), seq: 0, buf: new ArrayBuffer(41), rate: 20, back: 1, manual: false, rtimer: 0, sent: 0, recv: 0, bytes: 0 };
+const _mpv = new DataView(MPN.buf);
+function mpPack() {   // [1 type][2 seq][4 time ms][12 pos f32][8 quat i16][4 vel i16 x,z][1 steer][1 flags][4 progress][4 finish]
+  const c = player, m = c.mesh, p = m.position, q = m.quaternion, v = _mpv, inR = race.mp && race.state === 'green';
+  v.setUint8(0, 1); v.setUint16(1, MPN.seq = (MPN.seq + 1) & 65535, true); v.setUint32(3, Math.round(performance.now() - MPN.t0), true);
+  v.setFloat32(7, p.x, true); v.setFloat32(11, p.y, true); v.setFloat32(15, p.z, true);
+  v.setInt16(19, q.x * 32767, true); v.setInt16(21, q.y * 32767, true); v.setInt16(23, q.z * 32767, true); v.setInt16(25, q.w * 32767, true);
+  v.setInt16(27, clamp(c.vx || 0, -60, 60) * 500, true); v.setInt16(29, clamp(c.vz || 0, -60, 60) * 500, true);
+  v.setInt8(31, clamp((c.steerVis ?? c.psteer ?? 0) / .6, -1, 1) * 127); v.setUint8(32, (c.state === 'tumble' ? 1 : 0) | (c.finished ? 2 : 0));
+  v.setFloat32(33, inR ? c.laps + c.s / L : -1, true); v.setFloat32(37, race.mp && c.finished ? (MP.race.finT || 0) : 0, true);
+  return MPN.buf;
+}
+function mpOnBin(ab) {
+  if (ab.byteLength < 43) return; const v = new DataView(ab), id = v.getUint16(0, true); if (v.getUint8(2) !== 1) return; const o = 2;
+  const P = mpPeer(id), now = performance.now(), ts = v.getUint32(o + 3, true), seq = v.getUint16(o + 1, true);
+  if (P.seq != null && ((seq - P.seq) & 65535) > 32768) return; P.seq = seq;   // late and out of order: drop
+  const s = { ts, p: [v.getFloat32(o + 7, true), v.getFloat32(o + 11, true), v.getFloat32(o + 15, true)], q: [v.getInt16(o + 19, true) / 32767, v.getInt16(o + 21, true) / 32767, v.getInt16(o + 23, true) / 32767, v.getInt16(o + 25, true) / 32767],
+    vel: [v.getInt16(o + 27, true) / 500, v.getInt16(o + 29, true) / 500], st: v.getInt8(o + 31) / 127 * .6, fl: v.getUint8(o + 32) };
+  P.prog = v.getFloat32(o + 33, true); P.fin = v.getFloat32(o + 37, true);
+  // clock: the smallest (arrival − send) over the last few seconds is the offset; the spread above it is the jitter
+  const off = now - ts; P.offs = P.offs || []; P.offs.push(off); if (P.offs.length > 60) P.offs.shift();
+  let mn = 1e12, sum = 0; for (const x of P.offs) { mn = Math.min(mn, x); sum += x; } P.off = mn; P.jit = sum / P.offs.length - mn;
+  P.snaps = P.snaps || []; P.snaps.push(s); if (P.snaps.length > 40) P.snaps.shift(); P.lastAt = now; MPN.recv++; MPN.bytes += ab.byteLength;
+}
+const _mq3 = new THREE.Quaternion(), _mq4 = new THREE.Quaternion(), _mv3 = new THREE.Vector3();
+function mpPose(P, now, dt) {
+  const S = P.snaps; if (!S || !S.length) return null;
+  const want = clamp(70 + P.jit * 2.5, 70, 260); P.delay = P.delay == null ? want : P.delay + (want - P.delay) * Math.min(1, dt * 2);   // the buffer grows with the jitter, eased so it never jerks
+  const rt = now - P.off - P.delay; let a = null, b = null;
+  for (let i = S.length - 1; i > 0; i--) if (S[i - 1].ts <= rt && S[i].ts >= rt) { a = S[i - 1]; b = S[i]; break; }
+  const out = P.pose || (P.pose = { p: new THREE.Vector3(), q: new THREE.Quaternion(), st: 0, v: 0, fl: 0 });
+  if (a) { const T = Math.max(1, b.ts - a.ts), k = (rt - a.ts) / T, Ts = T / 1000, k2 = k * k, k3 = k2 * k, h00 = 2 * k3 - 3 * k2 + 1, h10 = k3 - 2 * k2 + k, h01 = -2 * k3 + 3 * k2, h11 = k3 - k2;
+    out.p.set(h00 * a.p[0] + h10 * Ts * a.vel[0] + h01 * b.p[0] + h11 * Ts * b.vel[0], a.p[1] + (b.p[1] - a.p[1]) * k, h00 * a.p[2] + h10 * Ts * a.vel[1] + h01 * b.p[2] + h11 * Ts * b.vel[1]);
+    _mq3.set(...a.q).normalize(); _mq4.set(...b.q).normalize(); out.q.copy(_mq3).slerp(_mq4, k); out.st = a.st + (b.st - a.st) * k; out.v = Math.hypot(b.vel[0], b.vel[1]); out.fl = b.fl; }
+  else { const l = S[S.length - 1], ex = clamp(rt - l.ts, 0, 300) / 1000;   // late: carry on along its velocity for up to 0.3 s, then hold
+    out.p.set(l.p[0] + l.vel[0] * ex, l.p[1], l.p[2] + l.vel[1] * ex); out.q.set(...l.q).normalize(); out.st = l.st; out.v = Math.hypot(l.vel[0], l.vel[1]); out.fl = l.fl; }
+  return out;
+}
 function mpStep(dt) {
   mpBoard(); mpRecover(dt);
-  if (!MP.ws || MP.ws.readyState !== 1) return; const now = performance.now() / 1000, onTrack = state.screen === 'race' && race && player && player.mesh;
+  if (!MP.ws || MP.ws.readyState !== 1) return; const now = performance.now(), onTrack = state.screen === 'race' && race && player && player.mesh;
   if (race && race.mp && player && player.finished && !MP.race.finT) MP.race.finT = Date.now() / 1000;
-  MP.sendT += dt; if (onTrack && MP.sendT > 1 / 15) { MP.sendT = 0; const m = player.mesh, p = m.position, q = m.quaternion, inR = race.mp && race.state === 'green';
-    mpSend({ t: 's', s: [+p.x.toFixed(2), +p.y.toFixed(2), +p.z.toFixed(2), +q.x.toFixed(4), +q.y.toFixed(4), +q.z.toFixed(4), +q.w.toFixed(4), +(player.v || 0).toFixed(1), inR ? +(player.laps + player.s / L).toFixed(4) : -1, race.mp && player.finished ? +(MP.race.finT).toFixed(2) : 0] }); }
-  const tt = now - MP.delay;
+  // 20 a second while there's racing, 8 when it's quiet, nothing off the track
+  MPN.rate = onTrack && (race.state === 'green' || race.state === 'formation' || race.state === 'pushoff') ? 20 : 8;
+  MP.sendT += dt; if (onTrack && MP.sendT >= 1 / MPN.rate && MP.ws.bufferedAmount < 4096) { MP.sendT = 0; MP.ws.send(mpPack()); MPN.sent++; }
   for (const P of MP.peers.values()) {
-    const B = P.buf; if (!B.length) continue; const car = mpCar(P); car.visible = !!onTrack && now - B[B.length - 1].at < 3;
-    let a = B[0], b = B[B.length - 1]; for (let i = 0; i + 1 < B.length; i++) if (B[i].at <= tt && B[i + 1].at >= tt) { a = B[i]; b = B[i + 1]; break; }
-    const k = b.at > a.at ? clamp((tt - a.at) / (b.at - a.at), 0, 1) : 1, A = a.s, Bs = b.s;
-    car.position.set(A[0] + (Bs[0] - A[0]) * k, A[1] + (Bs[1] - A[1]) * k, A[2] + (Bs[2] - A[2]) * k);
-    _mq.set(A[3], A[4], A[5], A[6]); _mq2.set(Bs[3], Bs[4], Bs[5], Bs[6]); car.quaternion.copy(_mq).slerp(_mq2, k);
+    const pose = mpPose(P, now, dt); if (!pose) continue; const car = mpCar(P); car.visible = !!onTrack && now - (P.lastAt || 0) < 3000; if (!car.visible) continue;
+    // a final, light smoothing: soaks up any residual step without visible lag; a big jump (a reset) just snaps
+    if (!P.shown || car.position.distanceTo(pose.p) > 12) { car.position.copy(pose.p); car.quaternion.copy(pose.q); P.shown = true; }
+    else { const k = 1 - Math.exp(-dt * 30); car.position.lerp(pose.p, k); car.quaternion.slerp(pose.q, k); }
+    const U = car.userData; if (U && U.wheels) { P.spin = (P.spin || 0) + pose.v * dt; for (const w of U.wheels) { w.t.rotation.z = -P.spin / (w.r || .4); if (w.front) w.piv.rotation.y = pose.st; } }
   }
 }
+
 { const cs0 = commStep; commStep = function (dt) { cs0(dt); try { mpStep(dt); } catch (e) {} }; }
 { const u = $('mpUrl'), r = $('mpRoom'), n = $('mpName'), b = $('mpBtn'), rb = $('mpRaceBtn');
   if (u) { u.value = MP.url; r.value = MP.room; n.value = MP.name;
