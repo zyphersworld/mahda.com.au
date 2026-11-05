@@ -545,9 +545,82 @@ body.noui #hud, body.noui #touch, body.noui #mpBoard, body.noui #wash .w-panel, 
 select, select option { background-color: #1c2026; color: #f2f2f2; color-scheme: dark; }   /* native dropdown lists were white on white */
 #uiEye { position: fixed; left: 10px; bottom: 10px; z-index: 60; width: 38px; height: 38px; border-radius: 50%; border: 0; background: rgba(10,10,14,.55); color: #fff; font-size: 18px; line-height: 38px; text-align: center; cursor: pointer; opacity: .55; padding: 0; }
 #uiEye:hover, body.noui #uiEye { opacity: .9; }
+
+/* v74: the intro */
+#intro{ position:fixed; inset:0; z-index:9999; overflow:hidden; background:#05060a; color:#fff; cursor:pointer; font-family:'Big Shoulders Display','Barlow Condensed',Impact,sans-serif; transition:opacity .6s; contain:strict; }
+#intro.out{ opacity:0; }
+#intro *{ will-change:transform,opacity; }
+.in-sky{ position:absolute; inset:0; background:radial-gradient(120% 70% at 50% 110%,#3a1d10 0%,#140c10 45%,#05060a 75%); opacity:0; animation:inFade 2s .3s forwards; }
+.in-lights{ position:absolute; left:0; right:0; top:8%; display:flex; justify-content:space-around; }
+.in-lights i{ width:16vmin; height:16vmin; border-radius:50%; background:radial-gradient(circle,#fff 0 6%,rgba(255,236,200,.85) 9%,rgba(255,200,120,.25) 30%,transparent 62%); opacity:0; transform:scale(.6); animation:inLamp .5s forwards, inFlick 3s 2s infinite alternate; }
+.in-lights i:nth-child(1){ animation-delay:.5s,2.1s } .in-lights i:nth-child(2){ animation-delay:.75s,2.4s } .in-lights i:nth-child(3){ animation-delay:1s,2.2s } .in-lights i:nth-child(4){ animation-delay:1.25s,2.6s } .in-lights i:nth-child(5){ animation-delay:1.5s,2.3s }
+.in-track{ position:absolute; left:-10%; right:-10%; bottom:0; height:34%; background:linear-gradient(180deg,#5a3520,#2b1a10 60%,#130b07); transform:perspective(400px) rotateX(55deg); transform-origin:50% 100%; opacity:0; animation:inFade 1.6s .8s forwards; }
+.in-track::after{ content:''; position:absolute; left:0; right:0; top:18%; height:3px; background:rgba(255,255,255,.55); }
+.in-t{ position:absolute; left:0; right:0; top:42%; text-align:center; opacity:0; transform:translateY(-50%); }
+.in-t b{ display:block; font-weight:900; font-size:clamp(46px,11vw,150px); letter-spacing:.04em; line-height:.9; text-shadow:0 6px 30px rgba(0,0,0,.6); transform:skewX(-10deg); }
+.in-t span{ display:block; margin-top:1.2vh; font-family:'Barlow Condensed',sans-serif; font-style:italic; font-weight:700; font-size:clamp(14px,2.6vw,30px); letter-spacing:.3em; color:#ffb547; }
+.in-t .am{ color:#ffb547; }
+.in-a{ animation:inWord 2.3s 1.4s cubic-bezier(.2,1,.3,1) forwards; } .in-a b{ font-size:clamp(34px,8vw,110px); letter-spacing:.12em; }
+.in-b{ animation:inSlam .95s 3.8s cubic-bezier(.2,1.4,.3,1) forwards; }
+.in-c{ animation:inSlam .95s 4.7s cubic-bezier(.2,1.4,.3,1) forwards; }
+.in-d{ animation:inSlam 1s 5.6s cubic-bezier(.2,1.4,.3,1) forwards; }
+.in-checker{ position:absolute; left:0; right:0; top:60%; height:7vmin; background:conic-gradient(#fff 25%,#000 0 50%,#fff 0 75%,#000 0) 0 0/7vmin 7vmin; transform:translateX(-110%) skewX(-18deg); animation:inWipe 1.1s 3.5s cubic-bezier(.6,0,.2,1) forwards; opacity:.92; }
+.in-car{ position:absolute; bottom:12%; left:0; width:min(88vw,820px); transform:translateX(-110%); animation:inCar 1.35s 6.15s cubic-bezier(.5,0,.3,1) forwards; filter:drop-shadow(0 0 18px rgba(255,120,40,.4)); }
+.in-car svg{ display:block; width:100%; transform:skewX(-6deg); }
+.in-dust{ position:absolute; right:88%; bottom:2%; width:120%; height:60%; background:radial-gradient(60% 50% at 100% 70%,rgba(160,110,70,.75),rgba(110,70,40,.25) 55%,transparent 75%); }
+.in-logo{ position:absolute; left:0; right:0; top:44%; transform:translateY(-50%); text-align:center; opacity:0; animation:inLogo 1s 7.7s cubic-bezier(.2,1.5,.3,1) forwards; }
+.in-logo h1{ margin:0; font-weight:900; font-size:clamp(70px,19vw,260px); letter-spacing:.08em; line-height:.9; transform:skewX(-10deg); text-shadow:0 10px 40px rgba(0,0,0,.7); }
+.in-logo h1.o{ position:absolute; left:0; right:0; top:0; color:transparent; -webkit-text-stroke:3px #ffb547; transform:skewX(-10deg) translate(6px,6px); opacity:.85; }
+.in-logo span{ display:block; margin-top:1vh; font-family:'Barlow Condensed',sans-serif; font-style:italic; font-weight:700; font-size:clamp(16px,3vw,34px); letter-spacing:.4em; color:#ffb547; }
+.in-foot{ position:absolute; left:0; right:0; bottom:4%; display:flex; justify-content:center; gap:24px; font-family:'Barlow Condensed',sans-serif; font-style:italic; font-weight:700; font-size:clamp(13px,1.8vw,18px); letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+.in-load em{ font-style:normal; animation:inDot 1.2s infinite; } .in-load em:nth-child(2){ animation-delay:.2s } .in-load em:nth-child(3){ animation-delay:.4s }
+#intro .in-skip{ display:none; } #intro.ready .in-skip{ display:inline; } #intro.ready .in-load{ display:none; }
+.in-flash{ position:absolute; inset:0; background:#fff8ec; opacity:0; animation:inFlash .5s 7.7s; pointer-events:none; }
+@keyframes inFade{ to{ opacity:1 } }
+@keyframes inLamp{ 0%{ opacity:0; transform:scale(.6) } 40%{ opacity:1; transform:scale(1.15) } 60%{ opacity:.55 } 100%{ opacity:1; transform:scale(1) } }
+@keyframes inFlick{ to{ opacity:.82 } }
+@keyframes inWord{ 0%{ opacity:0; transform:translateY(-50%) translateX(-6vw) } 18%{ opacity:1; transform:translateY(-50%) translateX(0) } 85%{ opacity:1; transform:translateY(-50%) translateX(1.5vw) } 100%{ opacity:0; transform:translateY(-50%) translateX(8vw) } }
+@keyframes inSlam{ 0%{ opacity:0; transform:translateY(-50%) scale(2.4) } 22%{ opacity:1; transform:translateY(-50%) scale(1) } 80%{ opacity:1; transform:translateY(-50%) scale(.96) } 100%{ opacity:0; transform:translateY(-50%) scale(.9) } }
+@keyframes inWipe{ to{ transform:translateX(110%) skewX(-18deg) } }
+@keyframes inCar{ 0%{ transform:translateX(-110%) } 100%{ transform:translateX(160vw) } }
+@keyframes inLogo{ 0%{ opacity:0; transform:translateY(-50%) scale(2.6) } 30%{ opacity:1; transform:translateY(-50%) scale(1) } 100%{ opacity:1; transform:translateY(-50%) scale(1.04) } }
+@keyframes inFlash{ 0%{ opacity:.85 } 100%{ opacity:0 } }
+@keyframes inDot{ 0%,100%{ opacity:.2 } 50%{ opacity:1 } }
+@media (prefers-reduced-motion: reduce){ #intro *{ animation-duration:.01s !important; animation-delay:0s !important; } }
+/* v74: menu Car Wash button, Save setup */
+#washGo{ display:inline-flex; align-items:center; gap:10px; padding:9px 20px 10px 16px; border:0; cursor:pointer; font-family:var(--display); font-weight:900; font-size:clamp(16px,2.2vw,22px); letter-spacing:.02em; text-transform:uppercase; color:#fff;
+  background:linear-gradient(180deg,#3d8fe0,#1a4f99); clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%); box-shadow:inset 0 -5px 0 rgba(0,0,0,.22); text-shadow:0 2px 0 rgba(0,0,0,.35); transition:transform .15s, filter .15s; }
+#washGo:hover{ filter:brightness(1.12); transform:translateY(-1px); } #washGo svg{ width:22px; height:22px; fill:currentColor; }
+#title.min .m-bar #washGo{ padding:13px 24px 14px 18px; animation:tglIn .7s .55s cubic-bezier(.2,1.3,.3,1) both; }
+#garSave.warn{ background:linear-gradient(180deg,#f0a43a,#b5660f); color:#fff; }
+#setName.need{ outline:2px solid #ffb547; outline-offset:2px; animation:needPulse .5s 3; }
+@keyframes needPulse{ 50%{ outline-color:transparent } }
 </style>
 </head>
 <body>
+<div id="intro" aria-label="SCREAM intro. Tap to skip.">
+  <div class="in-sky"></div>
+  <div class="in-lights"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="in-track"></div>
+  <div class="in-t in-a"><b>PREMIER SPEEDWAY</b><span>WARRNAMBOOL &middot; SOUTH WEST VICTORIA</span></div>
+  <div class="in-t in-b"><b>900 HP</b></div>
+  <div class="in-t in-c"><b>NO BRAKES.</b></div>
+  <div class="in-t in-d"><b class="am">ALL HEART.</b></div>
+  <div class="in-checker"></div>
+  <div class="in-car"><svg viewBox="0 0 260 120" aria-hidden="true"><g fill="#07090f"><path d="M58 6h150l6 30-150 6z"/><path d="M60 40l6 0 4 22h-6zM196 34h6l2 26h-6z"/><path d="M40 70l40-14h70l40 6 30 10 10 10-10 8H40z"/><path d="M104 60l18-22h34l10 20z"/><rect x="2" y="64" width="34" height="8" rx="2"/></g><g fill="#07090f" stroke="#ffb547" stroke-width="2.5"><circle cx="208" cy="90" r="27"/><circle cx="62" cy="96" r="20"/></g><path d="M58 6h150l6 30-150 6z" fill="none" stroke="#ff4b2b" stroke-width="2"/></svg><div class="in-dust"></div></div>
+  <div class="in-logo"><h1>SCREAM</h1><h1 class="o">SCREAM</h1><span>SPRINTCAR RACING</span></div>
+  <div class="in-foot"><span class="in-load">Warming up the engines<em>.</em><em>.</em><em>.</em></span><span class="in-skip">Tap or press any key to skip</span></div>
+  <div class="in-flash"></div>
+</div>
+<script>
+(function () { var el = document.getElementById('intro'), t0 = performance.now(), ready = false, gone = false, want = false;
+  function go() { if (gone) return; gone = true; el.classList.add('out'); try { if (window.AudioSys) AudioSys.init(); } catch (e) {} setTimeout(function () { el.remove(); }, 700); }
+  function tryGo() { if (ready && (want || performance.now() - t0 > 10200)) go(); }
+  window.__introReady = function () { ready = true; el.classList.add('ready'); setTimeout(function () { try { window.__introBg && window.__introBg(); } catch (e) {} }, 60); setInterval(tryGo, 150); tryGo(); };
+  function skip(e) { if (gone) return; want = true; if (ready) { e && e.preventDefault && e.preventDefault(); go(); } }
+  el.addEventListener('pointerdown', skip); el.addEventListener('click', function (e) { e.stopPropagation(); e.preventDefault(); }); window.addEventListener('keydown', function k(e) { if (gone) { window.removeEventListener('keydown', k); return; } skip(e); });
+})();
+</script>
 <canvas id="c" aria-label="3D view of Premier Speedway"></canvas>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -569,7 +642,7 @@ select, select option { background-color: #1c2026; color: #f2f2f2; color-scheme:
 <section id="title" class="min" aria-label="Main menu">
   <header class="m-head">
     <div class="m-logo"><div class="wflag" data-flag="checker"></div><div><h1 class="wordmark">SCREAM</h1><span id="venueName" class="m-venue">Premier Speedway, Warrnambool</span></div></div>
-    <div class="m-bar"><button id="menuTgl" class="m-tgl" aria-expanded="false" aria-controls="mStage"><span>Main menu</span><i aria-hidden="true">▸</i></button><button id="goBtn"><div class="wflag nopole" data-flag="green"></div><span>Let's go racing</span></button><button id="exitBtn" aria-label="Red flag: exit the game"><div class="wflag nopole" data-flag="red"></div><span>Exit</span></button></div>
+    <div class="m-bar"><button id="menuTgl" class="m-tgl" aria-expanded="false" aria-controls="mStage"><span>Main menu</span><i aria-hidden="true">▸</i></button><button id="goBtn"><div class="wflag nopole" data-flag="green"></div><span>Let's go racing</span></button><button id="washGo" aria-label="Car wash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2s-5 6-5 9.5a5 5 0 0 0 10 0C17 8 12 2 12 2zm-7 15h14l1 5H4z"/></svg><span>Car wash</span></button><button id="exitBtn" aria-label="Red flag: exit the game"><div class="wflag nopole" data-flag="red"></div><span>Exit</span></button></div>
         <nav class="m-tabs" role="tablist" aria-label="Menu sections">
       <button role="tab" data-p="race" aria-selected="true">Race</button><button role="tab" data-p="cond" aria-selected="false">Conditions</button><button role="tab" data-p="driver" aria-selected="false">Driver</button><button role="tab" data-p="garage" aria-selected="false">Garage</button><button role="tab" data-p="opts" aria-selected="false">Options</button>
     </nav>
@@ -677,6 +750,7 @@ select, select option { background-color: #1c2026; color: #f2f2f2; color-scheme:
       <div style="font-size:13px;opacity:.8;margin-bottom:10px"><span id="mpStatus">Off</span> · <span id="mpPeers"></span></div>
       <div class="m-h">Pre-race music</div>
       <div class="tiles sm" id="musicSeg"><button data-v="shuffle"><b>Shuffle</b><small>A different one each race</small></button><button data-v="rock"><b>Pub rock</b><small>Open chords, 132 bpm</small></button><button data-v="grunge"><b>Grunge</b><small>Drop D, loud and quiet</small></button><button data-v="electro"><b>Electronic</b><small>Four on the floor</small></button></div>
+      <div class="m-h">Music on the menus, under the race and at the flag</div><div class="tiles sm" id="musMoreSeg"><button data-v="on"><b>On</b><small>Menus, racing, the finish</small></button><button data-v="off"><b>Off</b><small>Pre-race only</small></button></div>
       <div class="bank call-vol"><label for="musicVol">Music volume</label><output id="musicVolOut"></output><input type="range" class="rng" id="musicVol" min="0" max="100" step="5"></div>
       <p class="ev-note call-cred">Commentary from Premier Speedway (the 2024 Grand Annual Classic Night 2 and final, 2023 Classic highlights, and Sprintcar Speedweek round 5 on New Year's Day 2024), used with the kind permission of Gavin White and Wade Aunger. Tap to switch each on or off; let go of the slider to hear the level.</p>
       <div class="m-h">Track overlays</div>
@@ -769,7 +843,7 @@ select, select option { background-color: #1c2026; color: #f2f2f2; color-scheme:
       <div id="tyreSliders"></div>
       <div class="btns" style="margin-bottom:10px"><button id="tyreReset">Reset tyres</button></div>
     </div>
-    <div class="btns"><button class="primary" id="garDone">Done</button></div>
+    <div class="btns"><button id="garSave" class="ghost">Save setup</button><button class="primary" id="garDone">Done</button></div>
   </aside>
 </div>
 
@@ -4084,7 +4158,7 @@ function restartRolling() {
 const PUSH = { active: false, moving: false, phase: 0, units: [], utes: [], mules: [], rows: [], t: 0, F: null, mesh: null, blob: null, lamp: null, glow: null, mmesh: null, mblob: null, fire: false, fireOn: false, rolling: false,
   M: new THREE.Matrix4(), M2: new THREE.Matrix4(), Q: new THREE.Quaternion(), E: new THREE.Euler(0, 0, 0, 'YXZ'), V: new THREE.Vector3(), V2: new THREE.Vector3(), S: new THREE.Vector3(1, 1, 1), C: new THREE.Color() };
 // in the chute's frame: x along from the front-straight end A, o sideways (+ is the inside of the turn onto the track)
-const PU = { lane: 2.3, strip: 4.8, R1: 6.25, R2: 5, R3: 5.5, ts: .24, bar: 2.7, gap: .35, cR: 1.5, front: 12, back: 18, maxG: 13, rel: 7, dp: 7, conv: 10.2, park: 86, vTop: 15, mbar: 1.66, n: 6 };
+const PU = { lane: 2.3, strip: 4.8, R1: 6.25, R2: 5, R3: 5.5, ts: .24, bar: 2.7, gap: .35, cR: 1.5, front: 12, back: 18, maxG: 13, rel: 7, dp: 7, conv: 10.2, park: 86, vTop: 15, mbar: 1.66, n: 8 };
 function vcGeo(list, BODY) {   // [geometry, material] parts as one vertex-coloured geometry; BODY parts take the instance colour
   const parts = [];
   for (const [g, m] of list) { const c = m === BODY ? new THREE.Color(1, 1, 1) : m.color, n = g.attributes.position.count, a = new Float32Array(n * 3);
@@ -4103,7 +4177,7 @@ function muleGeo() {   // a team mule: a little side-by-side with a push bar, a 
   return vcGeo(P, B);
 }
 function pushInit() {
-  if (PUSH.mesh) return; const n = PU.n, cols = ['#c8202a', '#1f5fbf', '#f5f3ee', '#2a8a4a', '#f5c518', '#15204a'];
+  if (PUSH.mesh) return; const n = PU.n, cols = ['#c8202a', '#1f5fbf', '#f5f3ee', '#2a8a4a', '#f5c518', '#15204a', '#e8761e', '#202020'];
   PUSH.mesh = new THREE.InstancedMesh(pushUteGeo(), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .45, metalness: .25 }), n); PUSH.mesh.castShadow = DYN_SH; PUSH.mesh.receiveShadow = true;
   for (let i = 0; i < n; i++) PUSH.mesh.setColorAt(i, PUSH.C.set(cols[i]));   // (while count is still the whole fleet: r128 sizes the colour buffer from it)
   PUSH.blob = new THREE.InstancedMesh(new THREE.PlaneGeometry(5.7, 2.4).rotateX(-Math.PI / 2), contactMat, n); PUSH.blob.renderOrder = 1;
@@ -4142,7 +4216,7 @@ function pathAt(P, u, out) {   // position, heading, pitch, curvature (and the p
   let dh = b.h - a.h; dh -= Math.round(dh / TAU) * TAU; out.h = a.h + dh * t; out.p = Math.atan2(b.y - a.y, Math.max(.01, b.u - a.u)); out.v = P.v ? lerp(P.v[lo], P.v[hi], t) : 0; return out;
 }
 // a speed for every sample: what the curvature allows, then accelerating from v0 and braking to vEnd
-function routeSpeed(P, v0, vEnd, top = PU.vTop, alat = 5.4, acc = 3.8, brk = 4.8) {
+function routeSpeed(P, v0, vEnd, top = PU.vTop * 1.25, alat = 7.5, acc = 5.2, brk = 6) {
   const S = P.S, n = S.length, v = new Float32Array(n);
   for (let i = 0; i < n; i++) { let k = 0; for (let j = Math.max(0, i - 2); j <= Math.min(n - 1, i + 2); j++) k = Math.max(k, Math.abs(S[j].k)); v[i] = Math.min(top, S[i].cap, Math.sqrt(alat / Math.max(1e-4, k))); }
   v[0] = Math.min(v[0], Math.max(v0, .3)); for (let i = 1; i < n; i++) v[i] = Math.min(v[i], Math.sqrt(v[i - 1] * v[i - 1] + 2 * acc * (S[i].u - S[i - 1].u)));
@@ -4193,11 +4267,11 @@ function planCircle(W, U) {
   const s = W.side, st = stagePose(U, true), B = PUSH.units.find(V => V.side === U.side && V.row === U.row + 1); let best = null;
   search: for (const oOut of [W.loop, W.loop - 3, W.loop - 6]) for (const oIn of [Math.min(oOut, 14.8), 12.5, 10.5]) {   // out to oOut, in to oIn for the last turn
     if (oIn > oOut + .01 || (B && oIn < PU.strip + 9)) continue;
-    const T = uteFrame(W); T.c = 5; T.fwd(1.5); T.c = 99; T.turnTo(Math.max(4.5, (oOut - Math.abs(T.o)) / 2), s * Math.PI);
+    const T = uteFrame(W); T.c = 7; T.fwd(1.5); T.c = 99; T.turnTo(Math.max(4.5, (oOut - Math.abs(T.o)) / 2), s * Math.PI);
     let xEnd, Rf; if (B) { Rf = (oIn - PU.strip) / 2; const xs = st.x - sInFit(st.o - s * PU.strip, PU.ts).dx; xEnd = xs - B.slotX < 3.8 ? B.slotX - 5.6 : xs; }   // rows close together: round behind the car behind, then up the side past it
     else { Rf = (oIn - Math.abs(st.o)) / (1 + Math.cos(PU.ts)); xEnd = st.x + Rf * Math.sin(PU.ts); }                                                  // nobody behind: swing straight in
     const dO = s * oIn - T.o; if (Math.abs(dO) > .3) { const th = Math.acos(clamp(1 - Math.abs(dO) / 12, -1, 1)); T.fwdX(xEnd + 12 * Math.sin(th) + 1); T.turnTo(6, s * Math.PI - Math.sign(dO) * th); T.turnTo(6, s * Math.PI); }
-    T.fwdX(xEnd); if (B) { T.arc(Rf, s * Math.PI); T.c = 4.5; sIn(T, st); } else T.arc(Rf, s * (Math.PI - PU.ts));
+    T.fwdX(xEnd); if (B) { T.arc(Rf, s * Math.PI); T.c = 6; sIn(T, st); } else T.arc(Rf, s * (Math.PI - PU.ts));
     const v = pathBad(T); if (!best || v < best.v - .01) best = { T, v }; if (v <= 0) break search;
   }
   uteGo(W, best.T, 'stage');
@@ -4268,15 +4342,15 @@ function startPushOff(order) {
     return { c, k, row, side: s, slotX, out: outR, slotU, dT, st: 'parked', u: slotU, v: 0, a: 0, t: 0, dp: clamp(F.len - 4.3 - slotX, 5, PU.dp), pusher: null };
   });
   // the last four (the last pair, in a small field) come in from the pits on their teams' mules
-  const del = PUSH.units.slice(Math.max(0, N - (N <= 6 ? 2 : 4))); PUSH.mules = [];
+  const del = []; PUSH.mules = [];
   del.forEach((U, j) => { U.st = 'train'; U.into = routeFrom([...prefix, ...laneIn(U.side), cxz(F, U.slotX, U.side * PU.lane)], gate); U.u0 = -6 - j * PUSH_GAP; U.u = U.u0;
     const M = mkUte(j, U.side); M.mule = true; M.del = U; M.mode = 'train'; PUSH.mules.push(M); PUSH.mmesh.setColorAt(j, PUSH.C.set(U.c.col || '#c8202a')); });
   if (PUSH.mmesh.instanceColor) PUSH.mmesh.instanceColor.needsUpdate = true;
   PUSH.home = [xz2(sg, -HW - 3), xz2(sg, 0), gate, [P0[0], P0[2]], E, R1, ...tail]; PUSH.gate = gate;   // the mules' way back to the pits
   // the push utes are already waiting behind the front two rows (or out beside the chute, for a row that's still coming in)
   PUSH.utes = Array.from({ length: PU.n }, (_, i) => mkUte(i, i % 2 ? -1 : 1));
-  const pairs = [0, 1, 2].map(p => ({ 1: PUSH.utes[p * 2], [-1]: PUSH.utes[p * 2 + 1] }));   // three pairs: the first pushes the front row and every third row after it
-  for (const U of PUSH.units) { U.pusher = pairs[U.row % 3][U.side]; U.pusher.queue.push(U); }
+  const NP = PU.n >> 1, pairs = Array.from({ length: NP }, (_, p) => ({ 1: PUSH.utes[p * 2], [-1]: PUSH.utes[p * 2 + 1] }));   // three pairs: the first pushes the front row and every third row after it
+  for (const U of PUSH.units) { U.pusher = pairs[U.row % NP][U.side]; U.pusher.queue.push(U); }
   const hB = Math.atan2(F.u[1], F.u[0]);
   PUSH.bp = PUSH.bn = null; grassBays(1); grassBays(-1); for (const W of PUSH.utes) { W.grass = null; const U = W.queue[0]; if (!U) { const sp = uteSpot(F, W.side, W.id >> 1), p = cxz(F, sp.x, sp.o); Object.assign(W, { x: p[0], z: p[1], h: hB, y: groundY(locate(p[0], p[1])), mode: 'idle', pk: W.id >> 1 }); continue; }   // nothing to push this time: wait out on the grass, clear of the loops
     const st = stagePose(U, U.st !== 'parked'), p = U.st === 'parked' ? cxz(F, st.x, st.o) : cxz(F, awaitX(U, st), W.side * 17);
@@ -4305,7 +4379,7 @@ function unitStep(U, dt) {
         else if (U.u - U.slotU >= U.dp + 9) pushRelease(U); }
       else if (U.u - U.slotU >= U.dp) pushRelease(U); break;
     case 'fired': { let vt = U.u - U.slotU > F_CHUTE(U) ? 15 : 11;
-      if (U.out.end - U.u < 32) { let e = wrapS(PACE.s - FORM.gap - U.row * FORM.row) - c.s; e = ((e + 30) % L + L) % L - 30; vt = Math.min(vt, Math.max(3, Math.max(PACE.v, race.pace * .6) + clamp(e * .45, -3, 9))); }   // ease into the pace of your spot so the hand-over is seamless
+      if (U.out.end - U.u < 32) { let e = wrapS(PACE.s - FORM.gap - U.row * FORM.row) - c.s; e = ((e + L * .4) % L + L) % L - L * .4; vt = Math.min(vt, Math.max(3, Math.max(PACE.v, race.pace * .6) + clamp(e * .45, -3, 9))); }   // ease into the pace of your spot so the hand-over is seamless
       U.v += clamp(vt - U.v, -3.5 * dt, 3.4 * dt); U.u += U.v * dt; if (U.u >= U.out.end) pushFire(U); else poseCar(c, U.out, U.u, U.v, dt); break; }
   }
 }
@@ -4328,8 +4402,8 @@ function uteStep(W, dt) {
   else if (W.mode === 'drive') {
     const P = W.P, rem = P.end - W.u; let vt = Math.min(pathAt(P, W.u, _pw).v, Math.sqrt(2 * P.brk * Math.max(0, rem) + P.vEnd * P.vEnd)); if (rem > .02) vt = Math.max(vt, .25);
     if (W.holdU != null) { if (mulesClear(W.holdX, W.side, 10)) W.holdU = null; else vt = Math.min(vt, Math.sqrt(2 * P.brk * Math.max(0, W.holdU - W.u))); }
-    const vs = uteSafe(W); if (vs < vt - .3) W.held = (W.held || 0) + dt; if (vs < vt) vt = vs; if (vs < .3) { W.blockT += dt; if (W.blockT > 3) { W.ghost = 1.5; W.blockT = 0; } } else W.blockT = 0; if (W.ghost > 0) W.ghost -= dt;
-    const a = dt > 0 ? clamp((vt - W.v) / dt, -6, 2.8) : 0; W.a = lerp(W.a, a, Math.min(1, dt * 8)); W.v = Math.max(0, W.v + a * dt); W.u = Math.min(P.end, W.u + W.v * dt);
+    const vs = uteSafe(W); if (vs < vt - .3) { W.held = (W.held || 0) + dt; W.stuck = (W.stuck || 0) + dt; if (W.stuck > .9 && W.next !== 'park') { W.ghost = 2; W.stuck = 0; } } else W.stuck = Math.max(0, (W.stuck || 0) - dt); if (vs < vt) vt = vs; if (vs < .3) { W.blockT += dt; if (W.blockT > 3) { W.ghost = 1.5; W.blockT = 0; } } else W.blockT = 0; if (W.ghost > 0) W.ghost -= dt;
+    const a = dt > 0 ? clamp((vt - W.v) / dt, -6, 4.2) : 0; W.a = lerp(W.a, a, Math.min(1, dt * 8)); W.v = Math.max(0, W.v + a * dt); W.u = Math.min(P.end, W.u + W.v * dt);
     pathAt(P, W.u, _pw); Object.assign(W, { x: _pw.x, z: _pw.z, y: _pw.y, h: _pw.h + (W.rev ? Math.PI : 0), p: W.rev ? -_pw.p : _pw.p, k: _pw.k }); tgtRoll = clamp(-W.k * W.v * W.v * .011, -.065, .065);
     if (W.u >= P.end - .005) { W.v = 0; W.a = 0; W.mode = W.next; if (W.mode === 'stage') W.unit = W.queue[0]; }
   }
@@ -4345,7 +4419,7 @@ function uteStep(W, dt) {
 // a row goes: its utes nudge up and shove
 function rowGo(R) { R.st = 'push'; R.goT = PUSH.t; for (const U of R.units) { U.st = 'creep'; U.t = 0; const W = U.pusher; W.mode = 'push'; W.unit = U; W.t = 0; W.h0 = W.h; W.K0 = [W.x + Math.cos(W.h) * PU.bar, W.z + Math.sin(W.h) * PU.bar]; } }
 function rowReady(R) {
-  if (R.st !== 'wait') return false; if (PUSH.units.some(U => U.st === 'train' || U.st === 'roll')) return false;
+  if (R.st !== 'wait') return false; if (R.units.some(U => U.st === 'train' || U.st === 'roll')) return false;
   for (const U of R.units) if (!U.pusher || U.pusher.mode !== 'stage' || U.pusher.unit !== U) return false;
   if (R.r === 0) return PUSH.t - (PUSH.lineT || 0) > .5;
   const Pv = PUSH.rows[R.r - 1]; if (R.r % 2) { if (Pv.st === 'wait') return false; }   // four at a time: an odd row goes with the row ahead of it
@@ -4354,7 +4428,7 @@ function rowReady(R) {
 }
 // will this row's spot in the formation be a short chase ahead when it gets out there? If not, wait for the field to come round
 function mergeOK(R) { const U = R.units[0], tF = 3.3 + (U.out.end - U.slotU - U.dp) / 8.5, slot = race.formS + Math.max(PACE.v, race.pace * .8) * tF - R.r * FORM.row;
-  const e = ((slot - (CHUTE.sB * L + 44) + 30) % L + L) % L - 30; return e > -85 && e + R.r * FORM.row + FORM.gap < L - 60; }   // out they go even if their spot has just gone by: they catch it up
+  const e = ((slot - (CHUTE.sB * L + 44) + 30) % L + L) % L - 30; return e > -240 && e + R.r * FORM.row + FORM.gap < L - 40; }   // out they go even if their spot has just gone by: they catch it up
 function pushRelease(U) {   // pushed up to speed: she fires and drives on, the ute heads for its next one
   if (!PUSH.rolling) { PUSH.rolling = true; race.pace = PUSH.rows.length >= 5 ? 6 : 7; }   // the pace ute moves off with the first pair
   U.st = 'fired'; U.c.pfired = true; const W = U.pusher; W.queue.shift(); W.unit = null;
@@ -4394,7 +4468,7 @@ function pushStep(dt) {
   if (!PUSH.gateShut && mulesOut && PUSH.t > 2) { GATES[0].target = 0; PUSH.gateShut = true; }
   for (const W of PUSH.utes) if (W.mode === 'await' && W.queue[0] && W.queue[0].st === 'parked' && mulesClear(cLoc(PUSH.F, W.x, W.z)[0], W.side, 1)) approachStage(W, W.queue[0]);
   for (const U of PUSH.units) unitStep(U, dt);
-  if (PUSH.phase === 1 && !PUSH.units.some(U => U.st === 'train' || U.st === 'roll')) { PUSH.phase = 2; PUSH.lineT = PUSH.t; }
+  if (PUSH.phase === 1 && (PUSH.t > 2.5 || !PUSH.units.some(U => U.st === 'train' || U.st === 'roll'))) { PUSH.phase = 2; PUSH.lineT = PUSH.t; }
   if (PUSH.phase === 2) for (const R of PUSH.rows) if (R.st === 'wait') { if (rowReady(R)) rowGo(R); break; }
   for (const W of PUSH.utes) uteStep(W, dt); for (const M of PUSH.mules) if (M.mode !== 'gone') uteStep(M, dt);
   if (PUSH.active && PUSH.units.every(U => U.st === 'gone')) PUSH.active = false;
@@ -4478,7 +4552,7 @@ function uteSparks(dt) {
   for (const W of PUSH.utes) { if ((W.mode !== 'parade' && W.mode !== 'join') || (W.v || 0) < 4) continue; if (W.mode === 'join' && locate(W.x, W.z).d < -HW - 1) continue;
     const ch = Math.cos(W.h), sh = Math.sin(W.h), n = Math.min(4, Math.floor(dt * 95 + Math.random()));
     for (let k = 0; k < n; k++) { const side = Math.random() < .5 ? -.55 : .55;
-      emitDust(W.x - ch * 2.78 - sh * side + sr(-.1, .1), W.y + .38, W.z - sh * 2.78 + ch * side + sr(-.1, .1), -ch * W.v * .42 + sr(-2.2, 2.2) - sh * sr(-1.4, 1.4), sr(.5, 3), -sh * W.v * .42 + sr(-2.2, 2.2) + ch * sr(-1.4, 1.4), 2); } }
+      const th = sr(45, 60) * D2R, sp = sr(6, 11), yj = sr(-.3, .3), bx = -(ch * Math.cos(yj) - sh * Math.sin(yj)), bz = -(sh * Math.cos(yj) + ch * Math.sin(yj)); sparkUp(W.x - ch * 2.78 - sh * side + sr(-.1, .1), W.y + .38, W.z - sh * 2.78 + ch * side + sr(-.1, .1), ch * W.v + bx * sp * Math.cos(th), sp * Math.sin(th), sh * W.v + bz * sp * Math.cos(th), 2); } }
 }
 
 function pushHide() { PUSH.units = []; PUSH.rows = []; PUSH.active = false; PUSH.moving = false; PUSH.phase = 0; PUSH.mulesGo = 0; PUSH.rolling = false; PUSH.fire = false; if (PUSH.fireOn) { PUSH.fireOn = false; const b = $('fireBtn'); if (b) b.style.display = 'none'; } if (race) race.pushRoll = false; pushHome(); }
@@ -6269,7 +6343,7 @@ function showStep(dt) {
   if (race.checkered && !race.fwDone && (race.name === 'A-Main' || (race.sess && race.sess.type === 'race' && !race.sess.night))) { race.fwDone = true; fwShow(16); }
   // grinder on the pace ute's tow bar: a shower of sparks off the back while it leads an A-Main
   if (race.name === 'A-Main' && PACE.st === 'track' && PACE.v > 4 && race.state !== 'green') { const h = PACE.h, ch = Math.cos(h), sh = Math.sin(h), n = Math.min(8, Math.floor(dt * 170 + Math.random()));
-    for (let k = 0; k < n; k++) emitDust(PACE.x - ch * 2.75 + sr(-.15, .15), (PACE.mesh ? PACE.mesh.position.y : 0) + .32, PACE.z - sh * 2.75 + sr(-.15, .15), -ch * PACE.v * .45 + sr(-2.5, 2.5) - sh * sr(-1.5, 1.5), sr(.6, 3.2), -sh * PACE.v * .45 + sr(-2.5, 2.5) + ch * sr(-1.5, 1.5), 2); }
+    for (let k = 0; k < n; k++) { const th = sr(45, 60) * D2R, sp = sr(6, 11), yj = sr(-.3, .3), bx = -(ch * Math.cos(yj) - sh * Math.sin(yj)), bz = -(sh * Math.cos(yj) + ch * Math.sin(yj)); sparkUp(PACE.x - ch * 2.75 + sr(-.15, .15), (PACE.mesh ? PACE.mesh.position.y : 0) + .32, PACE.z - sh * 2.75 + sr(-.15, .15), ch * PACE.v + bx * sp * Math.cos(th), sp * Math.sin(th), sh * PACE.v + bz * sp * Math.cos(th), 2); } }
 }
 
 // best line: string-pulled round the track (inside at the apex, wide on the way in and out), speed from its curvature
@@ -6719,12 +6793,12 @@ function washStep(dt) {
     if (pts.size === 2) { const [a, b] = [...pts.values()]; d0 = Math.hypot(a.x - b.x, a.y - b.y) || 1; mode = 'pinch'; WASH.act = false; return; }
     if (e.button === 2 || !washPick(e)) { mode = 'orbit'; return; } mode = 'work'; WASH.act = true; WASH.ptr = { clientX: e.clientX, clientY: e.clientY }; });
   el.addEventListener('pointermove', e => { if (!WASH.on) return; const q = pts.get(e.pointerId); if (!q) return; const dx = e.clientX - q.x, dy = e.clientY - q.y; q.x = e.clientX; q.y = e.clientY;
-    if (mode === 'pinch' && pts.size === 2) { const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1; WASH.orb.dist = clamp(WASH.orb.dist * d0 / d, 1.6, WASH.tool === 'garden' ? 20 : 12); d0 = d; }
+    if (mode === 'pinch' && pts.size === 2) { const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1; WASH.orb.dist = clamp(WASH.orb.dist * d0 / d, 1.6, washMaxD()); d0 = d; }
     else if (mode === 'orbit') { WASH.orb.yaw += dx * .008; WASH.orb.pitch = clamp(WASH.orb.pitch + dy * .005, -.05, 1.35); }
     else if (mode === 'work') WASH.ptr = { clientX: e.clientX, clientY: e.clientY }; });
   const up = e => { if (!pts.delete(e.pointerId)) return; if (!pts.size) { mode = null; WASH.act = false; } else if (mode === 'pinch') mode = 'orbit'; };
   el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('contextmenu', e => { if (WASH.on) e.preventDefault(); });
-  el.addEventListener('wheel', e => { if (!WASH.on) return; WASH.orb.dist = clamp(WASH.orb.dist * Math.exp(e.deltaY * .0011), 1.6, WASH.tool === 'garden' ? 20 : 12); }, { passive: true }); }
+  el.addEventListener('wheel', e => { if (!WASH.on) return; WASH.orb.dist = clamp(WASH.orb.dist * Math.exp(e.deltaY * .0011), 1.6, washMaxD()); }, { passive: true }); }
 $('wBack').onclick = washClose;
 $('wTools').addEventListener('click', e => { const b = e.target.closest('button'); if (b) washTool(b.dataset.v); });
 $('wPanels').onclick = () => { washPanels(!WASH.panels); washPct(true); };
@@ -7991,6 +8065,177 @@ $('wHint').addEventListener('click', e => { const b = e.target.closest('button[d
         const wT = -q.k * spd + dh * 4; c.w += (wT - c.w) * Math.min(1, k * dt * 14); c.h += dh * Math.min(1, k * dt * 6);
         const vh = Math.atan2(c.vz, c.vx); let dv = c.h - vh; dv -= Math.round(dv / TAU) * TAU; if (spd > 2) { const nv = vh + dv * Math.min(1, k * dt * 8); c.vx = Math.cos(nv) * spd; c.vz = Math.sin(nv) * spd; } } }
     return r; }; }
+
+/* ---------- v74: menu buttons, save setup, music round the clock, the crowd, a practice ghost, fireworks ---------- */
+// the Car Wash, straight from the menu bar
+{ const b = $('washGo'); if (b) b.onclick = () => { AudioSys.init(); washOpen('menu'); }; }
+// Save setup beside Done: a name first (we take you to the box), and a second press to overwrite one you've already got
+{ const btn = $('garSave'), inp = $('setName'), msg = $('setMsg'), o0 = $('setSave').onclick; let warn = '';
+  const say = t => { if (msg) msg.textContent = t; };
+  const toName = () => { const tab = document.querySelector('.g-tabs [data-g="chassis"]'); if (tab && tab.getAttribute('aria-selected') !== 'true') tab.click();
+    inp.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { try { inp.focus({ preventScroll: true }); } catch (e) { inp.focus(); } }, 380);
+    inp.classList.remove('need'); void inp.offsetWidth; inp.classList.add('need'); };
+  const reset = () => { warn = ''; btn.textContent = 'Save setup'; btn.classList.remove('warn'); };
+  const save = () => { const nm = (inp.value || '').trim().slice(0, 28);
+    if (!nm) { reset(); toName(); say('Give this setup a name, then save.'); return; }
+    if (SETUPS.list.some(s => s.name === nm) && warn !== nm) { warn = nm; btn.textContent = 'Overwrite?'; btn.classList.add('warn'); toName(); say(`You already have a setup called "${nm}". Press Overwrite? to replace it, or change the name.`); return; }
+    reset(); o0(); inp.classList.remove('need'); };
+  btn.onclick = save; $('setSave').onclick = save; inp.addEventListener('input', () => { if (warn) reset(); inp.classList.remove('need'); }); }
+
+// music between the racing: a tune on the menus, one under the race through the PA (down under the engines and the callers),
+// and the band at full tilt once the chequered flag's out. The pre-race tune still owns the push-off and the formation.
+var MUS = { on: store.get('scream-music-more') !== 'off', want: '', cur: null, k: '', t: 0, used: '' };
+function musWant() {
+  if (!MUS.on || BGM.vol <= 0 || AudioSys.muted || BGM.playing || document.hidden) return '';
+  if (state.screen === 'title') return WASH.on ? '' : 'menu';
+  if (state.screen !== 'race' || !race || REPLAY.playing) return '';
+  if (race.soloDoneT || (race.checkered && (!player || player.finished || player.state !== 'run')) || race.resultsShown) return 'finish';
+  if ((race.state === 'green' || race.state === 'practice') && !race.checkered) return 'race';
+  return '';
+}
+const MUS_LVL = { menu: .75, race: .3, finish: 1 };
+function musStop(fade = 1.2) { const P = MUS.cur; if (!P) return; MUS.cur = null; const ctx = AudioSys.ctx, t = ctx.currentTime; P.g.gain.cancelScheduledValues(t); P.g.gain.setValueAtTime(P.g.gain.value, t); P.g.gain.linearRampToValueAtTime(0, t + fade); try { P.s.stop(t + fade + .1); } catch (e) {} }
+function musStep(dt) {
+  const A = AudioSys; if (!A.ctx || A.ctx.state !== 'running') return; MUS.t -= dt; if (MUS.t > 0) return; MUS.t = .25;
+  const w = musWant();
+  if (w !== MUS.want) { MUS.want = w; musStop(w === 'finish' ? .6 : 1.4); MUS.k = '';
+    if (w) { const ks = Object.keys(BGM_LIB).filter(k => k !== BGM.last && k !== MUS.used), k = w === 'finish' ? (MUS.used === 'rock' ? 'grunge' : 'rock') : (ks[Math.random() * ks.length | 0] || 'rock'); MUS.k = k; MUS.used = k;
+      const go = () => { if (MUS.want !== w || MUS.k !== k || MUS.cur) return; const P = bgmPlay(k, w === 'finish' ? .2 : BGM_LIB[k].ls, w === 'race' ? 3 : 1.2); if (!P) return; MUS.cur = P;
+        const t = A.ctx.currentTime; P.g.gain.cancelScheduledValues(t); P.g.gain.setValueAtTime(0, t); P.g.gain.linearRampToValueAtTime(BGM.vol * MUS_LVL[w], t + (w === 'race' ? 3 : 1.2)); };
+      BGM.buf[k] ? go() : bgmLoad(k, go); } }
+  else if (MUS.cur) { const lv = BGM.vol * MUS_LVL[w] * (state.paused ? .5 : 1); MUS.cur.g.gain.setTargetAtTime(lv, A.ctx.currentTime, .4); }
+}
+{ const seg = $('musMoreSeg'); if (seg) { const sync = () => { for (const b of seg.children) b.setAttribute('aria-pressed', (b.dataset.v === 'on') === MUS.on ? 'true' : 'false'); };
+  seg.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; MUS.on = b.dataset.v === 'on'; store.set('scream-music-more', MUS.on ? 'on' : 'off'); sync(); }); sync(); } }
+
+// the crowd: a murmur and chatter that never quite stops, a roar that rises and falls with the racing (a battle up front,
+// the last lap, a crash, the chequered flag), quiet in the pits and the wash bay
+var CRWA = { n: null, ex: .2, spike: 0, t: 0, ch: .5, chT: .5, lastPos: 0 };
+function crowdInit() {
+  const A = AudioSys, ctx = A.ctx; if (!ctx || CRWA.n) return;
+  const len = ctx.sampleRate * 4, nb = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = nb.getChannelData(c); let b0 = 0, b1 = 0, b2 = 0; for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; b0 = .997 * b0 + w * .029; b1 = .985 * b1 + w * .032; b2 = .95 * b2 + w * .048; d[i] = (b0 + b1 + b2 + w * .02) * .9; } }
+  const src = () => { const s = ctx.createBufferSource(); s.buffer = nb; s.loop = true; s.start(0, Math.random() * 4); return s; };
+  const out = ctx.createGain(); out.gain.value = 0; out.connect(A.master);
+  const mk = (type, f, q, g) => { const fl = ctx.createBiquadFilter(); fl.type = type; fl.frequency.value = f; fl.Q.value = q; const gg = ctx.createGain(); gg.gain.value = g; src().connect(fl).connect(gg).connect(out); return gg; };
+  CRWA.n = { out, mur: mk('lowpass', 520, .4, .5), chat: mk('bandpass', 1250, 1.1, .25), roar: mk('bandpass', 760, .7, 0), hi: mk('bandpass', 2600, 1.4, 0) };
+}
+{ const c0 = AudioSys.cheer; AudioSys.cheer = function (amt = .22, dur = 3) { CRWA.spike = Math.max(CRWA.spike, Math.min(1, amt * 2.6)); CRWA.spikeT = dur; return c0.apply(this, arguments); }; }
+function crowdStep(dt) {
+  const A = AudioSys; if (!A.ctx) return; if (!CRWA.n) crowdInit(); const N = CRWA.n, t = A.ctx.currentTime;
+  CRWA.spikeT = (CRWA.spikeT || 0) - dt; if (CRWA.spikeT < 0) CRWA.spike = Math.max(0, CRWA.spike - dt * .35);
+  CRWA.t -= dt; if (CRWA.t > 0) return; CRWA.t = .12;
+  let ex = .18, lvl = .55;
+  if (WASH.on || A.muted) lvl = 0;
+  else if (state.screen === 'title') { ex = .14; lvl = .32; }
+  else if (state.screen === 'race' && race) {
+    const st = race.state; ex = st === 'pushoff' ? .3 : st === 'formation' ? (race.salute === 'on' ? .62 : race.paceOff ? .55 : .34) : st === 'green' ? .42 : st === 'practice' ? .12 : .3;
+    if (st === 'green' && !race.checkered) { const o = standings(); if (o.length > 1) { const g = Math.abs(wrapD(o[0].s - o[1].s)); ex += g < 6 ? .22 : g < 14 ? .1 : 0; }
+      if (race.white) ex += .15; if (race.flag === 'yellow' || race.flag === 'red') ex -= .12;
+      if (player) { const pp = o.indexOf(player) + 1; if (pp && CRWA.lastPos && pp < CRWA.lastPos) CRWA.spike = Math.max(CRWA.spike, .45); CRWA.lastPos = pp; } }
+    if (race.checkered) ex = Math.max(ex, race.t - (race.endT || race.t) < 12 ? .75 : .35);
+    if (race.resultsShown || state.paused) lvl = .4;
+    if (state.cam === 1 || state.cam === 2) lvl *= .7;   // in the car: the engine's in your ears
+  }
+  CRWA.ex += (Math.min(1, ex + CRWA.spike * .6) - CRWA.ex) * .25; const e = CRWA.ex;
+  CRWA.chT = Math.random() < .08 ? .25 + Math.random() * .75 : CRWA.chT; CRWA.ch += (CRWA.chT - CRWA.ch) * .2;
+  N.out.gain.setTargetAtTime(lvl * .5, t, .6);
+  N.mur.gain.setTargetAtTime(.35 + e * .25, t, .5); N.chat.gain.setTargetAtTime(.12 * CRWA.ch * (1.2 - e), t, .3);
+  N.roar.gain.setTargetAtTime(Math.max(0, e - .3) * .95, t, e > CRWA.lastE ? .25 : .9); N.hi.gain.setTargetAtTime(Math.max(0, e - .6) * .45, t, .3); CRWA.lastE = e;
+}
+{ const cs1 = commStep; commStep = function (dt) { cs1(dt); try { musStep(dt); crowdStep(dt); } catch (e) {} }; }
+
+// practice: race your own best lap. The fastest lap you've done here is kept (in this browser) and a ghost car drives it
+var GHOST = { rec: [], best: null, mesh: null, t0: 0, dtS: .05, acc: 0 };
+try { const g = JSON.parse(store.get('scream-ghost-' + (VENUE.name || 'premier')) || 'null'); if (g && g.lap > 0 && g.p && g.p.length > 60) GHOST.best = g; } catch (e) {}
+function ghostMesh() {
+  if (GHOST.mesh) return GHOST.mesh; const m = makeSprintcar('#bfe6ff', '#9ccfff', '', undefined, 'mesh', null, 0);
+  const mat = new THREE.MeshBasicMaterial({ color: 0x9fdcff, transparent: true, opacity: .26, depthWrite: false, fog: true });
+  m.traverse(o => { if (o.isMesh) { o.material = mat; o.castShadow = o.receiveShadow = false; o.renderOrder = 6; } }); m.visible = false; scene.add(m); GHOST.mat = mat; return GHOST.mesh = m;
+}
+const _ghQ1 = new THREE.Quaternion(), _ghQ2 = new THREE.Quaternion();
+function ghostStep(dt) {
+  const on = state.screen === 'race' && race && race.state === 'practice' && !race.qual && player && !REPLAY.playing;
+  if (!on) { if (GHOST.mesh) GHOST.mesh.visible = false; return; }
+  const c = player;
+  if (c.lapArmed && c.lapStart && c.state === 'run') { GHOST.acc += dt; if (GHOST.acc >= GHOST.dtS) { GHOST.acc -= GHOST.dtS; const m = c.mesh, q = m.quaternion;
+      if (GHOST.recT !== c.lapStart) { GHOST.recT = c.lapStart; GHOST.rec = []; }
+      if (GHOST.rec.length < 2400) GHOST.rec.push(+(race.t - c.lapStart).toFixed(3), +m.position.x.toFixed(2), +m.position.y.toFixed(2), +m.position.z.toFixed(2), +q.x.toFixed(4), +q.y.toFixed(4), +q.z.toFixed(4), +q.w.toFixed(4)); } }
+  else if (c.state !== 'run') GHOST.recT = -1;   // a crash or a reset spoils the lap
+  const B = GHOST.best, g = ghostMesh(); if (!B || !c.lapArmed || !c.lapStart) { g.visible = false; return; }
+  const t = race.t - c.lapStart, P = B.p, n = P.length / 8; if (t > B.lap + .5) { g.visible = false; return; }
+  let lo = 0, hi = n - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (P[mid * 8] <= t) lo = mid; else hi = mid; }
+  const a = lo * 8, b = hi * 8, k = clamp((t - P[a]) / Math.max(1e-3, P[b] - P[a]), 0, 1);
+  g.position.set(lerp(P[a + 1], P[b + 1], k), lerp(P[a + 2], P[b + 2], k), lerp(P[a + 3], P[b + 3], k));
+  _ghQ1.set(P[a + 4], P[a + 5], P[a + 6], P[a + 7]); _ghQ2.set(P[b + 4], P[b + 5], P[b + 6], P[b + 7]); g.quaternion.copy(_ghQ1).slerp(_ghQ2, k);
+  const dd = g.position.distanceTo(c.mesh.position); GHOST.mat.opacity = .26 * clamp((dd - 2.5) / 5, 0, 1); g.visible = GHOST.mat.opacity > .01;
+}
+{ const pl0 = playerLap; playerLap = function () { const c = player, was = c && c.lapArmed && c.lapStart && GHOST.recT === c.lapStart, last = c && c.lastLap, rec = GHOST.rec;
+    const r = pl0.apply(this, arguments);
+    if (race && race.state === 'practice' && !race.qual && was && c.lastLap && c.lastLap !== last && rec.length > 80 && (!GHOST.best || c.lastLap < GHOST.best.lap)) {
+      GHOST.best = { lap: c.lastLap, p: rec.slice() }; try { store.set('scream-ghost-' + (VENUE.name || 'premier'), JSON.stringify(GHOST.best)); } catch (e) {}
+      setTimeout(() => flash(c.lastLap.toFixed(3), 'New best. Your ghost runs it now.', 1800), 900); }
+    GHOST.rec = []; GHOST.recT = c ? c.lapStart : 0; GHOST.acc = 0; return r; }; }
+{ const ur = updateRace; updateRace = function (dt) { const r = ur(dt); try { ghostStep(dt); } catch (e) {} return r; }; }
+
+// the carousel keeps turning: if its loop stopped while hidden (another tab, the menu folded away) it starts again when it's back
+setInterval(() => { try { if (typeof CAROU === 'undefined' || !CAROU || !CAROU.cv || CAROU.raf || document.hidden || !CAROU.cv.isConnected) return; const host = CAROU.cv.parentElement; if (!host || !host.id) return;
+  const vis = CAROU.mode === 'driver' ? state.screen === 'title' && MENU.tab === 'driver' && !$('title').classList.contains('min') && $('title').style.display !== 'none' : LV.on; if (vis) carouShow(host.id); } catch (e) {} }, 400);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && typeof CAROU !== 'undefined' && CAROU && CAROU.cv && CAROU.cv.parentElement && !CAROU.raf) try { carouShow(CAROU.cv.parentElement.id); } catch (e) {} });
+
+// fireworks: more kinds (willow, crossette, strobe, ring, peony), a white flash at each break, comets that trail, mines
+// from the fence, and a finale salvo
+{ const put = (x, y, z, vx, vy, vz, col, life, size) => fwPut(x, y, z, vx, vy, vz, col, life, size);
+  fwStep = function (dt) {
+    if (!FW.pts) return; const W = WX.wind, left = FW.until - T;
+    if (T < FW.until && T >= FW.next && FW.sites.length) { const fin = left < 3.2, n = fin ? 2 + (Math.random() * 2 | 0) : Math.random() < .25 ? 2 : 1; FW.next = T + (fin ? sr(.12, .3) : sr(.3, .9));
+      for (let j = 0; j < n; j++) { const s = FW.sites[(Math.random() * FW.sites.length) | 0];
+        if (!fin && Math.random() < .18) { const th = sr(45, 60) * D2R, a0 = sr(0, TAU), col = FW_PAL[(Math.random() * FW_PAL.length) | 0];   // a mine: a fan of stars straight off the fence
+          for (let i = 0; i < 26; i++) { const a = a0 + i / 26 * TAU, v = sr(14, 19); put(s[0], s[1], s[2], Math.cos(a) * Math.cos(th) * v * .55, Math.sin(th) * v, Math.sin(a) * Math.cos(th) * v * .55, col, sr(1.1, 1.6), 1.3); } continue; }
+        FW.shells.push({ x: s[0], y: s[1], z: s[2], vx: sr(-2.5, 2.5), vy: sr(25, 35), vz: sr(-2.5, 2.5), kind: (Math.random() * 6) | 0, col: FW_PAL[(Math.random() * FW_PAL.length) | 0], col2: FW_PAL[(Math.random() * FW_PAL.length) | 0] }); }
+      AudioSys.thump(8); }
+    for (let k = FW.shells.length - 1; k >= 0; k--) { const S = FW.shells[k]; S.vy -= 9.8 * dt; S.x += (S.vx + W.x * .3) * dt; S.y += S.vy * dt; S.z += (S.vz + W.z * .3) * dt;
+      put(S.x, S.y, S.z, sr(-.6, .6), sr(-1.2, 0), sr(-.6, .6), [1, .72, .38], .7, 1.2); if (Math.random() < .5) put(S.x, S.y, S.z, sr(-1, 1), sr(-2, 0), sr(-1, 1), [1, .55, .2], .35, .7);
+      if (S.vy < 3) { FW.shells.splice(k, 1); put(S.x, S.y, S.z, 0, 0, 0, [1, .97, .9], .16, 14);   // the break
+        const kind = S.kind, n = kind === 1 ? 72 : kind === 3 ? 90 : kind === 4 ? 24 : 120;
+        for (let i = 0; i < n; i++) { let ux, uy, uz; if (kind === 1) { const a = i / n * TAU; ux = Math.cos(a); uy = sr(-.1, .1); uz = Math.sin(a); } else { uy = sr(-1, 1); const r = Math.sqrt(1 - uy * uy), a = sr(0, TAU); ux = r * Math.cos(a); uz = r * Math.sin(a); }
+          if (kind === 3) { const v = sr(10, 14); put(S.x, S.y, S.z, ux * v, uy * v + 1, uz * v, [1, .72, .3], sr(3.2, 4.4), 2.2); }   // willow: long golden strands
+          else if (kind === 4) { const v = 11; S.sub = S.sub || []; S.sub.push([ux * v, uy * v, uz * v]); put(S.x, S.y, S.z, ux * v, uy * v, uz * v, [1, .85, .5], .55, 1.6); }   // crossette: splits again
+          else { const v = (kind === 2 ? 12 : 20) * (kind === 1 ? 1 : sr(.78, 1)); put(S.x, S.y, S.z, ux * v, uy * v, uz * v, i % 3 ? S.col : S.col2, kind === 2 ? sr(2.2, 3.2) : kind === 5 ? sr(1.6, 2.4) : sr(1.4, 2.2), kind === 2 ? 2.2 : 2.9); } }
+        if (kind === 4) { const sub = S.sub, x = S.x, y = S.y, z = S.z, col = S.col; setTimeout(() => { for (const [vx, vy, vz] of sub) { const px = x + vx * .42, py = y + vy * .42 - .4, pz = z + vz * .42; for (let q = 0; q < 4; q++) { const a = q * Math.PI / 2 + sr(-.2, .2); put(px, py, pz, Math.cos(a) * 6, sr(-1, 2), Math.sin(a) * 6, col, sr(.9, 1.3), 1.5); } } }, 480); }
+        if (kind === 5) { const x = S.x, y = S.y, z = S.z; setTimeout(() => { for (let i = 0; i < 70; i++) { const uy = sr(-1, 1), r = Math.sqrt(1 - uy * uy), a = sr(0, TAU), v = sr(4, 13); put(x + r * Math.cos(a) * v * .15, y + uy * v * .15, z + r * Math.sin(a) * v * .15, 0, -1, 0, [1, 1, .92], sr(.08, .18), 1.4); } }, 900); }   // strobe crackle
+        const dist = camera.position.distanceTo(new THREE.Vector3(S.x, S.y, S.z)); setTimeout(() => AudioSys.thump(clamp(40 - dist * .12, 6, 30)), dist / .343); } }
+    let alive = 0; const p = FW.p, v = FW.v, drag = Math.exp(-1.6 * dt);
+    for (let i = 0; i < FW.N; i++) { if (FW.life[i] <= 0) continue; FW.age[i] += dt; const f = FW.age[i] / FW.life[i]; if (f >= 1) { FW.life[i] = 0; FW.a[i] = 0; FW.sz[i] = 0; continue; } alive++;
+      const wil = FW.life[i] > 3, dg = wil ? Math.exp(-2.4 * dt) : drag; v[i*3] *= dg; v[i*3+1] = v[i*3+1] * dg - (wil ? 1.6 : 3.2) * dt; v[i*3+2] *= dg;
+      p[i*3] += (v[i*3] + W.x * .25) * dt; p[i*3+1] += v[i*3+1] * dt; p[i*3+2] += (v[i*3+2] + W.z * .25) * dt;
+      FW.a[i] = FW.sz[i] > 12 ? (1 - f) : (1 - f * f) * (f > .6 ? .55 + .45 * Math.sin(FW.age[i] * 40 + i) : 1); }
+    FW.alive = alive; FW.pts.visible = alive > 0 || FW.shells.length > 0; if (!FW.pts.visible) return;
+    const G = FW.pts.geometry.attributes; G.position.needsUpdate = G.color.needsUpdate = G.aS.needsUpdate = G.aA.needsUpdate = true; FW.pts.material.uniforms.uH.value = window.innerHeight * .5 / Math.tan(camera.fov * D2R / 2) * .7 * renderer.getPixelRatio();
+  }; }
+if (FW.N < 6000 && !FW.pts) FW.N = 6000;
+
+// the intro's done its job once everything's built: warm the shaders and decode the music while it plays out
+window.__introBg = () => { try { renderer.compile(scene, camera); } catch (e) {} try { if (!WASH.scene) washBuildScene(); } catch (e) {} };
+
+// Kerry Madsen's DTRSC skin left the wing boards and top wing bare chrome (DTRSC put its graphics there with a reflection map), so he
+// read as a blank car: give him navy and orange boards to match his QVC panels
+{ const km = DTRSC.find(d => d.key === 'dtrsc:kerry_madsen'); if (km && !km.layers.length) { const N = '#232a7a', O = '#ff5a1f';
+  for (const [r, nx, tx] of [['lw', .83, .37], ['rw', .17, .63]]) km.layers.push(
+    { type: 'rect', region: r, x: .5, y: .86, w: 1.05, h: .3, color: N },
+    { type: 'number', region: r, x: nx, y: .44, w: .34, h: .82, color: O, color2: N, sw: .07, font: 'block', skew: .12 },
+    { type: 'text', region: r, x: tx, y: .4, w: .5, h: .46, text: 'MADSEN', color: N, font: 'block', skew: .12 },
+    { type: 'text', region: r, x: tx, y: .86, w: .5, h: .22, text: 'QVC RACING', color: '#fff', font: 'italic' });
+  km.layers.push({ type: 'stripe', region: 'tw', x: .5, y: .5, w: .34, h: 1.1, color: N, slant: 0 }, { type: 'number', region: 'tw', x: .5, y: .5, w: .6, h: .3, color: O, color2: N, sw: .06, font: 'block', rot: 90 }); } }
+
+// the wash bay on a phone held upright: the view widens (it was 20 degrees across, the car barely fitted even zoomed right out)
+// and pinch or scroll can pull back further
+function washMaxD() { const a = window.innerWidth / Math.max(1, window.innerHeight); return (WASH.tool === 'garden' ? 20 : 12) * clamp(1.25 / a, 1, 1.6); }
+{ const ws0 = washStep; washStep = function (dt) { const r = ws0(dt); const cam = WASH.cam, a = cam.aspect, f = a < 1.2 ? Math.min(68, 2 * Math.atan(Math.tan(21 * D2R) * 1.2 / a) / D2R) : 42; if (Math.abs(cam.fov - f) > .01) { cam.fov = f; cam.updateProjectionMatrix(); } return r; }; }
+
+// grinder sparks that carry: a rooster tail thrown up and back at 45 to 60 degrees, living long enough to arc and fall
+function sparkUp(x, y, z, vx, vy, vz) { emitDust(x, y, z, vx, vy, vz, 2); const D = dust, i = (D.next - 1 + D.N) % D.N; D.life[i] = sr(.45, .9); D.s0[i] = D.s1[i] = sr(.1, .19); }
+if (window.__introReady) window.__introReady();
 </script>
 </body>
 </html>
