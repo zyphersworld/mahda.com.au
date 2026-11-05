@@ -7723,7 +7723,7 @@ function mpPack() {   // [1 type][2 seq][4 time ms][12 pos f32][8 quat i16][4 ve
   v.setFloat32(7, p.x, true); v.setFloat32(11, p.y, true); v.setFloat32(15, p.z, true);
   v.setInt16(19, q.x * 32767, true); v.setInt16(21, q.y * 32767, true); v.setInt16(23, q.z * 32767, true); v.setInt16(25, q.w * 32767, true);
   v.setInt16(27, clamp(c.vx || 0, -60, 60) * 500, true); v.setInt16(29, clamp(c.vz || 0, -60, 60) * 500, true);
-  v.setInt8(31, clamp((c.steerVis ?? c.psteer ?? 0) / .6, -1, 1) * 127); v.setUint8(32, (c.state === 'tumble' ? 1 : 0) | (c.finished ? 2 : 0));
+  v.setInt8(31, clamp((c.steerVis ?? c.psteer ?? 0) / .6, -1, 1) * 127); v.setUint8(32, (c.state === 'tumble' ? 1 : 0) | (c.finished ? 2 : 0) | (mpShare() === 'prac' ? 4 : 0));
   v.setFloat32(33, inR ? c.laps + c.s / L : -1, true); v.setFloat32(37, race.mp && c.finished ? (MP.race.finT || 0) : 0, true);
   return MPN.buf;
 }
@@ -7759,9 +7759,9 @@ function mpStep(dt) {
   if (race && race.mp && player && player.finished && !MP.race.finT) MP.race.finT = Date.now() / 1000;
   // 20 a second while there's racing, 8 when it's quiet, nothing off the track
   MPN.rate = onTrack && (race.state === 'green' || race.state === 'formation' || race.state === 'pushoff') ? (race.state === 'green' && MP.ws.bufferedAmount < 2048 ? 30 : 15) : 8;
-  MP.sendT += dt; if (onTrack && MP.sendT >= 1 / MPN.rate && MP.ws.bufferedAmount < 4096) { MP.sendT = 0; MP.ws.send(mpPack()); MPN.sent++; }
+  MP.sendT += dt; if (onTrack && mpShare() && MP.sendT >= 1 / MPN.rate && MP.ws.bufferedAmount < 4096) { MP.sendT = 0; MP.ws.send(mpPack()); MPN.sent++; }
   for (const P of MP.peers.values()) {
-    const pose = mpPose(P, now, dt); if (!pose) continue; const car = mpCar(P); car.visible = !!onTrack && now - (P.lastAt || 0) < 3000; if (!car.visible) continue;
+    const pose = mpPose(P, now, dt); if (!pose) continue; const car = mpCar(P); car.visible = !!onTrack && now - (P.lastAt || 0) < 3000 && mpShown(P); if (!car.visible) continue;
     // a final, light smoothing: soaks up any residual step without visible lag; a big jump (a reset) just snaps
     if (!P.shown || car.position.distanceTo(pose.p) > 12) { car.position.copy(pose.p); car.quaternion.copy(pose.q); P.shown = true; }
     else { const k = 1 - Math.exp(-dt * 30); car.position.lerp(pose.p, k); car.quaternion.slerp(pose.q, k); }
@@ -8690,6 +8690,19 @@ async function lbSubmit(kind, t, sp, rec) {
 { const mt = menuTab; menuTab = function (p) { mt(p); if (p === 'race' && performance.now() - LBQ.t > 15000) lbFetch(); }; }
 setInterval(() => { if (state.screen === 'title' && !document.hidden && performance.now() - LBQ.t > 30000) lbFetch(); }, 5000);
 setTimeout(() => lbFetch(), 2500);
+
+/* ---------- v78: other people only where they belong ----------
+   Your car goes out to the room, and theirs show on your track, only in an online race (the people in that race) or in
+   open practice (anyone else in the room who's also in open practice). Quick races, full nights and A-Mains are yours alone. */
+MP2.openPrac = store.get('scream-openprac') !== 'off';
+function mpShare() { if (!race || state.screen !== 'race') return ''; if (race.mp) return 'race';
+  if (race.solo && !race.qual && race.sess && race.sess.name === 'Practice' && MP2.openPrac) return 'prac'; return ''; }
+function mpShown(P) { const sh = mpShare(); if (sh === 'race') return !!(MP.race && MP.race.order.includes(P.id));
+  if (sh === 'prac') { const S = P.snaps && P.snaps[P.snaps.length - 1], on = !!(S && (S.fl & 4)); if (on && !P.inPrac) flash(P.name + ' dropped in', 'Open practice: they\'re on track with you', 1800); P.inPrac = on; return on; } P.inPrac = false; return false; }
+{ const eo = evOpts; evOpts = function () { eo(); if (state.event !== 'practice') return; const box = $('evOpts'); if (!box) return;
+    const w = document.createElement('div'); w.innerHTML = `<div class="m-h">Open practice</div><div class="tiles sm" id="opSeg"><button data-v="on"><b>Others can drop in</b><small>Anyone online in open practice shares the track (no contact)</small></button><button data-v="off"><b>Just me</b></button></div>`;
+    box.append(...w.childNodes); segSync('opSeg', MP2.openPrac ? 'on' : 'off');
+    $('opSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; MP2.openPrac = b.dataset.v === 'on'; store.set('scream-openprac', MP2.openPrac ? 'on' : 'off'); segSync('opSeg', b.dataset.v); }); }; evOpts(); }
 if (window.__introReady) window.__introReady();
 </script>
 </body>
