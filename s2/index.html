@@ -548,6 +548,15 @@ select, select option { background-color: #1c2026; color: #f2f2f2; color-scheme:
 
 
 
+
+/* v77: Quicktimes */
+.qt{ margin-top:16px; } .qt-bar{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; } .qt-bar .seg{ display:inline-flex; gap:2px; } .qt-bar .seg button{ padding:6px 12px; border:0; background:rgba(255,255,255,.08); color:#fff; font:700 13px var(--cond); font-style:italic; text-transform:uppercase; letter-spacing:.06em; cursor:pointer; }
+.qt-bar .seg button[aria-pressed="true"]{ background:#ffb547; color:#141414; }
+.qt-list{ list-style:none; margin:0; padding:0; display:grid; gap:3px; } .qt-list li{ display:grid; grid-template-columns:22px 42px minmax(0,1fr) auto; align-items:center; gap:8px; padding:5px 8px; background:rgba(255,255,255,.05); }
+.qt-list li:nth-child(1){ background:linear-gradient(90deg,rgba(255,192,74,.28),rgba(255,255,255,.05)); } .qt-list li.me{ outline:1px solid #ffb547; }
+.qt-list i{ font-style:normal; opacity:.7; text-align:right; } .qt-list .num{ text-align:center; font-family:var(--display); font-weight:900; padding:1px 4px; } .qt-list b{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .qt-list small{ display:none; } .qt-list em{ font-style:normal; font-family:var(--display); font-size:18px; color:#ffb547; }
+@media (min-width:700px){ .qt-list li{ grid-template-columns:22px 42px minmax(0,1fr) minmax(0,.9fr) auto; } .qt-list small{ display:block; opacity:.55; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } }
+.qt-me{ margin:6px 0; font-size:13px; opacity:.8; } .qt-row{ display:flex; flex-wrap:wrap; gap:8px; align-items:end; } .qt-row label{ display:flex; flex-direction:column; gap:3px; font-size:13px; } .qt-row input{ padding:7px 9px; border:0; border-radius:6px; background:rgba(255,255,255,.1); color:inherit; font:inherit; }
 /* v76: online */
 #olReady, #olStart{ padding:10px 22px; border:0; cursor:pointer; font-family:var(--display); font-weight:900; font-size:19px; letter-spacing:.03em; text-transform:uppercase; color:#fff; background:linear-gradient(180deg,#36d985,#13854a); clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%); box-shadow:inset 0 -4px 0 rgba(0,0,0,.22); }
 #olStart{ background:linear-gradient(180deg,#ffb547,#d9800f); color:#141414; } #olStart:disabled{ opacity:.5; cursor:default; }
@@ -5406,7 +5415,7 @@ function menuSummary() {
   const items = [[{ practice: 'Practice', quick: 'Quick race', night: 'Full night', amain: 'Quick A-Main' }[state.event] || 'Quick race', 'race'], [{ day: 'Afternoon', dusk: 'Dusk', night: 'Under lights' }[state.mode], 'cond'], [WEATHER[state.weather] ? WEATHER[state.weather].name : '', 'cond'], [COND[state.cond].name + ' track', 'cond'], [state.prep === 'worn' ? 'Raced-in' : 'Fresh prep', 'cond'],
                  [{ none: 'No incidents', rare: 'Occasional incidents', often: 'Frequent incidents' }[state.incidents], 'cond'], ['AI ' + ({ rookie: 'rookie', club: 'club', pro: 'pro', elite: 'elite', legend: 'legend' }[state.aiDiff] || 'pro') + ', ' + (state.aiSpread || 'normal') + ' spread', 'cond'], ...(state.ttyres === 'on' ? [['Infield tyres', 'cond']] : []), ['Car ' + ($('numInput').value || 'V1').toUpperCase(), 'driver'],
                  [(CHASSIS[state.setup && state.setup.chassis] || CHASSIS.maxim).name + ' · ' + (MOTORS[state.setup && state.setup.motor] || MOTORS.shaver).name, 'garage']];
-  const best = $('bestLine') && $('bestLine').textContent; if (best) items.push([best, 'race']); items.push(['Drag the view to look around, scroll or pinch to zoom', null]);
+  const best = $('bestLine') && $('bestLine').textContent; if (best) items.push([best, 'race']); if (typeof LBQ !== 'undefined' && LBQ.tick) items.push([LBQ.tick, 'race']); items.push(['Drag the view to look around, scroll or pinch to zoom', null]);
   for (let copy = 0; copy < 2; copy++) for (const [t, p] of items) { if (!t) continue; const b = document.createElement(p ? 'button' : 'span'); b.textContent = t;
     if (p) b.onclick = () => { menuTab(p); if ($('title').classList.contains('min')) menuShow(true); }; if (copy) { b.setAttribute('aria-hidden', 'true'); b.tabIndex = -1; } el.append(b); }
   requestAnimationFrame(() => el.style.setProperty('--tk', Math.max(24, el.scrollWidth / 2 / 42).toFixed(1) + 's'));
@@ -8617,6 +8626,69 @@ function mpRows() { const me = { name: MP.name, num: pNumNow(), col: playerLiver
         $('resSub').textContent = 'Online race, ' + race.laps + ' laps. ' + (player.bestLap ? 'Your best lap: ' + player.bestLap.toFixed(3) + '.' : '');
         $('resTable').innerHTML = rows.map((x, i) => `<tr class="${x.me ? 'me ' : ''}${i < 3 ? 'p' + (i + 1) : ''}"><td>${i + 1}</td><td><span class="num" style="background:${esc(x.col)};color:${textColorFor(x.col || '#888')}">${esc(x.num)}</span> ${esc(x.name)}${x.ai ? ' <small>AI</small>' : ''}</td><td>${x.fin ? 'Finished' : 'Running'}</td></tr>`).join(''); } catch (e) {}
       if (race.mpHost && MP2.v >= 2) mpSend({ t: 'end' }); MP2.racing = false; } return r; }; }
+
+/* ---------- v77: Quicktimes, the live top ten ----------
+   Clean laps in practice (and your timed laps in qualifying) go to the board on the multiplayer relay (/lb). One entry per
+   device per board, your best; a board per track layout and kind of lap. The relay checks the lap could be real (average speed,
+   four sector splits that add up). The top ten keep a recording, so practice can put the record lap on track as a ghost. */
+var LBQ = { dev: store.get('scream-dev') || (() => { const d = (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)).slice(0, 36); store.set('scream-dev', d); return d; })(),
+  kind: 'practice', period: 'all', data: {}, t: 0, sp: [], lapT: null, dirty: false, prevS: 0, tick: '', busy: false };
+const lbBase = () => MP.url.replace(/^ws/, 'http').replace(/\/?(\?.*)?$/, '');
+const lbTrack = () => (VENUE.base || 'premier') + '-' + (hashStr(JSON.stringify(VENUE.track)) >>> 0).toString(36).slice(0, 5);
+const lbBoard = k => lbTrack() + ':' + k;
+const fmtT = t => (t >= 60 ? Math.floor(t / 60) + ':' + (t % 60).toFixed(3).padStart(6, '0') : t.toFixed(3));
+async function lbFetch(k = LBQ.kind) {
+  try { const r = await fetch(lbBase() + '/lb?board=' + encodeURIComponent(lbBoard(k)) + '&period=' + LBQ.period + '&dev=' + encodeURIComponent(LBQ.dev), { cache: 'no-store' }); const j = await r.json(); if (!j || !Array.isArray(j.top)) throw 0;
+    LBQ.data[k + LBQ.period] = j; LBQ.err = ''; if (k === 'practice' && LBQ.period === 'all') { LBQ.cut = j.top.length >= 10 ? j.top[9].t : 1e9; LBQ.myBest = j.me ? j.me.t : null; LBQ.top1 = j.top[0] || null; } }
+  catch (e) { LBQ.err = 'The Quicktimes board needs the updated relay (worker.js v3).'; }
+  LBQ.t = performance.now(); lbDraw(); lbTick();
+}
+function lbTick() { const j = LBQ.data['practiceall']; const s = j && j.top.length ? 'Quicktimes: ' + j.top.slice(0, 3).map((e, i) => `${i + 1}. ${e.num} ${e.name} ${fmtT(e.t)}`).join('   ') : ''; if (s !== LBQ.tick) { LBQ.tick = s; try { menuSummary(); } catch (e) {} } }
+// the panel on the Race tab
+{ const host = $('evOpts'); if (host) { const box = document.createElement('div'); box.className = 'qt'; box.id = 'qtBox';
+    box.innerHTML = `<div class="m-h">Quicktimes · ${esc(VENUE.name.split(',')[0])}</div><div class="qt-bar"><span class="seg" id="qtKind"><button data-v="practice">Practice laps</button><button data-v="qual">Qualifying</button></span><span class="seg" id="qtPer"><button data-v="all">All time</button><button data-v="month">This month</button></span></div>
+      <ol id="qtList" class="qt-list"></ol><div class="qt-me" id="qtMe"></div>
+      <div class="qt-row"><label>Your name on the board<input id="qtName" maxlength="24" spellcheck="false"></label><button class="ghost sm" id="qtRec">Race the record</button></div>`;
+    host.after(box);
+    const sync = () => { for (const b of $('qtKind').children) b.setAttribute('aria-pressed', b.dataset.v === LBQ.kind ? 'true' : 'false'); for (const b of $('qtPer').children) b.setAttribute('aria-pressed', b.dataset.v === LBQ.period ? 'true' : 'false'); };
+    $('qtKind').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; LBQ.kind = b.dataset.v; sync(); lbDraw(); lbFetch(); });
+    $('qtPer').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; LBQ.period = b.dataset.v; sync(); lbDraw(); lbFetch(); });
+    const nm = $('qtName'); nm.value = MP.name === 'Driver' ? '' : MP.name; nm.placeholder = 'Driver';
+    nm.addEventListener('change', () => { MP.name = nm.value.trim().slice(0, 24) || 'Driver'; store.set('scream-mp-name', MP.name); const o = $('olName'); if (o) o.value = MP.name; });
+    $('qtRec').onclick = () => lbRecord(); sync(); } }
+function lbDraw() { const L = $('qtList'); if (!L) return; const j = LBQ.data[LBQ.kind + LBQ.period];
+  L.innerHTML = LBQ.err && !j ? `<li class="ev-note">${esc(LBQ.err)}</li>` : !j ? '<li class="ev-note">Loading…</li>' : j.top.length ? j.top.map((e, i) => `<li class="${e.id && j.me && j.me.id === e.id ? 'me' : ''}"><i>${i + 1}</i><span class="num" style="background:${esc(e.col)};color:${textColorFor(e.col || '#888')}">${esc(e.num || '?')}</span><b>${esc(e.name)}</b><small>${esc(e.car || '')}</small><em>${fmtT(e.t)}</em></li>`).join('') : `<li class="ev-note">No ${LBQ.kind === 'qual' ? 'qualifying' : 'practice'} laps on the board${LBQ.period === 'month' ? ' this month' : ''} yet. Set the first.</li>`;
+  const me = j && j.me; $('qtMe').textContent = me ? `Your best: ${fmtT(me.t)}, P${me.rank} of ${j.n}` : j ? 'Run a clean lap in practice to get on the board.' : '';
+  const r = $('qtRec'), top = LBQ.data['practiceall'] && LBQ.data['practiceall'].top[0]; r.style.display = top && top.g ? '' : 'none'; r.textContent = GHOST.mode === 'record' ? `Racing ${top ? top.name + '\'s ' + fmtT(top.t) : 'the record'} · switch to your own` : `Race the record (${top ? fmtT(top.t) : ''})`; }
+async function lbRecord() { if (GHOST.mode === 'record') { GHOST.mode = 'pb'; lbGhostCol(); lbDraw(); return; } const top = LBQ.data['practiceall'] && LBQ.data['practiceall'].top[0]; if (!top || !top.g) return;
+  try { const g = await (await fetch(lbBase() + '/lb/ghost?id=' + encodeURIComponent(top.id))).json(); if (!g || !Array.isArray(g.p)) throw 0; GHOST.wr = { lap: g.lap, p: g.p, name: top.name }; GHOST.mode = 'record'; lbGhostCol(); state.event = 'practice'; for (const b of $('evSeg').children) b.setAttribute('aria-pressed', b.dataset.v === 'practice' ? 'true' : 'false'); try { evOpts(); } catch (e) {}
+    flash('Record ghost loaded', top.name + ', ' + fmtT(top.t) + '. Start practice and chase it.', 2600); } catch (e) { flash('No record ghost', 'Could not load it from the board', 1800); } lbDraw(); }
+function lbGhostCol() { if (GHOST.mat) GHOST.mat.color.set(GHOST.mode === 'record' ? 0xffc04a : 0x9fdcff); }
+{ const g0 = ghostStep; ghostStep = function (dt) { if (GHOST.mode === 'record' && GHOST.wr) { const b = GHOST.best; GHOST.best = GHOST.wr; try { g0(dt); } finally { GHOST.best = b; } if (GHOST.mesh && GHOST.mat) lbGhostCol(); } else g0(dt); }; }
+// sector splits, and whether the lap stayed clean
+{ const ur = updateRace; updateRace = function (dt) { const r = ur(dt); const c = player;
+    if (c && race && (race.state === 'practice') && c.lapArmed && c.lapStart) {
+      if (LBQ.lapT !== c.lapStart) { LBQ.lapT = c.lapStart; LBQ.sp = []; LBQ.dirty = false; LBQ.prevS = c.s; }
+      if (c.state !== 'run' || REPLAY.playing) LBQ.dirty = true;
+      const k = LBQ.sp.length + 1; if (k <= 3) { const b = L * k / 4; if (LBQ.prevS < b && c.s >= b && c.s - LBQ.prevS < L / 2) LBQ.sp.push(race.t - c.lapStart - LBQ.sp.reduce((a, x) => a + x, 0)); }
+      LBQ.prevS = c.s; }
+    return r; }; }
+{ const rp = resetPlayer; resetPlayer = function () { LBQ.dirty = true; return rp.apply(this, arguments); }; }
+{ const pl = playerLap; playerLap = function () { const c = player, last = c && c.lastLap, armed = c && c.lapArmed && c.lapStart && LBQ.lapT === c.lapStart, sp = LBQ.sp.slice(), dirty = LBQ.dirty, rec = GHOST.rec.slice(), qual = !!(race && race.qual), solo = race && race.state === 'practice';
+    const r = pl.apply(this, arguments);
+    if (solo && armed && !dirty && c.lastLap && c.lastLap !== last && sp.length === 3) { const t = c.lastLap; sp.push(t - sp.reduce((a, x) => a + x, 0)); lbSubmit(qual ? 'qual' : 'practice', t, sp, qual ? null : rec); }
+    LBQ.sp = []; LBQ.lapT = c ? c.lapStart : null; LBQ.dirty = false; return r; }; }
+async function lbSubmit(kind, t, sp, rec) {
+  if (kind === 'practice' && LBQ.myBest && t >= LBQ.myBest) return;   // not better than what you've already got on there
+  const lv = playerLivery(), d = livFind(LIVLIB.sel), body = { board: lbBoard(kind), dev: LBQ.dev, name: MP.name, num: pNumNow(), car: d && (d.dtrsc || d.reg) ? d.num + ' ' + d.name : 'Own livery', col: '#' + new THREE.Color(lv.main || state.color || '#888').getHexString(), t, splits: sp, len: L };
+  if (rec && rec.length >= 640 && (LBQ.cut == null || t < LBQ.cut)) body.ghost = rec;
+  try { const r = await fetch(lbBase() + '/lb', { method: 'POST', headers: { 'content-type': 'text/plain' }, body: JSON.stringify(body) }); const j = await r.json(); if (j.error) return;
+    if (j.pb) { if (kind === 'practice') LBQ.myBest = j.best; setTimeout(() => flash(j.rank <= 10 ? 'P' + j.rank + ' on the board' : 'New Quicktimes PB', fmtT(t) + (j.rank <= 10 ? ' · top ten at ' + VENUE.name.split(',')[0] : ' · P' + j.rank + ' of ' + j.n), 2400), 2800); }
+    lbFetch(kind); } catch (e) {}
+}
+{ const mt = menuTab; menuTab = function (p) { mt(p); if (p === 'race' && performance.now() - LBQ.t > 15000) lbFetch(); }; }
+setInterval(() => { if (state.screen === 'title' && !document.hidden && performance.now() - LBQ.t > 30000) lbFetch(); }, 5000);
+setTimeout(() => lbFetch(), 2500);
 if (window.__introReady) window.__introReady();
 </script>
 </body>

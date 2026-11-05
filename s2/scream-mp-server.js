@@ -8,9 +8,38 @@ const { WebSocketServer } = require('ws');
 const PORT = +process.env.PORT || 8787, MAX = 16, V = 2, GAME = path.join(__dirname, 'scream-premier-speedway.html');
 const clean = (s, n) => String(s ?? '').replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
 const rooms = new Map(); let nextId = 1;   // name -> { socks: Set, racing, settings, pub }
+// Quicktimes board (same rules as the Worker), kept in lb.json next to this file
+const LBF = path.join(__dirname, 'lb.json'); let LB = {}; try { LB = JSON.parse(fs.readFileSync(LBF, 'utf8')); } catch (e) {}
+const lbSave = () => fs.writeFile(LBF, JSON.stringify(LB), () => {});
+const HITS = new Map();
+function lbHandle(req, res) {
+  const out = (o, st = 200) => { res.writeHead(st, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'content-type', 'Access-Control-Allow-Methods': 'GET,POST,DELETE' }); res.end(JSON.stringify(o)); };
+  const u = new URL(req.url, 'http://x'), q = u.searchParams, B = k => (LB['b:' + k] = LB['b:' + k] || []);
+  const top = (L, period) => { const m = new Date(); m.setUTCDate(1); m.setUTCHours(0, 0, 0, 0); return L.filter(e => period !== 'month' || e.d >= m.getTime()).slice(0, 10).map(({ dev, ...e }) => e); };
+  if (req.method === 'OPTIONS') return out({});
+  if (req.method === 'GET' && u.pathname === '/lb/ghost') { const g = LB['g:' + q.get('id')]; return g ? out(g) : out({ error: 'no ghost' }, 404); }
+  if (req.method === 'GET') { const board = clean(q.get('board') || 'premier', 60), L = B(board), dev = clean(q.get('dev'), 40), me = dev ? L.findIndex(e => e.dev === dev) : -1;
+    return out({ board, top: top(L, q.get('period')), me: me >= 0 ? { rank: me + 1, ...top([L[me]])[0] } : null, n: L.length }); }
+  if (req.method === 'DELETE') { if (!process.env.ADMIN_KEY || q.get('key') !== process.env.ADMIN_KEY) return out({ error: 'no' }, 403); const board = clean(q.get('board'), 60); LB['b:' + board] = B(board).filter(e => e.id !== q.get('id')); delete LB['g:' + q.get('id')]; lbSave(); return out({ ok: true }); }
+  let body = ''; req.on('data', c => { body += c; if (body.length > 400000) req.destroy(); }); req.on('end', () => {
+    const ip = req.socket.remoteAddress, now = Date.now(), H = (HITS.get(ip) || []).filter(t => now - t < 60e3); if (H.length >= 8) return out({ error: 'slow down' }, 429); H.push(now); HITS.set(ip, H);
+    let m; try { m = JSON.parse(body); } catch (e) { return out({ error: 'bad json' }, 400); }
+    const board = clean(m.board, 60), t = +m.t, len = +m.len, sp = Array.isArray(m.splits) ? m.splits.map(Number) : [];
+    if (!board || !(t > 0) || !(len > 200 && len < 3000) || t < len / 46 || t > 120) return out({ error: 'not a real lap' }, 400);
+    if (sp.length !== 4 || Math.abs(sp.reduce((a, b) => a + b, 0) - t) > .06 || sp.some(x => !(x >= t * .13))) return out({ error: 'splits do not add up' }, 400);
+    const dev = clean(m.dev, 40) || ip, L = B(board), old = L.findIndex(e => e.dev === dev);
+    if (old >= 0 && L[old].t <= t) { L[old].name = clean(m.name, 24) || L[old].name; lbSave(); return out({ rank: old + 1, pb: false, best: L[old].t, n: L.length }); }
+    if (old >= 0) { delete LB['g:' + L[old].id]; L.splice(old, 1); }
+    const e = { id: now.toString(36) + Math.random().toString(36).slice(2, 6), dev, name: clean(m.name, 24) || 'Driver', num: clean(m.num, 5), car: clean(m.car, 40), col: /^#[0-9a-f]{6}$/i.test(m.col) ? m.col : '#888888', t: Math.round(t * 1000) / 1000, sp: sp.map(x => Math.round(x * 1000) / 1000), d: now };
+    L.push(e); L.sort((a, b) => a.t - b.t); for (const x of L.splice(200)) delete LB['g:' + x.id];
+    const rank = L.indexOf(e) + 1; if (rank <= 10 && Array.isArray(m.ghost) && m.ghost.length >= 80 && m.ghost.length <= 24000) { LB['g:' + e.id] = { lap: e.t, p: m.ghost.map(Number) }; e.g = 1; }
+    for (const x of L.slice(10)) if (x.g) { delete LB['g:' + x.id]; x.g = 0; }
+    lbSave(); out({ rank, pb: true, best: e.t, id: e.id, n: L.length }); });
+}
 const hostWs = R => { let h = null; for (const o of R.socks) if (!h || o.id < h.id) h = o; return h; };
 const pub = o => ({ id: o.id, name: o.info.name, num: o.info.num, col: o.info.col, prof: o.info.prof || null, ready: !!o.info.ready });
 const server = http.createServer((req, res) => {
+  if (req.url.startsWith('/lb')) { lbHandle(req, res); return; }
   if (req.url.startsWith('/rooms')) { res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     res.end(JSON.stringify([...rooms.entries()].filter(([, R]) => R.pub && R.socks.size).map(([room, R]) => ({ room, n: R.socks.size, host: hostWs(R) ? hostWs(R).info.name : '', racing: R.racing })))); return; }
   if (req.url === '/' || req.url.startsWith('/?') || req.url === '/index.html') {
