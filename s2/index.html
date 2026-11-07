@@ -5,9 +5,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SCREAM Sprintcar Racing</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#121831">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:wght@400;500;600&family=Barlow+Condensed:ital,wght@1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:wght@400;500;600&family=Barlow+Condensed:ital,wght@1,600;1,700;1,800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#070912; --navy:#121831; --navy-2:#1d2547; --steel:#2a3352; --sodium:#FFB547; --hot:#FF7A1A; --chalk:#F5F3EE; --wire:#9AA3B5;
@@ -549,6 +554,43 @@ select, select option { background-color: #1c2026; color: #f2f2f2; color-scheme:
 
 
 
+
+html[data-ev]:not([data-ev="quick"]) .tiles > button[aria-pressed="true"]{ background:linear-gradient(165deg,color-mix(in srgb,var(--sodium) 70%,#fff),var(--sodium) 60%,var(--hot)); filter:drop-shadow(0 6px 16px color-mix(in srgb,var(--hot) 45%,transparent)); }
+#mp-online .tiles > button[aria-pressed="true"]{ background:linear-gradient(165deg,#a8ecff,#4fd6ff 60%,#2f6bff); }
+.qt-list li.ev-note{ display:block; } .m-tabs{ row-gap:0; }
+
+/* v80: the wash bay, toy-box style */
+#wash::before{ content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(10,14,20,.35)); }
+#wash .g-top .ghost{ border-radius:999px; background:#f7f2e8; color:#2a2a35; border:0; box-shadow:0 4px 0 rgba(0,0,0,.28); font-family:Fredoka,var(--body); font-weight:600; padding:8px 16px; }
+#wash h2{ font-family:Fredoka,var(--display); font-weight:700; letter-spacing:.04em; }
+#wash .w-panel.wz{ background:#f7f2e8; color:#2b2b36; border:0; border-radius:26px; padding:10px 12px 12px; box-shadow:0 8px 0 rgba(0,0,0,.18),0 18px 44px rgba(0,0,0,.38); font-family:Fredoka,var(--body); gap:8px; max-height:58vh; overflow:auto; }
+.wz .wz-head{ display:flex; align-items:center; gap:10px; width:100%; } .wz .w-prog{ flex:1; color:#555a68; font-family:Fredoka,var(--body); font-style:normal; letter-spacing:.04em; text-transform:none; font-weight:600; } .wz .w-bar{ height:12px; border-radius:99px; background:#e4ddcf; overflow:hidden; box-shadow:inset 0 2px 0 rgba(0,0,0,.08); } .wz .w-bar i{ border-radius:99px; background:linear-gradient(90deg,#ff7a1a,#1fa85b); }
+.wz-fold{ width:36px; height:36px; border:0; border-radius:50%; background:#fff; color:#3a3a46; font-size:18px; box-shadow:0 3px 0 #d9d2c3; cursor:pointer; }
+.wz-tabs{ display:flex; gap:6px; width:100%; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; } .wz-tabs::-webkit-scrollbar{ display:none; }
+.wz-tabs button{ flex:1 0 62px; display:flex; flex-direction:column; align-items:center; gap:1px; padding:7px 4px 6px; border:0; border-radius:16px; background:#fff; color:#3a3a46; font:600 13px Fredoka,var(--body); box-shadow:0 4px 0 #d9d2c3; cursor:pointer; transition:transform .08s, box-shadow .08s; }
+.wz-tabs button span{ font-size:20px; line-height:1.1; } .wz-tabs button[aria-pressed="true"]{ background:var(--c); color:#fff; box-shadow:0 4px 0 rgba(0,0,0,.28); } .wz-tabs button:active{ transform:translateY(3px); box-shadow:0 1px 0 #d9d2c3; }
+.wz-body{ width:100%; } .wz-pane{ display:none; } .wz-pane.on{ display:block; }
+#wash .wz .seg button, #wash .wz .w-opts button, #wash .wz .wz-sw button, #wash .wz .wz-tunes button{ border:0; border-radius:999px; background:#fff; color:#2b2b36; font:600 14px Fredoka,var(--body); padding:8px 14px; box-shadow:0 3px 0 #d9d2c3; cursor:pointer; clip-path:none; text-transform:none; letter-spacing:0; font-style:normal; }
+#wash .wz .seg button[aria-pressed="true"], #wash .wz .wz-sw button[aria-pressed="true"], #wash .wz .w-opts button[aria-pressed="true"]{ background:#2f6bff; color:#fff; box-shadow:0 3px 0 #1d46b0; }
+#wash .wz .seg{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; background:none; } #wash .wz .w-opts, #wash .wz .wz-sw, .wz-tunes{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px; }
+#wash .wz .w-hint{ color:#4a4f5c; font-size:13px; } #wash .wz select{ background:#fff !important; color:#2b2b36 !important; border:0 !important; border-radius:12px !important; box-shadow:0 3px 0 #d9d2c3; padding:8px 10px !important; } #wash .wz label{ color:#4a4f5c; opacity:1 !important; }
+.wz .w-lab{ font-weight:700; font-size:13px; color:#6a6f7c; margin-top:4px; }
+.wz-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; margin-bottom:8px; } .wz-cards button{ display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; column-gap:8px; align-items:center; text-align:left; padding:10px 12px; border:0; border-radius:18px; background:#fff; color:#2b2b36; box-shadow:0 4px 0 #d9d2c3; cursor:pointer; font-family:Fredoka,var(--body); }
+.wz-cards span{ grid-row:1 / 3; font-size:28px; } .wz-cards b{ font-weight:700; } .wz-cards small{ color:#6a6f7c; font-size:12px; } .wz-cards button:active{ transform:translateY(3px); box-shadow:0 1px 0 #d9d2c3; }
+#wMisStat div{ margin:2px 0; } #wash .wz .bank{ color:#4a4f5c; } #wash .wz output{ color:#2b2b36; }
+#wash .w-panel.wz.folded{ max-height:none; } .wz.folded .wz-tabs, .wz.folded .wz-body, .wz.folded > .w-hint{ display:none; }
+@media (max-width:600px){ #wash .w-panel.wz{ left:8px; right:8px; width:auto; transform:none; bottom:8px; max-height:50vh; border-radius:22px; } .wz-tabs button{ flex-basis:56px; font-size:12px; } }
+/* v80: event colours (Online always blue), install, skip four-wide */
+html[data-ev="practice"]{ --sodium:#5fe0c9; --hot:#15a892; } html[data-ev="night"]{ --sodium:#c49bff; --hot:#7b4dff; } html[data-ev="amain"]{ --sodium:#ff6a5c; --hot:#d81f2a; } html[data-ev="online"]{ --sodium:#4fd6ff; --hot:#2f6bff; }
+html[data-ev="practice"] .mpanel{ background:linear-gradient(162deg,rgba(18,58,62,.94),rgba(8,18,24,.95)); } html[data-ev="night"] .mpanel{ background:linear-gradient(162deg,rgba(44,28,84,.94),rgba(12,9,28,.95)); }
+html[data-ev="amain"] .mpanel{ background:linear-gradient(162deg,rgba(74,22,28,.94),rgba(22,8,12,.95)); } html[data-ev="online"] .mpanel{ background:linear-gradient(162deg,rgba(16,42,86,.94),rgba(6,12,30,.95)); }
+.m-tabs [data-p="online"], #mp-online{ --sodium:#4fd6ff; --hot:#2f6bff; } .m-tabs [data-p="online"]{ color:#7fe0ff; } #mp-online.mpanel{ background:linear-gradient(162deg,rgba(16,42,86,.95),rgba(6,12,30,.96)) !important; }
+.m-tabs [data-p="online"][aria-selected="true"]::after{ background:linear-gradient(90deg,#4fd6ff,#2f6bff); box-shadow:0 0 14px rgba(60,160,255,.8); }
+#mp-online .qt-bar .seg button[aria-pressed="true"], #mp-online .subnav button[aria-pressed="true"]{ background:#4fd6ff; }
+.subnav button[aria-pressed="true"], .qt-bar .seg button[aria-pressed="true"]{ background:linear-gradient(180deg,var(--sodium),var(--hot)); color:#111; }
+#installBtn{ position:absolute; top:16px; right:clamp(150px,16vw,220px); z-index:5; }
+#skip4{ position:fixed; right:16px; bottom:calc(30% + 8px); z-index:35; display:none; padding:10px 16px; font-family:var(--cond); font-style:italic; font-weight:800; text-transform:uppercase; letter-spacing:.08em; } #skip4.on{ display:block; }
+.touchui #skip4{ bottom:auto; top:calc(70px + env(safe-area-inset-top,0px)); right:70px; }
 /* v77: Quicktimes */
 .qt{ margin-top:16px; } .qt-bar{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; } .qt-bar .seg{ display:inline-flex; gap:2px; } .qt-bar .seg button{ padding:6px 12px; border:0; background:rgba(255,255,255,.08); color:#fff; font:700 13px var(--cond); font-style:italic; text-transform:uppercase; letter-spacing:.06em; cursor:pointer; }
 .qt-bar .seg button[aria-pressed="true"]{ background:#ffb547; color:#141414; }
@@ -6842,11 +6884,11 @@ function washStep(dt) {
 }
 { const el = renderer.domElement, pts = new Map(); let mode = null, d0 = 0;
   el.addEventListener('pointerdown', e => { if (!WASH.on) return; pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); try { el.setPointerCapture(e.pointerId); } catch (_) {}
-    if (pts.size === 2) { const [a, b] = [...pts.values()]; d0 = Math.hypot(a.x - b.x, a.y - b.y) || 1; mode = 'pinch'; WASH.act = false; return; }
-    if (e.button === 2 || !washPick(e)) { mode = 'orbit'; return; } mode = 'work'; WASH.act = true; WASH.ptr = { clientX: e.clientX, clientY: e.clientY }; });
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; d0 = Math.hypot(a.x - b.x, a.y - b.y) || 1; WASH.mid = [(a.x + b.x) / 2, (a.y + b.y) / 2]; mode = 'pinch'; WASH.act = false; return; }
+    if (e.button === 2 || WASH.look || !washPick(e)) { mode = 'orbit'; return; } mode = 'work'; WASH.act = true; WASH.ptr = { clientX: e.clientX, clientY: e.clientY }; });
   el.addEventListener('pointermove', e => { if (!WASH.on) return; const q = pts.get(e.pointerId); if (!q) return; const dx = e.clientX - q.x, dy = e.clientY - q.y; q.x = e.clientX; q.y = e.clientY;
-    if (mode === 'pinch' && pts.size === 2) { const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1; WASH.orb.dist = clamp(WASH.orb.dist * d0 / d, 1.6, washMaxD()); d0 = d; }
-    else if (mode === 'orbit') { WASH.orb.yaw += dx * .008; WASH.orb.pitch = clamp(WASH.orb.pitch + dy * .005, -.05, 1.35); }
+    if (mode === 'pinch' && pts.size === 2) { const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1; WASH.orb.dist = clamp(WASH.orb.dist * d0 / d, 1.6, washMaxD()); d0 = d; const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2; if (WASH.mid) { WASH.orb.yaw += (mx - WASH.mid[0]) * .012; WASH.orb.pitch = clamp(WASH.orb.pitch + (my - WASH.mid[1]) * .007, -.05, 1.35); } WASH.mid = [mx, my]; }
+    else if (mode === 'orbit') { const tk = e.pointerType === 'touch' ? 1.8 : 1; WASH.orb.yaw += dx * .008 * tk; WASH.orb.pitch = clamp(WASH.orb.pitch + dy * .005 * tk, -.05, 1.35); }
     else if (mode === 'work') WASH.ptr = { clientX: e.clientX, clientY: e.clientY }; });
   const up = e => { if (!pts.delete(e.pointerId)) return; if (!pts.size) { mode = null; WASH.act = false; } else if (mode === 'pinch') mode = 'orbit'; };
   el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('contextmenu', e => { if (WASH.on) e.preventDefault(); });
@@ -8151,7 +8193,7 @@ function musStep(dt) {
   const A = AudioSys; if (!A.ctx || A.ctx.state !== 'running') return; MUS.t -= dt; if (MUS.t > 0) return; MUS.t = .25;
   const w = musWant();
   if (w !== MUS.want) { MUS.want = w; musStop(w === 'finish' ? .6 : 1.4); MUS.k = '';
-    if (w) { const ks = Object.keys(BGM_LIB).filter(k => k !== BGM.last && k !== MUS.used), k = w === 'finish' ? (MUS.used === 'rock' ? 'grunge' : 'rock') : (ks[Math.random() * ks.length | 0] || 'rock'); MUS.k = k; MUS.used = k;
+    if (w) { const ks = Object.keys(BGM_LIB).filter(k => k !== BGM.last && k !== MUS.used), k = w === 'finish' ? (MUS.used === 'rock' ? 'grunge' : 'rock') : w === 'menu' && MUS.menuK && BGM_LIB[MUS.menuK] ? MUS.menuK : (ks[Math.random() * ks.length | 0] || 'rock'); MUS.k = k; MUS.used = k;
       const go = () => { if (MUS.want !== w || MUS.k !== k || MUS.cur) return; const P = bgmPlay(k, w === 'finish' ? .2 : BGM_LIB[k].ls, w === 'race' ? 3 : 1.2); if (!P) return; MUS.cur = P;
         const t = A.ctx.currentTime; P.g.gain.cancelScheduledValues(t); P.g.gain.setValueAtTime(0, t); P.g.gain.linearRampToValueAtTime(BGM.vol * MUS_LVL[w], t + (w === 'race' ? 3 : 1.2)); };
       BGM.buf[k] ? go() : bgmLoad(k, go); } }
@@ -8224,7 +8266,7 @@ function ghostStep(dt) {
 }
 { const pl0 = playerLap; playerLap = function () { const c = player, was = c && c.lapArmed && c.lapStart && GHOST.recT === c.lapStart, last = c && c.lastLap, rec = GHOST.rec;
     const r = pl0.apply(this, arguments);
-    if (race && race.state === 'practice' && !race.qual && was && c.lastLap && c.lastLap !== last && rec.length > 80 && (!GHOST.best || c.lastLap < GHOST.best.lap)) {
+    if (race && race.state === 'practice' && !race.qual && was && c.lastLap && c.lastLap !== last && rec.length > 80 && (typeof LBQ === 'undefined' || (LBQ.sp.length === 3 && !LBQ.dirty)) && (!GHOST.best || c.lastLap < GHOST.best.lap)) {
       GHOST.best = { lap: c.lastLap, p: rec.slice() }; try { store.set('scream-ghost-' + (VENUE.name || 'premier'), JSON.stringify(GHOST.best)); } catch (e) {}
       setTimeout(() => flash(c.lastLap.toFixed(3), 'New best. Your ghost runs it now.', 1800), 900); }
     GHOST.rec = []; GHOST.recT = c ? c.lapStart : 0; GHOST.acc = 0; return r; }; }
@@ -8703,6 +8745,344 @@ function mpShown(P) { const sh = mpShare(); if (sh === 'race') return !!(MP.race
     const w = document.createElement('div'); w.innerHTML = `<div class="m-h">Open practice</div><div class="tiles sm" id="opSeg"><button data-v="on"><b>Others can drop in</b><small>Anyone online in open practice shares the track (no contact)</small></button><button data-v="off"><b>Just me</b></button></div>`;
     box.append(...w.childNodes); segSync('opSeg', MP2.openPrac ? 'on' : 'off');
     $('opSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; MP2.openPrac = b.dataset.v === 'on'; store.set('scream-openprac', MP2.openPrac ? 'on' : 'off'); segSync('opSeg', b.dataset.v); }); }; evOpts(); }
+
+/* ---------- v80: install for offline, a name filter, ghost fixes, menu music, Quicktimes tab, livery files, event colours,
+   a launch you control, restart rows, skip the four-wide ---------- */
+// install: on the hosted site a service worker keeps the game for offline play, and browsers offer to install it
+var PWA = { prompt: null };
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && window === window.top && !/claude|anthropic|localhost|127\.0\.0\.1/.test(location.hostname))
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').then(reg => { reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) flash('Update ready', 'A newer SCREAM is downloaded. Reload to get it.', 4000); }); }); }).catch(() => {}));
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); PWA.prompt = e; const b = $('installBtn'); if (b) b.style.display = ''; });
+addEventListener('appinstalled', () => { PWA.prompt = null; const b = $('installBtn'); if (b) b.style.display = 'none'; });
+{ const fs = document.querySelector('#fsBtn, .fs-btn, [data-fs]'), b = document.createElement('button'); b.id = 'installBtn'; b.className = 'ghost sm'; b.textContent = 'Install the game'; b.style.display = 'none';
+  b.onclick = async () => { if (!PWA.prompt) return; PWA.prompt.prompt(); try { await PWA.prompt.userChoice; } catch (e) {} PWA.prompt = null; b.style.display = 'none'; };
+  (fs && fs.parentElement ? fs.parentElement : $('title')).append(b);
+  const O = $('os-other'); if (O) { const d = document.createElement('div'); d.innerHTML = `<div class="m-h">Play offline</div><p class="ev-note">Install SCREAM and it runs without the internet (online racing and Quicktimes need a connection). On Android and desktop Chrome or Edge, use <b>Install the game</b> on the main screen or the install icon in the address bar. On iPhone or iPad, open it in Safari, tap Share, then <b>Add to Home Screen</b>.</p>`; O.prepend(...d.childNodes); } }
+
+// a mild name filter: obvious swearing and slurs come out of names, chat and the board (the relay does the same)
+const BADW = ['fuck', 'fuk', 'fck', 'shit', 'cunt', 'bitch', 'bastard', 'wank', 'twat', 'prick', 'cock', 'pussy', 'slut', 'whore', 'fag', 'faggot', 'nigger', 'nigga', 'retard', 'spastic', 'rape', 'nazi', 'hitler', 'boong', 'coon', 'chink', 'gook', 'kike', 'dyke', 'tranny', 'arsehole', 'asshole', 'bollock', 'tosser', 'bellend', 'jizz', 'cum', 'porn', 'sex', 'penis', 'vagina', 'tits', 'boob', 'anal', 'arse', 'piss', 'crap', 'damn'];
+const BADX = new Set(['rape', 'cum', 'sex', 'anal', 'arse', 'piss', 'crap', 'damn', 'cock', 'coon', 'fag', 'tits', 'boob', 'prick']);   // short or common inside other words: whole words only
+const LEET = { '0': 'o', '1': 'i', '!': 'i', '3': 'e', '4': 'a', '@': 'a', '5': 's', '$': 's', '7': 't', '+': 't', '8': 'b', '9': 'g' };
+function cleanText(s) { s = String(s ?? ''); let out = s;
+  const norm = w => w.toLowerCase().replace(/[01!3@4$578+9]/g, c => LEET[c]).replace(/(.)\1+/g, '$1').replace(/[^a-z]/g, '');
+  out = out.replace(/[^\s]+/g, w => { const n = norm(w); if (!n) return w; for (const b of BADW) { const bn = b.replace(/(.)\1+/g, '$1'); if (BADX.has(b) ? n === bn || n === bn + 's' : n.includes(bn)) return '*'.repeat(Math.min(8, w.length)); } return w; });
+  const joined = norm(s); if (out === s) for (const b of BADW) if (!BADX.has(b) && (b.length >= 5 || s.trim().split(/\s+/).every(x => x.length <= 2)) && joined.includes(b.replace(/(.)\1+/g, '$1'))) return '*'.repeat(Math.min(12, s.length));   // spaced-out letters
+  return out; }
+function cleanName(s) { const c = cleanText(String(s ?? '').trim()).slice(0, 24); return /^[*\s]*$/.test(c) ? 'Driver' : c; }
+MP.name = cleanName(MP.name);
+for (const id of ['olName', 'qtName']) { const el = $(id); if (el) el.addEventListener('change', () => { const c = cleanName(el.value); if (c !== el.value.trim()) { el.value = c === 'Driver' ? '' : c; flash('Name tidied up', 'Keep it family friendly for the board and the lobby', 2200); } MP.name = c; store.set('scream-mp-name', c); mpProfSend(); for (const o of ['olName', 'qtName']) if ($(o) && o !== id) $(o).value = el.value; }, true); }
+{ const ch0 = chat; chat = function (P, text) { if (P) P = { ...P, name: cleanName(P.name) }; return ch0(P, cleanText(text)); }; }
+{ const pp = mpPeer; mpPeer = function (id, info) { if (info && info.name) info = { ...info, name: cleanName(info.name) }; const P = pp(id, info); if (P && P.name) P.name = cleanName(P.name); return P; }; }
+{ const lf = lbFetch; lbFetch = async function (k) { const r = await lf.apply(this, arguments); for (const key in LBQ.data) { const j = LBQ.data[key]; if (j && j.top) for (const e of j.top) e.name = cleanName(e.name); } lbDraw(); lbTick(); return r; }; }
+
+// ghost: a lap only becomes your ghost if it was clean (on the track the whole way, all four sectors), and you can clear it
+{ const ur = updateRace; updateRace = function (dt) { const r = ur(dt); const c = player; if (c && race && race.state === 'practice' && c.lapArmed && c.lapStart && LBQ.lapT === c.lapStart) { const d = c.loc ? c.loc.d : c.d; if (Math.abs(d) > HW + 2.2) LBQ.dirty = true; } return r; }; }
+function ghostReset() { GHOST.best = null; GHOST.rec = []; GHOST.mode = 'pb'; try { store.set('scream-ghost-' + (VENUE.name || 'premier'), ''); } catch (e) {} if (GHOST.mesh) GHOST.mesh.visible = false; flash('Ghost cleared', 'Your next clean lap becomes the new ghost', 1800); try { lbDraw(); evOpts(); } catch (e) {} }
+
+// menu music: pick the tune (or none), and set each music level
+MUS.menuK = store.get('scream-mus-menu') || 'random';
+for (const k of ['menu', 'race', 'finish']) { const v = parseFloat(store.get('scream-mus-lvl-' + k)); if (!isNaN(v)) MUS_LVL[k] = v; }
+{ const mw = musWant; musWant = function () { const w = mw(); return w === 'menu' && MUS.menuK === 'off' ? '' : w; }; }
+OPT('audio', `<div class="m-h">Menu music</div><div class="ol-set"><label>Tune<select id="musMenuSel"><option value="random">A different one each time</option>${Object.keys(BGM_LIB).map(k => `<option value="${k}">${esc(BGM_LIB[k].name)}</option>`).join('')}<option value="off">None</option></select></label></div>
+  ${[['menu', 'Menu music level'], ['race', 'Under the race'], ['finish', 'At the flag']].map(([k, l]) => `<div class="bank call-vol"><label for="musL_${k}">${l}</label><output id="musLo_${k}"></output><input type="range" class="rng" id="musL_${k}" min="0" max="150" step="5"></div>`).join('')}`);
+{ const sel = $('musMenuSel'); sel.value = MUS.menuK; sel.onchange = () => { MUS.menuK = sel.value; store.set('scream-mus-menu', sel.value); if (MUS.want === 'menu') { musStop(.6); MUS.want = '~'; } MUS.t = 0; };
+  for (const k of ['menu', 'race', 'finish']) { const r = $('musL_' + k), o = $('musLo_' + k), base = { menu: .75, race: .3, finish: 1 }[k], sh = () => { o.textContent = Math.round(MUS_LVL[k] / base * 100) + '%'; r.value = Math.round(MUS_LVL[k] / base * 100); try { rngFill(r); } catch (e) {} };
+    r.addEventListener('input', () => { MUS_LVL[k] = base * r.value / 100; store.set('scream-mus-lvl-' + k, MUS_LVL[k]); sh(); MUS.t = 0; }); sh(); } }
+
+// Quicktimes gets its own tab (after Race), with the ghost reset beside it
+{ const tabs = document.querySelector('.m-tabs'), race0 = tabs.querySelector('[data-p="race"]'), b = document.createElement('button'); b.setAttribute('role', 'tab'); b.dataset.p = 'qt'; b.setAttribute('aria-selected', 'false'); b.textContent = 'Quicktimes'; (tabs.querySelector('[data-p="opts"]') || race0).after(b);
+  const p = document.createElement('div'); p.className = 'mpanel'; p.id = 'mp-qt'; p.setAttribute('role', 'tabpanel'); $('mStage').append(p); const qb = $('qtBox'); if (qb) p.append(qb);
+  const r = document.createElement('div'); r.className = 'qt-row'; r.innerHTML = '<button class="ghost sm" id="qtGhostReset">Reset my ghost car</button><span class="ev-note">Clears the practice ghost; your next clean lap replaces it.</span>'; p.append(r); $('qtGhostReset').onclick = ghostReset;
+  // Online after Garage
+  const on = tabs.querySelector('[data-p="online"]'), gar = tabs.querySelector('[data-p="garage"]'); if (on && gar) gar.after(on); }
+{ const mt = menuTab; menuTab = function (p) { mt(p); if (p === 'qt' && performance.now() - LBQ.t > 8000) lbFetch(); }; }
+
+// export and import your own liveries (a .json file)
+{ const lib = document.querySelector('.lv-lib'); if (lib) { const ex = document.createElement('button'), im = document.createElement('button'), f = document.createElement('input');
+    ex.className = im.className = 'ghost sm'; ex.textContent = 'Export'; ex.title = 'Save all your liveries to a file'; im.textContent = 'Import'; im.title = 'Load liveries from a file'; f.type = 'file'; f.accept = '.json,application/json'; f.hidden = true; lib.append(ex, im, f);
+    // the file's name is yours to pick; where the browser can (Chrome, Edge) you also choose the folder, otherwise it goes to Downloads
+    const fn = document.createElement('input'); fn.id = 'lvExpName'; fn.type = 'text'; fn.maxLength = 60; fn.spellcheck = false; fn.placeholder = 'File name'; fn.value = store.get('scream-liv-expname') || 'scream-liveries'; fn.title = 'Name for the exported file'; fn.style.cssText = 'flex:1 1 120px;min-width:0;padding:6px 8px;border:0;border-radius:6px;background:rgba(255,255,255,.1);color:inherit;font:inherit'; lib.insertBefore(fn, ex);
+    fn.addEventListener('change', () => store.set('scream-liv-expname', fn.value.trim()));
+    ex.textContent = window.showSaveFilePicker ? 'Export…' : 'Export';
+    ex.onclick = async () => { if (!LIVLIB.list.length) { $('lvState').textContent = 'No saved liveries to export yet'; return; }
+      const name = (fn.value.trim().replace(/[\\/:*?"<>|]+/g, '-').replace(/\.json$/i, '') || 'scream-liveries') + '.json', data = JSON.stringify({ type: 'scream-liveries', v: 1, list: LIVLIB.list }, null, 1);
+      if (window.showSaveFilePicker && window === window.top) { try { const h = await showSaveFilePicker({ suggestedName: name, types: [{ description: 'SCREAM liveries', accept: { 'application/json': ['.json'] } }] }); const w = await h.createWritable(); await w.write(data); await w.close(); $('lvState').textContent = LIVLIB.list.length + ' liveries saved to ' + h.name; return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+      const blob = new Blob([data], { type: 'application/json' }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); $('lvState').textContent = LIVLIB.list.length + ' liveries exported as ' + name; };
+    im.onclick = () => f.click();
+    f.onchange = () => { const file = f.files[0]; f.value = ''; if (!file) return; const rd = new FileReader(); rd.onload = () => { try { const j = JSON.parse(rd.result), L = Array.isArray(j) ? j : j.list; if (!Array.isArray(L)) throw 0; let n = 0;
+          for (const d of L) { if (!d || typeof d !== 'object' || !d.fills || !Array.isArray(d.layers)) continue; const nd = JSON.parse(JSON.stringify(d)); if (LIVLIB.list.some(l => l.key === nd.key) || !nd.key) nd.key = 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); nd.name = cleanText(nd.name || 'Imported livery').slice(0, 32); LIVLIB.list.push(nd); n++; }
+          livSave(); try { lvLib(); } catch (e) {} $('lvState').textContent = n ? n + ' liveries imported' : 'No liveries found in that file'; } catch (e) { $('lvState').textContent = 'That file isn\'t a SCREAM livery file'; } }; rd.readAsText(file); }; } }
+
+// each event has its own colours in the menu; Online is always blue
+function evTheme() { document.documentElement.dataset.ev = state.event || 'quick'; }
+evTheme(); $('evSeg').addEventListener('click', () => setTimeout(evTheme, 0));
+
+// the launch: after the green your throttle and brake are yours; the assist only stops you having more throttle than it would use
+applyAssist = function () {
+  const c = player, k = assistK(); if (k >= 1 || !c || c.state !== 'run' || c.finished || c.push || race.state === 'formation') return null;
+  const P = { st: input.steer, th: input.throttle, br: input.brake }, vT = tsample(c.s + 10).vp * .95; c.formV = vT;
+  const A = assistInputs(c, (c.lane != null ? c.lane : (c.loc ? c.loc.d : c.d)) - P.st * 1.4, vT, 1), hT = clamp((k - .25) / .75, 0, 1), hand = clamp(Math.max(hT * hT * hT, Math.abs(P.st) * 1.5), 0, 1);
+  input.steer = clamp(lerp(A.st + P.st * .35, P.st, hand), -1, 1);
+  if (P.br > .5) { input.brake = 1; input.throttle = 0; } else { input.throttle = Math.min(P.th, lerp(A.th, P.th, hT)); input.brake = A.br > .5 && hT < .4 && P.th < .5 ? 1 : 0; }
+  return P;
+};
+
+// restarts after a yellow: two rows or single file (race starts are always two rows)
+state.restartRows = store.get('scream-restart') === 'single' ? 'single' : 'two';
+{ const br = beginRolling; beginRolling = function (order, restart) { const r = br.apply(this, arguments);
+    if (restart && state.restartRows === 'single') { const s0 = race.formS; order.forEach((c, k) => { c.row = k; c.lane = 0; c.gridK = k * 2; placeCar(c, s0 - k * FORM.row, 0, FORM.pace); }); flash('Single-file restart', 'Nose to tail behind the leader', 2000, 'yellow'); }
+    return r; }; }
+{ const eo = evOpts; evOpts = function () { eo(); if (!['quick', 'night', 'amain'].includes(state.event)) return; const box = $('evOpts'), w = document.createElement('div');
+    w.innerHTML = '<div class="m-h">Restarts after a yellow</div><div class="tiles sm" id="rsSeg"><button data-v="two"><b>Two rows</b><small>Doubled up, side by side</small></button><button data-v="single"><b>Single file</b><small>Nose to tail</small></button></div><p class="ev-note">The start is always two by two.</p>';
+    box.append(...w.childNodes); segSync('rsSeg', state.restartRows); $('rsSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; state.restartRows = b.dataset.v; store.set('scream-restart', b.dataset.v); segSync('rsSeg', b.dataset.v); }); };
+  const eo2 = evOpts; evOpts = function () { eo2(); if (state.event !== 'practice') return; const box = $('evOpts'), b = document.createElement('button'); b.className = 'ghost sm'; b.textContent = GHOST.best ? 'Reset my ghost car (' + GHOST.best.lap.toFixed(3) + ')' : 'No ghost yet: your first clean lap makes one'; b.disabled = !GHOST.best; b.onclick = ghostReset; box.append(b); };
+  evOpts(); }
+
+// skip the four-wide while it's happening
+{ const b = document.createElement('button'); b.id = 'skip4'; b.className = 'ghost'; b.textContent = 'Skip the four-wide ▸'; b.onclick = () => { if (race && race.salute === 'on') { saluteOff(); b.classList.remove('on'); } }; document.body.append(b);
+  setInterval(() => b.classList.toggle('on', !!(state.screen === 'race' && race && race.salute === 'on' && !state.paused && !REPLAY.playing)), 300); }
+
+/* ---------- v80: the wash bay as a place to be ----------
+   A cleaner, chunkier panel (tabs: Wash, View, Places, Missions, Sounds, Sky), a zen garden out front (raked gravel, stones,
+   bamboo, lanterns, a koi pond with a bamboo spout, a blossom tree, petals, ground mist), ambient layers you switch on and off,
+   time of day and weather, and three new side missions beside the garden: Stars (an orrery and the night sky), a Dinosaur
+   Cove dig, and a music garden. On phones: one-finger drags off the car or in Look mode turn the view; two fingers turn and zoom. */
+const WZ = { built: false, t: 0, g: null, lights: {}, anim: [], petals: null, mist: [], koi: [], spout: null, lant: [], rain: null, stars: null, bolt: 0 };
+const WMS = (() => { try { return Object.assign({ orrery: 0, stars: [], dig: [0, 0, 0, 0, 0, 0], tunes: [], gong: 0, chime: 0 }, JSON.parse(store.get('scream-wash-mis') || '{}')); } catch (e) { return { orrery: 0, stars: [], dig: [0, 0, 0, 0, 0, 0], tunes: [], gong: 0, chime: 0 }; } })();
+const wmsSave = () => { try { store.set('scream-wash-mis', JSON.stringify(WMS)); } catch (e) {} };
+const WSKY = { tod: store.get('scream-wash-tod') || 'day', wx: store.get('scream-wash-wx') || 'clear', base: null, night: 0 };
+const WAMB = { on: (() => { try { return Object.assign({ birds: 1, wind: 1, stream: 1, chimes: 1, crickets: 1, rain: 0, surf: 0, bell: 1 }, JSON.parse(store.get('scream-wash-amb') || '{}')); } catch (e) { return { birds: 1, wind: 1, stream: 1, chimes: 1, crickets: 1, rain: 0, surf: 0, bell: 1 }; } })(), vol: +(store.get('scream-wash-ambvol') ?? .8), n: null, t: {} };
+const wRay = (e, objs) => { const r = renderer.domElement.getBoundingClientRect(), v = new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); WASH.rc.setFromCamera(v, WASH.cam); return WASH.rc.intersectObjects(objs, true)[0] || null; };
+const wSay = t => { const h = $('wHint'); if (h) h.textContent = t; };
+
+/* ---- the zen garden and the mission stations ---- */
+function wzBuild() {
+  if (WZ.built || !WASH.scene) return; WZ.built = true; const S = WASH.scene, G = new THREE.Group(); WZ.g = G; S.add(G);
+  const M = (c, r = .9, m = 0, e = 0) => matOf(c, r, m, e), box = (w, h, d, m, x, y, z) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); G.add(o); return o; };
+  // raked gravel with ripples round three stones
+  const stones = [[-3.6, 16.2, 1.1], [2.4, 18.4, .8], [4.8, 15.4, .55]];
+  const rake = ctex(1024, 512, (g, w, h) => { g.fillStyle = '#cfcabd'; g.fillRect(0, 0, w, h); g.strokeStyle = 'rgba(90,84,70,.35)'; g.lineWidth = 3;
+    for (let y = 8; y < h; y += 14) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+    for (const [x, z, r] of stones) { const cx = (x + 8) / 16 * w, cy = (z - 13) / 8 * h; g.fillStyle = '#cfcabd'; g.beginPath(); g.arc(cx, cy, r * 64 + 70, 0, TAU); g.fill(); for (let k = 0; k < 6; k++) { g.beginPath(); g.arc(cx, cy, r * 64 + 10 + k * 14, 0, TAU); g.stroke(); } }
+    for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(${Math.random() < .5 ? 60 : 255},${Math.random() < .5 ? 60 : 255},${Math.random() < .5 ? 55 : 250},.06)`; g.fillRect(Math.random() * w, Math.random() * h, 2, 2); } });
+  const sand = new THREE.Mesh(new THREE.PlaneGeometry(16, 8).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ map: rake, roughness: 1 })); sand.position.set(0, .02, 17); G.add(sand);
+  const edge = M(0x5b4632); for (const [w, d, x, z] of [[16.3, .15, 0, 13], [16.3, .15, 0, 21], [.15, 8, -8.1, 17], [.15, 8, 8.1, 17]]) box(w, .14, d, edge, x, .07, z);
+  const rockM = new THREE.MeshStandardMaterial({ color: 0x5a5d58, roughness: .95, flatShading: true });
+  for (const [x, z, r] of stones) { const geo = new THREE.DodecahedronGeometry(r, 1), p = geo.attributes.position; for (let i = 0; i < p.count; i++) { const k = 1 + (Math.sin(p.getX(i) * 7 + p.getZ(i) * 5) * .12); p.setXYZ(i, p.getX(i) * k, p.getY(i) * k * .7, p.getZ(i) * k); } geo.computeVertexNormals(); const o = new THREE.Mesh(geo, rockM); o.position.set(x, r * .35, z); G.add(o); }
+  // bamboo behind
+  { const n = 46, stem = new THREE.InstancedMesh(new THREE.CylinderGeometry(.06, .07, 1, 6), M(0x6f9a3c, .6), n), leaf = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.55, 0), M(0x3c6a24, .85), n), o = new THREE.Object3D();
+    for (let i = 0; i < n; i++) { const x = -8 + i / n * 16 + sr(-.2, .2), z = 21.8 + sr(0, 1.4), h = sr(4.5, 7.5); o.position.set(x, h / 2, z); o.scale.set(1, h, 1); o.rotation.set(sr(-.05, .05), 0, sr(-.06, .06)); o.updateMatrix(); stem.setMatrixAt(i, o.matrix);
+      o.position.set(x + sr(-.3, .3), h - .4, z); o.scale.set(sr(.8, 1.3), sr(1.4, 2.2), sr(.8, 1.3)); o.rotation.set(0, sr(0, 3), sr(-.2, .2)); o.updateMatrix(); leaf.setMatrixAt(i, o.matrix); }
+    G.add(stem, leaf); WZ.bamboo = leaf; }
+  // stone lanterns (glow at night)
+  const stoneM = M(0x8a8a82, .95); WZ.lantM = new THREE.MeshStandardMaterial({ color: 0xffe2a8, emissive: 0xffb04a, emissiveIntensity: 0 });
+  for (const x of [-9.4, 9.4]) { const z = 13.6; box(.7, .15, .7, stoneM, x, .08, z); const c = new THREE.Mesh(new THREE.CylinderGeometry(.12, .16, 1, 8), stoneM); c.position.set(x, .65, z); G.add(c); box(.62, .5, .62, WZ.lantM, x, 1.38, z); box(.5, .55, .5, stoneM, x, 1.38, z).scale.set(1.05, .2, 1.05);
+    const roof = new THREE.Mesh(new THREE.ConeGeometry(.62, .4, 4), stoneM); roof.position.set(x, 1.85, z); roof.rotation.y = Math.PI / 4; G.add(roof); }
+  // koi pond with a bamboo spout
+  { const pond = new THREE.Mesh(new THREE.CircleGeometry(2.6, 40).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x1d4048, roughness: .08, metalness: .4, transparent: true, opacity: .9 })); pond.position.set(-12.5, .03, 17); G.add(pond); WZ.pond = pond;
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(2.65, .18, 6, 40).rotateX(Math.PI / 2), M(0x6b6b64, .95)); rim.position.set(-12.5, .05, 17); G.add(rim);
+    const km = [M(0xff6a1a, .5), M(0xf5f0e6, .5), M(0xd8331f, .5)]; for (let i = 0; i < 5; i++) { const k = new THREE.Mesh(new THREE.SphereGeometry(.16, 8, 6), km[i % 3]); k.scale.set(1, .45, 2.2); G.add(k); WZ.koi.push({ m: k, r: sr(.6, 2), a: sr(0, TAU), v: sr(.25, .5) * (i % 2 ? 1 : -1) }); }
+    const sp = new THREE.Group(), tube = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, 1.3, 8).rotateZ(Math.PI / 2), M(0x8bb04a, .6)); tube.position.x = .4; sp.add(tube); sp.position.set(-10.2, .7, 15.4); sp.rotation.y = .6; G.add(sp);
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .8, 6), M(0x6f9a3c, .6)); post.position.set(-10.2, .35, 15.4); G.add(post); WZ.spout = { g: sp, t: 0, fill: 0 }; }
+  // blossom tree
+  { const tr = new THREE.Mesh(new THREE.CylinderGeometry(.12, .22, 3, 7), M(0x4a3426)); tr.position.set(7.5, 1.5, 21.6); tr.rotation.z = .12; G.add(tr); const bm = M(0xf3b6c8, .9);
+    for (let i = 0; i < 9; i++) { const b = new THREE.Mesh(new THREE.IcosahedronGeometry(sr(.7, 1.1), 0), bm); b.position.set(7.7 + sr(-1.6, 1.6), 3.1 + sr(-.4, .7), 21.6 + sr(-1.2, 1.2)); G.add(b); } }
+  // petals and mist
+  { const n = 160, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { pos[i * 3] = sr(-2, 12); pos[i * 3 + 1] = sr(0, 4); pos[i * 3 + 2] = sr(14, 24); }
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); WZ.petals = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xf7c3d2, size: .09, transparent: true, opacity: .9 })); G.add(WZ.petals); }
+  { const mt = ctex(128, 128, (g, w, h) => { const gr = g.createRadialGradient(64, 64, 4, 64, 64, 62); gr.addColorStop(0, 'rgba(255,255,255,.55)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h); });
+    for (let i = 0; i < 9; i++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(12, 4), new THREE.MeshBasicMaterial({ map: mt, transparent: true, opacity: .0, depthWrite: false, fog: false })); m.position.set(sr(-22, 22), .9, sr(-6, 26)); m.rotation.y = sr(0, 3); G.add(m); WZ.mist.push(m); } }
+  // a work light over the car and a lantern light for the night (always there, so nothing recompiles when night falls)
+  WZ.lights.work = new THREE.PointLight(0xfff1d8, 0, 18, 2); WZ.lights.work.position.set(0, 4.6, -3); S.add(WZ.lights.work);
+  WZ.lights.lant = new THREE.PointLight(0xffb04a, 0, 14, 2); WZ.lights.lant.position.set(0, 1.6, 15); S.add(WZ.lights.lant);
+  // stars (also the planetarium's sky)
+  { const n = 900, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { const u = Math.random(), v = Math.random() * .9 + .05, th = u * TAU, ph = Math.acos(1 - v); pos[i * 3] = Math.sin(ph) * Math.cos(th) * 135; pos[i * 3 + 1] = Math.cos(ph) * 135; pos[i * 3 + 2] = Math.sin(ph) * Math.sin(th) * 135; }
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); WZ.stars = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: 1.1, sizeAttenuation: false, transparent: true, opacity: 0, fog: false, depthWrite: false })); S.add(WZ.stars); }
+  // rain
+  { const n = 1400, pos = new Float32Array(n * 6); WZ.rainP = pos; for (let i = 0; i < n; i++) { const x = sr(-25, 25), y = sr(0, 18), z = sr(-15, 30); pos.set([x, y, z, x + .05, y + .5, z], i * 6); }
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); WZ.rain = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: 0xbfd0e0, transparent: true, opacity: .45, fog: true })); WZ.rain.visible = false; WZ.rain.frustumCulled = false; S.add(WZ.rain); }
+  misBuild(G, M, box);
+}
+
+/* ---- side missions: Stars, the Dinosaur Cove dig, the music garden ---- */
+const PLANETS = [['Mercury', 0x9a8f86, .12, 1.0, 'The fastest: a year is 88 days.'], ['Venus', 0xe3c27d, .2, 1.35, 'Brightest thing in our sky after the Sun and Moon.'], ['Earth', 0x3f7fd0, .21, 1.7, 'Home. Warrnambool is about here.'], ['Mars', 0xc4552f, .16, 2.05, 'The red one, with the tallest volcano we know of.'],
+  ['Jupiter', 0xd0a77a, .42, 2.6, 'Biggest planet: over a thousand Earths fit inside.'], ['Saturn', 0xe2cf8f, .36, 3.15, 'The rings are mostly ice.'], ['Uranus', 0x9fd9e0, .26, 3.6, 'It rolls round the Sun on its side.'], ['Neptune', 0x3e6fd6, .25, 4.0, 'Winds faster than a 410 down the straight.']];
+const CONST = [['Southern Cross', 'Crux, on our flag. Follow the long arm 4.5 times its length to find south.', 160, 55, [[0, 3], [0, -3], [-2, .4], [2, 0], [.8, -1.2]]], ['The Pointers', 'Alpha and Beta Centauri. Alpha is the nearest bright star, about 4.4 light years away.', 150, 50, [[0, 0], [3, -.6]]],
+  ['The Saucepan', 'Orion\'s belt and sword, upside down from down here.', 20, 45, [[-2, 0], [0, 0], [2, 0], [0, -2], [0, -3], [0, -4]]], ['Scorpius', 'The scorpion, with red Antares at its heart.', 250, 60, [[0, 0], [1, 1], [2, 2.5], [-1, -1], [-1.5, -2.5], [-1, -4], [.5, -5]]],
+  ['Emu in the Sky', 'An Aboriginal constellation made of dark dust in the Milky Way, its head in the Coalsack beside the Cross.', 175, 35, [[0, 0], [1, -2], [2, -4], [2.5, -6], [3.5, -8]]], ['Seven Sisters', 'The Pleiades: in many Aboriginal stories, sisters chased across the sky.', 60, 30, [[0, 0], [.6, .3], [1, -.2], [.4, -.6], [-.4, -.3], [-.2, .5], [.9, .7]]]];
+const TUNES = [['Twinkle, Twinkle', [0, 0, 4, 4, 5, 5, 4]], ['Brother John', [0, 1, 2, 0, 0, 1, 2, 0, 2, 3, 4]], ['Ode to Joy', [2, 2, 3, 4, 4, 3, 2, 1, 0, 0, 1, 2, 2, 1, 1]]];
+const NOTE = [261.63, 293.66, 329.63, 349.23, 392, 440, 493.88, 523.25];
+function misBuild(G, M, box) {
+  const W = { orr: [], cons: [], dig: [], bars: [], chimes: [], gong: null, dino: null, skel: [] }; WZ.mis = W;
+  // planetarium: a dome and an orrery
+  { const x = -21, z = 2, wall = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 3.2, 2.4, 24), M(0xe9e4da, .8)); wall.position.set(x - 5, 1.2, z - 2); G.add(wall);
+    const dome = new THREE.Mesh(new THREE.SphereGeometry(3.25, 24, 12, 0, TAU, 0, Math.PI / 2), M(0xdfe6ee, .4, .5)); dome.position.set(x - 5, 2.4, z - 2); G.add(dome); box(.15, 2.5, .7, M(0x223), x - 5 + 3.1, 3.4, z - 2).rotation.z = .5;
+    box(1.2, .9, 1.2, M(0x6b5a48), x, .45, z + 1.6); const sun = new THREE.Mesh(new THREE.SphereGeometry(.38, 16, 12), new THREE.MeshStandardMaterial({ color: 0xffc23a, emissive: 0xff9a1a, emissiveIntensity: 1.2 })); sun.position.set(x, 1.6, z + 1.6); G.add(sun);
+    PLANETS.forEach((p, i) => { const arm = new THREE.Group(); arm.position.copy(sun.position); G.add(arm); const rod = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, p[3], 4).rotateZ(Math.PI / 2), M(0xb8a06a, .4, .8)); rod.position.x = p[3] / 2; arm.add(rod);
+      const pl = new THREE.Mesh(new THREE.SphereGeometry(p[2], 14, 10), new THREE.MeshStandardMaterial({ color: p[1], roughness: .7, emissive: p[1], emissiveIntensity: i < WMS.orrery ? .35 : 0 })); pl.position.x = p[3]; arm.add(pl); pl.userData.planet = i;
+      if (p[0] === 'Saturn') { const ring = new THREE.Mesh(new THREE.RingGeometry(p[2] * 1.3, p[2] * 2, 24).rotateX(-Math.PI / 2 + .4), new THREE.MeshStandardMaterial({ color: 0xd8c38a, side: THREE.DoubleSide })); pl.add(ring); }
+      arm.rotation.y = sr(0, TAU); W.orr.push({ arm, pl, v: .9 / Math.pow(i + 1, 1.1) }); });
+    // constellations: small bright patterns in the sky, a soft halo to tap
+    CONST.forEach((c, i) => { const az = c[2] * D2R, el = c[3] * D2R, R = 120, cen = new THREE.Vector3(Math.cos(el) * Math.cos(az) * R, Math.sin(el) * R, Math.cos(el) * Math.sin(az) * R), up = new THREE.Vector3(0, 1, 0), right = new THREE.Vector3().crossVectors(cen, up).normalize(), up2 = new THREE.Vector3().crossVectors(right, cen).normalize();
+      const pts = c[4].map(([a, b]) => cen.clone().addScaledVector(right, a * 2.2).addScaledVector(up2, b * 2.2)); const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const st = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xfff6dc, size: 3.2, sizeAttenuation: false, transparent: true, opacity: 0, fog: false, depthWrite: false })); WASH.scene.add(st);
+      const ln = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x9fd8ff, transparent: true, opacity: 0, fog: false })); WASH.scene.add(ln);
+      const hit = new THREE.Mesh(new THREE.SphereGeometry(9, 8, 6), new THREE.MeshBasicMaterial({ visible: false })); hit.position.copy(cen); hit.userData.cons = i; WASH.scene.add(hit); W.cons.push({ st, ln, hit }); }); }
+  // Dinosaur Cove dig: a sandpit with six fossils, and the skeleton they make
+  { const x = 21, z = 2, pit = box(7, .3, 5, M(0xcaa86a, 1), x, .15, z); pit.userData.pit = 1; const frame = M(0x6b4a2a); for (const [w, d, ox, oz] of [[7.3, .2, 0, 2.6], [7.3, .2, 0, -2.6], [.2, 5.2, 3.6, 0], [.2, 5.2, -3.6, 0]]) box(w, .4, d, frame, x + ox, .2, z + oz);
+    const mound = M(0x8a6a3e, 1), bone = new THREE.MeshStandardMaterial({ color: 0xe8dcc0, roughness: .7 });
+    [[-2.2, -1.2], [0, -1.4], [2.2, -1], [-2, 1.1], [.2, 1.3], [2.3, 1.2]].forEach(([ox, oz], i) => { const m = new THREE.Mesh(new THREE.SphereGeometry(.55, 10, 6, 0, TAU, 0, Math.PI / 2), mound); m.position.set(x + ox, .3, z + oz); m.scale.y = .7; m.userData.dig = i; G.add(m);
+      const b = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .7, 6).rotateZ(Math.PI / 2), bone); b.position.set(x + ox, .32, z + oz); b.rotation.y = sr(0, 3); G.add(b); W.dig.push({ m, b }); });
+    // the skeleton display: Leaellynasaura, about two metres nose to tail, mostly tail
+    const sk = new THREE.Group(); sk.position.set(x, .3, z - 4.6); G.add(sk); box(4, .3, 1.4, M(0x5a4a3a), x, .15, z - 4.6);
+    const P = (geo, px, py, pz, rz = 0) => { const o = new THREE.Mesh(geo, bone); o.position.set(px, py, pz); o.rotation.z = rz; sk.add(o); return o; };
+    W.skel = [[P(new THREE.SphereGeometry(.13, 8, 6), 1.05, 1.15, 0)], [P(new THREE.CylinderGeometry(.04, .05, .45, 6), .82, .98, 0, .9)], [P(new THREE.CylinderGeometry(.06, .06, .75, 6), .3, .82, 0, Math.PI / 2 + .1)],
+      [P(new THREE.TorusGeometry(.18, .025, 4, 10, Math.PI), .35, .68, 0, Math.PI), P(new THREE.TorusGeometry(.16, .025, 4, 10, Math.PI), .15, .7, 0, Math.PI)], [P(new THREE.CylinderGeometry(.04, .03, .62, 6), .15, .4, .12, .25), P(new THREE.CylinderGeometry(.04, .03, .62, 6), .15, .4, -.12, .25)],
+      [P(new THREE.CylinderGeometry(.05, .01, 1.5, 6), -.75, .88, 0, Math.PI / 2 - .12)]];
+    // the living one, once the skeleton's done
+    const dg = new THREE.Group(), dm = M(0x7a8a4a, .8), body = new THREE.Mesh(new THREE.SphereGeometry(.22, 10, 8), dm); body.scale.set(1.6, 1, 1); dg.add(body); const tail = new THREE.Mesh(new THREE.ConeGeometry(.12, 1.1, 8).rotateZ(Math.PI / 2), dm); tail.position.x = -.75; dg.add(tail);
+    const head = new THREE.Mesh(new THREE.SphereGeometry(.11, 8, 6), dm); head.scale.set(1.5, 1, 1); head.position.set(.48, .22, 0); dg.add(head); const eye = new THREE.Mesh(new THREE.SphereGeometry(.035, 6, 4), M(0x111)); eye.position.set(.58, .27, .07); dg.add(eye);
+    W.legs = [0, 1].map(k => { const l = new THREE.Mesh(new THREE.CylinderGeometry(.04, .03, .36, 6), dm); l.position.set(.02, -.28, k ? .1 : -.1); dg.add(l); return l; }); dg.position.set(x, .45, z + 4); dg.visible = false; G.add(dg); W.dino = { g: dg, a: 0 }; }
+  // the music garden: eight bars, a set of chimes and a gong
+  { const x = 15.5, z = 13.5, wood = M(0x6b4a2a); box(4.6, .12, .9, wood, x, .78, z); box(.12, .78, .12, wood, x - 2.2, .39, z - .35); box(.12, .78, .12, wood, x + 2.2, .39, z - .35); box(.12, .78, .12, wood, x - 2.2, .39, z + .35); box(.12, .78, .12, wood, x + 2.2, .39, z + .35);
+    const cols = [0xe0302a, 0xff7a1a, 0xf5c518, 0x1fa85b, 0x1fa0a8, 0x2f6bff, 0x7b4dff, 0xe0302a];
+    for (let i = 0; i < 8; i++) { const m = new THREE.MeshStandardMaterial({ color: cols[i], roughness: .4, emissive: cols[i], emissiveIntensity: 0 }), b = box(.42, .1, .9 - i * .05, m, x - 1.9 + i * .54, .9, z); b.userData.bar = i; W.bars.push(b); }
+    const fr = M(0x3a2a1a); box(.1, 2.6, .1, fr, x + 3.4, 1.3, z - .6); box(.1, 2.6, .1, fr, x + 3.4, 1.3, z + .6); box(.1, .1, 1.4, fr, x + 3.4, 2.6, z);
+    for (let i = 0; i < 5; i++) { const c = new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, .7 - i * .08, 8), new THREE.MeshStandardMaterial({ color: 0xc9ccd2, roughness: .25, metalness: .9 })); c.position.set(x + 3.4, 2.15 + i * .04, z - .45 + i * .22); c.userData.chime = i; G.add(c); W.chimes.push(c); }
+    const gf = M(0x3a2a1a); box(.12, 2.4, .12, gf, x + 5.4, 1.2, z - 1); box(.12, 2.4, .12, gf, x + 5.4, 1.2, z + 1); box(.12, .12, 2.2, gf, x + 5.4, 2.4, z);
+    const gong = new THREE.Mesh(new THREE.CylinderGeometry(.85, .85, .06, 32).rotateZ(Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0xb88a3a, roughness: .3, metalness: .85 })); gong.position.set(x + 5.4, 1.4, z); gong.userData.gong = 1; G.add(gong); W.gong = gong; }
+  misRefresh();
+}
+function misRefresh() { const W = WZ.mis; if (!W) return; W.orr.forEach((o, i) => { o.pl.material.emissiveIntensity = i < WMS.orrery ? .35 : 0; });
+  W.cons.forEach((c, i) => { c.found = WMS.stars.includes(i); }); W.dig.forEach((d, i) => { const p = WMS.dig[i] || 0; d.m.scale.set(1 - p * .7, .7 * (1 - p * .95) + .02, 1 - p * .7); d.b.visible = p >= 1; });
+  const found = WMS.dig.filter(p => p >= 1).length; W.skel.forEach((parts, i) => parts.forEach(o => { o.visible = i < found; })); W.dino.g.visible = found >= 6; misStatus(); }
+function misStatus() { const el = $('wMisStat'); if (!el) return; const dig = WMS.dig.filter(p => p >= 1).length;
+  el.innerHTML = `<div><b>Stars</b> orrery ${WMS.orrery}/8 · constellations ${WMS.stars.length}/6</div><div><b>Dinosaur Cove</b> fossils ${dig}/6${dig >= 6 ? ' · Leaellynasaura is out and about' : ''}</div><div><b>Music garden</b> tunes ${WMS.tunes.length}/3${WMS.gong ? ' · gong ✓' : ''}${WMS.chime ? ' · chimes ✓' : ''}</div>`; }
+// the tunes: listen, then play it back
+const TUNE = { i: -1, play: null, pos: 0, t: 0 };
+function tuneStart(i) { TUNE.i = i; TUNE.pos = 0; TUNE.play = { seq: TUNES[i][1], k: 0, t: .6 }; wSay(`Listen: ${TUNES[i][0]}. Then play it back on the bars.`); }
+function barHit(i, user = true) { const W = WZ.mis, b = W.bars[i]; b.material.emissiveIntensity = 1; b.position.y = .86; setTimeout(() => { b.material.emissiveIntensity = 0; b.position.y = .9; }, 220); wTone(NOTE[i], 'bar');
+  if (!user || TUNE.i < 0 || TUNE.play) return; const seq = TUNES[TUNE.i][1]; if (seq[TUNE.pos] === i) { TUNE.pos++; if (TUNE.pos >= seq.length) { const n = TUNES[TUNE.i][0]; if (!WMS.tunes.includes(TUNE.i)) WMS.tunes.push(TUNE.i); wmsSave(); misStatus(); wSay(`${n}: got it! ${WMS.tunes.length < 3 ? 'Try the next tune.' : 'All three tunes. The garden sings.'}`); AudioSys.cheer && 0; TUNE.i = -1; } }
+  else { wSay('Not quite. Listen again.'); setTimeout(() => tuneStart(TUNE.i), 700); } }
+// the clicks: stations take the tap before the wash does
+function misTap(e) {
+  const W = WZ.mis; if (!W) return false;
+  const objs = [...W.orr.map(o => o.pl), ...W.cons.map(c => c.hit), ...W.dig.map(d => d.m), ...W.bars, ...W.chimes, W.gong, W.dino.g]; const h = wRay(e, objs); if (!h) return false; let o = h.object; while (o && !Object.keys(o.userData).length && o.parent) o = o.parent; const u = o.userData;
+  if (u.planet != null) { const i = u.planet, p = PLANETS[i]; if (i === WMS.orrery) { WMS.orrery++; wmsSave(); misRefresh(); wTone(300 + i * 60, 'bell'); wSay(`${p[0]}: ${p[4]}${WMS.orrery === 8 ? ' The orrery is complete!' : ' Next one out from the Sun?'}`); } else if (i < WMS.orrery) wSay(`${p[0]}: ${p[4]}`); else wSay(`Not that one yet. Start with the planet nearest the Sun and work outwards (${WMS.orrery}/8).`); return true; }
+  if (u.cons != null) { const c = CONST[u.cons]; if (WSKY.night < .6) { wSay('The stars are hiding. Set the sky to Night (Sky tab) and look up.'); return true; } if (!WMS.stars.includes(u.cons)) { WMS.stars.push(u.cons); wmsSave(); misRefresh(); wTone(880, 'bell'); } wSay(`${c[0]}: ${c[1]} (${WMS.stars.length}/6 found)`); return true; }
+  if (u.dig != null) { WZ.digging = u.dig; return 'dig'; }
+  if (u.bar != null) { barHit(u.bar); return true; }
+  if (u.chime != null) { for (let k = 0; k < 4; k++) setTimeout(() => wTone(1046 * [1, 1.125, 1.25, 1.5, 1.667][(u.chime + k) % 5], 'chime'), k * 140); if (!WMS.chime) { WMS.chime = 1; wmsSave(); misStatus(); } return true; }
+  if (u.gong) { wTone(110, 'gong'); W.gong.rotation.x = .12; if (!WMS.gong) { WMS.gong = 1; wmsSave(); misStatus(); } return true; }
+  if (o === W.dino.g) { wTone(1400, 'chirp'); wSay('Leaellynasaura amicagraphica: a little plant-eater that lived in the polar forests where Victoria was, about 110 million years ago. Found at Dinosaur Cove near Cape Otway and named in 1989.'); return true; }
+  return false;
+}
+{ const el = renderer.domElement;
+  el.addEventListener('pointerdown', e => { if (!WASH.on || e.button === 2 || !WZ.built) return; const r = misTap(e); if (r) { e.stopImmediatePropagation(); if (r === 'dig') { WZ.digPtr = e.pointerId; try { el.setPointerCapture(e.pointerId); } catch (_) {} } } }, true);
+  el.addEventListener('pointermove', e => { if (WZ.digPtr !== e.pointerId || WZ.digging == null) return; e.stopImmediatePropagation(); const W = WZ.mis, h = wRay(e, W.dig.map(d => d.m)); if (!h) return; const i = h.object.userData.dig; if (WMS.dig[i] >= 1) return;
+    WMS.dig[i] = Math.min(1, (WMS.dig[i] || 0) + .025); if (Math.random() < .3) wTone(0, 'brush'); misRefresh(); if (WMS.dig[i] >= 1) { wmsSave(); const n = WMS.dig.filter(p => p >= 1).length; wSay(n >= 6 ? 'The last bone! The skeleton is complete: Leaellynasaura. And look who\'s turned up.' : `A fossil! ${n}/6. It goes straight onto the skeleton.`); wTone(660, 'bell'); } }, true);
+  const up = e => { if (WZ.digPtr === e.pointerId) { WZ.digPtr = null; WZ.digging = null; wmsSave(); e.stopImmediatePropagation(); } }; el.addEventListener('pointerup', up, true); el.addEventListener('pointercancel', up, true); }
+
+/* ---- sound: mission tones and the ambient layers ---- */
+function wTone(f, kind) { const A = AudioSys; if (!A.ctx || A.muted) return; const ctx = A.ctx, t = ctx.currentTime, out = ctx.createGain(); out.connect(A.master);
+  if (kind === 'brush') { const s = ctx.createBufferSource(); s.buffer = A.noise; const fl = ctx.createBiquadFilter(); fl.type = 'bandpass'; fl.frequency.value = 3000; out.gain.setValueAtTime(.05, t); out.gain.exponentialRampToValueAtTime(.001, t + .12); s.connect(fl).connect(out); s.start(t, Math.random() * 2, .15); return; }
+  const parts = kind === 'bar' ? [[1, .5], [4, .12], [10, .03]] : kind === 'gong' ? [[1, .5], [1.48, .35], [2.03, .25], [2.71, .15], [3.6, .1]] : kind === 'chime' ? [[1, .2], [2.76, .08], [5.4, .04]] : kind === 'chirp' ? [[1, .2]] : [[1, .3], [2.4, .12], [4.1, .05]];
+  const dur = kind === 'bar' ? .9 : kind === 'gong' ? 6 : kind === 'chime' ? 3 : kind === 'chirp' ? .15 : 2.4;
+  for (const [m, a] of parts) { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = f * m; if (kind === 'chirp') o.frequency.exponentialRampToValueAtTime(f * 1.6, t + .12); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(a, t + (kind === 'gong' ? .02 : .005)); g.gain.exponentialRampToValueAtTime(.0005, t + dur / Math.sqrt(m)); o.connect(g).connect(out); o.start(t); o.stop(t + dur + .1); }
+  out.gain.value = kind === 'gong' ? .7 : .55; }
+function ambInit() { const A = AudioSys; if (!A.ctx || WAMB.n) return; const ctx = A.ctx, out = ctx.createGain(); out.gain.value = 0; out.connect(A.master);
+  const loop = (type, f, q) => { const s = ctx.createBufferSource(); s.buffer = A.noise; s.loop = true; const fl = ctx.createBiquadFilter(); fl.type = type; fl.frequency.value = f; fl.Q.value = q; const g = ctx.createGain(); g.gain.value = 0; s.connect(fl).connect(g).connect(out); s.start(0, Math.random() * 2); return { g, fl }; };
+  WAMB.n = { out, wind: loop('lowpass', 380, .5), stream: loop('bandpass', 2100, .6), rain: loop('highpass', 1300, .4), surf: loop('lowpass', 650, .6) }; }
+function ambStep(dt) {
+  const A = AudioSys; if (!A.ctx) return; ambInit(); const N = WAMB.n, t = A.ctx.currentTime, on = WASH.on && !A.muted, O = WAMB.on, rainW = WSKY.wx === 'rain' || WSKY.wx === 'storm';
+  N.out.gain.setTargetAtTime(on ? WAMB.vol * .9 : 0, t, on ? .8 : .2); if (!on) return; WZ.gust = (WZ.gust || 0) + dt;
+  const gust = .5 + .5 * Math.sin(WZ.gust * .23) * Math.sin(WZ.gust * .071 + 1);
+  N.wind.g.gain.setTargetAtTime(O.wind ? .06 + .1 * gust + (WSKY.wx === 'storm' ? .15 : 0) : 0, t, .5); N.wind.fl.frequency.setTargetAtTime(280 + 320 * gust, t, .8);
+  N.stream.g.gain.setTargetAtTime(O.stream ? .035 : 0, t, .5); N.rain.g.gain.setTargetAtTime(O.rain || rainW ? (WSKY.wx === 'storm' ? .2 : .12) : 0, t, .8);
+  N.surf.g.gain.setTargetAtTime(O.surf ? .06 + .1 * Math.max(0, Math.sin(WZ.gust * .7)) : 0, t, .6);
+  const T = WAMB.t, tick = (k, lo, hi, fn) => { T[k] = (T[k] ?? sr(lo, hi)) - dt; if (T[k] <= 0) { T[k] = sr(lo, hi); fn(); } };
+  if (O.chimes) tick('ch', 2.5, 9 - gust * 5, () => wTone(1046 * [1, 1.125, 1.25, 1.5, 1.667][Math.random() * 5 | 0] / (Math.random() < .5 ? 2 : 1), 'chime'));
+  if (O.crickets && WSKY.night > .5) tick('cr', .5, 1.6, () => { for (let k = 0; k < 3; k++) setTimeout(() => wTone(4300 + sr(-200, 200), 'chirp'), k * 70); });
+  if (O.bell) tick('bell', 35, 70, () => wTone(146.8, 'gong'));
+  if (O.stream) tick('bub', .15, .9, () => wTone(sr(500, 1100), 'chirp'));
+  WASH.birdT = O.birds && WSKY.night < .5 && !rainW ? WASH.birdT : 99;
+}
+{ const ws = washStep; washStep = function (dt) { const r = ws(dt); try { wzStep(dt); ambStep(dt); } catch (e) { if (!WZ.err) { WZ.err = 1; console.warn('wash v80', e); } } return r; }; }
+{ const wc = washClose; washClose = function () { const r = wc.apply(this, arguments); try { ambStep(0); } catch (e) {} return r; }; }
+
+/* ---- time of day and weather ---- */
+const TODS = { dawn: { el: .08, sun: '#ffb27a', si: .9, hi: .55, sky: [.75, .6, .6], hor: '#f7b38a', night: .2 }, day: { el: .9, sun: '#fff0d6', si: 1, hi: 1, sky: [1, 1, 1], night: 0 }, golden: { el: .22, sun: '#ffc06a', si: 1, hi: .8, sky: [1, .82, .66], hor: '#ffbf7a', night: 0 },
+  dusk: { el: .03, sun: '#ff7a4a', si: .45, hi: .45, sky: [.55, .38, .5], hor: '#e7795a', night: .5 }, night: { el: -.3, sun: '#9fb4ff', si: .12, hi: .16, sky: [.06, .08, .16], hor: '#1a2240', night: 1 } };
+const WXS = { clear: { c: 0, sun: 1, fog: 1 }, cloudy: { c: .85, sun: .45, fog: .8 }, mist: { c: .6, sun: .55, fog: .18 }, rain: { c: .95, sun: .3, fog: .45 }, storm: { c: 1, sun: .18, fog: .35 } };
+function skyApply() {
+  const S = WASH.scene; if (!S) return; const hemi = S.children.find(o => o.isHemisphereLight), sun = S.children.find(o => o.isDirectionalLight); if (!hemi || !sun) return;
+  if (!WSKY.base || WSKY.base.k !== WE.k + (WE.mat ? 1 : 0)) { const U = WE.mat && WE.sky && WE.sky.material === WE.mat ? WE.mat.uniforms : null;
+    WSKY.base = { k: WE.k + (WE.mat ? 1 : 0), sunC: sun.color.clone(), sunI: sun.intensity, sunP: sun.position.clone(), hemiC: hemi.color.clone(), hemiG: hemi.groundColor.clone(), hemiI: hemi.intensity, fogC: S.fog.color.clone(), fogN: S.fog.near, fogF: S.fog.far,
+      U: U ? { zen: U.uZen.value.clone(), hor: U.uHor.value.clone(), glow: U.uGlow.value.clone(), sun: U.uSun.value.clone(), cloud: U.uCloud.value, haze: U.uHaze.value } : null }; }
+  const B = WSKY.base, T = TODS[WSKY.tod] || TODS.day, X = WXS[WSKY.wx] || WXS.clear; WSKY.night = T.night;
+  const sk = new THREE.Color(T.sky[0], T.sky[1], T.sky[2]), grey = new THREE.Color(.62, .65, .7);
+  const az = Math.atan2(B.sunP.z, B.sunP.x); sun.position.set(Math.cos(az) * Math.cos(Math.max(.05, T.el)) * 18, Math.max(.6, Math.sin(Math.max(.05, T.el)) * 18), Math.sin(az) * Math.cos(Math.max(.05, T.el)) * 18);
+  sun.color.copy(B.sunC).lerp(new THREE.Color(T.sun), .7); sun.intensity = B.sunI * T.si * X.sun; hemi.intensity = B.hemiI * T.hi * (1 - X.c * .25); hemi.color.copy(B.hemiC).multiply(sk.clone().lerp(new THREE.Color(1, 1, 1), .35)).lerp(grey, X.c * .5);
+  S.fog.color.copy(B.fogC).multiply(sk).lerp(grey.clone().multiplyScalar(T.night ? .25 : 1), X.c * .6); if (T.hor && !X.c) S.fog.color.lerp(new THREE.Color(T.hor), .35); S.fog.near = B.fogN * X.fog; S.fog.far = Math.max(25, B.fogF * X.fog);
+  if (B.U && WE.mat && WE.sky.material === WE.mat) { const U = WE.mat.uniforms; U.uZen.value.copy(B.U.zen).multiply(sk).lerp(grey.clone().multiplyScalar(1 - T.night * .8), X.c * .55); U.uHor.value.copy(B.U.hor).multiply(sk).lerp(T.hor ? new THREE.Color(T.hor) : B.U.hor, T.hor ? .45 : 0).lerp(grey.clone().multiplyScalar(1 - T.night * .8), X.c * .5);
+    U.uGlow.value.copy(B.U.glow).lerp(new THREE.Color(T.sun), .5).multiplyScalar(Math.max(.15, T.si)); U.uSun.value.set(B.U.sun.x, Math.max(-.2, T.el), B.U.sun.z).normalize(); U.uCloud.value = Math.max(B.U.cloud, X.c); U.uHaze.value = Math.max(B.U.haze, WSKY.wx === 'mist' ? .9 : X.c * .6); }
+  if (WZ.built) { WZ.stars.material.opacity = T.night * (1 - X.c * .9); WZ.lights.work.intensity = T.night * 1.6; WZ.lights.lant.intensity = T.night * 1.2; WZ.lantM.emissiveIntensity = T.night * 2.2; WZ.rain.visible = WSKY.wx === 'rain' || WSKY.wx === 'storm';
+    for (const c of (WZ.mis && WZ.mis.cons) || []) { c.st.material.opacity = WZ.stars.material.opacity; c.ln.material.opacity = c.found ? WZ.stars.material.opacity * .6 : 0; }
+    for (const m of WZ.mist) m.material.opacity = WSKY.wx === 'mist' ? .5 : WSKY.tod === 'dawn' ? .35 : WSKY.wx === 'rain' ? .2 : .08; }
+  const pad = S.children.find(o => o.isMesh && o.geometry && o.geometry.parameters && o.geometry.parameters.width === 14); if (pad) { pad.material.roughness = WZ.rain && WZ.rain.visible ? .12 : .55; pad.material.metalness = WZ.rain && WZ.rain.visible ? .25 : .05; }
+  try { if (S.environment || WE.photoTex) wenvLight(); } catch (e) {}
+  for (const b of document.querySelectorAll('#wTod button')) b.setAttribute('aria-pressed', b.dataset.v === WSKY.tod ? 'true' : 'false'); for (const b of document.querySelectorAll('#wWx button')) b.setAttribute('aria-pressed', b.dataset.v === WSKY.wx ? 'true' : 'false');
+}
+{ const wa = wenvApply; wenvApply = function (k) { const r = wa.apply(this, arguments); WSKY.base = null; try { skyApply(); } catch (e) {} return r; }; }
+function wzStep(dt) {
+  if (!WZ.built) wzBuild(); WZ.t += dt; const t = WZ.t, W = WZ.mis;
+  for (const k of WZ.koi) { k.a += k.v * dt; const x = -12.5 + Math.cos(k.a) * k.r, z = 17 + Math.sin(k.a) * k.r; k.m.position.set(x, .06, z); k.m.rotation.y = -k.a + (k.v > 0 ? 0 : Math.PI); }
+  if (WZ.spout) { const S2 = WZ.spout; S2.fill += dt / 6; const tip = S2.fill >= 1; if (tip) { S2.fill = 0; S2.t = .8; if (WAMB.on.stream) wTone(520, 'bar'); } S2.t = Math.max(0, S2.t - dt); S2.g.rotation.z = S2.t > 0 ? -.5 * Math.min(1, S2.t * 3) : .25 * (1 - S2.fill); }
+  if (WZ.petals) { const p = WZ.petals.geometry.attributes.position, a = p.array, wind = .4 + (WSKY.wx === 'storm' ? 1.5 : 0); for (let i = 0; i < a.length; i += 3) { a[i] += (wind + Math.sin(t + i) * .3) * dt; a[i + 1] -= (.25 + (i % 7) * .03) * dt; a[i + 2] += Math.cos(t * .7 + i) * .2 * dt; if (a[i + 1] < 0 || a[i] > 14) { a[i] = sr(4, 10); a[i + 1] = sr(2.5, 4); a[i + 2] = sr(19, 23); } } p.needsUpdate = true; }
+  for (const [i, m] of WZ.mist.entries()) { m.position.x += Math.sin(t * .05 + i) * .3 * dt; m.lookAt(WASH.cam.position.x, m.position.y, WASH.cam.position.z); }
+  if (WZ.rain && WZ.rain.visible) { const a = WZ.rainP, c = WASH.tgt || new THREE.Vector3(), sp = WSKY.wx === 'storm' ? 16 : 11; for (let i = 0; i < a.length; i += 6) { a[i + 1] -= sp * dt; a[i + 4] -= sp * dt; if (a[i + 1] < 0) { const x = c.x + sr(-22, 22), z = c.z + sr(-22, 22), y = sr(12, 18), dx = WSKY.wx === 'storm' ? .25 : .05; a[i] = x; a[i + 1] = y; a[i + 2] = z; a[i + 3] = x + dx; a[i + 4] = y + .55; a[i + 5] = z; } } WZ.rain.geometry.attributes.position.needsUpdate = true; }
+  if (WSKY.wx === 'storm') { WZ.boltT = (WZ.boltT ?? sr(6, 14)) - dt; const hemi = WASH.scene.children.find(o => o.isHemisphereLight); if (WZ.boltT <= 0) { WZ.boltT = sr(7, 16); WZ.bolt = .35; setTimeout(() => { const A = AudioSys; if (A.thump) A.thump(18); wTone(48, 'gong'); }, sr(600, 2200)); }
+    if (WZ.bolt > 0 && hemi) { WZ.bolt -= dt; hemi.intensity += (WZ.bolt > .25 || (WZ.bolt > .1 && WZ.bolt < .16)) ? 2.5 : 0; if (WZ.bolt <= 0) skyApply(); } }
+  if (W) { for (const o of W.orr) o.arm.rotation.y += o.v * dt * .5; if (W.gong) W.gong.rotation.x *= .94;
+    if (TUNE.play) { const P = TUNE.play; P.t -= dt; if (P.t <= 0) { if (P.k < P.seq.length) { barHit(P.seq[P.k], false); P.k++; P.t = .45; } else { TUNE.play = null; wSay(`Your turn: play ${TUNES[TUNE.i][0]} on the bars.`); } } }
+    const D = W.dino; if (D.g.visible) { D.a += dt * .45; const x = 21 + Math.cos(D.a) * 4.5, z = 6.5 + Math.sin(D.a * 1.3) * 2; const dx = x - D.g.position.x, dz = z - D.g.position.z; D.g.position.set(x, .45 + Math.abs(Math.sin(t * 9)) * .04, z); if (dx || dz) D.g.rotation.y = Math.atan2(-dz, dx); W.legs.forEach((l, k) => { l.rotation.z = Math.sin(t * 9 + k * Math.PI) * .5; }); } }
+}
+
+/* ---- the panel: chunkier, grouped into tabs ---- */
+{ const P = document.querySelector('#wash .w-panel'); if (P) { P.classList.add('wz');
+    const grab = id => $(id), tools = $('wTools'), gBtn = tools.querySelector('[data-v="garden"]'), opts = [...P.querySelectorAll('.w-opts')], env = P.querySelector('.w-env'), gHint = $('wGarden'), hint = $('wHint'), prog = P.querySelector('.w-prog');
+    const tabs = [['wash', 'Wash', '🧽'], ['view', 'View', '👁'], ['place', 'Places', '🗺'], ['mis', 'Missions', '⭐'], ['snd', 'Sounds', '🎵'], ['sky', 'Sky', '☀']];
+    const head = document.createElement('div'); head.className = 'wz-head'; const nav = document.createElement('nav'); nav.className = 'wz-tabs'; nav.innerHTML = tabs.map(([k, l, i], n) => `<button data-t="${k}" style="--c:${['#e0302a', '#2f6bff', '#1fa85b', '#f5a518', '#7b4dff', '#ff7a1a'][n]}"><span>${i}</span>${l}</button>`).join('');
+    const fold = document.createElement('button'); fold.className = 'wz-fold'; fold.textContent = '▾'; fold.setAttribute('aria-label', 'Fold the panel'); head.append(prog, fold);
+    const body = document.createElement('div'); body.className = 'wz-body'; const pane = k => { const d = document.createElement('div'); d.className = 'wz-pane'; d.dataset.t = k; body.append(d); return d; };
+    const pw = pane('wash'), pv = pane('view'), pp = pane('place'), pm = pane('mis'), ps = pane('snd'), pk = pane('sky');
+    if (gBtn) gBtn.remove(); pw.append(tools); const o1 = opts.find(o => o.contains($('wPanels'))); if (o1) { pw.append(o1); const gv = $('wGardenView'), vv = $('wView'); const ov = document.createElement('div'); ov.className = 'w-opts'; if (vv) ov.append(vv); if (gv) ov.append(gv); pv.append(ov); }
+    const look = document.createElement('button'); look.className = 'ghost sm'; look.id = 'wLook'; look.textContent = '✋ Look around'; look.setAttribute('aria-pressed', 'false'); look.title = 'Drag anywhere to turn the view, even over the car'; pv.querySelector('.w-opts').prepend(look);
+    const vn = document.createElement('p'); vn.className = 'w-hint'; vn.textContent = 'Drag off the car to turn the view, or switch on Look around and drag anywhere. Two fingers turn and zoom; scroll or pinch to zoom.'; pv.append(vn);
+    if (env) pp.append(env);
+    pm.innerHTML = `<div class="wz-cards">${[['garden', '🌱', 'The garden', 'Plant, water, weed and pick'], ['stars', '🔭', 'Stars', 'Build the orrery, find the constellations'], ['dig', '🦴', 'Dinosaur Cove', 'Brush the sand off six fossils'], ['music', '🎶', 'Music garden', 'Bars, chimes, a gong, three tunes']].map(([k, i, n, d]) => `<button data-m="${k}"><span>${i}</span><b>${n}</b><small>${d}</small></button>`).join('')}</div><div class="wz-tunes" id="wTunes"></div><div id="wMisStat" class="w-hint"></div>`; if (gHint) pm.append(gHint);
+    ps.innerHTML = `<div class="wz-sw" id="wAmb">${[['birds', 'Birds'], ['wind', 'Wind'], ['stream', 'Water'], ['chimes', 'Wind chimes'], ['crickets', 'Crickets at night'], ['rain', 'Rain'], ['surf', 'Distant surf'], ['bell', 'Temple bell']].map(([k, l]) => `<button data-a="${k}">${l}</button>`).join('')}</div><div class="bank call-vol"><label for="wAmbVol">Ambience</label><output id="wAmbOut"></output><input type="range" class="rng" id="wAmbVol" min="0" max="150" step="5"></div>`;
+    pk.innerHTML = `<div class="w-lab">Time of day</div><div class="wz-sw" id="wTod">${[['dawn', 'Dawn'], ['day', 'Day'], ['golden', 'Golden hour'], ['dusk', 'Dusk'], ['night', 'Night']].map(([k, l]) => `<button data-v="${k}">${l}</button>`).join('')}</div><div class="w-lab">Weather</div><div class="wz-sw" id="wWx">${[['clear', 'Clear'], ['cloudy', 'Cloudy'], ['mist', 'Mist'], ['rain', 'Rain'], ['storm', 'Storm']].map(([k, l]) => `<button data-v="${k}">${l}</button>`).join('')}</div>`;
+    P.innerHTML = ''; P.append(head, nav, body, hint);
+    const show = k => { store.set('scream-wash-tab', k); for (const b of nav.children) b.setAttribute('aria-pressed', b.dataset.t === k ? 'true' : 'false'); for (const d of body.children) d.classList.toggle('on', d.dataset.t === k); P.classList.remove('folded'); fold.textContent = '▾'; if (k === 'mis') misStatus(); };
+    nav.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(b.dataset.t); }); show(store.get('scream-wash-tab') || 'wash');
+    fold.onclick = () => { const f = P.classList.toggle('folded'); fold.textContent = f ? '▴' : '▾'; };
+    look.onclick = () => { WASH.look = !WASH.look; look.setAttribute('aria-pressed', WASH.look ? 'true' : 'false'); };
+    const fly = (x, y, z, yaw, pitch, dist) => { WASH.tgtW.set(x, y, z); WASH.orb.yaw = yaw; WASH.orb.pitch = pitch; WASH.orb.dist = dist; };
+    pm.querySelector('.wz-cards').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const m = b.dataset.m; $('wTunes').innerHTML = '';
+      if (m === 'garden') { washTool('garden'); const gv = $('wGardenView'); if (gv) gv.click(); }
+      else { if (WASH.tool === 'garden') washTool('hose'); }
+      if (m === 'stars') { fly(-22, 1.6, 2.4, .25, .28, 9); wSay(WSKY.night < .6 ? 'Tap the planets in order out from the Sun. For the constellations, set the sky to Night and look up.' : 'Tap the planets in order from the Sun, then look up and tap the star patterns.'); }
+      if (m === 'dig') { fly(21, .4, 1, 3.4, .75, 8.5); wSay('Drag over the mounds in the sandpit to brush the sand away. Each fossil goes onto the skeleton.'); }
+      if (m === 'music') { fly(17.5, 1, 13.5, 1.45, .32, 8.5); $('wTunes').innerHTML = TUNES.map((t, i) => `<button class="ghost sm" data-tu="${i}">${WMS.tunes.includes(i) ? '✓ ' : ''}${t[0]}</button>`).join(''); wSay('Tap the bars, the chimes and the gong. Pick a tune to learn it.'); }
+      misStatus(); });
+    $('wTunes').addEventListener('click', e => { const b = e.target.closest('[data-tu]'); if (b) tuneStart(+b.dataset.tu); });
+    const ab = $('wAmb'), syncA = () => { for (const b of ab.children) b.setAttribute('aria-pressed', WAMB.on[b.dataset.a] ? 'true' : 'false'); }; ab.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; WAMB.on[b.dataset.a] = WAMB.on[b.dataset.a] ? 0 : 1; store.set('scream-wash-amb', JSON.stringify(WAMB.on)); syncA(); if (b.dataset.a === 'birds' && WAMB.on.birds) WASH.birdT = 1; }); syncA();
+    const av = $('wAmbVol'), ao = $('wAmbOut'), shA = () => { ao.textContent = Math.round(WAMB.vol * 100) + '%'; av.value = Math.round(WAMB.vol * 100); try { rngFill(av); } catch (e) {} }; av.addEventListener('input', () => { WAMB.vol = av.value / 100; store.set('scream-wash-ambvol', WAMB.vol); shA(); }); shA();
+    $('wTod').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; WSKY.tod = b.dataset.v; store.set('scream-wash-tod', WSKY.tod); skyApply(); });
+    $('wWx').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; WSKY.wx = b.dataset.v; store.set('scream-wash-wx', WSKY.wx); skyApply(); });
+  } }
+{ const wo = washOpen; washOpen = function () { const r = wo.apply(this, arguments); try { wzBuild(); misRefresh(); skyApply(); } catch (e) { console.warn('wash v80 open', e); } return r; }; }
 if (window.__introReady) window.__introReady();
 </script>
 </body>

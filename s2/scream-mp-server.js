@@ -7,6 +7,14 @@ const http = require('http'), fs = require('fs'), path = require('path');
 const { WebSocketServer } = require('ws');
 const PORT = +process.env.PORT || 8787, MAX = 16, V = 2, GAME = path.join(__dirname, 'scream-premier-speedway.html');
 const clean = (s, n) => String(s ?? '').replace(/[\u0000-\u001f<>]/g, '').slice(0, n);
+// a mild filter for names and chat (the game filters too; this catches anyone who goes round it)
+const BADW = ['fuck','fuk','fck','shit','cunt','bitch','bastard','wank','twat','prick','cock','pussy','slut','whore','fag','faggot','nigger','nigga','retard','spastic','rape','nazi','hitler','boong','coon','chink','gook','kike','dyke','tranny','arsehole','asshole','bollock','tosser','bellend','jizz','cum','porn','sex','penis','vagina','tits','boob','anal','arse','piss','crap','damn'];
+const BADX = new Set(['rape','cum','sex','anal','arse','piss','crap','damn','cock','coon','fag','tits','boob','prick']);
+const LEET = { '0': 'o', '1': 'i', '!': 'i', '3': 'e', '4': 'a', '@': 'a', '5': 's', '$': 's', '7': 't', '+': 't', '8': 'b', '9': 'g' };
+const norm = w => w.toLowerCase().replace(/[01!3@4$578+9]/g, c => LEET[c]).replace(/(.)\1+/g, '$1').replace(/[^a-z]/g, '');
+function censor(s) { s = String(s ?? ''); const out = s.replace(/[^\s]+/g, w => { const n = norm(w); if (!n) return w; for (const b of BADW) { const bn = b.replace(/(.)\1+/g, '$1'); if (BADX.has(b) ? n === bn || n === bn + 's' : n.includes(bn)) return '*'.repeat(Math.min(8, w.length)); } return w; });
+  if (out === s) { const j = norm(s); for (const b of BADW) if (!BADX.has(b) && (b.length >= 5 || s.trim().split(/\s+/).every(x => x.length <= 2)) && j.includes(b.replace(/(.)\1+/g, '$1'))) return '*'.repeat(Math.min(12, s.length)); } return out; }
+const cleanName = (s, n = 24) => { const c = censor(clean(s, n)); return /^[*\s]*$/.test(c) ? 'Driver' : c; };
 const rooms = new Map(); let nextId = 1;   // name -> { socks: Set, racing, settings, pub }
 // Quicktimes board (same rules as the Worker), kept in lb.json next to this file
 const LBF = path.join(__dirname, 'lb.json'); let LB = {}; try { LB = JSON.parse(fs.readFileSync(LBF, 'utf8')); } catch (e) {}
@@ -28,9 +36,9 @@ function lbHandle(req, res) {
     if (!board || !(t > 0) || !(len > 200 && len < 3000) || t < len / 46 || t > 120) return out({ error: 'not a real lap' }, 400);
     if (sp.length !== 4 || Math.abs(sp.reduce((a, b) => a + b, 0) - t) > .06 || sp.some(x => !(x >= t * .13))) return out({ error: 'splits do not add up' }, 400);
     const dev = clean(m.dev, 40) || ip, L = B(board), old = L.findIndex(e => e.dev === dev);
-    if (old >= 0 && L[old].t <= t) { L[old].name = clean(m.name, 24) || L[old].name; lbSave(); return out({ rank: old + 1, pb: false, best: L[old].t, n: L.length }); }
+    if (old >= 0 && L[old].t <= t) { L[old].name = cleanName(m.name); lbSave(); return out({ rank: old + 1, pb: false, best: L[old].t, n: L.length }); }
     if (old >= 0) { delete LB['g:' + L[old].id]; L.splice(old, 1); }
-    const e = { id: now.toString(36) + Math.random().toString(36).slice(2, 6), dev, name: clean(m.name, 24) || 'Driver', num: clean(m.num, 5), car: clean(m.car, 40), col: /^#[0-9a-f]{6}$/i.test(m.col) ? m.col : '#888888', t: Math.round(t * 1000) / 1000, sp: sp.map(x => Math.round(x * 1000) / 1000), d: now };
+    const e = { id: now.toString(36) + Math.random().toString(36).slice(2, 6), dev, name: cleanName(m.name), num: clean(m.num, 5), car: clean(m.car, 40), col: /^#[0-9a-f]{6}$/i.test(m.col) ? m.col : '#888888', t: Math.round(t * 1000) / 1000, sp: sp.map(x => Math.round(x * 1000) / 1000), d: now };
     L.push(e); L.sort((a, b) => a.t - b.t); for (const x of L.splice(200)) delete LB['g:' + x.id];
     const rank = L.indexOf(e) + 1; if (rank <= 10 && Array.isArray(m.ghost) && m.ghost.length >= 80 && m.ghost.length <= 24000) { LB['g:' + e.id] = { lap: e.t, p: m.ghost.map(Number) }; e.g = 1; }
     for (const x of L.slice(10)) if (x.g) { delete LB['g:' + x.id]; x.g = 0; }
@@ -63,7 +71,7 @@ wss.on('connection', (ws, req) => {
     if (m.t === 'hello' && !ws.room) {
       const name = clean(m.room || want, 32) || want, R2 = rooms.get(name) || { socks: new Set(), racing: false, settings: null, pub: m.pub !== false };
       if (R2.socks.size >= MAX) { send(ws, { t: 'full' }); ws.close(); return; }
-      ws.room = name; ws.info = { name: clean(m.name || 'Driver', 24) || 'Driver', num: clean(m.num, 5), col: /^#[0-9a-f]{6}$/i.test(m.col) ? m.col : '#888888', prof: m.prof || null, ready: false };
+      ws.room = name; ws.info = { name: cleanName(m.name || 'Driver'), num: clean(m.num, 5), col: /^#[0-9a-f]{6}$/i.test(m.col) ? m.col : '#888888', prof: m.prof || null, ready: false };
       R2.socks.add(ws); rooms.set(name, R2); const host = hostWs(R2).id;
       send(ws, { t: 'welcome', v: V, id: ws.id, host, peers: [...R2.socks].filter(o => o !== ws).map(pub), racing: R2.racing, settings: R2.settings, st: Date.now() });
       all(R2, { t: 'join', host, ...pub(ws) }, ws); console.log(ws.info.name, 'joined', name, '(' + R2.socks.size + ')'); return; }
@@ -71,9 +79,9 @@ wss.on('connection', (ws, req) => {
     if (m.t === 'start' && isHost && Array.isArray(m.order)) { R.racing = true; for (const o of R.socks) o.info.ready = false; all(R, { ...m, t: 'start', from: ws.id, laps: Math.max(2, Math.min(50, m.laps | 0)) }, ws); }
     else if (m.t === 'end' && isHost) { R.racing = false; all(R, { t: 'end', from: ws.id }, ws); }
     else if (m.t === 'set' && isHost) { R.settings = m.s || null; all(R, { t: 'set', s: R.settings }, ws); }
-    else if (m.t === 'prof') { if (m.name) ws.info.name = clean(m.name, 24) || ws.info.name; if (m.num != null) ws.info.num = clean(m.num, 5); if (/^#[0-9a-f]{6}$/i.test(m.col)) ws.info.col = m.col; if (m.prof) ws.info.prof = m.prof; all(R, { t: 'prof', ...pub(ws) }, ws); }
+    else if (m.t === 'prof') { if (m.name) ws.info.name = cleanName(m.name); if (m.num != null) ws.info.num = clean(m.num, 5); if (/^#[0-9a-f]{6}$/i.test(m.col)) ws.info.col = m.col; if (m.prof) ws.info.prof = m.prof; all(R, { t: 'prof', ...pub(ws) }, ws); }
     else if (m.t === 'ready') { ws.info.ready = !!m.on; all(R, { t: 'ready', id: ws.id, on: ws.info.ready }, ws); }
-    else if (m.t === 'x' && typeof m.k === 'string') { const out = JSON.stringify({ t: 'x', from: ws.id, k: m.k.slice(0, 12), d: m.d }); if (m.to != null) { for (const o of R.socks) if (o.id === m.to) send(o, out); } else all(R, out, ws); }
+    else if (m.t === 'x' && typeof m.k === 'string') { const out = JSON.stringify({ t: 'x', from: ws.id, k: m.k.slice(0, 12), d: m.k === 'chat' ? censor(String(m.d || '').slice(0, 140)) : m.d }); if (m.to != null) { for (const o of R.socks) if (o.id === m.to) send(o, out); } else all(R, out, ws); }
     else if (m.t === 's' && Array.isArray(m.s)) all(R, { t: 's', id: ws.id, s: m.s.map(Number) }, ws);
   });
   ws.on('close', () => { const R = ws.room && rooms.get(ws.room); if (!R) return; R.socks.delete(ws); const h = hostWs(R); all(R, { t: 'leave', id: ws.id, host: h ? h.id : null }); if (!R.socks.size) rooms.delete(ws.room); });
