@@ -580,6 +580,62 @@ html[data-ev]:not([data-ev="quick"]) .tiles > button[aria-pressed="true"]{ backg
 #wMisStat div{ margin:2px 0; } #wash .wz .bank{ color:#4a4f5c; } #wash .wz output{ color:#2b2b36; }
 #wash .w-panel.wz.folded{ max-height:none; } .wz.folded .wz-tabs, .wz.folded .wz-body, .wz.folded > .w-hint{ display:none; }
 @media (max-width:600px){ #wash .w-panel.wz{ left:8px; right:8px; width:auto; transform:none; bottom:8px; max-height:50vh; border-radius:22px; } .wz-tabs button{ flex-basis:56px; font-size:12px; } }
+
+/* v81: wash bay glass UI */
+#wzTop, #wzLeft, #wzRight, #wzTray, #wzBot .w-prog, #wzBot #wHint, #geyePad, #geyeJoy{ pointer-events:auto; } #wzTop{ z-index:12; } #wzLeft, #wzRight{ z-index:11; }
+#wash .g-top{ pointer-events:none; } #wash .g-top > *{ pointer-events:auto; }
+
+#wash .glass{ background:linear-gradient(160deg,rgba(40,52,78,.62),rgba(12,16,28,.5)); -webkit-backdrop-filter:blur(14px) saturate(1.5); backdrop-filter:blur(14px) saturate(1.5); border:1px solid rgba(255,255,255,.3); box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.4); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); font-family:Fredoka,var(--body); }
+#wzTop{ position:absolute; top:12px; left:50%; transform:translateX(-50%); z-index:6; display:flex; align-items:center; gap:6px; padding:6px; border-radius:22px; max-width:calc(100vw - 210px); }
+#wzTop .wz-tabs{ display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; padding:0; width:auto; } #wzTop .wz-tabs::-webkit-scrollbar{ display:none; }
+#wzTop .wz-tabs button{ flex:0 0 auto; min-width:64px; display:flex; flex-direction:column; align-items:center; gap:1px; padding:6px 10px 5px; border:0; border-radius:16px; background:transparent; color:#fff; font:600 12px Fredoka,var(--body); box-shadow:none; cursor:pointer; text-shadow:inherit; transition:background .15s, transform .1s; }
+#wzTop .wz-tabs button span{ font-size:20px; line-height:1.1; filter:drop-shadow(0 2px 2px rgba(0,0,0,.3)); } #wzTop .wz-tabs button:hover{ background:rgba(255,255,255,.14); }
+#wzTop .wz-tabs button[aria-pressed="true"]{ background:linear-gradient(160deg,color-mix(in srgb,var(--c) 85%,#fff),var(--c)); box-shadow:0 4px 14px color-mix(in srgb,var(--c) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.5); }
+#wzTop .wz-tabs button.locked{ opacity:.5; } #wzTop .wz-tabs button:active{ transform:scale(.94); }
+#wzExit{ display:none; align-items:center; gap:6px; padding:9px 14px; border:0; border-radius:16px; background:linear-gradient(160deg,#ff8a6a,#e0302a); color:#fff; font:700 13px Fredoka,var(--body); cursor:pointer; white-space:nowrap; box-shadow:0 4px 14px rgba(224,48,42,.5); }
+#wash.in-mis #wzExit{ display:flex; } #wzExit.nudge{ animation:nudge .5s; } @keyframes nudge{ 25%{ transform:translateX(-5px) } 75%{ transform:translateX(5px) } }
+#wzLeft{ position:absolute; left:12px; top:50%; transform:translateY(-50%); z-index:6; display:flex; flex-direction:column; gap:8px; padding:8px; border-radius:26px; transition:opacity .25s, transform .25s; }
+#wzLeft .w-tools{ display:flex; flex-direction:column; gap:8px; margin:0; background:none; } #wzLeft button{ width:62px; height:62px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; padding:0; border:1px solid rgba(255,255,255,.28); border-radius:50%; background:rgba(255,255,255,.1); color:#fff; font:600 10px Fredoka,var(--body); cursor:pointer; box-shadow:inset 0 1px 0 rgba(255,255,255,.35); clip-path:none; text-transform:none; letter-spacing:0; font-style:normal; transition:transform .1s, background .15s; }
+#wzLeft button span{ font-size:24px; line-height:1; } #wzLeft button:hover{ background:rgba(255,255,255,.2); } #wzLeft button:active{ transform:scale(.92); }
+#wzLeft button[aria-pressed="true"]{ background:radial-gradient(circle at 35% 30%,#7fd4ff,#2f6bff 70%); border-color:rgba(255,255,255,.6); box-shadow:0 0 0 3px rgba(79,214,255,.35),0 6px 16px rgba(47,107,255,.5); }
+#wzLeft .wz-side{ display:flex; flex-direction:column; gap:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,.2); } #wzLeft .wz-side button{ width:46px; height:46px; margin:0 auto; } #wzLeft .wz-side span{ font-size:20px; }
+#wash.in-mis #wzLeft, #wash.in-god #wzLeft{ opacity:0; pointer-events:none; transform:translate(-30px,-50%); }
+#wzRight{ position:absolute; right:12px; top:84px; bottom:96px; z-index:6; width:min(340px,40vw); padding:14px 14px 12px; border-radius:24px; overflow:auto; transform:translateX(calc(100% + 30px)); opacity:0; transition:transform .3s cubic-bezier(.2,.9,.3,1), opacity .25s; }
+#wzRight.on{ transform:none; opacity:1; } #wzRight .wz-x{ position:sticky; top:0; float:right; width:32px; height:32px; border:0; border-radius:50%; background:rgba(255,255,255,.18); color:#fff; cursor:pointer; z-index:2; }
+#wzRight .wz-pane{ display:none; } #wzRight .wz-pane.on{ display:block; }
+#wzRight button, #wzTray button{ border:1px solid rgba(255,255,255,.28) !important; border-radius:14px !important; background:rgba(255,255,255,.12) !important; color:#fff !important; font:600 13px Fredoka,var(--body) !important; padding:8px 12px !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.3) !important; cursor:pointer; clip-path:none !important; text-transform:none !important; letter-spacing:0 !important; font-style:normal !important; text-shadow:0 1px 2px rgba(0,0,0,.3); }
+#wzRight button[aria-pressed="true"], #wzTray button.on{ background:linear-gradient(160deg,#7fd4ff,#2f6bff) !important; border-color:rgba(255,255,255,.6) !important; }
+#wzRight .wz-grid{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px; } #wzRight .wz-sw, #wzRight .w-opts{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 10px; }
+#wzRight .wz-cards{ display:grid; grid-template-columns:1fr; gap:8px; } #wzRight .wz-cards button{ display:grid !important; grid-template-columns:auto 1fr; column-gap:10px; text-align:left; padding:12px !important; border-radius:18px !important; }
+#wzRight .wz-cards span{ grid-row:1 / 3; font-size:30px; } #wzRight .wz-cards small{ opacity:1; color:#d6e2ff; font-size:12px; } #wzRight .w-hint, #wzRight label, #wzRight .w-lab{ color:rgba(255,255,255,.88) !important; } #wzRight .w-lab{ font-weight:700; font-size:13px; margin-top:6px; }
+#wzRight select{ background:rgba(255,255,255,.14) !important; color:#fff !important; border:1px solid rgba(255,255,255,.3) !important; border-radius:12px !important; padding:8px !important; } #wzRight select option{ color:#111; }
+#wzBot{ position:absolute; left:50%; bottom:12px; transform:translateX(-50%); z-index:6; width:min(640px,calc(100vw - 200px)); display:flex; flex-direction:column; gap:8px; align-items:stretch; pointer-events:none; }
+#wzBot > *{ pointer-events:auto; } #wzBot .w-prog{ display:flex; align-items:center; gap:10px; padding:8px 14px; border-radius:18px; background:linear-gradient(160deg,rgba(40,52,78,.62),rgba(12,16,28,.5)); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.3); color:#fff; font:600 13px Fredoka,var(--body); }
+#wzBot .w-bar{ flex:1; height:10px; border-radius:99px; background:rgba(255,255,255,.18); overflow:hidden; } #wzBot .w-bar i{ border-radius:99px; background:linear-gradient(90deg,#ffb547,#46d36b); }
+#wzBot #wHint{ margin:0; padding:8px 14px; border-radius:16px; background:rgba(8,12,24,.6); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); color:#fff; font:500 13px/1.4 Fredoka,var(--body); text-align:center; } #wzBot #wHint:empty{ display:none; }
+#wash.in-mis #wzBot .w-prog, #wash.in-god #wzBot{ display:none; }
+#wzTray{ display:none; flex-wrap:wrap; justify-content:center; align-items:center; gap:6px; padding:8px 10px; border-radius:20px; } #wzTray.on{ display:flex; } #wzTray b{ font-weight:700; margin-right:4px; } #wzTray .sm{ font-size:12px; opacity:.85; }
+#wzTray button i{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; vertical-align:middle; box-shadow:0 0 0 2px rgba(255,255,255,.4); }
+#wzToast{ position:absolute; left:50%; top:86px; transform:translate(-50%,-10px); z-index:8; padding:10px 18px; border-radius:16px; opacity:0; pointer-events:none; font-weight:600; } #wzToast.on{ animation:toast 2.4s forwards; }
+@keyframes toast{ 10%,80%{ opacity:1; transform:translate(-50%,0) } 100%{ opacity:0; transform:translate(-50%,-6px) } }
+#wzTitle{ position:absolute; inset:0; z-index:7; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; opacity:0; color:#fff; font-family:Fredoka,var(--display); text-align:center; }
+#wzTitle.on{ animation:wzT 2.6s forwards; } @keyframes wzT{ 0%{ opacity:0 } 12%,78%{ opacity:1 } 100%{ opacity:0 } }
+#wzTitle .ic{ font-size:clamp(46px,9vw,84px); animation:wzI .7s cubic-bezier(.2,1.6,.4,1) both; } #wzTitle h3{ margin:4px 0; font-weight:700; font-size:clamp(40px,9vw,104px); letter-spacing:.04em; text-shadow:0 6px 30px rgba(0,0,0,.45),0 0 1px rgba(0,0,0,.6); }
+#wzTitle h3 i{ display:inline-block; font-style:normal; animation:wzL .6s cubic-bezier(.2,1.4,.3,1) both; animation-delay:var(--d); background:linear-gradient(180deg,#fff,#cfe9ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+#wzTitle p{ margin:0; font-size:clamp(14px,2.4vw,22px); font-weight:500; opacity:0; animation:wzP .6s .5s forwards; text-shadow:0 2px 10px rgba(0,0,0,.5); }
+@keyframes wzI{ from{ transform:scale(.2) rotate(-20deg); opacity:0 } } @keyframes wzL{ from{ transform:translateY(40px) scale(.6); opacity:0; filter:blur(8px) } } @keyframes wzP{ from{ opacity:0; transform:translateY(8px) } to{ opacity:.95; transform:none } }
+#geyePad, #geyeJoy{ display:none; position:absolute; z-index:6; bottom:24px; touch-action:none; -webkit-user-select:none; user-select:none; }
+.touchui #wash.in-god #geyePad, .touchui #wash.in-god #geyeJoy{ display:block; }
+#geyePad{ left:20px; width:170px; height:170px; } #geyePad button{ position:absolute; width:56px; height:56px; border-radius:16px; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.14); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); color:#fff; font-size:20px; }
+#geyePad [data-m="f"]{ left:57px; top:0; } #geyePad [data-m="b"]{ left:57px; top:114px; } #geyePad [data-m="l"]{ left:0; top:57px; } #geyePad [data-m="r"]{ left:114px; top:57px; }
+#geyePad .ud{ width:44px; height:44px; left:184px; font-size:18px; } #geyePad [data-m="u"]{ top:20px; } #geyePad [data-m="d"]{ top:106px; } #geyePad button.on{ background:rgba(79,214,255,.45); }
+#geyeJoy{ right:24px; width:clamp(118px,22vw,150px); aspect-ratio:1; } #geyeJoy .ring{ position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.04) 0 55%,rgba(255,255,255,.12) 56% 58%,rgba(255,255,255,.03) 59%); border:2px solid rgba(255,255,255,.22); }
+#geyeJoy i{ position:absolute; left:50%; top:50%; width:44%; aspect-ratio:1; margin:-22% 0 0 -22%; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffd28a,#ff9f2e 60%,#c4561a); box-shadow:0 4px 14px rgba(0,0,0,.5),0 0 0 3px rgba(255,255,255,.18); }
+#wash.in-god #wzRight{ display:none; } #wash .g-top h2{ display:none; }
+@media (max-width:700px){ #wzTop{ left:8px; right:8px; transform:none; max-width:none; top:calc(54px + env(safe-area-inset-top,0px)); } #wzTop .wz-tabs button{ min-width:54px; padding:5px 6px; font-size:11px; }
+  #wzLeft{ left:6px; padding:6px; gap:6px; top:auto; bottom:110px; transform:none; } #wzLeft button{ width:50px; height:50px; } #wzLeft button span{ font-size:20px; } #wzLeft small{ display:none; } #wzLeft .wz-side{ flex-direction:row; } #wzLeft .wz-side button{ width:38px; height:38px; }
+  #wash.in-mis #wzLeft{ transform:translateX(-30px); }
+  #wzRight{ left:8px; right:8px; width:auto; top:auto; bottom:8px; max-height:55vh; transform:translateY(calc(100% + 30px)); } #wzBot{ width:calc(100vw - 16px); bottom:8px; } #wzRight.on ~ #wzBot{ opacity:0; pointer-events:none; } }
 /* v80: event colours (Online always blue), install, skip four-wide */
 html[data-ev="practice"]{ --sodium:#5fe0c9; --hot:#15a892; } html[data-ev="night"]{ --sodium:#c49bff; --hot:#7b4dff; } html[data-ev="amain"]{ --sodium:#ff6a5c; --hot:#d81f2a; } html[data-ev="online"]{ --sodium:#4fd6ff; --hot:#2f6bff; }
 html[data-ev="practice"] .mpanel{ background:linear-gradient(162deg,rgba(18,58,62,.94),rgba(8,18,24,.95)); } html[data-ev="night"] .mpanel{ background:linear-gradient(162deg,rgba(44,28,84,.94),rgba(12,9,28,.95)); }
@@ -9083,6 +9139,226 @@ function wzStep(dt) {
     $('wWx').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; WSKY.wx = b.dataset.v; store.set('scream-wash-wx', WSKY.wx); skyApply(); });
   } }
 { const wo = washOpen; washOpen = function () { const r = wo.apply(this, arguments); try { wzBuild(); misRefresh(); skyApply(); } catch (e) { console.warn('wash v80 open', e); } return r; }; }
+
+/* ---------- v81: the wash bay, polished ----------
+   Glass tool rails round the edges (tools on the left, tabs along the top, a drawer on the right, progress and hints along
+   the bottom), vistas, missions you enter and leave properly (with a title card), the garden's seed tray kept on screen, a sand
+   rake for the zen garden, an aquarium, a God's eye free camera (WASD and mouse on a computer, a D-pad and the race thumb
+   stick on a phone), and small things to poke at: the koi pond, the lanterns, the bamboo spout, the blossom tree, a fairy-wren. */
+const WMIS = { cur: null };
+const ICON = { hose: '🚿', foam: '❄️', sponge: '🧽', brush: '🪥', cloth: '✨', wPanels: '🔧', wEngine: '⚙️', wDirty: '💩' };
+const MISS = { garden: ['🌱', 'The Garden', 'Plant, water, weed and pick'], zen: ['🪨', 'Zen Garden', 'Rake the gravel round the stones'], stars: ['🔭', 'Stars', 'The orrery and the night sky'],
+  dig: ['🦴', 'Dinosaur Cove', 'Brush six fossils out of the sand'], music: ['🎶', 'Music Garden', 'Bars, chimes, a gong and three tunes'], aqua: ['🐠', 'The Aquarium', 'A southern reef tank: feed, find, identify'] };
+const wFly = (x, y, z, yaw, pitch, dist) => { WASH.tgtW.set(x, y, z); WASH.orb.yaw = yaw; WASH.orb.pitch = pitch; WASH.orb.dist = dist; };
+Object.assign(WMS, { aqua: Object.assign({ ids: [], fed: 0 }, WMS.aqua || {}), raked: WMS.raked || 0 });
+
+/* ---- the layout ---- */
+function wzUI() {
+  const W = $('wash'), P = W && W.querySelector('.w-panel.wz'); if (!P || $('wzTop')) return;
+  const nav = P.querySelector('.wz-tabs'), body = P.querySelector('.wz-body'), prog = P.querySelector('.w-prog'), hint = $('wHint'), tools = $('wTools');
+  const top = document.createElement('div'); top.id = 'wzTop'; top.className = 'glass'; const left = document.createElement('div'); left.id = 'wzLeft'; left.className = 'glass';
+  const right = document.createElement('div'); right.id = 'wzRight'; right.className = 'glass'; const bot = document.createElement('div'); bot.id = 'wzBot'; const tray = document.createElement('div'); tray.id = 'wzTray'; tray.className = 'glass';
+  // tabs: Wash first, then the drawers, God's eye, and the mission pill
+  nav.querySelector('[data-t="wash"]').innerHTML = '<span>🧽</span>Wash'; const ge = document.createElement('button'); ge.dataset.t = 'god'; ge.style.setProperty('--c', '#14b8a6'); ge.innerHTML = '<span>🕊️</span>God\'s eye'; nav.append(ge);
+  const exitB = document.createElement('button'); exitB.id = 'wzExit'; exitB.innerHTML = '<span>⟵</span><b></b>'; top.append(exitB, nav);
+  // left rail: the wash tools, round glass buttons
+  for (const b of [...tools.children]) { const v = b.dataset.v; b.innerHTML = `<span>${ICON[v] || '•'}</span><small>${b.textContent.replace('Pressure ', '').replace('Snow ', '').replace('Microfibre', 'Cloth')}</small>`; b.title = b.textContent; }
+  left.append(tools); const wo = document.createElement('div'); wo.className = 'wz-side';
+  for (const id of ['wPanels', 'wEngine', 'wDirty']) { const b = $(id); if (b) { b.dataset.tip = b.textContent; b.title = b.textContent; b.innerHTML = `<span>${ICON[id]}</span>`; wo.append(b); } } left.append(wo);
+  const gv = $('wGardenView'); if (gv) gv.remove();   // the garden is a mission now
+  // the right drawer holds everything but Wash
+  body.querySelector('[data-t="wash"]').remove(); right.append(body); const close = document.createElement('button'); close.className = 'wz-x'; close.textContent = '✕'; close.setAttribute('aria-label', 'Close'); right.prepend(close);
+  bot.append(tray, prog, hint); W.append(top, left, right, bot); P.style.display = 'none';
+  // Views: vistas round the car and the grounds
+  const pv = body.querySelector('[data-t="view"]'), vv = document.createElement('div'); vv.className = 'wz-grid';
+  const VIS = [['Whole car', () => { const b = $('wView'); if (b) b.click(); }], ['Three-quarter', () => wFly(0, .8, 0, .7, .32, 6.8)], ['Side on', () => wFly(0, .7, 0, 1.57, .12, 7)], ['Low and close', () => wFly(0, .5, 0, 2.3, .02, 4.2)], ['From above', () => wFly(0, 0, 0, 1.2, 1.3, 9)], ['The other side', () => wFly(0, .8, 0, -1.4, .25, 7)],
+    ['Zen garden', () => wFly(0, .3, 17, 1.57, .55, 12)], ['Koi pond', () => wFly(-12.5, .2, 17, 1.2, .7, 6.5)], ['Observatory', () => wFly(-23, 2, 0, .4, .2, 12)], ['Dinosaur Cove', () => wFly(21, .4, 0, 3.4, .55, 11)], ['Music garden', () => wFly(17.5, 1, 13.5, 1.45, .32, 8.5)], ['Aquarium', () => wFly(-23, 1.8, 13, 1.57, .12, 7)], ['The whole place', () => wFly(0, 0, 4, 1.1, .85, 36)]];
+  vv.innerHTML = VIS.map(([n], i) => `<button data-vi="${i}">${n}</button>`).join(''); pv.prepend(vv); vv.addEventListener('click', e => { const b = e.target.closest('[data-vi]'); if (b) { if (GEYE.on) geyeOff(); VIS[+b.dataset.vi][1](); } });
+  const ov = pv.querySelector('.w-opts'); if (ov) { const wv = $('wView'); if (wv) wv.style.display = 'none'; }
+  // Missions: cards that enter a mission
+  const pm = body.querySelector('[data-t="mis"]'); const cards = pm.querySelector('.wz-cards'); cards.innerHTML = Object.entries(MISS).map(([k, [i, n, d]]) => `<button data-m="${k}"><span>${i}</span><b>${n}</b><small>${d}</small></button>`).join('');
+  cards.replaceWith(cards.cloneNode(true)); pm.querySelector('.wz-cards').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) enterMission(b.dataset.m); }); const tu = $('wTunes'); if (tu) tu.remove();
+  // tabs behave: Wash closes the drawer (locked during a mission), others open their drawer, God's eye flies free
+  const open = k => { right.classList.toggle('on', !!k); for (const b of nav.children) b.setAttribute('aria-pressed', b.dataset.t === k || (!k && b.dataset.t === 'wash' && !WMIS.cur) ? 'true' : 'false'); for (const d of body.children) d.classList.toggle('on', d.dataset.t === k); if (k === 'mis') misStatus(); };
+  WZ.open = open;
+  nav.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; e.stopImmediatePropagation(); const k = b.dataset.t;
+    if (k === 'wash') { if (WMIS.cur) { wzToast('Leave ' + MISS[WMIS.cur][1] + ' first (⟵ at the top)'); exitB.classList.add('nudge'); setTimeout(() => exitB.classList.remove('nudge'), 700); return; } if (GEYE.on) geyeOff(); open(null); return; }
+    if (k === 'god') { GEYE.on ? geyeOff() : geyeOn(); open(null); return; }
+    open(right.classList.contains('on') && b.getAttribute('aria-pressed') === 'true' ? null : k); }, true);
+  close.onclick = () => open(null); exitB.onclick = () => exitMission();
+  open(null); wzSync();
+}
+function wzSync() { const W = $('wash'); if (!W) return; W.classList.toggle('in-mis', !!WMIS.cur); W.classList.toggle('in-god', GEYE.on); const ex = $('wzExit'); if (ex) ex.querySelector('b').textContent = WMIS.cur ? 'Leave ' + MISS[WMIS.cur][1] : '';
+  const wt = document.querySelector('#wzTop [data-t="wash"]'); if (wt) { wt.classList.toggle('locked', !!WMIS.cur); wt.querySelector('span').textContent = WMIS.cur ? '🔒' : '🧽'; } trayDraw(); }
+function wzToast(t) { let el = $('wzToast'); if (!el) { el = document.createElement('div'); el.id = 'wzToast'; el.className = 'glass'; $('wash').append(el); } el.textContent = t; el.classList.remove('on'); void el.offsetWidth; el.classList.add('on'); }
+function wzTitle(icon, name, sub) { let el = $('wzTitle'); if (!el) { el = document.createElement('div'); el.id = 'wzTitle'; $('wash').append(el); }
+  el.innerHTML = `<div class="ic">${icon}</div><h3>${[...name].map((c, i) => `<i style="--d:${i * 45}ms">${c === ' ' ? '&nbsp;' : c}</i>`).join('')}</h3><p>${sub}</p>`; el.classList.remove('on'); void el.offsetWidth; el.classList.add('on'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 2600); }
+
+/* ---- missions: in and out ---- */
+function enterMission(k) {
+  if (GEYE.on) geyeOff(); if (WMIS.cur && WMIS.cur !== k) exitMission(true); WMIS.cur = k; WZ.open && WZ.open(null); const [i, n, d] = MISS[k]; wzTitle(i, n, d);
+  if (k === 'garden') { washTool('garden'); const p = (GARD.plots || [])[0]; wFly(0, .3, 2, 1.57, .75, 18); }
+  else { if (WASH.tool === 'garden') washTool('hose'); }
+  if (k === 'zen') { wFly(0, .1, 17, 1.57, 1.05, 11); wSay('Drag across the gravel to rake it. The stones keep their ripples. Smooth it over and start again any time.'); }
+  if (k === 'stars') { wFly(-22, 1.6, 2.4, .25, .28, 9); wSay(WSKY.night < .6 ? 'Tap the planets in order out from the Sun. For the constellations, set the Sky to Night and look up.' : 'Tap the planets in order from the Sun, then look up and tap the star patterns.'); }
+  if (k === 'dig') { wFly(21, .4, 1, 3.4, .75, 8.5); wSay('Drag over the mounds to brush the sand away. Each fossil goes onto the skeleton.'); }
+  if (k === 'music') { wFly(17.5, 1, 13.5, 1.45, .32, 8.5); wSay('Tap the bars, the chimes and the gong, or pick a tune below to learn it.'); }
+  if (k === 'aqua') { aqBuild(); wFly(-23, 1.8, 13, 1.57, .12, 6.5); wSay('A southern reef, like off Warrnambool. Tap a fish to find out who it is, tap Feed to drop food in, tap the glass and watch them scatter. Somewhere in the kelp is a weedy seadragon.'); }
+  wzSync(); wTone(660, 'bell');
+}
+function exitMission(quiet) { const k = WMIS.cur; if (!k) return; WMIS.cur = null; TUNE.i = -1; TUNE.play = null; if (k === 'garden' && WASH.tool === 'garden') washTool('hose'); if (!quiet) { const b = $('wView'); if (b) b.click(); else wFly(0, .8, 0, .7, .32, 6.8); wzToast('Back to the wash'); washTool(WASH.tool === 'garden' ? 'hose' : WASH.tool || 'hose'); } wzSync(); }
+{ const wp = washPick; washPick = function (e) { if (WMIS.cur && WMIS.cur !== 'garden') return null; if (GEYE.on) return null; return wp(e); }; }
+{ const wt = washTool; washTool = function (t) { if (WMIS.cur && t !== 'garden' && WMIS.cur === 'garden') return; wt(t); trayDraw(); }; }
+// a station only plays when you're in its mission
+{ const mt = misTap; misTap = function (e) { const W = WZ.mis; if (!W) return false; const objs = [...W.orr.map(o => o.pl), ...W.cons.map(c => c.hit), ...W.dig.map(d => d.m), ...W.bars, ...W.chimes, W.gong]; const h = wRay(e, objs);
+    if (h) { let o = h.object; while (o && !Object.keys(o.userData).length && o.parent) o = o.parent; const u = o.userData, need = u.planet != null || u.cons != null ? 'stars' : u.dig != null ? 'dig' : (u.bar != null || u.chime != null || u.gong) ? 'music' : null;
+      if (need && WMIS.cur !== need) { wzToast('Open Missions → ' + MISS[need][1] + ' to play'); return true; } }
+    return mt(e); }; }
+function trayDraw() { const tr = $('wzTray'); if (!tr) return; const k = WMIS.cur; let h = '';
+  if (k === 'garden') h = '<b>Seedlings</b>' + GKEYS.map(s => `<button data-seed="${s}" class="${s === GARD.seed ? 'on' : ''}" title="${GSP[s].name}"><i style="background:${GSP[s].flower}"></i>${GSP[s].name}</button>`).join('');
+  else if (k === 'zen') h = '<b>Rake</b><button data-z="smooth">Smooth it over</button><button data-z="lines">Straight lines</button><button data-z="rings">Ripples round the stones</button><button data-z="wide" class="' + (RAKE.wide ? 'on' : '') + '">Wide rake</button>';
+  else if (k === 'music') h = '<b>Tunes</b>' + TUNES.map((t, i) => `<button data-tu="${i}" class="${WMS.tunes.includes(i) ? 'on' : ''}">${WMS.tunes.includes(i) ? '✓ ' : ''}${t[0]}</button>`).join('');
+  else if (k === 'aqua') h = `<b>Tank</b><button data-aq="feed">🍤 Feed</button><button data-aq="light">${AQ.night ? '☀️ Day light' : '🌙 Moon light'}</button><span class="sm">Species ${WMS.aqua.ids.length}/6 · fed ${Math.min(3, WMS.aqua.fed)}/3</span>`;
+  else if (k === 'stars') h = `<b>Stars</b><span class="sm">Orrery ${WMS.orrery}/8 · constellations ${WMS.stars.length}/6</span><button data-sky="night">🌙 Night sky</button>`;
+  else if (k === 'dig') h = `<b>Dig</b><span class="sm">Fossils ${WMS.dig.filter(p => p >= 1).length}/6</span>`;
+  tr.innerHTML = h; tr.classList.toggle('on', !!h); }
+document.addEventListener('click', e => { const tr = e.target.closest('#wzTray'); if (!tr) return; const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.seed) { GARD.seed = b.dataset.seed; store.set('scream-garden-seed', GARD.seed); trayDraw(); wSay(GSP[GARD.seed].name + ' ready to plant. Tap an empty spot in a bed.'); }
+  if (b.dataset.z) { if (b.dataset.z === 'wide') { RAKE.wide = !RAKE.wide; trayDraw(); } else rakePreset(b.dataset.z); }
+  if (b.dataset.tu) tuneStart(+b.dataset.tu);
+  if (b.dataset.aq === 'feed') aqFeed(); if (b.dataset.aq === 'light') { AQ.night = !AQ.night; aqLight(); trayDraw(); }
+  if (b.dataset.sky) { WSKY.tod = 'night'; WSKY.wx = 'clear'; skyApply(); wSay('Night falls. Look up and tap the star patterns.'); } });
+{ const gs = gardStatus; gardStatus = function () { const r = gs.apply(this, arguments); if (WMIS.cur === 'garden' && Math.random() < .1) trayDraw(); return r; }; }
+{ const gsu = gardSeedUI; gardSeedUI = function () { gsu(); if (WMIS.cur === 'garden') { wSay('Tap a bed: pull weeds, plant in an empty spot, water what\'s growing, pick what\'s ready. Drag the ground to look round.'); trayDraw(); } }; }
+
+/* ---- the zen garden's rake ---- */
+const RAKE = { on: false, last: null, wide: false, tex: null, dirty: 0, base: '#cfcabd', snd: 0 };
+function rakeCanvas() { if (RAKE.tex) return RAKE.tex; const sand = WZ.g && WZ.g.children.find(o => o.isMesh && o.material && o.material.map && o.geometry.parameters && o.geometry.parameters.width === 16); if (!sand) return null; RAKE.mesh = sand; RAKE.tex = sand.material.map; return RAKE.tex; }
+function rakeStroke(a, b) { const t = rakeCanvas(); if (!t) return; const c = t.image, g = c.getContext('2d'), dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy); if (L < 1) return; const nx = -dy / L, ny = dx / L, n = RAKE.wide ? 7 : 5, sp = RAKE.wide ? 15 : 12;
+  g.lineCap = 'butt'; g.strokeStyle = RAKE.base; g.lineWidth = sp * n + 6; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); g.lineCap = 'round';
+  for (let k = 0; k < n; k++) { const o = (k - (n - 1) / 2) * sp; g.strokeStyle = 'rgba(66,58,46,.62)'; g.lineWidth = 4; g.beginPath(); g.moveTo(a[0] + nx * o, a[1] + ny * o); g.lineTo(b[0] + nx * o, b[1] + ny * o); g.stroke();
+    g.strokeStyle = 'rgba(255,255,248,.35)'; g.lineWidth = 1.6; g.beginPath(); g.moveTo(a[0] + nx * (o + 3), a[1] + ny * (o + 3)); g.lineTo(b[0] + nx * (o + 3), b[1] + ny * (o + 3)); g.stroke(); } t.needsUpdate = true; }
+function rakePreset(kind) { const t = rakeCanvas(); if (!t) return; const c = t.image, g = c.getContext('2d'), w = c.width, h = c.height; g.fillStyle = RAKE.base; g.fillRect(0, 0, w, h);
+  if (kind === 'lines' || kind === 'rings') { g.strokeStyle = 'rgba(90,84,70,.35)'; g.lineWidth = 3; for (let y = 8; y < h; y += 14) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); } }
+  if (kind === 'rings') for (const [x, z, r] of [[-3.6, 16.2, 1.1], [2.4, 18.4, .8], [4.8, 15.4, .55]]) { const cx = (x + 8) / 16 * w, cy = (z - 13) / 8 * h; g.fillStyle = RAKE.base; g.beginPath(); g.arc(cx, cy, r * 64 + 70, 0, TAU); g.fill(); for (let k = 0; k < 6; k++) { g.beginPath(); g.arc(cx, cy, r * 64 + 10 + k * 14, 0, TAU); g.stroke(); } }
+  t.needsUpdate = true; WMS.raked = (WMS.raked || 0) + 1; wmsSave(); wTone(0, 'brush'); }
+{ const el = renderer.domElement;
+  el.addEventListener('pointerdown', e => { if (!WASH.on || WMIS.cur !== 'zen' || GEYE.on || e.button === 2) return; rakeCanvas(); if (!RAKE.mesh) return; const h = wRay(e, [RAKE.mesh]); if (!h || !h.uv) return;
+    e.stopImmediatePropagation(); RAKE.on = e.pointerId; const c = RAKE.tex.image; RAKE.last = [h.uv.x * c.width, (1 - h.uv.y) * c.height]; try { el.setPointerCapture(e.pointerId); } catch (_) {} }, true);
+  el.addEventListener('pointermove', e => { if (RAKE.on !== e.pointerId) return; e.stopImmediatePropagation(); const h = wRay(e, [RAKE.mesh]); if (!h || !h.uv) return; const c = RAKE.tex.image, p = [h.uv.x * c.width, (1 - h.uv.y) * c.height];
+    if (Math.hypot(p[0] - RAKE.last[0], p[1] - RAKE.last[1]) > 6) { rakeStroke(RAKE.last, p); RAKE.last = p; RAKE.snd += 1; if (RAKE.snd % 3 === 0) wTone(0, 'brush'); } }, true);
+  const up = e => { if (RAKE.on === e.pointerId) { RAKE.on = false; e.stopImmediatePropagation(); WMS.raked = (WMS.raked || 0) + 1; wmsSave(); } }; el.addEventListener('pointerup', up, true); el.addEventListener('pointercancel', up, true); }
+
+/* ---- the aquarium: a southern reef tank ---- */
+const AQ = { built: false, fish: [], food: [], night: false, x: -23, z: 13, y: 1.0, W: 5, H: 2.2, D: 1.6 };
+const AQSP = [['Weedy seadragon', 'Victoria\'s marine emblem. It hides in the kelp looking like a bit of weed, and the dad carries the eggs.', 0xd8a23a, 0x7a3fa0, 'dragon'],
+  ['Port Jackson shark', 'A gentle shark of southern Australian reefs with a harness of dark bands. It crunches sea urchins.', 0x9a8466, 0x3e3328, 'shark'], ['Old wife', 'Black and white bands and a sharp spine on its back: look, don\'t touch.', 0xf2f0ea, 0x1a1a1a, 'band'],
+  ['Six-spined leatherjacket', 'Tough skin instead of scales. The males have bright blue lines.', 0xd9a94a, 0x2f6bff, 'line'], ['Magpie morwong', 'A reef fish with bold black and white blotches and thick lips.', 0xf4f2ee, 0x202020, 'blot'], ['Zebra fish', 'Girella zebra: grey with dark vertical bars, nibbling weed off the rocks.', 0x8e9aa4, 0x2e353b, 'band']];
+function aqTex(c1, c2, kind) { return ctex(128, 64, (g, w, h) => { g.fillStyle = '#' + new THREE.Color(c1).getHexString(); g.fillRect(0, 0, w, h); g.fillStyle = '#' + new THREE.Color(c2).getHexString();
+  if (kind === 'band' || kind === 'shark') for (let x = 12; x < w; x += kind === 'shark' ? 34 : 22) g.fillRect(x, 0, kind === 'shark' ? 9 : 10, h);
+  if (kind === 'line') for (let y = 14; y < h; y += 12) g.fillRect(0, y, w, 3);
+  if (kind === 'blot') for (let i = 0; i < 7; i++) { g.beginPath(); g.arc(Math.random() * w, Math.random() * h, 6 + Math.random() * 9, 0, TAU); g.fill(); }
+  if (kind === 'dragon') for (let i = 0; i < 30; i++) g.fillRect(Math.random() * w, Math.random() * h, 3, 3); }); }
+function aqBuild() {
+  if (AQ.built || !WZ.g) return; AQ.built = true; const G = new THREE.Group(), x = AQ.x, z = AQ.z, y = AQ.y, W = AQ.W, H = AQ.H, D = AQ.D; WZ.g.add(G); AQ.g = G;
+  const M = (c, r = .8, m = 0) => matOf(c, r, m), bx = (w, h, d, m, px, py, pz) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(px, py, pz); G.add(o); return o; };
+  bx(W + .3, y, D + .3, M(0x2a2420), x, y / 2, z); const roofM = M(0x3a3f46, .5, .4); bx(W + .3, .18, D + .3, roofM, x, y + H + .09, z);
+  AQ.lightM = new THREE.MeshStandardMaterial({ color: 0xbfe9ff, emissive: 0x9fdcff, emissiveIntensity: 1.2 }); bx(W - .2, .04, .3, AQ.lightM, x, y + H - .02, z);
+  const water = new THREE.Mesh(new THREE.BoxGeometry(W, H - .15, D), new THREE.MeshStandardMaterial({ color: 0x2a8fb0, transparent: true, opacity: .28, roughness: .1, depthWrite: false })); water.position.set(x, y + (H - .15) / 2, z); G.add(water); AQ.water = water;
+  const glass = new THREE.Mesh(new THREE.BoxGeometry(W + .02, H, D + .02), new THREE.MeshStandardMaterial({ color: 0xdff4ff, transparent: true, opacity: .08, roughness: .02, metalness: .3, depthWrite: false })); glass.position.set(x, y + H / 2, z); glass.userData.aqGlass = 1; G.add(glass); AQ.glass = glass;
+  const frame = M(0x1a1d22, .4, .6); for (const sx of [-1, 1]) for (const sz of [-1, 1]) bx(.05, H, .05, frame, x + sx * W / 2, y + H / 2, z + sz * D / 2);
+  bx(W - .05, .16, D - .05, M(0xd8c79a, 1), x, y + .08, z);   // sand
+  const rockM = new THREE.MeshStandardMaterial({ color: 0x6a6258, roughness: 1, flatShading: true }); for (let i = 0; i < 6; i++) { const r = new THREE.Mesh(new THREE.DodecahedronGeometry(sr(.15, .34), 0), rockM); r.position.set(x + sr(-W / 2 + .4, W / 2 - .4), y + .2, z + sr(-D / 2 + .3, D / 2 - .3)); G.add(r); }
+  AQ.kelp = []; const kelpM = new THREE.MeshStandardMaterial({ color: 0x7a6a2a, roughness: .8, side: THREE.DoubleSide }); for (let i = 0; i < 14; i++) { const h = sr(.8, 1.8), k = new THREE.Mesh(new THREE.PlaneGeometry(.14, h, 1, 6), kelpM); k.geometry.translate(0, h / 2, 0); k.position.set(x + sr(-W / 2 + .3, W / 2 - .3), y + .16, z + sr(-D / 2 + .25, -.1)); k.rotation.y = sr(0, 3); G.add(k); AQ.kelp.push(k); }
+  // bubbles
+  { const n = 60, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { pos[i * 3] = x + W / 2 - .3 + sr(-.05, .05); pos[i * 3 + 1] = y + sr(.2, H - .2); pos[i * 3 + 2] = z - D / 2 + .25 + sr(-.05, .05); } const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); AQ.bub = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: .035, transparent: true, opacity: .7 })); G.add(AQ.bub); }
+  // the fish: three of most, one shark, one seadragon in the kelp
+  AQSP.forEach((sp, si) => { const n = si === 0 || si === 1 ? 1 : 3; for (let j = 0; j < n; j++) { const f = new THREE.Group(), mat = new THREE.MeshStandardMaterial({ map: aqTex(sp[2], sp[3], sp[4]), roughness: .5 });
+      const L = sp[4] === 'shark' ? .55 : sp[4] === 'dragon' ? .34 : sr(.18, .26), body = new THREE.Mesh(new THREE.SphereGeometry(.5, 12, 8), mat); body.scale.set(L, sp[4] === 'dragon' ? L * .18 : L * .45, sp[4] === 'dragon' ? L * .14 : L * .22); f.add(body);
+      const tail = new THREE.Mesh(new THREE.ConeGeometry(L * .22, L * .4, 4).rotateZ(Math.PI / 2), mat); tail.position.x = -L * .55; tail.scale.z = .35; f.add(tail);
+      if (sp[4] === 'dragon') for (let q = 0; q < 6; q++) { const lf = new THREE.Mesh(new THREE.PlaneGeometry(.06, .05), new THREE.MeshStandardMaterial({ color: 0xc89a3a, side: THREE.DoubleSide })); lf.position.set(sr(-.15, .15), sr(-.05, .06), 0); lf.rotation.z = sr(-1, 1); f.add(lf); }
+      f.position.set(x + sr(-W / 2 + .5, W / 2 - .5), y + sr(.4, H - .4), z + sr(-D / 2 + .3, D / 2 - .3)); f.userData.fish = si; G.add(f);
+      AQ.fish.push({ g: f, tail, sp: si, v: sp[4] === 'shark' ? .22 : sp[4] === 'dragon' ? .06 : sr(.3, .5), tgt: f.position.clone(), t: 0, flee: 0, low: sp[4] === 'shark', kelp: sp[4] === 'dragon' }); } });
+  AQ.foodGeo = new THREE.SphereGeometry(.018, 4, 3); AQ.foodM = M(0xc8642a); aqLight();
+}
+function aqLight() { if (!AQ.built) return; AQ.lightM.emissive.set(AQ.night ? 0x3050ff : 0x9fdcff); AQ.lightM.emissiveIntensity = AQ.night ? .8 : 1.2; AQ.water.material.color.set(AQ.night ? 0x10306a : 0x2a8fb0); AQ.water.material.opacity = AQ.night ? .45 : .28; }
+function aqFeed() { if (!AQ.built) return; for (let i = 0; i < 14; i++) { const m = new THREE.Mesh(AQ.foodGeo, AQ.foodM); m.position.set(AQ.x + sr(-1.2, 1.2), AQ.y + AQ.H - .2, AQ.z + sr(-.4, .4)); AQ.g.add(m); AQ.food.push({ m, vy: -sr(.05, .12) }); }
+  WMS.aqua.fed++; wmsSave(); trayDraw(); wTone(900, 'chirp'); wSay(WMS.aqua.fed === 3 ? 'Fed three times. They know you now: watch them follow you along the glass.' : 'Food\'s in. Watch them come up for it.'); }
+function aqStep(dt) { if (!AQ.built) return; const t = WZ.t, x = AQ.x, z = AQ.z, y = AQ.y, W = AQ.W, H = AQ.H, D = AQ.D;
+  for (const k of AQ.kelp) k.rotation.z = Math.sin(t * .9 + k.position.x * 3) * .12;
+  { const a = AQ.bub.geometry.attributes.position.array; for (let i = 1; i < a.length; i += 3) { a[i] += dt * .5; if (a[i] > y + H - .2) a[i] = y + .2; } AQ.bub.geometry.attributes.position.needsUpdate = true; }
+  for (let i = AQ.food.length - 1; i >= 0; i--) { const f = AQ.food[i]; f.m.position.y += f.vy * dt; f.m.position.x += Math.sin(t * 2 + i) * .02 * dt; if (f.m.position.y < y + .2) f.vy = 0; f.age = (f.age || 0) + dt; if (f.age > 25) { AQ.g.remove(f.m); AQ.food.splice(i, 1); } }
+  const cam = WASH.cam.position;
+  for (const F of AQ.fish) { const p = F.g.position; F.t -= dt; F.flee = Math.max(0, F.flee - dt);
+    let food = null, best = 1e9; if (!F.kelp) for (const f of AQ.food) { const d = f.m.position.distanceToSquared(p); if (d < best) { best = d; food = f; } }
+    if (food && best < 4) { F.tgt.copy(food.m.position); if (best < .02) { AQ.g.remove(food.m); AQ.food.splice(AQ.food.indexOf(food), 1); } }
+    else if (F.t <= 0) { F.t = sr(2, 5); F.tgt.set(x + sr(-W / 2 + .35, W / 2 - .35), F.low ? y + sr(.3, .6) : F.kelp ? y + sr(.6, 1.4) : y + sr(.35, H - .35), F.kelp ? z + sr(-D / 2 + .25, -.1) : z + sr(-D / 2 + .25, D / 2 - .25));
+      if (WMS.aqua.fed >= 3 && !F.low && !F.kelp && Math.random() < .5) { F.tgt.x = clamp(cam.x, x - W / 2 + .4, x + W / 2 - .4); F.tgt.z = z + D / 2 - .3; } }
+    const v = new THREE.Vector3().subVectors(F.tgt, p), d = v.length(), sp = F.v * (F.flee ? 3.5 : food ? 1.8 : 1); if (d > .02) { v.multiplyScalar(Math.min(d, sp * dt) / d); p.add(v); const yaw = Math.atan2(-v.z, v.x); let dy = yaw - F.g.rotation.y; dy -= Math.round(dy / TAU) * TAU; F.g.rotation.y += dy * Math.min(1, dt * 4); }
+    p.x = clamp(p.x, x - W / 2 + .2, x + W / 2 - .2); p.y = clamp(p.y, y + .25, y + H - .25); p.z = clamp(p.z, z - D / 2 + .15, z + D / 2 - .15); F.tail.rotation.y = Math.sin(t * (F.flee ? 22 : 9) + p.x * 5) * .5; }
+}
+function aqTap(e) { if (!AQ.built || WMIS.cur !== 'aqua') return false; const h = wRay(e, [...AQ.fish.map(f => f.g), AQ.glass]); if (!h) return false; let o = h.object; while (o && o.userData.fish == null && !o.userData.aqGlass && o.parent) o = o.parent;
+  if (o.userData.fish != null) { const i = o.userData.fish, s = AQSP[i]; if (!WMS.aqua.ids.includes(i)) { WMS.aqua.ids.push(i); wmsSave(); wTone(880, 'bell'); } wSay(`${s[0]}: ${s[1]} (${WMS.aqua.ids.length}/6 species)${i === 0 ? ' Well spotted!' : ''}`); trayDraw(); return true; }
+  for (const F of AQ.fish) if (F.g.position.distanceTo(h.point) < 1.4) { F.flee = 1.2; F.tgt.copy(F.g.position).addScaledVector(new THREE.Vector3().subVectors(F.g.position, h.point).normalize(), 1.2); } wTone(220, 'bar'); wSay('Tap tap. They scatter (go easy on them).'); return true; }
+
+/* ---- small things to poke at ---- */
+const WREN = { g: null, st: 'hop', t: 2, tgt: null };
+function detailsBuild() { if (WREN.g || !WZ.g) return; const g = new THREE.Group(), blue = matOf(0x2a7fff, .5), brown = matOf(0x7a5a3a, .8), body = new THREE.Mesh(new THREE.SphereGeometry(.07, 8, 6), brown); body.scale.set(1.2, 1, 1); g.add(body);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(.045, 8, 6), blue); head.position.set(.07, .05, 0); g.add(head); const tail = new THREE.Mesh(new THREE.BoxGeometry(.13, .015, .03), blue); tail.position.set(-.1, .06, 0); tail.rotation.z = .9; g.add(tail);
+  g.position.set(9, .05, 3); g.userData.wren = 1; WZ.g.add(g); WREN.g = g; WREN.tgt = g.position.clone(); WZ.ripples = []; }
+function detailsStep(dt) { if (!WREN.g) detailsBuild(); const w = WREN, p = w.g.position; w.t -= dt;
+  if (w.st === 'hop') { if (w.t <= 0) { w.t = sr(.4, 1.6); const a = sr(0, TAU); w.tgt.set(clamp(p.x + Math.cos(a) * .6, -14, 14), .05, clamp(p.z + Math.sin(a) * .6, -6, 12)); if (Math.hypot(w.tgt.x, w.tgt.z) < 4.5) w.tgt.set(9, .05, 3); if (Math.random() < .15) wTone(3200 + sr(-300, 300), 'chirp'); }
+    const v = new THREE.Vector3().subVectors(w.tgt, p); if (v.length() > .02) { p.addScaledVector(v, Math.min(1, dt * 3)); w.g.rotation.y = Math.atan2(-v.z, v.x); p.y = .05 + Math.abs(Math.sin(WZ.t * 14)) * .05; } }
+  else if (w.st === 'fly') { w.k += dt * .5; const k = Math.min(1, w.k); p.lerpVectors(w.from, w.to, k); p.y += Math.sin(k * Math.PI) * 2.5; w.g.rotation.y = Math.atan2(-(w.to.z - w.from.z), w.to.x - w.from.x); if (k >= 1) { w.st = w.back ? 'hop' : 'perch'; w.t = sr(6, 12); } }
+  else if (w.st === 'perch' && w.t <= 0) { w.st = 'fly'; w.k = 0; w.from = p.clone(); w.to = new THREE.Vector3(sr(-12, 12), .05, sr(-5, 10)); if (Math.hypot(w.to.x, w.to.z) < 5) w.to.set(9, .05, 3); w.back = true; wTone(3600, 'chirp'); }
+  for (let i = WZ.ripples.length - 1; i >= 0; i--) { const r = WZ.ripples[i]; r.t += dt; r.m.scale.setScalar(.2 + r.t * 1.6); r.m.material.opacity = Math.max(0, .6 - r.t * .4); if (r.t > 1.5) { WZ.g.remove(r.m); WZ.ripples.splice(i, 1); } }
+  if (WZ.koiBoost > 0) { WZ.koiBoost -= dt; for (const k of WZ.koi) k.a += k.v * dt * 3; }
+  if (WZ.lantFlick != null) WZ.lantM.emissiveIntensity = Math.max(WZ.lantM.emissiveIntensity, WZ.lantOn ? 1.6 + Math.sin(WZ.t * 9) * .2 : 0);
+}
+function detailTap(e) {
+  const objs = []; if (WREN.g) objs.push(WREN.g); if (WZ.pond) objs.push(WZ.pond); if (WZ.spout) objs.push(WZ.spout.g); if (WZ.lantM) WZ.g.traverse(o => { if (o.isMesh && o.material === WZ.lantM) objs.push(o); });
+  const tree = WZ.g.children.filter(o => o.isMesh && o.geometry.type === 'IcosahedronGeometry' && o.position.z > 20 && o.position.x > 5); objs.push(...tree);
+  const h = wRay(e, objs); if (!h) return false; let o = h.object; while (o && o.parent && !o.userData.wren && o !== WZ.pond && o !== (WZ.spout && WZ.spout.g)) { if (o.parent === WZ.g) break; o = o.parent; }
+  if (o.userData.wren || h.object.parent === WREN.g) { const w = WREN; if (w.st !== 'fly') { w.st = 'fly'; w.k = 0; w.from = w.g.position.clone(); w.to = new THREE.Vector3(7.7, 3.4, 21.6); w.back = false; for (let k = 0; k < 4; k++) setTimeout(() => wTone(3400 + k * 200, 'chirp'), k * 90); wSay('A superb fairy-wren. Off to the blossom tree for a bit.'); } return true; }
+  if (h.object === WZ.pond) { const r = new THREE.Mesh(new THREE.RingGeometry(.9, 1, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .6, depthWrite: false })); r.position.set(h.point.x, .05, h.point.z); WZ.g.add(r); WZ.ripples.push({ m: r, t: 0 }); WZ.koiBoost = 1.5; wTone(300, 'chirp'); return true; }
+  if (WZ.spout && (h.object.parent === WZ.spout.g || h.object === WZ.spout.g)) { WZ.spout.fill = 1; return true; }
+  if (h.object.material === WZ.lantM) { WZ.lantOn = !WZ.lantOn; WZ.lantFlick = 1; if (!WZ.lantOn) WZ.lantM.emissiveIntensity = WSKY.night * 2.2; wTone(1200, 'chime'); return true; }
+  if (tree.includes(h.object)) { const P = WZ.petals.geometry.attributes.position.array; for (let i = 0; i < 60 * 3; i += 3) { P[i] = h.point.x + sr(-1, 1); P[i + 1] = h.point.y + sr(-.5, .5); P[i + 2] = h.point.z + sr(-1, 1); } WZ.petals.geometry.attributes.position.needsUpdate = true; wTone(0, 'brush'); return true; }
+  return false;
+}
+{ const el = renderer.domElement; el.addEventListener('pointerdown', e => { if (!WASH.on || GEYE.on || e.button === 2 || !WZ.built) return; if (aqTap(e) || detailTap(e)) e.stopImmediatePropagation(); }, true); }
+
+/* ---- God's eye: fly free ---- */
+const GEYE = { on: false, pos: new THREE.Vector3(), yaw: 0, pitch: -.3, keys: {}, mv: [0, 0, 0], look: [0, 0], lock: false };
+function geyeOn() { GEYE.on = true; const c = WASH.cam; GEYE.pos.copy(c.position); const d = new THREE.Vector3(); c.getWorldDirection(d); GEYE.yaw = Math.atan2(-d.x, -d.z); GEYE.pitch = Math.asin(clamp(d.y, -1, 1)); wzSync();
+  wzTitle('🕊️', 'God\'s Eye', h0() ? 'Left pad to fly, right stick to look, ▲▼ to rise and sink' : 'Click to look with the mouse · W A S D to fly · Space up, C down · Shift for speed · Esc to let go'); }
+function geyeOff() { GEYE.on = false; GEYE.keys = {}; GEYE.mv = [0, 0, 0]; GEYE.look = [0, 0]; if (document.pointerLockElement) document.exitPointerLock(); wzSync(); }
+{ const el = renderer.domElement;
+  el.addEventListener('pointerdown', e => { if (!WASH.on || !GEYE.on) return; e.stopImmediatePropagation(); if (e.pointerType === 'mouse' && el.requestPointerLock) try { el.requestPointerLock(); } catch (_) {} }, true);
+  document.addEventListener('mousemove', e => { if (!GEYE.on || document.pointerLockElement !== el) return; GEYE.yaw -= e.movementX * .0025; GEYE.pitch = clamp(GEYE.pitch - e.movementY * .0025, -1.5, 1.5); });
+  addEventListener('keydown', e => { if (!GEYE.on || !WASH.on || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; GEYE.keys[e.code] = true; if (/^(KeyW|KeyA|KeyS|KeyD|Space|KeyC|KeyQ|KeyE)$/.test(e.code)) e.preventDefault(); if (e.code === 'Escape') { e.stopImmediatePropagation(); if (!document.pointerLockElement) geyeOff(); } }, true);
+  addEventListener('keyup', e => { GEYE.keys[e.code] = false; }, true); }
+// phone controls: a D-pad (with rise and sink) on the left, the race thumb stick on the right
+{ const pad = document.createElement('div'); pad.id = 'geyePad'; pad.innerHTML = '<button data-m="f" aria-label="Forward">▲</button><button data-m="l" aria-label="Left">◀</button><button data-m="r" aria-label="Right">▶</button><button data-m="b" aria-label="Back">▼</button><button data-m="u" class="ud" aria-label="Rise">⤒</button><button data-m="d" class="ud" aria-label="Sink">⤓</button>';
+  const joy = document.createElement('div'); joy.id = 'geyeJoy'; joy.innerHTML = '<div class="ring"><i></i></div>'; const W = $('wash'); W.append(pad, joy);
+  const held = new Map(), apply = () => { const s = new Set(held.values()); GEYE.mv = [(s.has('r') ? 1 : 0) - (s.has('l') ? 1 : 0), (s.has('u') ? 1 : 0) - (s.has('d') ? 1 : 0), (s.has('f') ? 1 : 0) - (s.has('b') ? 1 : 0)]; for (const b of pad.children) b.classList.toggle('on', s.has(b.dataset.m)); };
+  pad.addEventListener('pointerdown', e => { const b = e.target.closest('button'); if (!b) return; e.preventDefault(); held.set(e.pointerId, b.dataset.m); try { pad.setPointerCapture(e.pointerId); } catch (_) {} apply(); });
+  pad.addEventListener('pointermove', e => { if (!held.has(e.pointerId)) return; const el = document.elementFromPoint(e.clientX, e.clientY), b = el && el.closest && el.closest('#geyePad button'); if (b) { held.set(e.pointerId, b.dataset.m); apply(); } });
+  for (const ev of ['pointerup', 'pointercancel']) pad.addEventListener(ev, e => { held.delete(e.pointerId); apply(); });
+  const ring = joy.querySelector('.ring'), knob = ring.querySelector('i'); let jid = null, c0 = null;
+  joy.addEventListener('pointerdown', e => { e.preventDefault(); jid = e.pointerId; const r = ring.getBoundingClientRect(); c0 = [r.left + r.width / 2, r.top + r.height / 2]; try { joy.setPointerCapture(e.pointerId); } catch (_) {} mvJ(e); });
+  const mvJ = e => { if (e.pointerId !== jid) return; const R = ring.getBoundingClientRect().width / 2, dx = e.clientX - c0[0], dy = e.clientY - c0[1], d = Math.hypot(dx, dy), k = Math.min(1, d / R), nx = d ? dx / d * k : 0, ny = d ? dy / d * k : 0; GEYE.look = [nx, ny]; knob.style.transform = `translate(${nx * R * .6}px,${ny * R * .6}px)`; };
+  joy.addEventListener('pointermove', mvJ); for (const ev of ['pointerup', 'pointercancel']) joy.addEventListener(ev, e => { if (e.pointerId === jid) { jid = null; GEYE.look = [0, 0]; knob.style.transform = ''; } }); }
+function geyeStep(dt) { if (!GEYE.on) return; const K = GEYE.keys, sp = (K.ShiftLeft || K.ShiftRight ? 14 : 5.5) * dt;
+  GEYE.yaw -= GEYE.look[0] * Math.abs(GEYE.look[0]) * 2.4 * dt; GEYE.pitch = clamp(GEYE.pitch - GEYE.look[1] * Math.abs(GEYE.look[1]) * 1.6 * dt, -1.5, 1.5);
+  const fx = (K.KeyD ? 1 : 0) - (K.KeyA ? 1 : 0) + GEYE.mv[0], fz = (K.KeyW ? 1 : 0) - (K.KeyS ? 1 : 0) + GEYE.mv[2], fy = (K.Space || K.KeyE ? 1 : 0) - (K.KeyC || K.KeyQ ? 1 : 0) + GEYE.mv[1];
+  const sy = Math.sin(GEYE.yaw), cy = Math.cos(GEYE.yaw), cp = Math.cos(GEYE.pitch), spp = Math.sin(GEYE.pitch);
+  GEYE.pos.x += (-sy * cp * fz + cy * fx) * sp; GEYE.pos.z += (-cy * cp * fz - sy * fx) * sp; GEYE.pos.y += (spp * fz + fy) * sp;
+  GEYE.pos.y = clamp(GEYE.pos.y, .35, 70); const r = Math.hypot(GEYE.pos.x, GEYE.pos.z); if (r > 110) GEYE.pos.multiplyScalar(110 / r);
+  const c = WASH.cam; c.position.copy(GEYE.pos); c.rotation.set(GEYE.pitch, GEYE.yaw, 0, 'YXZ'); c.updateMatrixWorld(); }
+{ const ws = washStep; washStep = function (dt) { const r = ws(dt); try { if (!$('wzTop')) wzUI(); aqStep(dt); detailsStep(dt); geyeStep(dt); } catch (e) { if (!WZ.err2) { WZ.err2 = 1; console.warn('wash v81', e); } } return r; }; }
+{ const wc = washClose; washClose = function () { if (GEYE.on) geyeOff(); if (WMIS.cur) exitMission(true); return wc.apply(this, arguments); }; }
+{ const wo = washOpen; washOpen = function () { const r = wo.apply(this, arguments); try { wzUI(); wzSync(); aqBuild(); } catch (e) { console.warn('wash v81 open', e); } return r; }; }
 if (window.__introReady) window.__introReady();
 </script>
 </body>
